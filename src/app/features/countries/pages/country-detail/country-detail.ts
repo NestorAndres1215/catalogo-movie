@@ -1,8 +1,10 @@
+
 import {
   Component,
   OnInit,
   inject,
-  signal
+  signal,
+  computed
 } from '@angular/core';
 
 import {
@@ -20,6 +22,12 @@ import {
 } from '../../../../core/service/country.service';
 
 type CountryMediaType = 'movie' | 'tv';
+
+type CountrySortOption =
+  | 'rating-desc'
+  | 'rating-asc'
+  | 'date-desc'
+  | 'date-asc';
 
 @Component({
   selector: 'app-country-detail',
@@ -40,25 +48,86 @@ export class CountryDetailComponent implements OnInit {
   // ESTADOS
   // =========================================
 
-  country = signal<Country | null>(null);
+  readonly country = signal<Country | null>(null);
 
-  media = signal<CountryMedia[]>([]);
+  readonly media = signal<CountryMedia[]>([]);
 
-  selectedType = signal<CountryMediaType>('movie');
+  readonly selectedType = signal<CountryMediaType>('movie');
 
-  loading = signal<boolean>(true);
+  readonly selectedSort = signal<CountrySortOption>('rating-desc');
 
-  errorMessage = signal<string>('');
+  readonly loading = signal<boolean>(true);
 
-  currentPage = signal<number>(1);
+  readonly errorMessage = signal<string>('');
 
-  totalPages = signal<number>(1);
+  readonly currentPage = signal<number>(1);
 
-  totalResults = signal<number>(0);
+  readonly totalPages = signal<number>(1);
+
+  readonly totalResults = signal<number>(0);
 
   private countryCode = '';
 
   private requestVersion = 0;
+
+  // =========================================
+  // ORDENAMIENTO DE PELÍCULAS Y SERIES
+  // =========================================
+
+  readonly sortedMedia = computed(() => {
+
+    const items = [...this.media()];
+
+    const getDate = (item: CountryMedia): string => {
+
+      return this.selectedType() === 'movie'
+        ? item.release_date ?? ''
+        : item.first_air_date ?? '';
+    };
+
+    switch (this.selectedSort()) {
+
+      // Mejor valoración
+      case 'rating-desc':
+        return items.sort(
+          (a, b) => b.vote_average - a.vote_average
+        );
+
+      // Peor valoración
+      case 'rating-asc':
+        return items.sort(
+          (a, b) => a.vote_average - b.vote_average
+        );
+
+      // Más recientes
+      case 'date-desc':
+        return items.sort((a, b) => {
+
+          const dateA = getDate(a);
+          const dateB = getDate(b);
+
+          if (!dateA && !dateB) return 0;
+          if (!dateA) return 1;
+          if (!dateB) return -1;
+
+          return dateB.localeCompare(dateA);
+        });
+
+      // Más antiguas
+      case 'date-asc':
+        return items.sort((a, b) => {
+
+          const dateA = getDate(a);
+          const dateB = getDate(b);
+
+          if (!dateA && !dateB) return 0;
+          if (!dateA) return 1;
+          if (!dateB) return -1;
+
+          return dateA.localeCompare(dateB);
+        });
+    }
+  });
 
   // =========================================
   // INICIALIZACIÓN
@@ -71,6 +140,8 @@ export class CountryDetailComponent implements OnInit {
       const code = params.get('code');
 
       if (!code || !/^[a-z]{2}$/i.test(code)) {
+
+        this.country.set(null);
 
         this.errorMessage.set(
           'El código del país no es válido.'
@@ -85,9 +156,15 @@ export class CountryDetailComponent implements OnInit {
 
       this.selectedType.set('movie');
 
+      this.selectedSort.set('rating-desc');
+
       this.currentPage.set(1);
 
       this.country.set(null);
+
+      this.media.set([]);
+
+      this.errorMessage.set('');
 
       this.loadCountry();
 
@@ -101,13 +178,19 @@ export class CountryDetailComponent implements OnInit {
 
   loadCountry(): void {
 
+    const code = this.countryCode;
+
     this.countryService.getCountries().subscribe({
 
       next: countries => {
 
+        if (code !== this.countryCode) {
+          return;
+        }
+
         const selectedCountry = countries.find(
           item =>
-            item.iso_3166_1.toUpperCase() === this.countryCode
+            item.iso_3166_1.toUpperCase() === code
         );
 
         if (!selectedCountry) {
@@ -129,6 +212,12 @@ export class CountryDetailComponent implements OnInit {
           error
         );
 
+        if (code === this.countryCode) {
+
+          this.errorMessage.set(
+            'No se pudo cargar la información del país.'
+          );
+        }
       }
 
     });
@@ -204,7 +293,10 @@ export class CountryDetailComponent implements OnInit {
 
   changeType(type: CountryMediaType): void {
 
-    if (this.selectedType() === type) {
+    if (
+      this.selectedType() === type ||
+      this.loading()
+    ) {
       return;
     }
 
@@ -213,6 +305,26 @@ export class CountryDetailComponent implements OnInit {
     this.currentPage.set(1);
 
     this.loadMedia();
+  }
+
+  // =========================================
+  // CAMBIAR ORDENAMIENTO
+  // =========================================
+
+  onSortChange(event: Event): void {
+
+    const select = event.target as HTMLSelectElement;
+
+    const value = select.value;
+
+    if (
+      value === 'rating-desc' ||
+      value === 'rating-asc' ||
+      value === 'date-desc' ||
+      value === 'date-asc'
+    ) {
+      this.selectedSort.set(value);
+    }
   }
 
   // =========================================

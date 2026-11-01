@@ -1,65 +1,102 @@
+
 <section class="country-detail-page">
-  <!-- CARGANDO -->
+
+  <!-- CARGANDO PAÍS -->
 
   @if (loading() && !country()) {
+
     <div class="message">
       <div class="loader"></div>
 
       <p>Cargando información del país...</p>
     </div>
+
   }
 
   <!-- ERROR -->
 
   @if (errorMessage() && !country()) {
+
     <div class="message error">
+
       <h2>Error</h2>
 
       <p>{{ errorMessage() }}</p>
 
-      <a routerLink="/countries"> Volver a países </a>
+      <a routerLink="/countries">
+        Volver a países
+      </a>
+
     </div>
+
   }
 
   <!-- DETALLE DEL PAÍS -->
 
   @if (country(); as countryData) {
-    <a class="back-link" routerLink="/countries"> ← Volver a países </a>
+
+    <a class="back-link" routerLink="/countries">
+      ← Volver a países
+    </a>
 
     <!-- ENCABEZADO -->
 
     <header class="country-header">
+
       <div class="country-flag">
         {{ getFlag() }}
       </div>
 
       <div class="country-heading-info">
-        <span class="section-label"> CINEVERSE / PAÍSES </span>
+
+        <span class="section-label">
+          CINEVERSE / PAÍSES
+        </span>
 
         <h1>
           {{ countryData.english_name }}
         </h1>
 
-        <p>Nombre nativo: {{ countryData.native_name }}</p>
+        <p>
+          Nombre nativo: {{ countryData.native_name }}
+        </p>
 
-        <span class="country-code"> Código ISO: {{ countryData.iso_3166_1 }} </span>
+        <span class="country-code">
+          Código ISO: {{ countryData.iso_3166_1 }}
+        </span>
+
       </div>
+
     </header>
 
     <!-- CONTENIDO -->
 
     <section class="content-section">
-      <div class="section-heading">
-        <div>
-          <span class="section-label"> EXPLORAR CONTENIDO </span>
 
-          <h2>Contenido de {{ countryData.english_name }}</h2>
+      <!-- ENCABEZADO DE SECCIÓN -->
+
+      <div class="section-heading">
+
+        <div>
+          <span class="section-label">
+            EXPLORAR CONTENIDO
+          </span>
+
+          <h2>
+            Contenido de {{ countryData.english_name }}
+          </h2>
+
+          <p>
+            Descubre las producciones cinematográficas de este país.
+          </p>
         </div>
+
       </div>
 
-      <!-- SELECTOR -->
+      <!-- SELECTOR DE TIPO -->
 
       <div class="type-selector">
+
         <button
           type="button"
           [class.active]="selectedType() === 'movie'"
@@ -77,12 +114,19 @@
         >
           📺 Series
         </button>
+
       </div>
 
-      <!-- RESULTADOS -->
+      <!-- RESULTADOS Y FILTROS -->
 
       <div class="results-header">
-        <div>
+
+        <div class="results-title">
+
+          <span class="section-label">
+            CATÁLOGO CINEMATOGRÁFICO
+          </span>
+
           <h3>
             @if (selectedType() === 'movie') {
               Películas
@@ -91,97 +135,224 @@
             }
           </h3>
 
-          <p>{{ totalResults() }} resultados encontrados</p>
+          <p>
+            {{ totalResults() }} resultados encontrados
+          </p>
+
         </div>
 
-        <span class="page-info"> Página {{ currentPage() }} de {{ totalPages() }} </span>
+        <div class="results-controls">
+
+          <span class="page-info">
+            Página {{ currentPage() }} de {{ totalPages() }}
+          </span>
+
+          <div class="sort-control">
+
+            <label for="country-sort">
+              Ordenar por
+            </label>
+
+            <select
+              id="country-sort"
+              [value]="selectedSort()"
+              (change)="onSortChange($event)"
+              [disabled]="loading() || media().length === 0"
+            >
+
+              <option value="rating-desc">
+                ⭐ Mejor valoración
+              </option>
+
+              <option value="rating-asc">
+                ⭐ Peor valoración
+              </option>
+
+              <option value="date-desc">
+                🆕 Más recientes
+              </option>
+
+              <option value="date-asc">
+                📅 Más antiguas
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
       </div>
 
-      <!-- CARGANDO -->
+      <!-- CARGANDO CONTENIDO -->
 
       @if (loading()) {
+
         <div class="message">
+
           <div class="loader"></div>
 
-          <p>Cargando contenido...</p>
+          <p>
+            Cargando contenido...
+          </p>
+
         </div>
+
       }
 
       <!-- ERROR DE CONTENIDO -->
 
       @if (!loading() && errorMessage()) {
+
         <div class="message error">
+
+          <h2>Error al cargar el contenido</h2>
+
           <p>{{ errorMessage() }}</p>
+
+          <button
+            type="button"
+            (click)="loadMedia()"
+          >
+            Reintentar
+          </button>
+
         </div>
+
       }
 
       <!-- SIN RESULTADOS -->
 
-      @if (!loading() && !errorMessage() && media().length === 0) {
+      @if (
+        !loading() &&
+        !errorMessage() &&
+        media().length === 0
+      ) {
+
         <div class="message">
+
+          <div class="empty-icon">
+            🎬
+          </div>
+
           <h2>No hay contenido disponible</h2>
 
-          <p>No se encontraron resultados para este país.</p>
+          <p>
+            No se encontraron resultados para este país.
+          </p>
+
         </div>
+
       }
 
-      <!-- GRID -->
+      <!-- GRID DE PELÍCULAS Y SERIES -->
 
-      @if (!loading() && media().length > 0) {
+      @if (!loading() && !errorMessage() && sortedMedia().length > 0) {
+
         <div class="media-grid">
-          @for (item of media(); track item.id) {
-            <a class="media-card" [routerLink]="getMediaRoute(item)">
+
+          @for (item of sortedMedia(); track item.id) {
+
+            <a
+              class="media-card"
+              [routerLink]="getMediaRoute(item)"
+            >
+
+              <!-- POSTER -->
+
               <div class="media-poster">
+
                 @if (item.poster_path) {
-                  <img [src]="getPoster(item.poster_path)" [alt]="getMediaTitle(item)" />
+
+                  <img
+                    [src]="getPoster(item.poster_path)"
+                    [alt]="getMediaTitle(item)"
+                    loading="lazy"
+                  />
+
                 } @else {
-                  <div class="no-poster">Sin imagen</div>
+
+                  <div class="no-poster">
+                    <span>🎬</span>
+                    <p>Sin imagen disponible</p>
+                  </div>
+
                 }
 
-                <span class="rating"> ★ {{ item.vote_average.toFixed(1) }} </span>
+                <span class="rating">
+                  ★ {{ item.vote_average.toFixed(1) }}
+                </span>
+
               </div>
 
+              <!-- INFORMACIÓN -->
+
               <div class="media-info">
+
                 <h3>
                   {{ getMediaTitle(item) }}
                 </h3>
 
-                <span>
+                <span class="media-date">
                   {{ getMediaDate(item) }}
                 </span>
 
                 <p>
                   {{ item.overview || 'Sin descripción disponible.' }}
                 </p>
+
+                <div class="media-card-footer">
+                  <span>
+                    Ver detalles
+                  </span>
+
+                  <span class="arrow">
+                    →
+                  </span>
+                </div>
+
               </div>
+
             </a>
+
           }
+
         </div>
 
         <!-- PAGINACIÓN -->
 
-        @if (media().length > 0) {
+        @if (totalPages() > 1) {
+
           <nav class="pagination">
+
             <button
               type="button"
               [disabled]="currentPage() === 1 || loading()"
               (click)="changePage(currentPage() - 1)"
             >
-              Anterior
+              ← Anterior
             </button>
 
-            <span> Página {{ currentPage() }} de {{ totalPages() }} </span>
+            <span>
+              Página {{ currentPage() }} de {{ totalPages() }}
+            </span>
 
             <button
               type="button"
               [disabled]="currentPage() >= totalPages() || loading()"
               (click)="changePage(currentPage() + 1)"
             >
-              Siguiente
+              Siguiente →
             </button>
+
           </nav>
+
         }
+
       }
+
     </section>
+
   }
+
 </section>

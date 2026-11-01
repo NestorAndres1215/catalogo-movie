@@ -164,13 +164,16 @@ export class VideoListComponent {
     return this.videoService.getYoutubeUrl(key);
   }
 
-  getSafeYoutubeUrl(key: string): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(
-      this.getYoutubeUrl(key)
-    );
-  }
 
-  getYoutubeThumbnail(key: string): string {
-    return this.videoService.getYoutubeThumbnail(key);
-  }
+
+
+getSafeYoutubeUrl(key: string): SafeResourceUrl {
+  return this.sanitizer.bypassSecurityTrustResourceUrl(
+    this.getYoutubeUrl(key)
+  );
+}
+
+getYoutubeThumbnail(key: string): string {
+  return `https://img.youtube.com/vi/${key}/hqdefault.jpg`;
+}
 }

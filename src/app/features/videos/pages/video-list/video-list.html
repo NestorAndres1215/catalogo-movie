@@ -1,58 +1,37 @@
 <section class="videos-page">
-
   <header class="page-header">
     <h1>Trailers y videos</h1>
     <p>Descubre los avances y videos de tus películas y series favoritas.</p>
   </header>
 
   <div class="media-selector">
-    <button
-      [class.active]="mediaType() === 'movie'"
-      (click)="changeMediaType('movie')">
+    <button [class.active]="mediaType() === 'movie'" (click)="changeMediaType('movie')">
       Películas
     </button>
 
-    <button
-      [class.active]="mediaType() === 'tv'"
-      (click)="changeMediaType('tv')">
-      Series
-    </button>
+    <button [class.active]="mediaType() === 'tv'" (click)="changeMediaType('tv')">Series</button>
   </div>
 
   <div class="filters">
-    <button
-      [class.active]="selectedFilter() === 'all'"
-      (click)="filterVideos('all')">
-      Todos
-    </button>
+    <button [class.active]="selectedFilter() === 'all'" (click)="filterVideos('all')">Todos</button>
 
-    <button
-      [class.active]="selectedFilter() === 'Trailer'"
-      (click)="filterVideos('Trailer')">
+    <button [class.active]="selectedFilter() === 'Trailer'" (click)="filterVideos('Trailer')">
       Trailers
     </button>
 
-    <button
-      [class.active]="selectedFilter() === 'Teaser'"
-      (click)="filterVideos('Teaser')">
+    <button [class.active]="selectedFilter() === 'Teaser'" (click)="filterVideos('Teaser')">
       Teasers
     </button>
 
-    <button
-      [class.active]="selectedFilter() === 'Clip'"
-      (click)="filterVideos('Clip')">
+    <button [class.active]="selectedFilter() === 'Clip'" (click)="filterVideos('Clip')">
       Clips
     </button>
 
-    <button
-      [class.active]="selectedFilter() === 'Featurette'"
-      (click)="filterVideos('Featurette')">
+    <button [class.active]="selectedFilter() === 'Featurette'" (click)="filterVideos('Featurette')">
       Featurettes
     </button>
 
-    <button
-      [class.active]="selectedFilter() === 'official'"
-      (click)="filterVideos('official')">
+    <button [class.active]="selectedFilter() === 'official'" (click)="filterVideos('official')">
       Oficiales
     </button>
   </div>
@@ -66,22 +45,14 @@
   }
 
   @if (!loading() && filteredVideos.length === 0) {
-    <p class="message">
-      No se encontraron videos para este filtro.
-    </p>
+    <p class="message">No se encontraron videos para este filtro.</p>
   }
 
   <div class="videos-grid">
-
     @for (video of filteredVideos; track video.id) {
       <article class="video-card">
-
-        <div class="video-thumbnail"
-             (click)="playVideo(video)">
-
-          <img
-            [src]="getYoutubeThumbnail(video.key)"
-            [alt]="video.name">
+        <div class="video-thumbnail" (click)="playVideo(video)">
+          <img [src]="getYoutubeThumbnail(video.key)" [alt]="video.name" />
 
           <span class="play-icon">▶</span>
         </div>
@@ -98,39 +69,37 @@
           </div>
 
           <p>
-            {{ video.published_at | date:'dd/MM/yyyy' }}
+            {{ video.published_at | date: 'dd/MM/yyyy' }}
           </p>
         </div>
-
       </article>
     }
-
   </div>
 
   @if (selectedVideo(); as video) {
     <div class="video-modal" (click)="closeVideo()">
-
-      <div class="video-modal-content"
-           (click)="$event.stopPropagation()">
-
-        <button
-          class="close-button"
-          (click)="closeVideo()">
-          ✕
-        </button>
+      <div class="video-modal-content" (click)="$event.stopPropagation()">
+        <button class="close-button" type="button" (click)="closeVideo()">✕</button>
 
         <h2>{{ video.name }}</h2>
 
         <iframe
-          [src]="getYoutubeUrl(video.key)"
-          title="Reproductor de video"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen>
+          [src]="getSafeYoutubeUrl(video.key)"
+          [title]="video.name"
+          allow="
+            accelerometer;
+            autoplay;
+            clipboard-write;
+            encrypted-media;
+            gyroscope;
+            picture-in-picture;
+            web-share;
+          "
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+        >
         </iframe>
-
       </div>
-
     </div>
   }
-
 </section>
