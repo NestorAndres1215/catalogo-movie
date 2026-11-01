@@ -8,6 +8,8 @@
 
 @if (movie(); as movie) {
   <section class="detail-page">
+
+    <!-- HERO DE LA PELÍCULA -->
     <div
       class="detail-hero"
       [style.background-image]="movie.backdrop_path
@@ -15,9 +17,14 @@
         : 'linear-gradient(90deg, #11141d, #252b38)'"
     >
       <div class="hero-content">
-        <a routerLink="/movies" class="back-link">← Volver al catálogo</a>
 
-        <span class="eyebrow">DETALLES DE LA PELÍCULA</span>
+        <a routerLink="/movies" class="back-link">
+          ← Volver al catálogo
+        </a>
+
+        <span class="eyebrow">
+          DETALLES DE LA PELÍCULA
+        </span>
 
         <h1>{{ movie.title }}</h1>
 
@@ -28,6 +35,7 @@
         <div class="movie-meta">
           <span>★ {{ movie.vote_average.toFixed(1) }} / 10</span>
           <span>{{ getYear(movie.release_date) }}</span>
+
           @if (movie.runtime) {
             <span>{{ movie.runtime }} minutos</span>
           }
@@ -51,10 +59,13 @@
             <span>{{ director.name }}</span>
           </div>
         }
+
       </div>
     </div>
 
+    <!-- INFORMACIÓN DE LA PELÍCULA -->
     <section class="detail-content">
+
       <div class="poster-column">
         @if (movie.poster_path) {
           <img
@@ -62,13 +73,19 @@
             [src]="getPoster(movie.poster_path)"
             [alt]="movie.title"
           />
+        } @else {
+          <div class="no-poster">
+            Sin imagen disponible
+          </div>
         }
       </div>
 
       <div class="information-column">
+
         <h2>Información</h2>
 
         <div class="information-grid">
+
           <div>
             <span>Fecha de estreno</span>
             <strong>{{ movie.release_date || 'No disponible' }}</strong>
@@ -96,8 +113,11 @@
 
           <div>
             <span>Duración</span>
-            <strong>{{ movie.runtime ? movie.runtime + ' min' : 'No disponible' }}</strong>
+            <strong>
+              {{ movie.runtime ? movie.runtime + ' min' : 'No disponible' }}
+            </strong>
           </div>
+
         </div>
 
         @if (movie.production_countries?.length) {
@@ -109,16 +129,45 @@
             }
           </div>
         }
+
       </div>
     </section>
 
+    <!-- TRÁILER -->
+    @if (trailerUrl(); as trailer) {
+      <section class="trailer-section">
+
+        <div class="trailer-heading">
+          <span class="eyebrow">VIDEO OFICIAL</span>
+          <h2>Tráiler de {{ movie.title }}</h2>
+          <p>
+            Mira el avance de esta película directamente en CINEVERSE.
+          </p>
+        </div>
+
+        <div class="trailer-container">
+          <iframe
+            [src]="trailer"
+            [title]="'Tráiler de ' + movie.title"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+        </div>
+
+      </section>
+    }
+
+    <!-- REPARTO -->
     @if (cast().length > 0) {
       <section class="cast-section">
+
         <h2>Reparto principal</h2>
 
         <div class="cast-grid">
           @for (person of cast(); track person.id) {
             <article class="cast-card">
+
               @if (person.profile_path) {
                 <img
                   [src]="getPoster(person.profile_path)"
@@ -129,14 +178,17 @@
                 <div class="no-profile">👤</div>
               }
 
-              <div>
+              <div class="cast-info">
                 <h3>{{ person.name }}</h3>
                 <p>{{ person.character }}</p>
               </div>
+
             </article>
           }
         </div>
+
       </section>
     }
+
   </section>
 }

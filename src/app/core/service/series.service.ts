@@ -9,6 +9,7 @@ import { GenreResponse } from '../models/genre.interface';
 import { SeriesCredits } from '../models/series-credits.interface';
 
 import { SeriesFilters } from '../models/series.interface';
+import { MovieVideoResponse } from '../models/movie.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +24,9 @@ export class SeriesService {
   getSeriesDetails(id: number): Observable<TvSeries> {
     return this.tmdb.get<TvSeries>(`/tv/${id}`);
   }
-
+getSeriesVideos(id: number): Observable<MovieVideoResponse> {
+  return this.tmdb.get<MovieVideoResponse>(`/tv/${id}/videos`);
+}
   getSeriesGenres(): Observable<GenreResponse> {
     return this.tmdb.get<GenreResponse>('/genre/tv/list');
   }

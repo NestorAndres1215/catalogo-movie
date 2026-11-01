@@ -1,4 +1,3 @@
-
 :host {
   display: block;
   color: white;
@@ -9,6 +8,8 @@
   margin: auto;
   padding: 30px 40px;
 }
+
+/* HERO */
 
 .detail-hero {
   min-height: 440px;
@@ -30,6 +31,10 @@
   margin-bottom: 28px;
   color: #e5b94b;
   text-decoration: none;
+}
+
+.back-link:hover {
+  color: #ffd66b;
 }
 
 .eyebrow {
@@ -94,6 +99,8 @@
   color: #a9afbd;
 }
 
+/* INFORMACIÓN */
+
 .detail-content {
   display: grid;
   grid-template-columns: 220px 1fr;
@@ -104,6 +111,18 @@
 .detail-poster {
   width: 100%;
   border-radius: 12px;
+}
+
+.no-poster {
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: #858d9d;
+  background: #252b38;
+  border-radius: 12px;
+  text-align: center;
 }
 
 .information-column h2,
@@ -141,6 +160,47 @@
   gap: 10px;
 }
 
+/* TRÁILER */
+
+.trailer-section {
+  margin-top: 55px;
+}
+
+.trailer-heading {
+  margin-bottom: 22px;
+}
+
+.trailer-heading h2 {
+  margin: 8px 0;
+  font-size: 25px;
+}
+
+.trailer-heading p {
+  color: #a9afbd;
+  font-size: 14px;
+}
+
+.trailer-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #090b10;
+  border: 1px solid #292e3b;
+  border-radius: 14px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.trailer-container iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* REPARTO */
+
 .cast-section {
   margin-top: 45px;
 }
@@ -156,6 +216,12 @@
   background: #191d28;
   border: 1px solid #292e3b;
   border-radius: 10px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.cast-card:hover {
+  transform: translateY(-4px);
+  border-color: #e5b94b;
 }
 
 .cast-card img,
@@ -173,7 +239,7 @@
   font-size: 35px;
 }
 
-.cast-card div:last-child {
+.cast-info {
   padding: 12px;
 }
 
@@ -188,6 +254,8 @@
   font-size: 11px;
 }
 
+/* ESTADOS */
+
 .detail-loading,
 .detail-error {
   padding: 70px 20px;
@@ -197,6 +265,11 @@
 
 .detail-error a {
   color: #e5b94b;
+  text-decoration: none;
+}
+
+.detail-error a:hover {
+  text-decoration: underline;
 }
 
 .spinner {
@@ -215,6 +288,8 @@
   }
 }
 
+/* RESPONSIVE */
+
 @media (max-width: 900px) {
   .cast-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -231,6 +306,7 @@
   }
 
   .detail-hero {
+    min-height: 400px;
     padding: 22px;
   }
 
@@ -253,5 +329,13 @@
   .cast-card img,
   .no-profile {
     height: 160px;
+  }
+
+  .trailer-section {
+    margin-top: 40px;
+  }
+
+  .trailer-heading h2 {
+    font-size: 21px;
   }
 }

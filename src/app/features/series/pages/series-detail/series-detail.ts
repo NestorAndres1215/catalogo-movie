@@ -1,8 +1,9 @@
-
 import { Component, OnInit, inject, signal } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { SeriesService } from '../../../../core/service/series.service';
+
 import {
   TvSeries,
   SeriesCreator,
@@ -10,6 +11,7 @@ import {
 } from '../../../../core/models/series.interface';
 
 import { SeriesCredits } from '../../../../core/models/series-credits.interface';
+import { MovieVideoResponse } from '../../../../core/models/movie.interface';
 
 @Component({
   selector: 'app-series-detail',
@@ -22,12 +24,16 @@ export class SeriesDetailComponent implements OnInit {
 
   private readonly route = inject(ActivatedRoute);
   private readonly seriesService = inject(SeriesService);
+  private readonly sanitizer = inject(DomSanitizer);
 
-  series = signal<TvSeries | null>(null);
-  credits = signal<SeriesCredits | null>(null);
+  readonly series = signal<TvSeries | null>(null);
+  readonly credits = signal<SeriesCredits | null>(null);
 
-  loading = signal<boolean>(true);
-  errorMessage = signal<string>('');
+  readonly loading = signal(true);
+  readonly errorMessage = signal('');
+
+  // URL segura del tráiler.
+  readonly trailerUrl = signal<SafeResourceUrl | null>(null);
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -40,8 +46,10 @@ export class SeriesDetailComponent implements OnInit {
 
     this.loadSeries(id);
     this.loadCredits(id);
+    this.loadVideos(id);
   }
 
+  // Información principal de la serie.
   loadSeries(id: number): void {
     this.seriesService.getSeriesDetails(id).subscribe({
       next: response => {
@@ -49,20 +57,75 @@ export class SeriesDetailComponent implements OnInit {
         this.loading.set(false);
       },
       error: () => {
-        this.errorMessage.set('No se pudo cargar la información de la serie.');
+        this.errorMessage.set(
+          'No se pudo cargar la información de la serie.'
+        );
         this.loading.set(false);
       }
     });
   }
 
+  // Créditos de la serie.
   loadCredits(id: number): void {
     this.seriesService.getSeriesCredits(id).subscribe({
       next: response => {
         this.credits.set(response);
+      },
+      error: () => {
+        this.credits.set(null);
       }
     });
   }
 
+  // Videos y tráiler de la serie.
+  loadVideos(id: number): void {
+    this.trailerUrl.set(null);
+
+    this.seriesService.getSeriesVideos(id).subscribe({
+      next: response => {
+        this.setTrailer(response);
+      },
+      error: () => {
+        this.trailerUrl.set(null);
+      }
+    });
+  }
+
+  // Selecciona el mejor video disponible.
+  private setTrailer(response: MovieVideoResponse): void {
+    const videos = response.results ?? [];
+
+    const officialTrailer = videos.find(video =>
+      video.site === 'YouTube' &&
+      video.type === 'Trailer' &&
+      video.official
+    );
+
+    const anyTrailer = videos.find(video =>
+      video.site === 'YouTube' &&
+      video.type === 'Trailer'
+    );
+
+    const teaser = videos.find(video =>
+      video.site === 'YouTube' &&
+      video.type === 'Teaser'
+    );
+
+    const selectedVideo = officialTrailer ?? anyTrailer ?? teaser;
+
+    if (!selectedVideo || !/^[a-zA-Z0-9_-]+$/.test(selectedVideo.key)) {
+      this.trailerUrl.set(null);
+      return;
+    }
+
+    const url = `https://www.youtube-nocookie.com/embed/${selectedVideo.key}`;
+
+    this.trailerUrl.set(
+      this.sanitizer.bypassSecurityTrustResourceUrl(url)
+    );
+  }
+
+  // Imágenes.
   getBackdrop(path: string | null): string {
     return this.seriesService.getImageUrl(path, 'original');
   }
@@ -75,10 +138,12 @@ export class SeriesDetailComponent implements OnInit {
     return this.seriesService.getImageUrl(path, 'w185');
   }
 
+  // Año de estreno.
   getYear(date: string | undefined): string {
     return date ? date.substring(0, 4) : 'Sin fecha';
   }
 
+  // Datos derivados.
   get creators(): SeriesCreator[] {
     return this.series()?.created_by ?? [];
   }

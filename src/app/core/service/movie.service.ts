@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 
 import { TmdbService } from './tmdb.service';
 
-import { Movie, MovieFilters, MovieResponse } from '../models/movie.interface';
+import { Movie, MovieFilters, MovieResponse, MovieVideoResponse } from '../models/movie.interface';
 
 import { GenreResponse } from '../models/genre.interface';
 
@@ -107,5 +107,8 @@ getUpcomingMovies(page: number = 1): Observable<MovieResponse> {
 
 getTopRatedMovies(page: number = 1): Observable<MovieResponse> {
   return this.tmdb.get<MovieResponse>('/movie/top_rated', { page });
+}
+getMovieVideos(id: number): Observable<MovieVideoResponse> {
+  return this.tmdb.get<MovieVideoResponse>(`/movie/${id}/videos`);
 }
 }

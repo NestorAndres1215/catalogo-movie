@@ -1,10 +1,12 @@
 import { Component, computed, inject } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { catchError, map, of, switchMap } from 'rxjs';
 
-import { Movie } from '../../../../core/models/movie.interface';
+import { Movie, MovieVideoResponse } from '../../../../core/models/movie.interface';
 import { MovieCredits } from '../../../../core/models/movie-credits.interface';
+
 import { MovieService } from '../../../../core/service/movie.service';
 
 interface MovieResult {
@@ -22,17 +24,22 @@ interface MovieResult {
 export class MovieDetailComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly movieService = inject(MovieService);
+  private readonly sanitizer = inject(DomSanitizer);
 
-  // ID reactivo: si la ruta cambia (/movies/1 -> /movies/2) todo se recarga solo
+  // ID reactivo: permite cargar otra película si cambia la ruta.
   private readonly id = toSignal(
-    this.route.paramMap.pipe(map((params) => Number(params.get('id')))),
-    { initialValue: Number(this.route.snapshot.paramMap.get('id')) },
+    this.route.paramMap.pipe(
+      map(params => Number(params.get('id')))
+    ),
+    {
+      initialValue: Number(this.route.snapshot.paramMap.get('id')),
+    },
   );
 
-  // Película + error
+  // Información principal de la película.
   private readonly result = toSignal(
     toObservable(this.id).pipe(
-      switchMap((id) => {
+      switchMap(id => {
         if (!Number.isInteger(id) || id <= 0) {
           return of<MovieResult>({
             movie: null,
@@ -41,7 +48,10 @@ export class MovieDetailComponent {
         }
 
         return this.movieService.getMovieDetails(id).pipe(
-          map((movie): MovieResult => ({ movie, error: '' })),
+          map((movie): MovieResult => ({
+            movie,
+            error: '',
+          })),
           catchError(() =>
             of<MovieResult>({
               movie: null,
@@ -51,31 +61,91 @@ export class MovieDetailComponent {
         );
       }),
     ),
-    { initialValue: { movie: null, error: '' } as MovieResult },
+    {
+      initialValue: {
+        movie: null,
+        error: '',
+      } as MovieResult,
+    },
   );
 
-  // Créditos (se piden en paralelo; si fallan, simplemente no se muestran)
+  // Créditos de la película.
   readonly credits = toSignal(
     toObservable(this.id).pipe(
-      switchMap((id) =>
+      switchMap(id =>
         Number.isInteger(id) && id > 0
-          ? this.movieService.getMovieCredits(id).pipe(catchError(() => of(null)))
+          ? this.movieService.getMovieCredits(id).pipe(
+              catchError(() => of(null)),
+            )
           : of(null),
       ),
     ),
-    { initialValue: null as MovieCredits | null },
+    {
+      initialValue: null as MovieCredits | null,
+    },
   );
 
-  // Estado derivado
+  // Videos disponibles de la película.
+  readonly videos = toSignal(
+    toObservable(this.id).pipe(
+      switchMap(id =>
+        Number.isInteger(id) && id > 0
+          ? this.movieService.getMovieVideos(id).pipe(
+              catchError(() => of(null)),
+            )
+          : of(null),
+      ),
+    ),
+    {
+      initialValue: null as MovieVideoResponse | null,
+    },
+  );
+
+  // Busca el tráiler oficial o un video alternativo.
+  readonly trailerUrl = computed<SafeResourceUrl | null>(() => {
+    const availableVideos = this.videos()?.results ?? [];
+
+    const officialTrailer = availableVideos.find(video =>
+      video.site === 'YouTube' &&
+      video.type === 'Trailer' &&
+      video.official
+    );
+
+    const anyTrailer = availableVideos.find(video =>
+      video.site === 'YouTube' &&
+      video.type === 'Trailer'
+    );
+
+    const teaser = availableVideos.find(video =>
+      video.site === 'YouTube' &&
+      video.type === 'Teaser'
+    );
+
+    const selectedVideo = officialTrailer ?? anyTrailer ?? teaser;
+
+    if (!selectedVideo || !/^[a-zA-Z0-9_-]+$/.test(selectedVideo.key)) {
+      return null;
+    }
+
+    const url = `https://www.youtube-nocookie.com/embed/${selectedVideo.key}`;
+
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  });
+
+  // Estados derivados.
   readonly movie = computed(() => this.result().movie);
+
   readonly errorMessage = computed(() => this.result().error);
 
   readonly director = computed(() =>
-    this.credits()?.crew.find((member) => member.job === 'Director'),
+    this.credits()?.crew.find(member => member.job === 'Director'),
   );
 
-  readonly cast = computed(() => this.credits()?.cast.slice(0, 12) ?? []);
+  readonly cast = computed(() =>
+    this.credits()?.cast.slice(0, 12) ?? [],
+  );
 
+  // Imágenes.
   getBackdrop(path: string | null): string {
     return this.movieService.getImageUrl(path, 'original');
   }
@@ -84,6 +154,7 @@ export class MovieDetailComponent {
     return this.movieService.getImageUrl(path, 'w500');
   }
 
+  // Año de estreno.
   getYear(date: string): string {
     return date ? date.substring(0, 4) : 'Sin fecha';
   }

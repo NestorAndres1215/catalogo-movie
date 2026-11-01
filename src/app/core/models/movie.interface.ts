@@ -59,3 +59,17 @@ export interface MovieFilters {
   'vote_count.gte'?: number;
   include_adult?: boolean;
 }
+export interface MovieVideo {
+  id: string;
+  key: string;
+  name: string;
+  site: string;
+  type: string;
+  official: boolean;
+  published_at: string;
+}
+
+export interface MovieVideoResponse {
+  id: number;
+  results: MovieVideo[];
+}
