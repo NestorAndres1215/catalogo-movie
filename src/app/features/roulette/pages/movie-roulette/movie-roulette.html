@@ -1,0 +1,414 @@
+<main class="roulette-page">
+
+  <header class="page-header">
+    <span class="eyebrow">CINEVERSE ORIGINAL</span>
+    <h1>Ruleta de películas</h1>
+    <p>
+      Agrega tus películas favoritas, gira la ruleta y deja que el azar
+      decida qué vas a ver.
+    </p>
+  </header>
+
+  <!-- BUSCADOR -->
+  <section class="section-card">
+
+    <div class="section-title">
+      <div>
+        <span class="step-number">01</span>
+        <h2>Busca tus películas</h2>
+      </div>
+      <span class="counter">
+        {{ selectedMovies().length }} seleccionadas
+      </span>
+    </div>
+
+    <div class="search-box">
+      <input
+        type="text"
+        placeholder="Escribe el nombre de una película..."
+        [value]="searchQuery()"
+        (input)="updateSearch($event)"
+        (keydown.enter)="searchMovies()"
+      />
+
+      <button
+        type="button"
+        (click)="searchMovies()"
+        [disabled]="searching()"
+      >
+        @if (searching()) {
+          Buscando...
+        } @else {
+          Buscar
+        }
+      </button>
+    </div>
+
+    @if (searchError()) {
+      <p class="error-message">{{ searchError() }}</p>
+    }
+
+    @if (searchResults().length > 0) {
+      <div class="search-results">
+
+        @for (movie of searchResults(); track movie.id) {
+          <article class="search-result">
+
+            <img
+              [src]="getImageUrl(movie.poster_path)"
+              [alt]="getTitle(movie)"
+            />
+
+            <div class="result-info">
+              <h3>{{ getTitle(movie) }}</h3>
+              <span>{{ getYear(movie) }}</span>
+              <p>
+                {{ movie.overview || 'Sin descripción disponible.' }}
+              </p>
+            </div>
+
+            @if (selectedMovies().some(item => item.id === movie.id)) {
+              <button class="added-button" disabled>
+                <span>✓</span> Agregada
+              </button>
+            } @else {
+              <button
+                class="add-button"
+                type="button"
+                (click)="addMovie(movie)"
+                [disabled]="winners().length > 0"
+              >
+                + Agregar
+              </button>
+            }
+
+          </article>
+        }
+
+      </div>
+    }
+
+  </section>
+
+  <!-- LISTA SELECCIONADA -->
+  <section class="section-card">
+
+    <div class="section-title">
+      <div>
+        <span class="step-number">02</span>
+        <h2>Tu lista para la ruleta</h2>
+      </div>
+      <span class="counter">
+        {{ selectedMovies().length }} películas
+      </span>
+    </div>
+
+    @if (selectedMovies().length === 0) {
+      <div class="empty-state">
+        <span class="empty-icon">🎬</span>
+        <h3>Aún no tienes películas</h3>
+        <p>Busca y agrega las películas que quieres incluir en la ruleta.</p>
+      </div>
+    } @else {
+
+      <div class="selected-grid">
+
+        @for (movie of selectedMovies(); track movie.id) {
+          <article class="selected-movie">
+
+            <img
+              [src]="getImageUrl(movie.poster_path)"
+              [alt]="getTitle(movie)"
+            />
+
+            <div class="selected-info">
+              <h3>{{ getTitle(movie) }}</h3>
+              <span>{{ getYear(movie) }}</span>
+            </div>
+
+            @if (winners().length === 0) {
+              <button
+                type="button"
+                class="remove-button"
+                title="Quitar película"
+                (click)="removeMovie(movie.id)"
+              >
+                ×
+              </button>
+            }
+
+          </article>
+        }
+
+      </div>
+
+    }
+
+  </section>
+
+  <!-- CONFIGURACIÓN -->
+  <section class="section-card">
+
+    <div class="section-title">
+      <div>
+        <span class="step-number">03</span>
+        <h2>Configura tu ruleta</h2>
+      </div>
+    </div>
+
+    <div class="configuration">
+
+      <div class="configuration-info">
+        <h3>¿Cuántas películas quieres que salgan ganadoras?</h3>
+        <p>
+          Cada giro seleccionará una película diferente.
+        </p>
+      </div>
+
+      <select
+        [value]="winnerCount()"
+        (change)="changeWinnerCount($event)"
+        [disabled]="winners().length > 0 || selectedMovies().length === 0"
+      >
+        @for (count of getWinnerOptions(); track count) {
+          <option [value]="count">
+            {{ count }} {{ count === 1 ? 'ganadora' : 'ganadoras' }}
+          </option>
+        }
+      </select>
+
+    </div>
+
+    <p class="configuration-note">
+      Necesitas seleccionar al menos una película. No se repetirán las
+      películas que ya hayan salido.
+    </p>
+
+  </section>
+
+  <!-- RULETA -->
+  <section class="roulette-section">
+
+    <div class="section-title roulette-title">
+      <div>
+        <span class="step-number">04</span>
+        <h2>¡Que comience el sorteo!</h2>
+      </div>
+    </div>
+
+    <div class="wheel-container">
+
+      <div class="wheel-pointer">▼</div>
+
+      <div
+        class="roulette-wheel"
+        [class.spinning]="spinning()"
+      >
+        <div class="wheel-center">
+          <span>🎬</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="roulette-actions">
+
+      @if (winners().length === 0) {
+        <p>¿Preparado para descubrir qué película verás?</p>
+      } @else {
+        <p>
+          Ganadoras obtenidas: {{ winners().length }} /
+          {{ winnerCount() }}
+        </p>
+      }
+
+      <button
+        type="button"
+        class="spin-button"
+        (click)="spinRoulette()"
+        [disabled]="!canSpin()"
+      >
+        @if (spinning()) {
+          Girando...
+        } @else if (completed()) {
+          Sorteo finalizado
+        } @else if (getPendingWinner()) {
+          Decide la ganadora primero
+        } @else {
+          <span>🎯</span> Girar ruleta
+        }
+      </button>
+
+      @if (winners().length > 0) {
+        <button
+          type="button"
+          class="reset-button"
+          (click)="resetRoulette()"
+          [disabled]="spinning()"
+        >
+          Volver a empezar con las mismas películas
+        </button>
+      }
+
+    </div>
+
+    @if (message()) {
+      <div class="roulette-message">
+        {{ message() }}
+      </div>
+    }
+
+  </section>
+
+  <!-- GANADORA ACTUAL -->
+  @if (currentWinner(); as winner) {
+
+    <section class="winner-section">
+
+      <div class="winner-heading">
+        <span>🎉</span>
+        <h2>¡Tenemos una ganadora!</h2>
+        <p>Decide si quieres guardar esta película en Mi lista.</p>
+      </div>
+
+      <article class="winner-card">
+
+        <img
+          [src]="getImageUrl(winner.poster_path)"
+          [alt]="getTitle(winner)"
+        />
+
+        <div class="winner-info">
+          <span class="winner-label">
+            GANADORA N.º {{ winners().length }}
+          </span>
+
+          <h3>{{ getTitle(winner) }}</h3>
+
+          <div class="winner-meta">
+            <span>{{ getYear(winner) }}</span>
+            <span>
+              ★ {{ winner.vote_average | number:'1.1-1' }}
+            </span>
+          </div>
+
+          <p>
+            {{ winner.overview || 'Sin descripción disponible.' }}
+          </p>
+
+          @if (getPendingWinner(); as pending) {
+            <div class="decision-buttons">
+
+              <button
+                type="button"
+                class="accept-button"
+                (click)="acceptWinner(pending)"
+              >
+                ✓ Aceptar y guardar
+              </button>
+
+              <button
+                type="button"
+                class="reject-button"
+                (click)="rejectWinner(pending)"
+              >
+                ✕ Rechazar
+              </button>
+
+            </div>
+          }
+
+        </div>
+
+      </article>
+
+    </section>
+
+  }
+
+  <!-- HISTORIAL DE GANADORAS -->
+  @if (winners().length > 0) {
+
+    <section class="section-card history-section">
+
+      <div class="section-title">
+        <div>
+          <span class="step-number">05</span>
+          <h2>Resultados de la ruleta</h2>
+        </div>
+      </div>
+
+      <div class="history-summary">
+        <div>
+          <strong>{{ getAcceptedCount() }}</strong>
+          <span>Aceptadas</span>
+        </div>
+
+        <div>
+          <strong>{{ getRejectedCount() }}</strong>
+          <span>Rechazadas</span>
+        </div>
+
+        <div>
+          <strong>{{ winners().length }}</strong>
+          <span>Seleccionadas</span>
+        </div>
+      </div>
+
+      <div class="history-list">
+
+        @for (winner of winners(); track winner.movie.id) {
+
+          <article class="history-item">
+
+            <span class="history-position">
+              {{ winner.position }}
+            </span>
+
+            <img
+              [src]="getImageUrl(winner.movie.poster_path)"
+              [alt]="getTitle(winner.movie)"
+            />
+
+            <div class="history-info">
+              <h3>{{ getTitle(winner.movie) }}</h3>
+              <span>{{ getYear(winner.movie) }}</span>
+            </div>
+
+            @if (winner.status === 'accepted') {
+              <span class="status accepted">✓ Aceptada</span>
+            } @else if (winner.status === 'rejected') {
+              <span class="status rejected">✕ Rechazada</span>
+            } @else {
+              <span class="status pending">Pendiente</span>
+            }
+
+          </article>
+
+        }
+
+      </div>
+
+      @if (completed()) {
+        <div class="completed-message">
+          <h3>¡Sorteo terminado!</h3>
+          <p>
+            Has aceptado {{ getAcceptedCount() }} películas.
+            Las encontrarás en tu módulo Mi lista.
+          </p>
+
+          <button
+            type="button"
+            class="new-roulette-button"
+            (click)="newRoulette()"
+          >
+            Crear nueva ruleta
+          </button>
+        </div>
+      }
+
+    </section>
+
+  }
+
+</main>

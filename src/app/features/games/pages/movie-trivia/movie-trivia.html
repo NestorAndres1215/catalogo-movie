@@ -1,0 +1,342 @@
+<main class="trivia-container">
+
+  <header class="trivia-header">
+    <span class="eyebrow">CINEVERSE GAMES</span>
+    <h1>🧠 Trivia de películas</h1>
+    <p>¿Cuánto sabes del mundo del cine?</p>
+  </header>
+
+  <!-- Categorías -->
+  <section class="category-section">
+    <h2>Selecciona una categoría</h2>
+
+    <div class="category-grid">
+
+      <button
+        type="button"
+        [class.active]="category() === 'movie'"
+        (click)="changeCategory('movie')">
+        🎬 Películas
+      </button>
+
+      <button
+        type="button"
+        [class.active]="category() === 'tv'"
+        (click)="changeCategory('tv')">
+        📺 Series
+      </button>
+
+      <button
+        type="button"
+        [class.active]="category() === 'person'"
+        (click)="changeCategory('person')">
+        ⭐ Actores
+      </button>
+
+      <button
+        type="button"
+        [class.active]="category() === 'company'"
+        (click)="changeCategory('company')">
+        🏢 Productoras
+      </button>
+
+    </div>
+  </section>
+
+  <!-- Inicio -->
+  @if (questionNumber() === 0 && !gameFinished() && !loading()) {
+    <section class="start-section">
+
+      <div class="start-icon">🎯</div>
+
+      <h2>¿Estás preparado?</h2>
+
+      <p>
+        Tendrás 10 preguntas de {{ getCategoryName().toLowerCase() }}.
+        Observa la imagen, escribe el nombre y selecciona la respuesta.
+      </p>
+
+      <div class="game-rules">
+        <div>⏱️ 60 segundos</div>
+        <div>❓ 10 preguntas</div>
+        <div>⭐ 1 punto por acierto</div>
+      </div>
+
+      <button
+        type="button"
+        class="primary-button"
+        (click)="startGame()">
+        Comenzar trivia
+      </button>
+
+    </section>
+  }
+
+  <!-- Cargando -->
+  @if (loading() && !gameFinished()) {
+    <section class="loading-section">
+      <div class="spinner"></div>
+      <p>Preparando la siguiente pregunta...</p>
+    </section>
+  }
+
+  <!-- Pregunta -->
+  @if (!gameFinished() && currentQuestion(); as question) {
+
+    <section class="question-section">
+
+      <!-- Información de partida -->
+      <div class="question-top">
+
+        <span>
+          Pregunta {{ questionNumber() }} de {{ totalQuestions }}
+        </span>
+
+        <span>
+          ⭐ {{ score() }} puntos
+        </span>
+
+        <span
+          class="timer"
+          [class.time-warning]="timeLeft() <= 10">
+          ⏱️ {{ formatTime() }}
+        </span>
+
+      </div>
+
+      <!-- Progreso -->
+      <div class="progress-track">
+        <div
+          class="progress-value"
+          [style.width.%]="questionNumber() / totalQuestions * 100">
+        </div>
+      </div>
+
+      <h2>¿Qué {{ getQuestionLabel() }} es?</h2>
+
+      <!-- Imagen -->
+      <div class="image-container">
+
+        <img
+          [src]="getImageUrl(question.imagePath)"
+          [alt]="'Imagen de la pregunta ' + questionNumber()"
+          [class.company-image]="category() === 'company'">
+
+      </div>
+
+      <!-- Buscador -->
+      <div class="answer-section">
+
+        <h3>Escribe tu respuesta</h3>
+
+        <div class="autocomplete-container">
+
+          <input
+            type="text"
+            [value]="searchText()"
+            (input)="onSearchInput($any($event.target).value)"
+            [disabled]="answered() || loading() || gameFinished()"
+            placeholder="Escribe el nombre aquí..."
+            autocomplete="off">
+
+          @if (searching()) {
+            <span class="search-status">
+              Buscando...
+            </span>
+          }
+
+          <!-- Sugerencias -->
+          @if (suggestions().length > 0 && !answered()) {
+
+            <div class="suggestions-list">
+
+              @for (item of suggestions(); track item.id) {
+
+                <button
+                  type="button"
+                  class="suggestion-item"
+                  (click)="selectSuggestion(item)">
+
+                  <img
+                    [src]="getImageUrl(item.imagePath)"
+                    [alt]="item.name">
+
+                  <span>{{ item.name }}</span>
+
+                  <span class="select-icon">
+                    Seleccionar
+                  </span>
+
+                </button>
+
+              }
+
+            </div>
+
+          }
+
+          @if (
+            searchText().trim().length >= 2 &&
+            suggestions().length === 0 &&
+            !searching() &&
+            !answered()
+          ) {
+            <p class="no-results">
+              No se encontraron coincidencias.
+            </p>
+          }
+
+        </div>
+
+        <p class="search-help">
+          Escribe al menos dos letras y selecciona una sugerencia.
+        </p>
+
+      </div>
+
+      <!-- Validación -->
+      @if (answered()) {
+
+        <div
+          class="feedback-panel"
+          [class.correct]="isCorrect()"
+          [class.incorrect]="!isCorrect()">
+
+          @if (isCorrect()) {
+
+            <span class="feedback-icon">🎉</span>
+
+            <h3>¡Respuesta correcta!</h3>
+
+            <p>¡Muy bien! Has ganado un punto.</p>
+
+          } @else {
+
+            <span class="feedback-icon">❌</span>
+
+            <h3>Respuesta incorrecta</h3>
+
+            <p>La respuesta correcta era:</p>
+
+            <strong>{{ correctAnswer() }}</strong>
+
+          }
+
+        </div>
+
+        <button
+          type="button"
+          class="primary-button next-button"
+          (click)="nextQuestion()">
+
+          {{ questionNumber() === totalQuestions
+            ? 'Ver resultados'
+            : 'Siguiente pregunta →' }}
+
+        </button>
+
+      }
+
+    </section>
+
+  }
+
+  <!-- Error -->
+  @if (errorMessage() && !gameFinished()) {
+
+    <section class="error-section">
+
+      <p>{{ errorMessage() }}</p>
+
+      <button
+        type="button"
+        class="primary-button"
+        (click)="loadQuestion()">
+        Intentar nuevamente
+      </button>
+
+    </section>
+
+  }
+
+  <!-- Resultados -->
+  @if (gameFinished()) {
+
+    <section class="final-section">
+
+      <div class="final-icon">
+
+        @if (score() >= 8) {
+          🏆
+        } @else if (score() >= 5) {
+          🎉
+        } @else {
+          🎬
+        }
+
+      </div>
+
+      <h2>¡Trivia completada!</h2>
+
+      <p class="final-category">
+        Categoría: {{ getCategoryName() }}
+      </p>
+
+      @if (timeLeft() === 0) {
+
+        <p class="time-expired-message">
+          ⏰ ¡Se acabó el tiempo!
+        </p>
+
+      } @else {
+
+        <p class="time-completed-message">
+          ¡Terminaste antes de que acabara el tiempo!
+        </p>
+
+      }
+
+      <div class="final-score">
+
+        <strong>
+          {{ score() }}/{{ totalQuestions }}
+        </strong>
+
+        <span>Puntos obtenidos</span>
+
+      </div>
+
+      <div class="final-progress">
+
+        <div
+          class="final-progress-value"
+          [style.width.%]="getPercentage()">
+        </div>
+
+      </div>
+
+      <h3>{{ getPercentage() }}% de aciertos</h3>
+
+      <p class="final-time">
+        Tiempo restante: {{ formatTime() }}
+      </p>
+
+      <button
+        type="button"
+        class="primary-button"
+        (click)="playAgain()">
+        🔄 Volver a jugar
+      </button>
+
+      <button
+        type="button"
+        class="secondary-button"
+        (click)="resetGame()">
+        Cambiar categoría
+      </button>
+
+    </section>
+
+  }
+
+</main>

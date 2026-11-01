@@ -1,0 +1,172 @@
+
+@if (loading()) {
+  <div class="detail-loading">
+    <div class="spinner"></div>
+    <p>Cargando perfil...</p>
+  </div>
+}
+
+@if (errorMessage() && !loading()) {
+  <div class="detail-error">
+    <h2>No se pudo cargar el perfil</h2>
+    <p>{{ errorMessage() }}</p>
+    <a routerLink="/actors">Volver a actores</a>
+  </div>
+}
+
+@if (person(); as item) {
+
+  <section class="actor-detail-page">
+
+    <!-- PERFIL PRINCIPAL -->
+    <div class="profile-header">
+
+      <div class="profile-image">
+        @if (item.profile_path) {
+          <img
+            [src]="getProfile(item.profile_path)"
+            [alt]="item.name"
+          />
+        } @else {
+          <div class="profile-placeholder">👤</div>
+        }
+      </div>
+
+      <div class="profile-information">
+
+        <a class="back-link" routerLink="/actors">
+          ← Volver a actores
+        </a>
+
+        <span class="eyebrow">CINEVERSE / PERSONAS</span>
+
+        <h1>{{ item.name }}</h1>
+
+        <p class="department">
+          {{ getDepartment(item.known_for_department) }}
+        </p>
+
+        <div class="profile-meta">
+          <span>⭐ {{ item.popularity.toFixed(1) }} popularidad</span>
+          <span>{{ genderLabel }}</span>
+        </div>
+
+        @if (item.birthday) {
+          <p>
+            <strong>Fecha de nacimiento:</strong>
+            {{ item.birthday }}
+          </p>
+        }
+
+        @if (item.deathday) {
+          <p>
+            <strong>Fecha de fallecimiento:</strong>
+            {{ item.deathday }}
+          </p>
+        }
+
+        @if (item.place_of_birth) {
+          <p>
+            <strong>Lugar de nacimiento:</strong>
+            {{ item.place_of_birth }}
+          </p>
+        }
+
+        @if (item.homepage) {
+          <a
+            class="homepage-link"
+            [href]="item.homepage"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Sitio oficial ↗
+          </a>
+        }
+
+      </div>
+    </div>
+
+    <!-- BIOGRAFÍA -->
+    <section class="detail-section">
+      <h2>Biografía</h2>
+
+      <p class="biography">
+        {{ item.biography || 'No hay información biográfica disponible.' }}
+      </p>
+    </section>
+
+    <!-- OTROS NOMBRES -->
+    @if (item.also_known_as.length > 0) {
+      <section class="detail-section">
+        <h2>También conocido como</h2>
+
+        <div class="aliases">
+          @for (alias of item.also_known_as.slice(0, 12); track alias) {
+            <span>{{ alias }}</span>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- TRABAJOS -->
+    <section class="detail-section">
+
+      <div class="section-heading">
+        <div>
+          <h2>Películas y series</h2>
+          <p>Producciones en las que ha participado</p>
+        </div>
+      </div>
+
+      @if (knownCredits.length > 0) {
+        <div class="credits-grid">
+
+          @for (credit of knownCredits; track credit.id) {
+            <article class="credit-card">
+
+              @if (credit.poster_path) {
+                <img
+                  [src]="getPoster(credit.poster_path)"
+                  [alt]="getTitle(credit)"
+                  loading="lazy"
+                />
+              } @else {
+                <div class="credit-placeholder">🎬</div>
+              }
+
+              <div class="credit-info">
+                <span class="media-type">
+                  {{ credit.media_type === 'movie' ? 'Película' : 'Serie' }}
+                </span>
+
+                <h3>{{ getTitle(credit) }}</h3>
+
+                <p>{{ getYear(credit) }}</p>
+
+                @if (credit.character) {
+                  <p>Personaje: {{ credit.character }}</p>
+                } @else if (credit.job) {
+                  <p>Trabajo: {{ credit.job }}</p>
+                }
+
+                @if (credit.vote_average > 0) {
+                  <span class="credit-rating">
+                    ⭐ {{ credit.vote_average.toFixed(1) }}
+                  </span>
+                }
+              </div>
+
+            </article>
+          }
+
+        </div>
+      } @else {
+        <div class="empty-credits">
+          <p>No hay producciones disponibles.</p>
+        </div>
+      }
+
+    </section>
+
+  </section>
+}

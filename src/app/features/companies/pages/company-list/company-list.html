@@ -1,0 +1,245 @@
+<section class="companies-page">
+
+  <!-- ENCABEZADO -->
+
+  <header class="page-header">
+
+    <div>
+      <span class="section-label">
+        CINEVERSE / INDUSTRIA CINEMATOGRÁFICA
+      </span>
+
+      <h1>Productoras</h1>
+
+      <p>
+        Descubre los estudios y compañías responsables
+        de producir grandes películas.
+      </p>
+    </div>
+
+  </header>
+
+  <!-- BÚSQUEDA -->
+
+  <section class="search-section">
+
+    <div class="search-box">
+
+      <span class="search-icon">⌕</span>
+
+      <input
+        type="text"
+        placeholder="Buscar productora..."
+        [value]="searchQuery()"
+        (keyup.enter)="onSearch($event)"
+      />
+
+      <button
+        type="button"
+        (click)="searchCompanies(searchQuery())"
+        [disabled]="loading()"
+      >
+        Buscar
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- BÚSQUEDAS RÁPIDAS -->
+
+  @if (!searchQuery()) {
+
+    <section class="quick-search-section">
+
+      <h2>Productoras conocidas</h2>
+
+      <p>
+        Explora algunas de las principales compañías cinematográficas.
+      </p>
+
+      <div class="quick-search-list">
+
+        @for (
+          company of popularSearches;
+          track company
+        ) {
+
+          <button
+            type="button"
+            (click)="searchPopularCompany(company)"
+          >
+            {{ company }}
+          </button>
+
+        }
+
+      </div>
+
+    </section>
+
+  }
+
+  <!-- RESULTADOS -->
+
+  @if (searchQuery()) {
+
+    <div class="results-header">
+
+      <div>
+        <h2>
+          Resultados de búsqueda
+        </h2>
+
+        <p>
+          {{ totalResults() }} productoras encontradas
+          para "{{ searchQuery() }}"
+        </p>
+      </div>
+
+    </div>
+
+  }
+
+  <!-- CARGANDO -->
+
+  @if (loading()) {
+
+    <div class="message">
+
+      <div class="loader"></div>
+
+      <p>
+        Buscando productoras...
+      </p>
+
+    </div>
+
+  }
+
+  <!-- ERROR -->
+
+  @if (errorMessage()) {
+
+    <div class="message error">
+
+      <p>{{ errorMessage() }}</p>
+
+      <button
+        type="button"
+        (click)="searchCompanies(searchQuery(), currentPage())"
+      >
+        Reintentar
+      </button>
+
+    </div>
+
+  }
+
+  <!-- SIN RESULTADOS -->
+
+  @if (
+    !loading() &&
+    !errorMessage() &&
+    searchQuery() &&
+    companies().length === 0
+  ) {
+
+    <div class="message">
+
+      <h2>No se encontraron productoras</h2>
+
+      <p>
+        Intenta buscar con otro nombre.
+      </p>
+
+    </div>
+
+  }
+
+  <!-- GRID DE PRODUCTORAS -->
+
+  @if (companies().length > 0) {
+
+    <div class="companies-grid">
+
+      @for (
+        company of companies();
+        track company.id
+      ) {
+
+        <a
+          class="company-card"
+          [routerLink]="['/companies', company.id]"
+        >
+
+          <div class="company-logo">
+
+            @if (company.logo_path) {
+
+              <img
+                [src]="getLogo(company.logo_path)"
+                [alt]="company.name"
+              />
+
+            } @else {
+
+              <div class="no-logo">
+                <span>Sin logotipo</span>
+              </div>
+
+            }
+
+          </div>
+
+          <div class="company-info">
+
+            <h2>
+              {{ company.name }}
+            </h2>
+
+            <span class="country">
+              {{ company.origin_country || 'País no disponible' }}
+            </span>
+
+          </div>
+
+          <span class="view-details">
+            Ver productora →
+          </span>
+
+        </a>
+
+      }
+
+    </div>
+
+    <!-- PAGINACIÓN -->
+
+    <nav class="pagination">
+
+      <button
+        type="button"
+        [disabled]="currentPage() === 1 || loading()"
+        (click)="changePage(currentPage() - 1)"
+      >
+        Anterior
+      </button>
+
+      <span>
+        Página {{ currentPage() }} de {{ totalPages() }}
+      </span>
+
+      <button
+        type="button"
+        [disabled]="currentPage() >= totalPages() || loading()"
+        (click)="changePage(currentPage() + 1)"
+      >
+        Siguiente
+      </button>
+
+    </nav>
+
+  }
+
+</section>

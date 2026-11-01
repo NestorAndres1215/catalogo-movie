@@ -1,0 +1,219 @@
+<main class="calendar-page">
+
+  <!-- ENCABEZADO -->
+  <header class="page-header">
+    <div>
+      <span class="eyebrow">CINEVERSE · ESTRENOS</span>
+      <h1>Calendario de estrenos</h1>
+      <p>
+        Descubre qué películas llegan a los cines y selecciona
+        cualquier día para consultar sus estrenos.
+      </p>
+    </div>
+  </header>
+
+  <!-- CALENDARIO -->
+  <section class="calendar-card">
+
+    <div class="calendar-header">
+
+      <div>
+        <span class="section-label">CALENDARIO MENSUAL</span>
+        <h2>{{ getMonthName() }}</h2>
+      </div>
+
+      <div class="calendar-controls">
+
+        <button
+          type="button"
+          class="today-button"
+          (click)="goToToday()"
+        >
+          Hoy
+        </button>
+
+        <button
+          type="button"
+          class="navigation-button"
+          aria-label="Mes anterior"
+          (click)="changeMonth(-1)"
+        >
+          ‹
+        </button>
+
+        <button
+          type="button"
+          class="navigation-button"
+          aria-label="Mes siguiente"
+          (click)="changeMonth(1)"
+        >
+          ›
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- DÍAS DE LA SEMANA -->
+    <div class="weekdays">
+
+      @for (weekday of ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom']; track weekday) {
+        <div>{{ weekday }}</div>
+      }
+
+    </div>
+
+    <!-- DÍAS DEL MES -->
+    <div class="calendar-grid">
+
+      @for (day of calendarDays(); track day.key) {
+
+        <button
+          type="button"
+          class="calendar-day"
+          [class.other-month]="!day.currentMonth"
+          [class.selected]="isSelected(day)"
+          [class.today]="day.today"
+          [class.has-releases]="hasMovies(day)"
+          [disabled]="loading()"
+          (click)="selectDay(day)"
+        >
+
+          <span class="day-number">
+            {{ day.day }}
+          </span>
+
+          @if (getMovieCount(day) > 0) {
+            <span class="release-indicator">
+              {{ getMovieCount(day) }}
+              <span class="indicator-label">
+                {{ getMovieCount(day) === 1 ? 'estreno' : 'estrenos' }}
+              </span>
+            </span>
+          }
+
+          @if (day.today) {
+            <span class="today-label">Hoy</span>
+          }
+
+        </button>
+
+      }
+
+    </div>
+
+    <!-- LEYENDA -->
+    <div class="calendar-legend">
+      <span>
+        <i class="legend-dot"></i>
+        Día con estrenos
+      </span>
+
+      <span>
+        <i class="legend-selected"></i>
+        Día seleccionado
+      </span>
+    </div>
+
+  </section>
+
+  <!-- RESULTADOS DEL DÍA -->
+  <section class="releases-section">
+
+    <div class="releases-header">
+
+      <div>
+        <span class="section-label">ESTRENOS DEL DÍA</span>
+        <h2>{{ getSelectedDateName() }}</h2>
+      </div>
+
+      <span class="release-count">
+        {{ getMoviesForSelectedDay().length }}
+        {{ getMoviesForSelectedDay().length === 1 ? 'película' : 'películas' }}
+      </span>
+
+    </div>
+
+    @if (loading()) {
+
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Consultando estrenos...</p>
+      </div>
+
+    } @else if (errorMessage()) {
+
+      <div class="error-state">
+        <span>⚠️</span>
+        <p>{{ errorMessage() }}</p>
+
+        <button type="button" (click)="loadMonthMovies()">
+          Intentar nuevamente
+        </button>
+      </div>
+
+    } @else if (getMoviesForSelectedDay().length > 0) {
+
+      <div class="movies-grid">
+
+        @for (movie of getMoviesForSelectedDay(); track movie.id) {
+
+          <article class="movie-card">
+
+            <div class="poster-container">
+
+              <img
+                [src]="getImageUrl(movie.poster_path)"
+                [alt]="getTitle(movie)"
+                loading="lazy"
+              />
+
+              <span class="rating">
+                ★ {{ movie.vote_average | number:'1.1-1' }}
+              </span>
+
+            </div>
+
+            <div class="movie-info">
+
+              <h3>{{ getTitle(movie) }}</h3>
+
+              <span class="release-date">
+                {{ movie.release_date }}
+              </span>
+
+              <p>
+                {{ movie.overview || 'No hay descripción disponible.' }}
+              </p>
+
+              <div class="movie-footer">
+                <span>{{ getYear(movie) }}</span>
+                <span>{{ movie.vote_count }} votos</span>
+              </div>
+
+            </div>
+
+          </article>
+
+        }
+
+      </div>
+
+    } @else {
+
+      <div class="empty-state">
+        <span class="empty-icon">🎬</span>
+
+        <h3>No hay estrenos registrados</h3>
+
+        <p>
+          No encontramos películas con estreno registrado para este día
+          en Perú. Selecciona otra fecha del calendario.
+        </p>
+      </div>
+
+    }
+
+  </section>
+
+</main>

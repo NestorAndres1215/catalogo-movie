@@ -1,0 +1,402 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.rankings-container {
+  width: 100%;
+  padding: 30px;
+  color: #f5f5f5;
+}
+
+/* HEADER */
+
+.rankings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.section-label {
+  color: #a855f7;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.rankings-header h1 {
+  margin: 10px 0;
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.rankings-header p {
+  margin: 0;
+  color: #999;
+  font-size: 14px;
+}
+
+/* BOTÓN ACTUALIZAR */
+
+.reload-button {
+  padding: 11px 18px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background: #1c1c1c;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.reload-button:hover {
+  background: #a855f7;
+  border-color: #a855f7;
+}
+
+/* PESTAÑAS */
+
+.ranking-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #292929;
+  overflow-x: auto;
+}
+
+.ranking-tabs button {
+  flex-shrink: 0;
+  padding: 14px 20px;
+  border: none;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: #999;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.ranking-tabs button:hover {
+  color: #fff;
+}
+
+.ranking-tabs button.active {
+  color: #c084fc;
+  border-bottom-color: #a855f7;
+}
+
+/* SECCIÓN */
+
+.ranking-section {
+  margin-top: 20px;
+}
+
+.ranking-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.ranking-title h2 {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.ranking-title span {
+  color: #999;
+  font-size: 12px;
+}
+
+/* FILTRO DE GÉNEROS */
+
+.genre-filter {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.genre-filter label {
+  color: #aaa;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.genre-filter select {
+  min-width: 210px;
+  padding: 11px 14px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  outline: none;
+  background: #171717;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.genre-filter select:focus {
+  border-color: #a855f7;
+}
+
+.genre-filter option {
+  background: #171717;
+  color: #fff;
+}
+
+/* LISTA */
+
+.ranking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* TARJETAS */
+
+.ranking-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 15px;
+  border: 1px solid #292929;
+  border-radius: 12px;
+  background: #171717;
+  transition: 0.2s;
+}
+
+.ranking-card:hover {
+  transform: translateY(-3px);
+  border-color: #a855f7;
+  background: #1e1e1e;
+}
+
+/* POSICIÓN */
+
+.ranking-position {
+  min-width: 35px;
+  color: #a855f7;
+  font-size: 24px;
+  font-weight: 800;
+  text-align: center;
+}
+
+/* PÓSTER */
+
+.serie-poster {
+  width: 85px;
+  height: 125px;
+  border-radius: 8px;
+  background: #252525;
+  object-fit: cover;
+}
+
+/* INFORMACIÓN */
+
+.serie-information {
+  flex: 1;
+  min-width: 0;
+}
+
+.serie-information h3 {
+  margin: 0 0 5px;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.serie-year {
+  color: #a855f7;
+  font-size: 12px;
+}
+
+.serie-overview {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 10px 0;
+  color: #aaa;
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.serie-votes {
+  color: #777;
+  font-size: 11px;
+}
+
+/* PUNTUACIÓN */
+
+.serie-rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #292014;
+  white-space: nowrap;
+}
+
+.serie-rating span {
+  color: #facc15;
+  font-size: 18px;
+}
+
+.serie-rating strong {
+  color: #facc15;
+  font-size: 19px;
+}
+
+.serie-rating small {
+  color: #999;
+  font-size: 11px;
+}
+
+.worst-rating {
+  background: #291919;
+}
+
+.worst-rating span,
+.worst-rating strong {
+  color: #f87171;
+}
+
+/* ESTADOS */
+
+.loading-message,
+.empty-message {
+  padding: 40px 20px;
+  color: #999;
+  text-align: center;
+}
+
+.error-message {
+  padding: 20px;
+  border: 1px solid #7f1d1d;
+  border-radius: 8px;
+  background: #291919;
+  color: #fca5a5;
+}
+
+.error-message button {
+  display: block;
+  margin-top: 12px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #dc2626;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* FOOTER */
+
+.ranking-footer {
+  margin-top: 30px;
+  padding: 18px;
+  border-top: 1px solid #292929;
+  color: #777;
+  font-size: 12px;
+  text-align: center;
+}
+
+.ranking-footer p {
+  margin: 5px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .rankings-container {
+    padding: 18px;
+  }
+
+  .rankings-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .rankings-header h1 {
+    font-size: 25px;
+  }
+
+  .ranking-card {
+    gap: 12px;
+    padding: 10px;
+  }
+
+  .ranking-position {
+    min-width: 25px;
+    font-size: 19px;
+  }
+
+  .serie-poster {
+    width: 65px;
+    height: 100px;
+  }
+
+  .serie-information h3 {
+    font-size: 14px;
+  }
+
+  .serie-overview {
+    font-size: 11px;
+  }
+
+  .serie-rating {
+    gap: 3px;
+    padding: 7px;
+  }
+
+  .serie-rating strong {
+    font-size: 15px;
+  }
+
+  .serie-rating span {
+    font-size: 14px;
+  }
+
+  .serie-rating small {
+    font-size: 9px;
+  }
+
+  .ranking-title h2 {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 480px) {
+  .genre-filter {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .genre-filter select {
+    width: 100%;
+  }
+
+  .ranking-card {
+    flex-wrap: wrap;
+  }
+
+  .serie-information {
+    flex: 1;
+    width: calc(100% - 120px);
+  }
+
+  .serie-rating {
+    margin-left: auto;
+  }
+
+  .ranking-tabs button {
+    padding: 12px 10px;
+    font-size: 12px;
+  }
+}

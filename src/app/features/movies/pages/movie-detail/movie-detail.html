@@ -1,0 +1,142 @@
+@if (errorMessage()) {
+  <div class="detail-error">
+    <h2>Película no disponible</h2>
+    <p>{{ errorMessage() }}</p>
+    <a routerLink="/movies">Volver a películas</a>
+  </div>
+}
+
+@if (movie(); as movie) {
+  <section class="detail-page">
+    <div
+      class="detail-hero"
+      [style.background-image]="movie.backdrop_path
+        ? 'linear-gradient(90deg, #11141d 5%, rgba(17,20,29,.92) 45%, rgba(17,20,29,.35) 100%), url(' + getBackdrop(movie.backdrop_path) + ')'
+        : 'linear-gradient(90deg, #11141d, #252b38)'"
+    >
+      <div class="hero-content">
+        <a routerLink="/movies" class="back-link">← Volver al catálogo</a>
+
+        <span class="eyebrow">DETALLES DE LA PELÍCULA</span>
+
+        <h1>{{ movie.title }}</h1>
+
+        @if (movie.tagline) {
+          <p class="tagline">{{ movie.tagline }}</p>
+        }
+
+        <div class="movie-meta">
+          <span>★ {{ movie.vote_average.toFixed(1) }} / 10</span>
+          <span>{{ getYear(movie.release_date) }}</span>
+          @if (movie.runtime) {
+            <span>{{ movie.runtime }} minutos</span>
+          }
+        </div>
+
+        <div class="genre-list">
+          @for (genre of movie.genres ?? []; track genre.id) {
+            <span>{{ genre.name }}</span>
+          }
+        </div>
+
+        <h2>Sinopsis</h2>
+
+        <p class="overview">
+          {{ movie.overview || 'No hay una sinopsis disponible.' }}
+        </p>
+
+        @if (director(); as director) {
+          <div class="director">
+            <strong>Director</strong>
+            <span>{{ director.name }}</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <section class="detail-content">
+      <div class="poster-column">
+        @if (movie.poster_path) {
+          <img
+            class="detail-poster"
+            [src]="getPoster(movie.poster_path)"
+            [alt]="movie.title"
+          />
+        }
+      </div>
+
+      <div class="information-column">
+        <h2>Información</h2>
+
+        <div class="information-grid">
+          <div>
+            <span>Fecha de estreno</span>
+            <strong>{{ movie.release_date || 'No disponible' }}</strong>
+          </div>
+
+          <div>
+            <span>Idioma original</span>
+            <strong>{{ movie.original_language.toUpperCase() }}</strong>
+          </div>
+
+          <div>
+            <span>Estado</span>
+            <strong>{{ movie.status || 'No disponible' }}</strong>
+          </div>
+
+          <div>
+            <span>Votos</span>
+            <strong>{{ movie.vote_count }}</strong>
+          </div>
+
+          <div>
+            <span>Popularidad</span>
+            <strong>{{ movie.vote_average.toFixed(1) }} / 10</strong>
+          </div>
+
+          <div>
+            <span>Duración</span>
+            <strong>{{ movie.runtime ? movie.runtime + ' min' : 'No disponible' }}</strong>
+          </div>
+        </div>
+
+        @if (movie.production_countries?.length) {
+          <h2>Países de producción</h2>
+
+          <div class="country-list">
+            @for (country of movie.production_countries; track country.iso_3166_1) {
+              <span>{{ country.name }}</span>
+            }
+          </div>
+        }
+      </div>
+    </section>
+
+    @if (cast().length > 0) {
+      <section class="cast-section">
+        <h2>Reparto principal</h2>
+
+        <div class="cast-grid">
+          @for (person of cast(); track person.id) {
+            <article class="cast-card">
+              @if (person.profile_path) {
+                <img
+                  [src]="getPoster(person.profile_path)"
+                  [alt]="person.name"
+                  loading="lazy"
+                />
+              } @else {
+                <div class="no-profile">👤</div>
+              }
+
+              <div>
+                <h3>{{ person.name }}</h3>
+                <p>{{ person.character }}</p>
+              </div>
+            </article>
+          }
+        </div>
+      </section>
+    }
+  </section>
+}

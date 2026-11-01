@@ -1,0 +1,195 @@
+<section class="collections-page">
+  <header class="page-header">
+    <span class="page-subtitle">UNIVERSOS CINEMATOGRÁFICOS</span>
+
+    <h1>Colecciones y sagas</h1>
+
+    <p>
+      Descubre las grandes franquicias del cine y explora todas las películas que forman parte de
+      ellas.
+    </p>
+  </header>
+
+  <div class="search-container">
+    <div class="search-box">
+      <span class="search-icon">⌕</span>
+
+      <input
+        type="text"
+        placeholder="Buscar una saga..."
+        [value]="searchQuery()"
+        (input)="searchQuery.set($any($event.target).value)"
+        (keyup.enter)="searchCollections()"
+      />
+
+      @if (searchQuery()) {
+        <button type="button" class="clear-button" (click)="clearSearch()">✕</button>
+      }
+    </div>
+
+    <button
+      type="button"
+      class="search-button"
+      [disabled]="loading()"
+      (click)="searchCollections()"
+    >
+      Buscar
+    </button>
+  </div>
+
+  @if (!selectedCollection() && collections().length === 0 && !loading()) {
+    <div class="suggestions">
+      <span>Prueba buscando:</span>
+
+      <button type="button" (click)="searchQuery.set('Harry Potter'); searchCollections()">
+        Harry Potter
+      </button>
+
+      <button type="button" (click)="searchQuery.set('Star Wars'); searchCollections()">
+        Star Wars
+      </button>
+
+      <button type="button" (click)="searchQuery.set('Toy Story'); searchCollections()">
+        Toy Story
+      </button>
+
+      <button type="button" (click)="searchQuery.set('The Avengers'); searchCollections()">
+        The Avengers
+      </button>
+    </div>
+  }
+
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Buscando colecciones...</p>
+    </div>
+  }
+
+  @if (loadingDetails()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Cargando películas de la saga...</p>
+    </div>
+  }
+
+  @if (errorMessage()) {
+    <div class="error-message">
+      {{ errorMessage() }}
+    </div>
+  }
+
+  @if (collections().length > 0 && !selectedCollection()) {
+    <div class="section-heading">
+      <h2>Resultados de búsqueda</h2>
+      <span>{{ collections().length }} colecciones</span>
+    </div>
+
+    <div class="collections-grid">
+      @for (collection of collections(); track collection.id) {
+        <article class="collection-card" (click)="selectCollection(collection)">
+          <div class="collection-poster">
+            @if (collection.poster_path) {
+              <img
+                [src]="getImageUrl(collection.poster_path)"
+                [alt]="collection.name"
+                loading="lazy"
+              />
+            } @else {
+              <div class="no-poster">🎬</div>
+            }
+
+            <div class="collection-overlay">
+              <span>Ver saga</span>
+            </div>
+          </div>
+
+          <div class="collection-info">
+            <h3>{{ collection.name }}</h3>
+
+            <p>
+              {{ collection.overview || 'Sin descripción disponible.' }}
+            </p>
+
+            <span class="explore-link"> Explorar colección → </span>
+          </div>
+        </article>
+      }
+    </div>
+  }
+
+  @if (selectedCollection(); as collection) {
+    <section class="collection-detail">
+      <button type="button" class="back-button" (click)="backToResults()">
+        ← Volver a resultados
+      </button>
+
+      <div class="collection-banner">
+        @if (collection.backdrop_path) {
+          <img
+            class="collection-backdrop"
+            [src]="getImageUrl(collection.backdrop_path, 'w1280')"
+            [alt]="collection.name"
+          />
+        }
+
+        <div class="collection-banner-content">
+          @if (collection.poster_path) {
+            <img
+              class="collection-main-poster"
+              [src]="getImageUrl(collection.poster_path)"
+              [alt]="collection.name"
+            />
+          }
+
+          <div>
+            <span class="page-subtitle">COLECCIÓN CINEMATOGRÁFICA</span>
+
+            <h2>{{ collection.name }}</h2>
+
+            <p>
+              {{ collection.overview || 'Sin descripción disponible.' }}
+            </p>
+
+            <span class="movie-count"> 🎬 {{ collection.parts.length }} películas </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-heading">
+        <h2>Películas de la colección</h2>
+        <span>{{ collection.parts.length }} títulos</span>
+      </div>
+
+      <div class="movies-grid">
+        @for (movie of collection.parts; track movie.id) {
+          <article class="movie-card">
+            <div class="movie-poster">
+              @if (movie.poster_path) {
+                <img [src]="getImageUrl(movie.poster_path)" [alt]="movie.title" loading="lazy" />
+              } @else {
+                <div class="no-poster">🎬</div>
+              }
+
+              <span class="movie-rating"> ⭐ {{ movie.vote_average | number: '1.1-1' }} </span>
+            </div>
+
+            <div class="movie-info">
+              <h3>{{ movie.title }}</h3>
+
+              <span class="movie-year">
+                {{ getReleaseYear(movie.release_date) }}
+              </span>
+
+              <p>
+                {{ movie.overview || 'Sin descripción disponible.' }}
+              </p>
+
+              <a [href]="'/movies/' + movie.id"> Ver película → </a>
+            </div>
+          </article>
+        }
+      </div>
+    </section>
+  }
+</section>

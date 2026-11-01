@@ -1,0 +1,180 @@
+
+<section class="watchlist-page">
+
+  <!-- ENCABEZADO -->
+  <header class="page-header">
+    <div>
+      <span class="page-subtitle">MI BIBLIOTECA</span>
+      <h1>Mi lista para ver</h1>
+      <p>Guarda las películas y series que quieres disfrutar después.</p>
+    </div>
+
+    @if (watchlist().length > 0) {
+      <button
+        class="clear-button"
+        type="button"
+        (click)="clearWatchlist()">
+        🗑 Vaciar lista
+      </button>
+    }
+  </header>
+
+  <!-- ESTADÍSTICAS -->
+  <div class="stats-container">
+
+    <div class="stat-card">
+      <span class="stat-icon">📋</span>
+      <div>
+        <strong>{{ watchlist().length }}</strong>
+        <span>En mi lista</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <span class="stat-icon">🎬</span>
+      <div>
+        <strong>{{ totalMovies() }}</strong>
+        <span>Películas</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <span class="stat-icon">📺</span>
+      <div>
+        <strong>{{ totalSeries() }}</strong>
+        <span>Series</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FILTROS -->
+  <div class="filter-container">
+
+    <div class="filter-tabs">
+      <button
+        type="button"
+        [class.active]="selectedFilter() === 'all'"
+        (click)="selectFilter('all')">
+        Todas
+      </button>
+
+      <button
+        type="button"
+        [class.active]="selectedFilter() === 'movie'"
+        (click)="selectFilter('movie')">
+        🎬 Películas
+      </button>
+
+      <button
+        type="button"
+        [class.active]="selectedFilter() === 'tv'"
+        (click)="selectFilter('tv')">
+        📺 Series
+      </button>
+    </div>
+
+    <span class="results-count">
+      {{ filteredItems().length }} resultados
+    </span>
+
+  </div>
+
+  <!-- LISTADO -->
+  @if (filteredItems().length > 0) {
+
+    <div class="media-grid">
+
+      @for (item of filteredItems(); track item.mediaType + '-' + item.id) {
+
+        <article class="media-card">
+
+          <div class="poster-container">
+
+            <img
+              [src]="getImageUrl(item.posterPath)"
+              [alt]="item.title"
+              loading="lazy">
+
+            <span class="media-type">
+              {{ item.mediaType === 'movie' ? 'PELÍCULA' : 'SERIE' }}
+            </span>
+
+            <span class="rating">
+              ⭐ {{ item.voteAverage | number:'1.1-1' }}
+            </span>
+
+            <button
+              class="remove-button"
+              type="button"
+              title="Eliminar de mi lista"
+              aria-label="Eliminar de mi lista"
+              (click)="removeItem(item.id, item.mediaType)">
+              ✕
+            </button>
+
+          </div>
+
+          <div class="media-info">
+
+            <h3>{{ item.title }}</h3>
+
+            <span class="release-year">
+              {{ getReleaseYear(item.releaseDate) }}
+            </span>
+
+            <p class="overview">
+              {{ item.overview || 'Sin descripción disponible.' }}
+            </p>
+
+            <button
+              class="details-button"
+              type="button"
+              (click)="openDetails(item)">
+              Ver detalles
+              <span>→</span>
+            </button>
+
+          </div>
+
+        </article>
+
+      }
+
+    </div>
+
+  } @else {
+
+    <!-- LISTA VACÍA -->
+    <div class="empty-state">
+
+      <div class="empty-icon">🎬</div>
+
+      <h2>
+        @if (watchlist().length === 0) {
+          Tu lista está vacía
+        } @else {
+          No hay resultados
+        }
+      </h2>
+
+      <p>
+        @if (watchlist().length === 0) {
+          Explora películas y series y agrega tus favoritas a tu lista para verlas más tarde.
+        } @else {
+          No tienes elementos guardados en esta categoría.
+        }
+      </p>
+
+      <button
+        type="button"
+        class="explore-button"
+        (click)="router.navigate(['/movies'])">
+        Explorar películas
+      </button>
+
+    </div>
+
+  }
+
+</section>

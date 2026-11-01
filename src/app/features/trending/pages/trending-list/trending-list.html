@@ -1,0 +1,193 @@
+<section class="trending-page">
+  <header class="page-header">
+    <div>
+      <span class="eyebrow">LO MÁS POPULAR</span>
+      <h1>Tendencias</h1>
+      <p>Descubre las películas y series que están dando de qué hablar.</p>
+    </div>
+  </header>
+
+  <div class="trending-banner">
+    <div class="banner-content">
+      <span>EN CINEVERSE</span>
+      <h2>Lo que todos están viendo</h2>
+      <p>Explora las producciones más populares del momento.</p>
+    </div>
+
+    <div class="banner-decoration">TRENDING</div>
+  </div>
+
+  <div class="filters-container">
+    <div class="filter-group">
+      <span class="filter-label">Contenido</span>
+
+      <div class="filter-tabs">
+        <button
+          type="button"
+          [class.active]="mediaType() === 'all'"
+          (click)="changeMediaType('all')"
+        >
+          Todo
+        </button>
+
+        <button
+          type="button"
+          [class.active]="mediaType() === 'movie'"
+          (click)="changeMediaType('movie')"
+        >
+          Películas
+        </button>
+
+        <button type="button" [class.active]="mediaType() === 'tv'" (click)="changeMediaType('tv')">
+          Series
+        </button>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <span class="filter-label">Periodo</span>
+
+      <div class="filter-tabs">
+        <button
+          type="button"
+          [class.active]="timeWindow() === 'day'"
+          (click)="changeTimeWindow('day')"
+        >
+          Hoy
+        </button>
+
+        <button
+          type="button"
+          [class.active]="timeWindow() === 'week'"
+          (click)="changeTimeWindow('week')"
+        >
+          Esta semana
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="results-header">
+    <div>
+      <h2>
+        @if (timeWindow() === 'day') {
+          Tendencias de hoy
+        } @else {
+          Tendencias de esta semana
+        }
+      </h2>
+
+      <p>
+        @if (mediaType() === 'all') {
+          Películas y series populares.
+        } @else if (mediaType() === 'movie') {
+          Películas populares.
+        } @else {
+          Series populares.
+        }
+      </p>
+    </div>
+
+    @if (!loading() && !errorMessage()) {
+      <span class="results-count"> {{ totalResults() }} resultados </span>
+    }
+  </div>
+
+  @if (loading()) {
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Cargando tendencias...</p>
+    </div>
+  }
+
+  @if (errorMessage()) {
+    <div class="error-message">
+      <p>{{ errorMessage() }}</p>
+
+      <button type="button" (click)="loadTrending()">Reintentar</button>
+    </div>
+  }
+
+  @if (!loading() && !errorMessage()) {
+    @if (trending().length > 0) {
+      <div class="trending-grid">
+        @for (item of trending(); track item.id + '-' + getMediaType(item)) {
+          <article class="trending-card">
+            <div class="poster-container">
+              <a [routerLink]="getMediaRoute(item)" class="poster-link">
+                @if (item.poster_path) {
+                  <img
+                    [src]="getImageUrl(item.poster_path)"
+                    [alt]="getMediaTitle(item)"
+                    loading="lazy"
+                  />
+                } @else {
+                  <div class="no-poster">
+                    <span>Sin imagen</span>
+                  </div>
+                }
+              </a>
+
+              <span class="rating"> ★ {{ item.vote_average | number: '1.1-1' }} </span>
+
+              <app-favorite-button
+                [mediaId]="item.id"
+                [mediaType]="getMediaType(item)"
+                [title]="getMediaTitle(item)"
+                [overview]="item.overview"
+                [posterPath]="item.poster_path"
+                [voteAverage]="item.vote_average"
+                [releaseDate]="getMediaDate(item)"
+              />
+            </div>
+
+            <div class="media-info">
+              <div class="media-type">
+                {{ getMediaLabel(item) }}
+              </div>
+
+              <a [routerLink]="getMediaRoute(item)" class="media-title">
+                {{ getMediaTitle(item) }}
+              </a>
+
+              <span class="release-date">
+                {{ getMediaDate(item) || 'Fecha no disponible' }}
+              </span>
+
+              <p>
+                {{ item.overview || 'No hay descripción disponible.' }}
+              </p>
+            </div>
+          </article>
+        }
+      </div>
+
+      @if (totalPages() > 1) {
+        <nav class="pagination">
+          <button
+            type="button"
+            [disabled]="currentPage() === 1"
+            (click)="changePage(currentPage() - 1)"
+          >
+            Anterior
+          </button>
+
+          <span> Página {{ currentPage() }} de {{ totalPages() }} </span>
+
+          <button
+            type="button"
+            [disabled]="currentPage() === totalPages()"
+            (click)="changePage(currentPage() + 1)"
+          >
+            Siguiente
+          </button>
+        </nav>
+      }
+    } @else {
+      <div class="empty-state">
+        <h2>No hay tendencias disponibles</h2>
+        <p>No encontramos producciones para los filtros seleccionados.</p>
+      </div>
+    }
+  }
+</section>

@@ -1,0 +1,306 @@
+.company-detail-page {
+  padding: 35px;
+  color: #f5f5f5;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 30px;
+  color: #e5a00d;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+/* ENCABEZADO */
+
+.company-header {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+  padding: 35px;
+  border: 1px solid #292929;
+  border-radius: 14px;
+  background: #181818;
+}
+
+.company-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 250px;
+  height: 170px;
+  padding: 20px;
+  border-radius: 10px;
+  background: #f2f2f2;
+  color: #777;
+}
+
+.company-logo img {
+  max-width: 100%;
+  max-height: 130px;
+  object-fit: contain;
+}
+
+.company-heading-info h1 {
+  margin: 12px 0;
+  font-size: 34px;
+}
+
+.company-heading-info p {
+  color: #aaa;
+}
+
+.section-label {
+  color: #e5a00d;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.homepage-link {
+  display: inline-block;
+  margin-top: 20px;
+  color: #e5a00d;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.homepage-link:hover {
+  text-decoration: underline;
+}
+
+/* INFORMACIÓN */
+
+.information-section,
+.description-section,
+.movies-section {
+  margin-top: 45px;
+}
+
+.information-section h2,
+.description-section h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+.information-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.information-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 100px;
+  padding: 20px;
+  border: 1px solid #292929;
+  border-radius: 10px;
+  background: #181818;
+}
+
+.information-card span {
+  color: #999;
+  font-size: 13px;
+}
+
+.information-card strong {
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+/* DESCRIPCIÓN */
+
+.description-section p {
+  max-width: 900px;
+  color: #aaa;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* PELÍCULAS */
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.section-heading h2 {
+  margin-top: 10px;
+  font-size: 25px;
+}
+
+.movie-count {
+  color: #999;
+  font-size: 13px;
+}
+
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.movie-card {
+  overflow: hidden;
+  border: 1px solid #292929;
+  border-radius: 10px;
+  background: #181818;
+  color: white;
+  text-decoration: none;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.movie-card:hover {
+  transform: translateY(-5px);
+  border-color: #e5a00d;
+}
+
+.movie-poster {
+  height: 270px;
+  background: #252525;
+}
+
+.movie-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.no-poster {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #888;
+  font-size: 13px;
+}
+
+.movie-info {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 15px;
+}
+
+.movie-info h3 {
+  font-size: 14px;
+}
+
+.movie-info span {
+  color: #999;
+  font-size: 12px;
+}
+
+.movie-info strong {
+  color: #e5a00d;
+  font-size: 13px;
+}
+
+.empty-movies {
+  padding: 40px;
+  border: 1px solid #292929;
+  border-radius: 10px;
+  background: #181818;
+  color: #999;
+  text-align: center;
+}
+
+/* MENSAJES */
+
+.message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  text-align: center;
+}
+
+.message p {
+  color: #999;
+}
+
+.message a {
+  margin-top: 20px;
+  color: #e5a00d;
+  text-decoration: none;
+}
+
+.error p {
+  color: #ff7777;
+}
+
+.loader {
+  width: 35px;
+  height: 35px;
+  margin-bottom: 15px;
+  border: 3px solid #333;
+  border-top-color: #e5a00d;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1100px) {
+  .information-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .movies-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 750px) {
+  .company-detail-page {
+    padding: 20px;
+  }
+
+  .company-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .company-logo {
+    width: 100%;
+  }
+
+  .movies-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .information-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .movies-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .company-heading-info h1 {
+    font-size: 27px;
+  }
+
+  .movie-poster {
+    height: 350px;
+  }
+}

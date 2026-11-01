@@ -1,0 +1,16 @@
+<button
+  type="button"
+  class="favorite-button"
+  [class.is-favorite]="isFavorite()"
+  [attr.aria-label]="isFavorite()
+    ? 'Quitar de favoritos'
+    : 'Agregar a favoritos'"
+  [attr.aria-pressed]="isFavorite()"
+  (click)="toggleFavorite($event)"
+>
+  @if (isFavorite()) {
+    <span class="heart">♥</span>
+  } @else {
+    <span class="heart">♡</span>
+  }
+</button>

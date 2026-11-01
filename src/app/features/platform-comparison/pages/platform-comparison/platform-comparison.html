@@ -1,0 +1,258 @@
+<section class="comparison-container">
+
+  <header class="page-header">
+    <span class="eyebrow">CINEVERSE · COMPARADORES</span>
+    <h1>Comparador de streaming</h1>
+    <p>
+      Descubre dónde puedes ver tus películas y series favoritas.
+      Compara las plataformas disponibles en Perú.
+    </p>
+  </header>
+
+  <section class="search-panel">
+
+    <h2>Busca una película o serie</h2>
+
+    <div class="media-selector">
+      <button
+        type="button"
+        [class.active]="mediaType() === 'movie'"
+        (click)="setMediaType('movie')"
+      >
+        Películas
+      </button>
+
+      <button
+        type="button"
+        [class.active]="mediaType() === 'tv'"
+        (click)="setMediaType('tv')"
+      >
+        Series
+      </button>
+    </div>
+
+    <div class="search-form">
+      <input
+        type="search"
+        placeholder="Ejemplo: Interstellar, Breaking Bad..."
+        [value]="searchQuery()"
+        (input)="onSearchInput($event)"
+        (keydown.enter)="searchMedia()"
+      />
+
+      <button
+        type="button"
+        (click)="searchMedia()"
+        [disabled]="loadingSearch()"
+      >
+        {{ loadingSearch() ? 'Buscando...' : 'Buscar' }}
+      </button>
+    </div>
+
+  </section>
+
+  @if (loadingSearch()) {
+    <div class="status-message">
+      Buscando títulos...
+    </div>
+  }
+
+@if (searchResults().length > 0 && !selectedMedia()) {
+  <section class="results-section">
+      <h2>Resultados de búsqueda</h2>
+
+      <div class="results-grid">
+        @for (media of searchResults(); track media.id) {
+          <article
+            class="result-card"
+            [class.selected]="selectedMedia()?.id === media.id"
+            (click)="selectMedia(media)"
+          >
+            <div class="result-poster">
+              @if (media.poster_path) {
+                <img
+                  [src]="getImageUrl(media.poster_path)"
+                  [alt]="getTitle(media)"
+                  loading="lazy"
+                />
+              } @else {
+                <div class="no-poster">Sin imagen</div>
+              }
+            </div>
+
+            <div class="result-info">
+              <h3>{{ getTitle(media) }}</h3>
+              <span>{{ getReleaseDate(media) }}</span>
+              <span class="rating">
+                ★ {{ media.vote_average | number:'1.1-1' }}
+              </span>
+            </div>
+
+          </article>
+        }
+      </div>
+    </section>
+  }
+
+  @if (errorMessage()) {
+    <div class="status-message error">
+      {{ errorMessage() }}
+    </div>
+  }
+
+  @if (selectedMedia(); as media) {
+
+    <section class="comparison-section">
+
+      <div class="selected-title">
+        <div class="selected-poster">
+          @if (media.poster_path) {
+            <img
+              [src]="getImageUrl(media.poster_path)"
+              [alt]="getTitle(media)"
+            />
+          }
+        </div>
+
+        <div>
+          <span class="eyebrow">TÍTULO SELECCIONADO</span>
+          <h2>{{ getTitle(media) }}</h2>
+          <p>{{ getReleaseDate(media) }}</p>
+          <span class="rating">
+            ★ {{ media.vote_average | number:'1.1-1' }}
+          </span>
+        </div>
+      </div>
+
+      @if (loadingProviders()) {
+        <div class="status-message">
+          Consultando plataformas disponibles en Perú...
+        </div>
+      }
+
+      @if (!loadingProviders() && selectedRegion(); as region) {
+
+        <div class="comparison-heading">
+          <div>
+            <h2>Disponibilidad en Perú</h2>
+            <p>Compara las opciones para este título.</p>
+          </div>
+
+          <span class="country-label">PE · Perú</span>
+        </div>
+
+        @if (region.flatrate?.length) {
+          <section class="provider-category">
+            <h3>Incluido en suscripción</h3>
+            <p>Plataformas donde puedes verlo mediante una suscripción.</p>
+
+            <div class="providers-grid">
+              @for (provider of getProviders('flatrate'); track provider.provider_id) {
+                <article class="provider-card">
+                  <img
+                    [src]="getProviderLogo(provider.logo_path)"
+                    [alt]="provider.provider_name"
+                  />
+                  <span>{{ provider.provider_name }}</span>
+                </article>
+              }
+            </div>
+          </section>
+        }
+
+        @if (region.free?.length) {
+          <section class="provider-category">
+            <h3>Gratis</h3>
+            <div class="providers-grid">
+              @for (provider of getProviders('free'); track provider.provider_id) {
+                <article class="provider-card">
+                  <img
+                    [src]="getProviderLogo(provider.logo_path)"
+                    [alt]="provider.provider_name"
+                  />
+                  <span>{{ provider.provider_name }}</span>
+                </article>
+              }
+            </div>
+          </section>
+        }
+
+        @if (region.ads?.length) {
+          <section class="provider-category">
+            <h3>Gratis con anuncios</h3>
+            <div class="providers-grid">
+              @for (provider of getProviders('ads'); track provider.provider_id) {
+                <article class="provider-card">
+                  <img
+                    [src]="getProviderLogo(provider.logo_path)"
+                    [alt]="provider.provider_name"
+                  />
+                  <span>{{ provider.provider_name }}</span>
+                </article>
+              }
+            </div>
+          </section>
+        }
+
+        @if (region.rent?.length) {
+          <section class="provider-category">
+            <h3>Alquiler</h3>
+            <div class="providers-grid">
+              @for (provider of getProviders('rent'); track provider.provider_id) {
+                <article class="provider-card">
+                  <img
+                    [src]="getProviderLogo(provider.logo_path)"
+                    [alt]="provider.provider_name"
+                  />
+                  <span>{{ provider.provider_name }}</span>
+                </article>
+              }
+            </div>
+          </section>
+        }
+
+        @if (region.buy?.length) {
+          <section class="provider-category">
+            <h3>Compra</h3>
+            <div class="providers-grid">
+              @for (provider of getProviders('buy'); track provider.provider_id) {
+                <article class="provider-card">
+                  <img
+                    [src]="getProviderLogo(provider.logo_path)"
+                    [alt]="provider.provider_name"
+                  />
+                  <span>{{ provider.provider_name }}</span>
+                </article>
+              }
+            </div>
+          </section>
+        }
+
+        @if (region.link) {
+          <a
+            class="tmdb-link"
+            [href]="region.link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Ver opciones en TMDB
+          </a>
+        }
+
+      }
+
+    </section>
+  }
+
+  @if (!selectedMedia() && !searchResults().length && !loadingSearch()) {
+    <div class="empty-state">
+      <h2>Comienza tu comparación</h2>
+      <p>Busca una película o serie y selecciona un resultado.</p>
+    </div>
+  }
+
+  <footer class="attribution">
+    Información de disponibilidad proporcionada por JustWatch a través de TMDB.
+  </footer>
+
+</section>

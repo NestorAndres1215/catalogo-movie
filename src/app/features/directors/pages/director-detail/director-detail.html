@@ -1,0 +1,158 @@
+@if (loading()) {
+  <div class="message">
+    <div class="loader"></div>
+    <p>Cargando información del director...</p>
+  </div>
+}
+
+@if (errorMessage()) {
+  <div class="message error">
+    {{ errorMessage() }}
+    <a routerLink="/directors">Volver a directores</a>
+  </div>
+}
+
+@if (!loading() && director(); as person) {
+  <section class="director-detail">
+
+    <a routerLink="/directors" class="back-link">
+      ← Volver a directores
+    </a>
+
+    <div class="profile-section">
+
+      <div class="profile-image">
+        @if (person.profile_path) {
+          <img
+            [src]="getProfile(person.profile_path)"
+            [alt]="person.name"
+          />
+        } @else {
+          <div class="no-image">Sin fotografía</div>
+        }
+      </div>
+
+      <div class="profile-info">
+        <span class="section-label">CINEVERSE / DIRECTOR</span>
+
+        <h1>{{ person.name }}</h1>
+
+        <span class="department">Director de cine y televisión</span>
+
+        <div class="personal-data">
+          @if (person.birthday) {
+            <div>
+              <span>Fecha de nacimiento</span>
+              <strong>{{ person.birthday }}</strong>
+            </div>
+          }
+
+          @if (person.deathday) {
+            <div>
+              <span>Fecha de fallecimiento</span>
+              <strong>{{ person.deathday }}</strong>
+            </div>
+          }
+
+          @if (person.place_of_birth) {
+            <div>
+              <span>Lugar de nacimiento</span>
+              <strong>{{ person.place_of_birth }}</strong>
+            </div>
+          }
+
+          <div>
+            <span>Popularidad</span>
+            <strong>{{ person.popularity  }}</strong>
+          </div>
+        </div>
+
+        @if (person.homepage) {
+          <a
+            class="homepage-link"
+            [href]="person.homepage"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Sitio web oficial ↗
+          </a>
+        }
+      </div>
+
+    </div>
+
+    <section class="biography-section">
+      <h2>Biografía</h2>
+
+      <p>
+        {{ person.biography || 'No hay una biografía disponible para este director.' }}
+      </p>
+
+      @if (person.also_known_as.length > 0) {
+        <div class="aliases">
+          <h3>También conocido como</h3>
+
+          <div class="alias-list">
+            @for (alias of person.also_known_as; track alias) {
+              <span>{{ alias }}</span>
+            }
+          </div>
+        </div>
+      }
+    </section>
+
+    <section class="credits-section">
+      <div class="section-heading">
+        <div>
+          <h2>Filmografía como director</h2>
+          <p>Películas y series dirigidas por {{ person.name }}</p>
+        </div>
+
+        <span class="credits-count">{{ credits().length }} trabajos</span>
+      </div>
+
+      @if (credits().length === 0) {
+        <div class="empty-credits">
+          No hay créditos de dirección disponibles.
+        </div>
+      }
+
+      <div class="credits-grid">
+        @for (credit of credits(); track credit.media_type + '-' + credit.id) {
+          <article class="credit-card">
+
+            <div class="credit-image">
+              @if (credit.poster_path) {
+                <img
+                  [src]="getPoster(credit.poster_path)"
+                  [alt]="getTitle(credit)"
+                />
+              } @else {
+                <div class="no-image">Sin póster</div>
+              }
+            </div>
+
+            <div class="credit-info">
+              <h3>{{ getTitle(credit) }}</h3>
+
+              <div class="credit-meta">
+                <span>{{ getYear(credit) }}</span>
+                <span>{{ getMediaType(credit.media_type) }}</span>
+              </div>
+
+              <div class="rating">
+                ★ {{ credit.vote_average  }}
+              </div>
+
+              <p>
+                {{ credit.overview || 'Sin descripción disponible.' }}
+              </p>
+            </div>
+
+          </article>
+        }
+      </div>
+    </section>
+
+  </section>
+}

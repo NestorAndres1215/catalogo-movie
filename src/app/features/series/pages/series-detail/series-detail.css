@@ -1,0 +1,271 @@
+
+.series-detail-page {
+  color: #fff;
+  padding-bottom: 40px;
+}
+
+.detail-hero {
+  min-height: 470px;
+  display: flex;
+  align-items: center;
+  padding: 45px;
+  background-color: #191d28;
+  background-size: cover;
+  background-position: center;
+}
+
+.detail-hero-content {
+  max-width: 650px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 30px;
+  color: #e5b94b;
+  text-decoration: none;
+}
+
+.eyebrow {
+  display: block;
+  color: #e5b94b;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.detail-hero h1 {
+  margin: 14px 0;
+  font-size: 42px;
+}
+
+.tagline {
+  color: #c3c9d4;
+  font-style: italic;
+}
+
+.detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin: 20px 0;
+  color: #c3c9d4;
+  font-size: 14px;
+}
+
+.rating {
+  color: #e5b94b;
+  font-weight: 700;
+}
+
+.genre-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.genre-list span {
+  padding: 7px 12px;
+  color: #e5b94b;
+  background: #252b38;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.overview {
+  color: #c3c9d4;
+  line-height: 1.8;
+}
+
+.homepage-link {
+  display: inline-block;
+  margin-top: 15px;
+  color: #e5b94b;
+  text-decoration: none;
+}
+
+.detail-section {
+  padding: 30px 32px;
+}
+
+.detail-section h2 {
+  margin-bottom: 22px;
+  font-size: 22px;
+}
+
+.information-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.information-card {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 18px;
+  background: #191d28;
+  border: 1px solid #292e3b;
+  border-radius: 10px;
+}
+
+.information-card span {
+  color: #929aaa;
+  font-size: 13px;
+}
+
+.information-card strong {
+  font-size: 15px;
+}
+
+.people-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.person-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 12px;
+  background: #191d28;
+  border-radius: 10px;
+}
+
+.person-card img,
+.person-placeholder {
+  flex-shrink: 0;
+  width: 55px;
+  height: 65px;
+  object-fit: cover;
+  border-radius: 7px;
+}
+
+.person-placeholder {
+  display: grid;
+  place-items: center;
+  background: #292e3b;
+  font-size: 25px;
+}
+
+.person-card h3 {
+  overflow: hidden;
+  margin: 0 0 6px;
+  font-size: 13px;
+  text-overflow: ellipsis;
+}
+
+.person-card p {
+  margin: 0;
+  color: #929aaa;
+  font-size: 12px;
+}
+
+.seasons-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.season-card {
+  overflow: hidden;
+  background: #191d28;
+  border: 1px solid #292e3b;
+  border-radius: 10px;
+}
+
+.season-card img,
+.season-placeholder {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+}
+
+.season-placeholder {
+  display: grid;
+  place-items: center;
+  background: #252b38;
+  font-size: 45px;
+}
+
+.season-info {
+  padding: 14px;
+}
+
+.season-info h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+.season-info p,
+.season-info span {
+  color: #929aaa;
+  font-size: 12px;
+}
+
+.detail-loading,
+.detail-error {
+  padding: 70px 20px;
+  color: #929aaa;
+  text-align: center;
+}
+
+.detail-error a {
+  color: #e5b94b;
+}
+
+.spinner {
+  width: 35px;
+  height: 35px;
+  margin: 0 auto 15px;
+  border: 3px solid #343b4a;
+  border-top-color: #e5b94b;
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 1000px) {
+  .people-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .seasons-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 650px) {
+  .detail-hero {
+    min-height: 420px;
+    padding: 25px 18px;
+  }
+
+  .detail-hero h1 {
+    font-size: 30px;
+  }
+
+  .detail-section {
+    padding: 25px 16px;
+  }
+
+  .information-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .people-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .seasons-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

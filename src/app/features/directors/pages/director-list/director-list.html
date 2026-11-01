@@ -1,0 +1,210 @@
+<section class="directors-page">
+
+  <header class="page-header">
+    <div>
+      <span class="section-label">
+        CINEVERSE / PROFESIONALES
+      </span>
+
+      <h1>Directores</h1>
+
+      <p>
+        Descubre a los cineastas detrás de tus películas favoritas.
+      </p>
+    </div>
+  </header>
+
+  <!-- BÚSQUEDA Y FILTROS -->
+
+  <div class="filters">
+
+    <div class="search-box">
+      <span>⌕</span>
+
+      <input
+        type="text"
+        placeholder="Buscar director..."
+        [value]="searchQuery()"
+        (keyup.enter)="onSearch($event)"
+      />
+
+      @if (searchQuery()) {
+        <button
+          type="button"
+          (click)="clearSearch()"
+        >
+          ✕
+        </button>
+      }
+    </div>
+
+    <select
+      [value]="filters().sortBy"
+      (change)="onSortChange($event)"
+    >
+      <option value="popularity.desc">
+        Más populares
+      </option>
+
+      <option value="popularity.asc">
+        Menos populares
+      </option>
+
+      <option value="name.asc">
+        Nombre A - Z
+      </option>
+
+      <option value="name.desc">
+        Nombre Z - A
+      </option>
+    </select>
+
+  </div>
+
+  <!-- CARGANDO -->
+
+  @if (loading()) {
+    <div class="message">
+      <div class="loader"></div>
+
+      <p>
+        Buscando directores...
+      </p>
+
+      <small>
+        Estamos verificando sus créditos en TMDB.
+      </small>
+    </div>
+  }
+
+  <!-- ERROR -->
+
+  @if (errorMessage()) {
+    <div class="message error">
+
+      <p>{{ errorMessage() }}</p>
+
+      <button
+        type="button"
+        (click)="loadDirectors()"
+      >
+        Reintentar
+      </button>
+
+    </div>
+  }
+
+  <!-- SIN RESULTADOS -->
+
+  @if (
+    !loading() &&
+    !errorMessage() &&
+    directors().length === 0
+  ) {
+    <div class="message">
+
+      <h2>No se encontraron directores</h2>
+
+      <p>
+        Intenta con otro nombre o revisa tu búsqueda.
+      </p>
+
+    </div>
+  }
+
+  <!-- LISTADO -->
+
+  @if (directors().length > 0) {
+
+    <div class="directors-grid">
+
+      @for (
+        director of directors();
+        track director.id
+      ) {
+
+        <a
+          class="director-card"
+          [routerLink]="['/directors', director.id]"
+        >
+
+          <div class="director-image">
+
+            @if (director.profile_path) {
+
+              <img
+                [src]="getProfile(director.profile_path)"
+                [alt]="director.name"
+              />
+
+            } @else {
+
+              <div class="no-image">
+                Sin fotografía
+              </div>
+
+            }
+
+          </div>
+
+          <div class="director-info">
+
+            <h2>
+              {{ director.name }}
+            </h2>
+
+            <span class="department">
+              Director
+            </span>
+
+            <p class="known-for">
+              {{ getKnownFor(director) }}
+            </p>
+
+            <div class="popularity">
+
+              <span>Popularidad</span>
+
+              <strong>
+                {{ director.popularity | number:'1.0-0' }}
+              </strong>
+
+            </div>
+
+          </div>
+
+        </a>
+
+      }
+
+    </div>
+
+    <!-- PAGINACIÓN -->
+
+    <nav class="pagination">
+
+      <button
+        type="button"
+        [disabled]="currentPage() === 1 || loading()"
+        (click)="changePage(currentPage() - 1)"
+      >
+        Anterior
+      </button>
+
+      <span>
+        Página {{ currentPage() }} de {{ totalPages() }}
+      </span>
+
+      <button
+        type="button"
+        [disabled]="currentPage() === totalPages() || loading()"
+        (click)="changePage(currentPage() + 1)"
+      >
+        Siguiente
+      </button>
+
+    </nav>
+
+  }
+
+</section>

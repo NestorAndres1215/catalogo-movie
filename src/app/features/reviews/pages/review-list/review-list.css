@@ -1,0 +1,267 @@
+.reviews-page {
+  min-height: 100vh;
+  padding: 30px;
+  color: #ffffff;
+}
+
+/* ENCABEZADO */
+
+.page-header {
+  margin-bottom: 30px;
+}
+
+.page-header h1 {
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.page-header p {
+  color: #a1a1aa;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* SELECTOR */
+
+.media-selector {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.media-selector button {
+  padding: 11px 24px;
+  border: 1px solid #34343e;
+  border-radius: 8px;
+  background: #191922;
+  color: #c4c4cc;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.media-selector button:hover {
+  background: #292936;
+  color: #ffffff;
+}
+
+.media-selector button.active {
+  background: #e50914;
+  border-color: #e50914;
+  color: #ffffff;
+}
+
+/* CONTADOR */
+
+.reviews-count {
+  margin-bottom: 20px;
+  color: #a1a1aa;
+  font-size: 13px;
+}
+
+/* GRID */
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 22px;
+}
+
+/* TARJETAS */
+
+.review-card {
+  display: flex;
+  flex-direction: column;
+  background: #191922;
+  border: 1px solid #30303c;
+  border-radius: 12px;
+  padding: 20px;
+  transition: 0.25s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-4px);
+  border-color: #e50914;
+}
+
+/* AUTOR */
+
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.author-avatar {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #e50914;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.author-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.author-info h3 {
+  color: #ffffff;
+  font-size: 14px;
+  margin: 0 0 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.author-info span {
+  color: #92929e;
+  font-size: 12px;
+}
+
+/* VALORACIÓN */
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.rating span {
+  color: #facc15;
+  font-size: 19px;
+}
+
+/* PELÍCULA O SERIE */
+
+.media-info {
+  padding-bottom: 15px;
+  border-bottom: 1px solid #30303c;
+  margin-bottom: 15px;
+}
+
+.media-label {
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: 5px;
+  background: rgba(229, 9, 20, 0.15);
+  color: #ff646b;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.media-info h2 {
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* CONTENIDO */
+
+.review-content {
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.review-content p {
+  color: #c4c4cc;
+  font-size: 13px;
+  line-height: 1.8;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+/* FOOTER */
+
+.review-footer {
+  border-top: 1px solid #30303c;
+  padding-top: 15px;
+}
+
+.review-footer a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #ff4b55;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  transition: 0.2s ease;
+}
+
+.review-footer a:hover {
+  color: #ffffff;
+}
+
+/* MENSAJES */
+
+.message,
+.empty-state {
+  padding: 50px 20px;
+  text-align: center;
+  color: #a1a1aa;
+}
+
+.empty-state h2 {
+  color: #ffffff;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.empty-state p {
+  font-size: 14px;
+}
+
+.error-message {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(229, 9, 20, 0.4);
+  border-radius: 8px;
+  background: rgba(229, 9, 20, 0.1);
+  color: #ff777e;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .reviews-page {
+    padding: 20px 15px;
+  }
+
+  .page-header h1 {
+    font-size: 24px;
+  }
+
+  .reviews-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .media-selector {
+    width: 100%;
+  }
+
+  .media-selector button {
+    flex: 1;
+  }
+
+  .review-card {
+    padding: 16px;
+  }
+}

@@ -1,0 +1,318 @@
+.companies-page {
+  width: 100%;
+  padding: 35px;
+  color: #f5f5f5;
+}
+
+.page-header {
+  margin-bottom: 35px;
+}
+
+.section-label {
+  color: #e5a00d;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.page-header h1 {
+  margin: 12px 0;
+  font-size: 38px;
+  font-weight: 800;
+}
+
+.page-header p {
+  color: #999;
+  font-size: 15px;
+}
+
+/* BÚSQUEDA */
+
+.search-section {
+  margin-bottom: 35px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 650px;
+  padding: 8px 12px;
+  border: 1px solid #303030;
+  border-radius: 10px;
+  background: #181818;
+}
+
+.search-icon {
+  color: #999;
+  font-size: 25px;
+}
+
+.search-box input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 5px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: white;
+  font-size: 14px;
+}
+
+.search-box button {
+  padding: 11px 22px;
+  border: none;
+  border-radius: 7px;
+  background: #e5a00d;
+  color: #111;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.search-box button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* BÚSQUEDAS RÁPIDAS */
+
+.quick-search-section {
+  margin-bottom: 45px;
+}
+
+.quick-search-section h2,
+.results-header h2 {
+  margin-bottom: 8px;
+  font-size: 21px;
+}
+
+.quick-search-section p,
+.results-header p {
+  color: #999;
+  font-size: 14px;
+}
+
+.quick-search-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.quick-search-list button {
+  padding: 11px 17px;
+  border: 1px solid #333;
+  border-radius: 25px;
+  background: #1d1d1d;
+  color: #ddd;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.quick-search-list button:hover {
+  border-color: #e5a00d;
+  color: #e5a00d;
+}
+
+/* RESULTADOS */
+
+.results-header {
+  margin-bottom: 25px;
+}
+
+/* GRID */
+
+.companies-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.company-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #292929;
+  border-radius: 12px;
+  background: #181818;
+  color: white;
+  text-decoration: none;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.company-card:hover {
+  transform: translateY(-5px);
+  border-color: #e5a00d;
+}
+
+.company-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 170px;
+  padding: 25px;
+  background: #f2f2f2;
+}
+
+.company-logo img {
+  max-width: 100%;
+  max-height: 120px;
+  object-fit: contain;
+}
+
+.no-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: #777;
+  font-size: 13px;
+}
+
+.company-info {
+  flex: 1;
+  padding: 18px 18px 10px;
+}
+
+.company-info h2 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.country {
+  display: inline-block;
+  color: #999;
+  font-size: 12px;
+}
+
+.view-details {
+  padding: 15px 18px;
+  color: #e5a00d;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* MENSAJES */
+
+.message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 250px;
+  text-align: center;
+}
+
+.message p {
+  color: #999;
+}
+
+.message h2 {
+  margin-bottom: 10px;
+}
+
+.message button {
+  margin-top: 15px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 7px;
+  background: #e5a00d;
+  color: #111;
+  cursor: pointer;
+}
+
+.error p {
+  color: #ff7777;
+}
+
+.loader {
+  width: 35px;
+  height: 35px;
+  margin-bottom: 15px;
+  border: 3px solid #333;
+  border-top-color: #e5a00d;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* PAGINACIÓN */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  margin: 40px 0;
+}
+
+.pagination span {
+  color: #ccc;
+  font-size: 14px;
+}
+
+.pagination button {
+  padding: 10px 18px;
+  border: 1px solid #333;
+  border-radius: 7px;
+  background: #1d1d1d;
+  color: white;
+  cursor: pointer;
+}
+
+.pagination button:hover:not(:disabled) {
+  border-color: #e5a00d;
+  color: #e5a00d;
+}
+
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1100px) {
+  .companies-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 750px) {
+  .companies-page {
+    padding: 20px;
+  }
+
+  .companies-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .companies-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-header h1 {
+    font-size: 30px;
+  }
+
+  .search-box {
+    flex-wrap: wrap;
+  }
+
+  .search-box button {
+    width: 100%;
+  }
+
+  .pagination {
+    gap: 10px;
+  }
+}

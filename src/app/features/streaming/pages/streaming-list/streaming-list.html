@@ -1,0 +1,148 @@
+<section class="streaming-page">
+  <header class="page-header">
+    <div>
+      <span class="section-label">CINEVERSE ORIGINAL</span>
+      <h1>Streaming y plataformas</h1>
+      <p>Explora películas y series disponibles en tus plataformas favoritas.</p>
+    </div>
+  </header>
+
+  <!-- Selector de contenido -->
+  <div class="media-selector">
+    <button
+      type="button"
+      [class.active]="mediaType() === 'movie'"
+      (click)="changeMediaType('movie')"
+    >
+      Películas
+    </button>
+
+    <button type="button" [class.active]="mediaType() === 'tv'" (click)="changeMediaType('tv')">
+      Series
+    </button>
+  </div>
+
+  <!-- Plataformas -->
+  <section class="providers-section">
+    <div class="section-heading">
+      <div>
+        <h2>Plataformas disponibles</h2>
+        <p>Selecciona una plataforma para explorar su catálogo.</p>
+      </div>
+
+      <div class="carousel-controls">
+        <span class="provider-count"> {{ providers().length }} plataformas </span>
+
+        <button
+          type="button"
+          class="carousel-arrow"
+          (click)="scrollProviders('left')"
+          aria-label="Ver plataformas anteriores"
+        >
+          &#10094;
+        </button>
+
+        <button
+          type="button"
+          class="carousel-arrow"
+          (click)="scrollProviders('right')"
+          aria-label="Ver más plataformas"
+        >
+          &#10095;
+        </button>
+      </div>
+    </div>
+
+    @if (loadingProviders()) {
+      <div class="loading-message">Cargando plataformas...</div>
+    }
+
+    @if (!loadingProviders() && providers().length > 0) {
+      <div class="providers-carousel" #providersCarousel>
+        @for (provider of providers(); track provider.provider_id) {
+          <button
+            type="button"
+            class="provider-card"
+            [class.selected]="selectedProvider() === provider.provider_id"
+            (click)="selectProvider(provider.provider_id)"
+          >
+            <img
+              [src]="getProviderLogo(provider.logo_path)"
+              [alt]="provider.provider_name"
+              loading="lazy"
+            />
+
+            <span>{{ provider.provider_name }}</span>
+          </button>
+        }
+      </div>
+    }
+  </section>
+  <!-- Contenido de plataforma -->
+  <section class="catalog-section">
+    <div class="section-heading">
+      <div>
+        <h2>
+          {{ mediaType() === 'movie' ? 'Películas disponibles' : 'Series disponibles' }}
+        </h2>
+        <p>Contenido asociado a la plataforma seleccionada.</p>
+      </div>
+    </div>
+
+    @if (loadingContents()) {
+      <div class="loading-message">Cargando catálogo...</div>
+    }
+
+    @if (errorMessage()) {
+      <div class="error-message">
+        {{ errorMessage() }}
+      </div>
+    }
+
+    @if (
+      !loadingContents() &&
+      !errorMessage() &&
+      contents().length === 0 &&
+      selectedProvider() !== null
+    ) {
+      <div class="empty-message">No se encontró contenido para esta plataforma.</div>
+    }
+
+    @if (!loadingContents() && contents().length > 0) {
+      <div class="content-grid">
+        @for (media of contents(); track media.id) {
+          <article class="content-card">
+            <div class="poster-container">
+              @if (media.poster_path) {
+                <img
+                  [src]="getPoster(media.poster_path)"
+                  [alt]="getMediaTitle(media)"
+                  loading="lazy"
+                />
+              } @else {
+                <div class="poster-placeholder">Sin imagen</div>
+              }
+
+              <span class="rating">
+                <span>★</span>
+                {{ media.vote_average | number: '1.1-1' }}
+              </span>
+            </div>
+
+            <div class="content-info">
+              <h3>{{ getMediaTitle(media) }}</h3>
+
+              <span class="release-date">
+                {{ getReleaseDate(media) }}
+              </span>
+
+              <p>
+                {{ media.overview || 'Sin descripción disponible.' }}
+              </p>
+            </div>
+          </article>
+        }
+      </div>
+    }
+  </section>
+</section>

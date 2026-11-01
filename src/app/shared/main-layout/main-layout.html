@@ -1,0 +1,445 @@
+<div class="app-container">
+  <!-- FONDO OSCURO -->
+  @if (sidebarOpen()) {
+    <div class="sidebar-overlay" (click)="closeSidebar()" aria-hidden="true"></div>
+  }
+
+  <!-- SIDEBAR -->
+  <aside
+    class="sidebar"
+    id="sidebar"
+    [class.open]="sidebarOpen()"
+    aria-label="Navegación principal"
+  >
+    <!-- CABECERA -->
+    <div class="sidebar-top">
+      <a class="logo" routerLink="/" (click)="closeSidebar()">
+        <span class="logo-icon">🎬</span>
+        <h2>CINE<span>VERSE</span></h2>
+      </a>
+
+      <button class="sidebar-close" type="button" (click)="closeSidebar()" aria-label="Cerrar menú">
+        ✕
+      </button>
+    </div>
+
+    <nav class="sidebar-scroll">
+      <!-- MENÚ PRINCIPAL -->
+      <div class="sidebar-section">
+        <p class="sidebar-title">MENÚ PRINCIPAL</p>
+
+        <a
+          class="sidebar-link"
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeSidebar()"
+        >
+          <span>⌂</span> Inicio
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/movies"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>🎞</span> Películas
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/series"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>📺</span> Series
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/actors"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>👤</span> Actores
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/directors"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>🎥</span> Directores
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/companies"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>🏢</span> Productoras
+        </a>
+      </div>
+
+      <!-- DESCUBRIR -->
+      <div class="sidebar-section">
+        <p class="sidebar-title">DESCUBRIR</p>
+
+        <a
+          class="sidebar-link"
+          routerLink="/genres"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>🎭</span> Géneros
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/countries"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>🌎</span> Países
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/years"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>📅</span> Por año
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/decades"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>🎞</span> Por décadas
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/timeline"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>⏳</span> Línea de tiempo
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/languages"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>🌐</span> Idiomas
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/recommendations"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>✨</span> Recomendaciones
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/roulette"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>🎲</span> Aleatorio
+        </a>
+      </div>
+
+      <!-- CALENDARIO -->
+      <div class="sidebar-section">
+        <p class="sidebar-title">ESTRENOS</p>
+
+        <a
+          class="sidebar-link"
+          routerLink="/calendar"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>🗓</span> Calendario de estrenos
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/upcoming"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>🍿</span> Próximos estrenos
+        </a>
+      </div>
+
+      <!-- MI BIBLIOTECA -->
+      <div class="sidebar-section">
+        <p class="sidebar-title">MI BIBLIOTECA</p>
+
+        <a
+          class="sidebar-link"
+          routerLink="/favorites"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>❤️</span> Favoritos
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/watchlist"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>📋</span> Mi lista para ver
+        </a>
+      </div>
+
+      <!-- TOP Y RANKINGS -->
+      <div class="sidebar-section">
+        <p class="sidebar-title">TOP Y RANKINGS</p>
+
+        <a
+          class="sidebar-link"
+          routerLink="/rankings/movies"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>🏆</span> Top de películas
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/rankings/series"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>📺</span> Top de series
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/rankings/actors"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>🎭</span> Top de actores
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/rankings/sagas"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>🎬</span> Top de sagas
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/rankings/streaming"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>📺</span> Top de streaming
+        </a>
+      </div>
+
+      <!-- COLECCIONES -->
+      <div class="sidebar-section">
+        <p class="sidebar-title">COLECCIONES</p>
+
+        <a
+          class="sidebar-link"
+          routerLink="/trending"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>🔥</span> Tendencias
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/top-rated"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>⭐</span> Mejor valoradas
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/collections"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>🎬</span> Colecciones y sagas
+        </a>
+      </div>
+
+      <!-- MULTIMEDIA -->
+      <div class="sidebar-section">
+        <p class="sidebar-title">MULTIMEDIA</p>
+
+        <a
+          class="sidebar-link"
+          routerLink="/videos"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>▶️</span> Tráilers y videos
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/reviews"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>📝</span> Críticas y reseñas
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/streaming"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>📺</span> Plataformas de streaming
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/platform-comparison"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>📡</span> Comparar streaming
+        </a>
+      </div>
+
+      <!-- JUEGOS -->
+      <div class="sidebar-section">
+        <p class="sidebar-title">JUEGOS</p>
+
+        <a
+          class="sidebar-link"
+          routerLink="/games/emoji"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>🤔</span> Adivina con emojis
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/games/random-challenge"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>🎲</span> Reto random
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/games/trivia"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>🧠</span> Trivia de películas
+        </a>
+      </div>
+    </nav>
+
+    <!-- FOOTER -->
+    <div class="sidebar-footer">
+      <p>Explora el universo del cine.</p>
+      <span>© 2026 CINEVERSE</span>
+    </div>
+  </aside>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main-content">
+    <!-- NAVBAR -->
+    <header class="navbar">
+      <div class="navbar-left">
+        <button
+          class="menu-button"
+          type="button"
+          (click)="toggleSidebar()"
+          [attr.aria-expanded]="sidebarOpen()"
+          aria-controls="sidebar"
+          aria-label="Abrir menú"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <div class="breadcrumb">
+          <span>CINEVERSE</span>
+          <span class="separator">/</span>
+          <strong>Descubrir</strong>
+        </div>
+      </div>
+
+      <div class="navbar-actions">
+        <div class="search-box">
+          <span class="search-icon">⌕</span>
+
+          <input
+            #searchInput
+            type="text"
+            placeholder="Buscar películas, series y actores..."
+            autocomplete="off"
+            (input)="onSearch(searchInput.value)"
+            (focus)="onSearchFocus()"
+            (keydown.escape)="closeSearch()"
+          />
+
+          @if (searching()) {
+            <span class="search-loader"></span>
+          }
+
+          @if (searchOpen()) {
+            <div class="search-results">
+              @if (searchResults().length > 0) {
+                @for (result of searchResults(); track result.id + result.media_type) {
+                  <button type="button" class="search-result" (click)="openSearchResult(result)">
+                    <img [src]="getSearchImage(result)" [alt]="getSearchTitle(result)" />
+
+                    <span class="search-result-info">
+                      <strong>{{ getSearchTitle(result) }}</strong>
+                      <small>{{ getSearchType(result) }}</small>
+                    </span>
+
+                    <span class="result-arrow">→</span>
+                  </button>
+                }
+              } @else if (!searching()) {
+                <p class="search-empty">No se encontraron resultados.</p>
+              }
+            </div>
+          }
+        </div>
+
+        <button class="profile-button" type="button" aria-label="Perfil">N</button>
+      </div>
+    </header>
+
+    <!-- AQUÍ SE CARGAN TODAS LAS PÁGINAS -->
+    <router-outlet />
+  </main>
+</div>

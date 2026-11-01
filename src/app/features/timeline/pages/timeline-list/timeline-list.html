@@ -1,0 +1,180 @@
+<section class="timeline-container">
+
+  <header class="page-header">
+    <span class="eyebrow">CINEVERSE · HISTORIA DEL CINE</span>
+
+    <h1>Línea de tiempo del cine</h1>
+
+    <p>
+      Recorre los años y descubre las películas que marcaron
+      cada época de la historia cinematográfica.
+    </p>
+  </header>
+
+  <section class="year-selector">
+
+    <div class="section-heading">
+      <div>
+        <h2>Explora por año</h2>
+        <p>Selecciona un año para descubrir sus estrenos.</p>
+      </div>
+
+      <span class="year-label">{{ selectedYear() }}</span>
+    </div>
+
+    <div class="years-list">
+      @for (year of years; track year) {
+        <button
+          type="button"
+          class="year-button"
+          [class.active]="selectedYear() === year"
+          (click)="selectYear(year)"
+        >
+          {{ year }}
+        </button>
+      }
+    </div>
+
+  </section>
+
+  <section class="timeline-section">
+
+    <div class="timeline-heading">
+      <div>
+        <span class="eyebrow">RECORRIDO CRONOLÓGICO</span>
+        <h2>Estrenos de {{ selectedYear() }}</h2>
+      </div>
+
+      <span class="movie-count">
+        {{ movies().length }} películas
+      </span>
+    </div>
+
+    @if (loading()) {
+      <div class="status-message">
+        Cargando historia cinematográfica...
+      </div>
+    }
+
+    @if (errorMessage()) {
+      <div class="status-message error">
+        {{ errorMessage() }}
+
+        <button type="button" (click)="loadMovies()">
+          Reintentar
+        </button>
+      </div>
+    }
+
+    @if (!loading() && !errorMessage() && movies().length > 0) {
+
+      <div class="timeline">
+
+        @for (movie of movies(); track movie.id) {
+
+          <article class="timeline-item">
+
+            <div class="timeline-date">
+              <span class="day">
+                {{ getDay(movie.release_date ?? '') }}
+              </span>
+
+              <span class="month">
+                {{ getMonth(movie.release_date ?? '') }}
+              </span>
+            </div>
+
+            <div class="timeline-marker"></div>
+
+            <div class="timeline-card">
+
+              <div class="movie-poster">
+
+                @if (movie.poster_path) {
+                  <img
+                    [src]="getImageUrl(movie.poster_path)"
+                    [alt]="movie.title"
+                    loading="lazy"
+                  />
+                } @else {
+                  <div class="no-poster">
+                    Sin imagen
+                  </div>
+                }
+
+              </div>
+
+              <div class="movie-details">
+
+                <span class="movie-year">
+                  ESTRENO · {{ selectedYear() }}
+                </span>
+
+                <h3>{{ movie.title }}</h3>
+
+                <p class="overview">
+                  {{ movie.overview || 'Sin descripción disponible.' }}
+                </p>
+
+                <div class="movie-metadata">
+
+                  <span class="rating">
+                    ★ {{ movie.vote_average | number:'1.1-1' }}/10
+                  </span>
+
+                  <span class="votes">
+                    {{ movie.vote_count | number }} votos
+                  </span>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </article>
+
+        }
+
+      </div>
+
+      <div class="pagination">
+
+        <button
+          type="button"
+          (click)="previousPage()"
+          [disabled]="page() === 1"
+        >
+          Anterior
+        </button>
+
+        <span>
+          Página {{ page() }} de {{ totalPages() }}
+        </span>
+
+        <button
+          type="button"
+          (click)="nextPage()"
+          [disabled]="page() >= totalPages()"
+        >
+          Siguiente
+        </button>
+
+      </div>
+
+    }
+
+    @if (!loading() && !errorMessage() && movies().length === 0) {
+      <div class="empty-state">
+        <h2>No encontramos estrenos</h2>
+        <p>No hay películas disponibles para este año.</p>
+      </div>
+    }
+
+  </section>
+
+  <footer class="attribution">
+    Información cinematográfica proporcionada por TMDB.
+  </footer>
+
+</section>

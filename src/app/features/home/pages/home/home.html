@@ -1,0 +1,327 @@
+<div class="home-page">
+
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="loader"></div>
+      <p>Preparando tu universo cinematográfico...</p>
+    </div>
+  }
+
+  @if (error()) {
+    <div class="error-message">
+      <p>{{ error() }}</p>
+      <button type="button" (click)="loadHome()">Reintentar</button>
+    </div>
+  }
+
+  @if (!loading() && !error()) {
+
+    <!-- BANNER PRINCIPAL -->
+    @if (featuredMovie(); as movie) {
+      <section
+        class="hero"
+        [style.background-image]="
+          movie.backdrop_path
+            ? 'linear-gradient(90deg, #101018 5%, rgba(16,16,24,.85) 45%, rgba(16,16,24,.15)), url(' +
+              getBackdrop(movie.backdrop_path) + ')'
+            : 'linear-gradient(90deg, #101018, #29223b)'
+        "
+      >
+        <div class="hero-content">
+          <span class="hero-label">🎬 DESTACADO DE LA SEMANA</span>
+
+          <h1>{{ movie.title }}</h1>
+
+          <div class="hero-meta">
+            <span>⭐ {{ getRating(movie.vote_average) }}</span>
+            <span>{{ getYear(movie.release_date) }}</span>
+            <span>🎞 Película</span>
+          </div>
+
+          <p>{{ movie.overview || 'Descubre esta película en CINEVERSE.' }}</p>
+
+          <div class="hero-actions">
+            <a
+              class="btn-primary"
+              [routerLink]="['/movies', movie.id]"
+            >
+              Ver detalles
+            </a>
+
+            <a class="btn-secondary" routerLink="/videos">
+              ▶ Explorar tráilers
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-indicator">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </section>
+    }
+
+    <!-- ACCESOS RÁPIDOS -->
+    <section class="quick-access">
+      <a routerLink="/movies" class="quick-card">
+        <span>🎞️</span>
+        <div>
+          <strong>Películas</strong>
+          <small>Explora el catálogo</small>
+        </div>
+        <span class="quick-arrow">→</span>
+      </a>
+
+      <a routerLink="/series" class="quick-card">
+        <span>📺</span>
+        <div>
+          <strong>Series</strong>
+          <small>Descubre nuevas historias</small>
+        </div>
+        <span class="quick-arrow">→</span>
+      </a>
+
+      <a routerLink="/universes" class="quick-card">
+        <span>🌌</span>
+        <div>
+          <strong>Universos</strong>
+          <small>Explora tus sagas favoritas</small>
+        </div>
+        <span class="quick-arrow">→</span>
+      </a>
+
+      <a routerLink="/rankings/movies" class="quick-card">
+        <span>🏆</span>
+        <div>
+          <strong>Rankings</strong>
+          <small>Descubre los mejores títulos</small>
+        </div>
+        <span class="quick-arrow">→</span>
+      </a>
+    </section>
+
+    <!-- TENDENCIAS DE PELÍCULAS -->
+    <section class="content-section">
+      <div class="section-header">
+        <div>
+          <span class="section-label">LO MÁS POPULAR</span>
+          <h2>Películas en tendencia 🔥</h2>
+          <p>Las películas que están destacando esta semana.</p>
+        </div>
+
+        <a routerLink="/trending" class="see-all">Ver todas →</a>
+      </div>
+
+      <div class="media-row">
+        @for (movie of trendingMovies(); track trackMovie($index, movie)) {
+          <a
+            class="media-card"
+            [routerLink]="['/movies', movie.id]"
+          >
+            <div class="poster">
+              @if (movie.poster_path) {
+                <img
+                  [src]="getMovieImage(movie.poster_path)"
+                  [alt]="movie.title"
+                  loading="lazy"
+                />
+              } @else {
+                <div class="poster-placeholder">🎬</div>
+              }
+
+              <span class="rating">⭐ {{ getRating(movie.vote_average) }}</span>
+            </div>
+
+            <h3>{{ movie.title }}</h3>
+            <span class="media-year">{{ getYear(movie.release_date) }}</span>
+          </a>
+        }
+      </div>
+    </section>
+
+    <!-- TENDENCIAS DE SERIES -->
+    <section class="content-section">
+      <div class="section-header">
+        <div>
+          <span class="section-label">PARA MARATONEAR</span>
+          <h2>Series en tendencia 📺</h2>
+          <p>Las series más populares de esta semana.</p>
+        </div>
+
+        <a routerLink="/series" class="see-all">Ver todas →</a>
+      </div>
+
+      <div class="media-row">
+        @for (series of trendingSeries(); track trackSeries($index, series)) {
+          <a
+            class="media-card"
+            [routerLink]="['/series', series.id]"
+          >
+            <div class="poster">
+              @if (series.poster_path) {
+                <img
+                  [src]="getSeriesImage(series.poster_path)"
+                  [alt]="series.name"
+                  loading="lazy"
+                />
+              } @else {
+                <div class="poster-placeholder">📺</div>
+              }
+
+              <span class="rating">⭐ {{ getRating(series.vote_average) }}</span>
+            </div>
+
+            <h3>{{ series.name }}</h3>
+            <span class="media-year">{{ getYear(series.first_air_date) }}</span>
+          </a>
+        }
+      </div>
+    </section>
+
+    <!-- PRÓXIMOS ESTRENOS -->
+    <section class="content-section">
+      <div class="section-header">
+        <div>
+          <span class="section-label">PRÓXIMAMENTE</span>
+          <h2>Próximos estrenos 🍿</h2>
+          <p>Prepárate para los próximos lanzamientos.</p>
+        </div>
+
+        <a routerLink="/upcoming" class="see-all">Ver calendario →</a>
+      </div>
+
+      <div class="media-row">
+        @for (movie of upcomingMovies(); track trackMovie($index, movie)) {
+          <a
+            class="media-card"
+            [routerLink]="['/movies', movie.id]"
+          >
+            <div class="poster">
+              @if (movie.poster_path) {
+                <img
+                  [src]="getMovieImage(movie.poster_path)"
+                  [alt]="movie.title"
+                  loading="lazy"
+                />
+              } @else {
+                <div class="poster-placeholder">🍿</div>
+              }
+
+              <span class="rating">⭐ {{ getRating(movie.vote_average) }}</span>
+            </div>
+
+            <h3>{{ movie.title }}</h3>
+            <span class="media-year">{{ getYear(movie.release_date) }}</span>
+          </a>
+        }
+      </div>
+    </section>
+
+    <!-- MEJOR VALORADAS -->
+    <section class="content-section">
+      <div class="section-header">
+        <div>
+          <span class="section-label">RECOMENDACIONES DE LA COMUNIDAD</span>
+          <h2>Películas mejor valoradas ⭐</h2>
+          <p>Grandes películas según las puntuaciones de TMDB.</p>
+        </div>
+
+        <a routerLink="/top-rated" class="see-all">Ver todas →</a>
+      </div>
+
+      <div class="media-row">
+        @for (movie of topRatedMovies(); track trackMovie($index, movie)) {
+          <a
+            class="media-card"
+            [routerLink]="['/movies', movie.id]"
+          >
+            <div class="poster">
+              @if (movie.poster_path) {
+                <img
+                  [src]="getMovieImage(movie.poster_path)"
+                  [alt]="movie.title"
+                  loading="lazy"
+                />
+              } @else {
+                <div class="poster-placeholder">⭐</div>
+              }
+
+              <span class="rating">⭐ {{ getRating(movie.vote_average) }}</span>
+            </div>
+
+            <h3>{{ movie.title }}</h3>
+            <span class="media-year">{{ getYear(movie.release_date) }}</span>
+          </a>
+        }
+      </div>
+    </section>
+
+    <!-- SERIES MEJOR VALORADAS -->
+    <section class="content-section">
+      <div class="section-header">
+        <div>
+          <span class="section-label">GRANDES HISTORIAS</span>
+          <h2>Series mejor valoradas 🏅</h2>
+          <p>Series destacadas por la comunidad de TMDB.</p>
+        </div>
+
+        <a routerLink="/rankings/series" class="see-all">Ver ranking →</a>
+      </div>
+
+      <div class="media-row">
+        @for (series of topRatedSeries(); track trackSeries($index, series)) {
+          <a
+            class="media-card"
+            [routerLink]="['/series', series.id]"
+          >
+            <div class="poster">
+              @if (series.poster_path) {
+                <img
+                  [src]="getSeriesImage(series.poster_path)"
+                  [alt]="series.name"
+                  loading="lazy"
+                />
+              } @else {
+                <div class="poster-placeholder">📺</div>
+              }
+
+              <span class="rating">⭐ {{ getRating(series.vote_average) }}</span>
+            </div>
+
+            <h3>{{ series.name }}</h3>
+            <span class="media-year">{{ getYear(series.first_air_date) }}</span>
+          </a>
+        }
+      </div>
+    </section>
+
+    <!-- BIBLIOTECA -->
+    <section class="library-banner">
+      <div>
+        <span class="section-label">TU ESPACIO PERSONAL</span>
+        <h2>Tu universo, tus películas ❤️</h2>
+        <p>
+          Organiza tus favoritos, guarda lo que quieres ver
+          y descubre tus preferencias cinematográficas.
+        </p>
+
+        <div class="library-actions">
+          <a routerLink="/favorites">❤️ Mis favoritos</a>
+          <a routerLink="/watchlist">📋 Mi lista para ver</a>
+          <a routerLink="/statistics">📊 Mis estadísticas</a>
+        </div>
+      </div>
+
+      <span class="library-icon">🎬</span>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="home-footer">
+      <h3>🎬 CINEVERSE</h3>
+      <p>Explora, descubre y disfruta el universo del cine.</p>
+      <span>Contenido cinematográfico proporcionado por TMDB.</span>
+    </footer>
+
+  }
+</div>

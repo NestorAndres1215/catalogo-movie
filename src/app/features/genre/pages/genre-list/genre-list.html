@@ -1,0 +1,89 @@
+<section class="genres-page">
+  <!-- ENCABEZADO -->
+
+  <header class="page-header">
+    <div>
+      <span class="section-label"> CINEVERSE / EXPLORAR </span>
+
+      <h1>Géneros</h1>
+
+      <p>Explora películas y series según tus géneros favoritos.</p>
+    </div>
+  </header>
+
+  <!-- SELECTOR DE TIPO -->
+
+  <div class="type-selector">
+    <button type="button" [class.active]="selectedType() === 'movie'" (click)="changeType('movie')">
+      🎬 Películas
+    </button>
+
+    <button type="button" [class.active]="selectedType() === 'tv'" (click)="changeType('tv')">
+      📺 Series
+    </button>
+  </div>
+
+  <!-- INFORMACIÓN -->
+
+  <div class="genres-heading">
+    <div>
+      <h2>
+        @if (selectedType() === 'movie') {
+          Géneros de películas
+        } @else {
+          Géneros de series
+        }
+      </h2>
+
+      <p>Selecciona un género para descubrir contenido.</p>
+    </div>
+
+    @if (!loading()) {
+      <span class="genre-count"> {{ genres().length }} géneros </span>
+    }
+  </div>
+
+  <!-- CARGANDO -->
+
+  @if (loading()) {
+    <div class="message">
+      <div class="loader"></div>
+
+      <p>Cargando géneros...</p>
+    </div>
+  }
+
+  <!-- ERROR -->
+
+  @if (errorMessage()) {
+    <div class="message error">
+      <p>{{ errorMessage() }}</p>
+
+      <button type="button" (click)="loadGenres()">Reintentar</button>
+    </div>
+  }
+
+  <!-- LISTADO -->
+
+  @if (!loading() && !errorMessage()) {
+    <div class="genres-grid">
+      @for (genre of genres(); track genre.id) {
+        <a class="genre-card" [routerLink]="['/genres', selectedType(), genre.id]">
+          <div class="genre-icon">
+            {{ getGenreIcon(genre.name) }}
+          </div>
+
+          <div class="genre-info">
+            <h3>
+              {{ genre.name }}
+            </h3>
+
+            <span> Explorar contenido → </span>
+          </div>
+
+          <div class="genre-arrow">→</div>
+        </a>
+      }
+    </div>
+  }
+</section>

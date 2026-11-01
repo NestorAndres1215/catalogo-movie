@@ -1,0 +1,364 @@
+.timeline-container {
+  padding: 30px;
+  color: #fff;
+}
+
+.page-header {
+  margin-bottom: 40px;
+}
+
+.eyebrow {
+  color: #a78bfa;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.page-header h1 {
+  margin: 12px 0;
+  font-size: 34px;
+  font-weight: 800;
+}
+
+.page-header p,
+.section-heading p {
+  color: #999;
+  line-height: 1.6;
+}
+
+.year-selector {
+  margin-bottom: 45px;
+  padding: 22px;
+  border: 1px solid #292929;
+  border-radius: 14px;
+  background: #171717;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.section-heading h2 {
+  margin-bottom: 7px;
+  font-size: 20px;
+}
+
+.year-label {
+  color: #a78bfa;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.years-list {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: #7c3aed #252525;
+}
+
+.year-button {
+  flex-shrink: 0;
+  min-width: 65px;
+  padding: 12px;
+  border: 1px solid #333;
+  border-radius: 9px;
+  background: #222;
+  color: #ccc;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.year-button:hover {
+  border-color: #8b5cf6;
+  color: #fff;
+}
+
+.year-button.active {
+  border-color: #7c3aed;
+  background: #7c3aed;
+  color: #fff;
+  font-weight: 700;
+}
+
+.timeline-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.timeline-heading h2 {
+  margin-top: 8px;
+  font-size: 24px;
+}
+
+.movie-count {
+  color: #aaa;
+  font-size: 13px;
+}
+
+.timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.timeline::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 125px;
+  width: 2px;
+  background: #393044;
+  content: '';
+}
+
+.timeline-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 105px 20px minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+}
+
+.timeline-date {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-top: 18px;
+}
+
+.day {
+  color: #fff;
+  font-size: 27px;
+  font-weight: 800;
+}
+
+.month {
+  margin-top: 3px;
+  color: #a78bfa;
+  font-size: 12px;
+}
+
+.timeline-marker {
+  z-index: 1;
+  width: 13px;
+  height: 13px;
+  margin: 24px auto 0;
+  border: 3px solid #a78bfa;
+  border-radius: 50%;
+  background: #171717;
+  box-shadow: 0 0 12px #7c3aed66;
+}
+
+.timeline-card {
+  display: flex;
+  gap: 20px;
+  min-width: 0;
+  padding: 15px;
+  border: 1px solid #292929;
+  border-radius: 13px;
+  background: #171717;
+  transition: 0.2s;
+}
+
+.timeline-card:hover {
+  border-color: #7c3aed;
+  transform: translateX(4px);
+}
+
+.movie-poster {
+  flex-shrink: 0;
+  width: 125px;
+  height: 180px;
+  overflow: hidden;
+  border-radius: 9px;
+  background: #252525;
+}
+
+.movie-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.no-poster {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #888;
+  font-size: 12px;
+}
+
+.movie-details {
+  min-width: 0;
+  padding: 7px 0;
+}
+
+.movie-year {
+  color: #a78bfa;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.movie-details h3 {
+  margin: 9px 0;
+  font-size: 19px;
+}
+
+.overview {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: #999;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.movie-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 15px;
+  font-size: 12px;
+}
+
+.rating {
+  color: #facc15;
+  font-weight: 700;
+}
+
+.votes {
+  color: #888;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin: 35px 0;
+}
+
+.pagination button,
+.status-message button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #7c3aed;
+  color: #fff;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background: #333;
+  color: #777;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  color: #aaa;
+  font-size: 13px;
+}
+
+.status-message,
+.empty-state {
+  padding: 35px 20px;
+  border-radius: 12px;
+  background: #171717;
+  color: #aaa;
+  text-align: center;
+}
+
+.status-message.error {
+  color: #f87171;
+}
+
+.status-message button {
+  display: block;
+  margin: 15px auto 0;
+}
+
+.empty-state h2 {
+  color: #fff;
+}
+
+.attribution {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #292929;
+  color: #777;
+  font-size: 11px;
+  text-align: center;
+}
+
+@media (max-width: 650px) {
+  .timeline-container {
+    padding: 18px;
+  }
+
+  .page-header h1 {
+    font-size: 27px;
+  }
+
+  .timeline::before {
+    left: 64px;
+  }
+
+  .timeline-item {
+    grid-template-columns: 45px 14px minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .timeline-date {
+    padding-top: 12px;
+  }
+
+  .day {
+    font-size: 20px;
+  }
+
+  .month {
+    font-size: 10px;
+  }
+
+  .timeline-marker {
+    width: 11px;
+    height: 11px;
+    margin-top: 19px;
+  }
+
+  .timeline-card {
+    flex-direction: column;
+    gap: 12px;
+    padding: 10px;
+  }
+
+  .movie-poster {
+    width: 100%;
+    height: 190px;
+  }
+
+  .movie-details h3 {
+    font-size: 16px;
+  }
+
+  .overview {
+    -webkit-line-clamp: 3;
+  }
+
+  .pagination {
+    gap: 10px;
+  }
+}

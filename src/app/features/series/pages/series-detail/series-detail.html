@@ -1,0 +1,219 @@
+
+@if (loading()) {
+  <div class="detail-loading">
+    <div class="spinner"></div>
+    <p>Cargando información de la serie...</p>
+  </div>
+}
+
+@if (errorMessage() && !loading()) {
+  <div class="detail-error">
+    <h2>No se pudo cargar la serie</h2>
+    <p>{{ errorMessage() }}</p>
+    <a routerLink="/series">Volver a series</a>
+  </div>
+}
+
+@if (series(); as item) {
+
+  <section class="series-detail-page">
+
+    <!-- PORTADA -->
+    <div
+      class="detail-hero"
+      [style.background-image]="
+        'linear-gradient(90deg, #0d1018 5%, rgba(13,16,24,.9) 45%, rgba(13,16,24,.2) 100%), url(' +
+        getBackdrop(item.backdrop_path) +
+        ')'
+      "
+    >
+      <div class="detail-hero-content">
+
+        <a class="back-link" routerLink="/series">
+          ← Volver a series
+        </a>
+
+        <span class="eyebrow">CINEVERSE / SERIES</span>
+
+        <h1>{{ item.name }}</h1>
+
+        @if (item.tagline) {
+          <p class="tagline">{{ item.tagline }}</p>
+        }
+
+        <div class="detail-meta">
+          <span class="rating">
+            ⭐ {{ item.vote_average.toFixed(1) }}
+          </span>
+
+          <span>{{ getYear(item.first_air_date) }}</span>
+
+          <span>{{ item.number_of_seasons }} temporadas</span>
+
+          <span>{{ item.number_of_episodes }} episodios</span>
+        </div>
+
+        <div class="genre-list">
+          @for (genre of item.genres ?? []; track genre.id) {
+            <span>{{ genre.name }}</span>
+          }
+        </div>
+
+        <p class="overview">
+          {{ item.overview || 'No hay descripción disponible.' }}
+        </p>
+
+        @if (item.homepage) {
+          <a
+            class="homepage-link"
+            [href]="item.homepage"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Sitio oficial ↗
+          </a>
+        }
+
+      </div>
+    </div>
+
+    <!-- INFORMACIÓN -->
+    <section class="detail-section">
+      <h2>Información de la serie</h2>
+
+      <div class="information-grid">
+
+        <article class="information-card">
+          <span>Estado</span>
+          <strong>{{ item.status || 'No disponible' }}</strong>
+        </article>
+
+        <article class="information-card">
+          <span>Primera emisión</span>
+          <strong>{{ item.first_air_date || 'No disponible' }}</strong>
+        </article>
+
+        <article class="information-card">
+          <span>Temporadas</span>
+          <strong>{{ item.number_of_seasons ?? 0 }}</strong>
+        </article>
+
+        <article class="information-card">
+          <span>Episodios</span>
+          <strong>{{ item.number_of_episodes ?? 0 }}</strong>
+        </article>
+
+        <article class="information-card">
+          <span>Idioma original</span>
+          <strong>{{ item.original_language.toUpperCase() }}</strong>
+        </article>
+
+        <article class="information-card">
+          <span>País de origen</span>
+          <strong>{{ item.origin_country?.join(', ') || 'No disponible' }}</strong>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- CREADORES -->
+    @if (creators.length > 0) {
+      <section class="detail-section">
+        <h2>Creadores</h2>
+
+        <div class="people-grid">
+          @for (creator of creators; track creator.id) {
+            <article class="person-card">
+
+              @if (creator.profile_path) {
+                <img
+                  [src]="getProfile(creator.profile_path)"
+                  [alt]="creator.name"
+                  loading="lazy"
+                />
+              } @else {
+                <div class="person-placeholder">👤</div>
+              }
+
+              <div>
+                <h3>{{ creator.name }}</h3>
+                <p>Creador</p>
+              </div>
+
+            </article>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- REPARTO -->
+    @if (cast.length > 0) {
+      <section class="detail-section">
+        <h2>Reparto principal</h2>
+
+        <div class="people-grid">
+          @for (person of cast; track person.id) {
+            <article class="person-card">
+
+              @if (person.profile_path) {
+                <img
+                  [src]="getProfile(person.profile_path)"
+                  [alt]="person.name"
+                  loading="lazy"
+                />
+              } @else {
+                <div class="person-placeholder">👤</div>
+              }
+
+              <div>
+                <h3>{{ person.name }}</h3>
+                <p>{{ person.character }}</p>
+              </div>
+
+            </article>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- TEMPORADAS -->
+    @if (seasons.length > 0) {
+      <section class="detail-section">
+        <h2>Temporadas</h2>
+
+        <div class="seasons-grid">
+
+          @for (season of seasons; track season.id) {
+            <article class="season-card">
+
+              @if (season.poster_path) {
+                <img
+                  [src]="getPoster(season.poster_path)"
+                  [alt]="season.name"
+                  loading="lazy"
+                />
+              } @else {
+                <div class="season-placeholder">📺</div>
+              }
+
+              <div class="season-info">
+                <h3>{{ season.name }}</h3>
+
+                <p>
+                  {{ season.episode_count }} episodios
+                </p>
+
+                <span>
+                  {{ season.air_date || 'Fecha no disponible' }}
+                </span>
+              </div>
+
+            </article>
+          }
+
+        </div>
+      </section>
+    }
+
+  </section>
+}

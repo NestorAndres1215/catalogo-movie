@@ -1,0 +1,182 @@
+<main class="languages-page">
+
+  <section class="page-header">
+    <div class="header-content">
+      <span class="section-label">EXPLORA CINEVERSE</span>
+
+      <h1>Películas por idioma</h1>
+
+      <p>
+        Descubre películas y series de diferentes partes del mundo
+        según su idioma original.
+      </p>
+    </div>
+  </section>
+
+  <!-- Selector de idioma -->
+  <section class="filters-section">
+
+    <div class="filter-group">
+      <label for="language-select">Selecciona un idioma</label>
+
+      @if (loadingLanguages()) {
+        <p class="loading-text">Cargando idiomas...</p>
+      } @else {
+        <select
+          id="language-select"
+          [value]="selectedLanguage()"
+          (change)="changeLanguage($event)"
+        >
+          @for (language of languages(); track language.iso_639_1) {
+            <option [value]="language.iso_639_1">
+              {{ language.name || language.english_name }}
+              ({{ language.iso_639_1 }})
+            </option>
+          }
+        </select>
+      }
+    </div>
+
+    <div class="media-selector">
+      <button
+        type="button"
+        [class.active]="mediaType() === 'movie'"
+        (click)="changeMediaType('movie')"
+      >
+        Películas
+      </button>
+
+      <button
+        type="button"
+        [class.active]="mediaType() === 'tv'"
+        (click)="changeMediaType('tv')"
+      >
+        Series
+      </button>
+    </div>
+
+  </section>
+
+  <!-- Información del idioma -->
+  <section class="results-header">
+    <div>
+      <h2>{{ getSelectedLanguageName() }}</h2>
+
+      <p>
+        {{ mediaType() === 'movie' ? 'Películas' : 'Series' }}
+        en idioma original
+      </p>
+    </div>
+
+    <span class="language-code">
+      {{ selectedLanguage().toUpperCase() }}
+    </span>
+  </section>
+
+  <!-- Error -->
+  @if (errorMessage()) {
+    <div class="error-message">
+      {{ errorMessage() }}
+    </div>
+  }
+
+  <!-- Cargando contenido -->
+  @if (loadingContent()) {
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Buscando contenido...</p>
+    </div>
+  }
+
+  <!-- Resultados -->
+  @if (!loadingContent() && movies().length > 0) {
+
+    <section class="movies-grid">
+
+      @for (media of movies(); track media.id) {
+
+        <article class="movie-card">
+
+          <div class="poster-container">
+            <img
+              [src]="getImageUrl(media.poster_path)"
+              [alt]="getTitle(media)"
+              loading="lazy"
+            />
+
+            <span class="rating">
+              <span>★</span>
+              {{ media.vote_average | number:'1.1-1' }}
+            </span>
+          </div>
+
+          <div class="movie-info">
+
+            <h3>{{ getTitle(media) }}</h3>
+
+            <span class="release-year">
+              {{ getReleaseDate(media) }}
+            </span>
+
+            <p>
+              {{ media.overview || 'No hay descripción disponible.' }}
+            </p>
+
+            <div class="movie-footer">
+              <span>
+                {{ media.original_language?.toUpperCase() || selectedLanguage().toUpperCase() }}
+              </span>
+
+              <span>
+                {{ media.vote_count }} votos
+              </span>
+            </div>
+
+          </div>
+
+        </article>
+
+      }
+
+    </section>
+
+    <!-- Paginación -->
+    <section class="pagination">
+
+      <button
+        type="button"
+        (click)="previousPage()"
+        [disabled]="page() <= 1 || loadingContent()"
+      >
+        Anterior
+      </button>
+
+      <span>
+        Página {{ page() }} de {{ totalPages() }}
+      </span>
+
+      <button
+        type="button"
+        (click)="nextPage()"
+        [disabled]="page() >= totalPages() || loadingContent()"
+      >
+        Siguiente
+      </button>
+
+    </section>
+
+  }
+
+  <!-- Sin resultados -->
+  @if (!loadingContent() && !errorMessage() && movies().length === 0) {
+    <div class="empty-state">
+      <h3>No encontramos contenido</h3>
+
+      <p>
+        No hay resultados para este idioma.
+        Prueba seleccionando otro idioma.
+      </p>
+    </div>
+  }
+
+</main>

@@ -1,0 +1,117 @@
+<section class="movies-page">
+  <header class="page-header">
+    <div>
+      <span class="eyebrow">CINEVERSE / CATÁLOGO</span>
+      <h1>Explora películas</h1>
+      <p>Descubre historias, géneros y grandes producciones cinematográficas.</p>
+    </div>
+  </header>
+
+  <div class="search-container">
+    <span class="search-icon">⌕</span>
+
+    <input
+      type="search"
+      placeholder="Buscar una película..."
+      [value]="searchQuery()"
+      (keyup.enter)="onSearch($event)"
+      (search)="onSearch($event)"
+    />
+
+    @if (searchQuery()) {
+      <button class="clear-search" type="button" (click)="clearSearch()">
+        Limpiar
+      </button>
+    }
+  </div>
+
+  <app-movie-filters
+    [genres]="genres()"
+    (filtersChange)="onFiltersChange($event)"
+  />
+
+  <div class="section-heading">
+    <div>
+      <h2>{{ title() }}</h2>
+      <p>Página {{ currentPage() }} de {{ totalPages() }}</p>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-state" role="status">
+      <p>Cargando películas...</p>
+    </div>
+  }
+
+  @if (hasError()) {
+    <div class="error-state">
+      <span>⚠</span>
+      <p>{{ errorMessage() }}</p>
+      <button type="button" (click)="retry()">Intentar nuevamente</button>
+    </div>
+  }
+
+  @if (isEmpty()) {
+    <div class="empty-state">
+      <span>🎬</span>
+      <h3>No encontramos películas</h3>
+      <p>Prueba con otros filtros o términos de búsqueda.</p>
+    </div>
+  }
+
+  @if (hasMovies()) {
+    <div class="movie-grid">
+      @for (movie of movies(); track movie.id) {
+        <a class="movie-card" [routerLink]="['/movies', movie.id]">
+          <div class="poster-container">
+            @if (movie.poster_path) {
+              <img
+                [src]="getPoster(movie.poster_path)"
+                [alt]="movie.title"
+                loading="lazy"
+              />
+            } @else {
+              <div class="no-poster">
+                <span>🎬</span>
+                <p>Sin póster</p>
+              </div>
+            }
+
+            <span class="rating">★ {{ movie.vote_average.toFixed(1) }}</span>
+          </div>
+
+          <div class="movie-info">
+            <h3>{{ movie.title }}</h3>
+
+            <div class="movie-meta">
+              <span>{{ getYear(movie.release_date) }}</span>
+              <span>TMDB</span>
+            </div>
+          </div>
+        </a>
+      }
+    </div>
+
+    @if (totalPages() > 1) {
+      <div class="pagination">
+        <button
+          type="button"
+          [disabled]="!canGoPrev()"
+          (click)="changePage(currentPage() - 1)"
+        >
+          ← Anterior
+        </button>
+
+        <span>{{ currentPage() }} / {{ totalPages() }}</span>
+
+        <button
+          type="button"
+          [disabled]="!canGoNext()"
+          (click)="changePage(currentPage() + 1)"
+        >
+          Siguiente →
+        </button>
+      </div>
+    }
+  }
+</section>

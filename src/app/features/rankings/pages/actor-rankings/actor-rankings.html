@@ -1,0 +1,140 @@
+
+<div class="rankings-container">
+
+  <header class="rankings-header">
+    <div>
+      <span class="section-label">CINEVERSE / RANKINGS</span>
+      <h1>Ranking de actores</h1>
+      <p>Descubre los actores más y menos populares de TMDB.</p>
+    </div>
+
+    <button
+      class="reload-button"
+      type="button"
+      (click)="loadRankings()"
+      [disabled]="loading()">
+      ↻ Actualizar
+    </button>
+  </header>
+
+  <nav class="ranking-tabs">
+    <button
+      type="button"
+      [class.active]="activeRanking() === 'best'"
+      (click)="changeRanking('best')">
+      ⭐ Más populares
+    </button>
+
+    <button
+      type="button"
+      [class.active]="activeRanking() === 'worst'"
+      (click)="changeRanking('worst')">
+      📉 Menor popularidad
+    </button>
+  </nav>
+
+  @if (loading()) {
+    <div class="loading-message">
+      Cargando ranking de actores...
+    </div>
+  }
+
+  @if (error()) {
+    <div class="error-message">
+      {{ error() }}
+    </div>
+  }
+
+  @if (!loading() && !error()) {
+
+    @if (activeRanking() === 'best') {
+      <section class="ranking-section">
+        <div class="ranking-title">
+          <h2>Top 10 actores más populares</h2>
+          <span>Mayor popularidad</span>
+        </div>
+
+        <div class="ranking-list">
+          @for (actor of bestActors(); track actor.id; let i = $index) {
+            <article class="ranking-card">
+
+              <span class="ranking-position">
+                {{ i + 1 }}
+              </span>
+
+              <img
+                class="actor-poster"
+                [src]="getPoster(actor.profile_path)"
+                [alt]="actor.name"
+                loading="lazy">
+
+              <div class="actor-information">
+                <h3>{{ actor.name }}</h3>
+                <span class="actor-category">Actor / Actriz</span>
+                <p class="actor-description">
+                  Popularidad según los datos de TMDB.
+                </p>
+              </div>
+
+              <div class="actor-rating">
+                <span>POPULARIDAD</span>
+                <strong>{{ getPopularity(actor.popularity) }}</strong>
+              </div>
+
+            </article>
+          } @empty {
+            <p class="empty-message">No hay actores disponibles.</p>
+          }
+        </div>
+      </section>
+    }
+
+    @if (activeRanking() === 'worst') {
+      <section class="ranking-section">
+        <div class="ranking-title">
+          <h2>Top 10 de menor popularidad</h2>
+          <span>Menor popularidad</span>
+        </div>
+
+        <div class="ranking-list">
+          @for (actor of worstActors(); track actor.id; let i = $index) {
+            <article class="ranking-card">
+
+              <span class="ranking-position">
+                {{ i + 1 }}
+              </span>
+
+              <img
+                class="actor-poster"
+                [src]="getPoster(actor.profile_path)"
+                [alt]="actor.name"
+                loading="lazy">
+
+              <div class="actor-information">
+                <h3>{{ actor.name }}</h3>
+                <span class="actor-category">Actor / Actriz</span>
+                <p class="actor-description">
+                  Menor popularidad dentro de los resultados consultados.
+                </p>
+              </div>
+
+              <div class="actor-rating worst-rating">
+                <span>POPULARIDAD</span>
+                <strong>{{ getPopularity(actor.popularity) }}</strong>
+              </div>
+
+            </article>
+          } @empty {
+            <p class="empty-message">No hay actores disponibles.</p>
+          }
+        </div>
+      </section>
+    }
+  }
+
+  <footer class="ranking-footer">
+    Datos proporcionados por TMDB.
+    El ranking se calcula según la popularidad, no según la calidad actoral.
+  </footer>
+
+</div>

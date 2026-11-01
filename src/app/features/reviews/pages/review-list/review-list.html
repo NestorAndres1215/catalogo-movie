@@ -1,0 +1,127 @@
+<section class="reviews-page">
+
+  <header class="page-header">
+    <div>
+      <h1>Críticas y reseñas</h1>
+      <p>
+        Descubre las opiniones y valoraciones de la comunidad
+        sobre películas y series.
+      </p>
+    </div>
+  </header>
+
+  <div class="media-selector">
+
+    <button
+      [class.active]="mediaType() === 'movie'"
+      (click)="changeMediaType('movie')">
+
+      Películas
+
+    </button>
+
+    <button
+      [class.active]="mediaType() === 'tv'"
+      (click)="changeMediaType('tv')">
+
+      Series
+
+    </button>
+
+  </div>
+
+  @if (loading()) {
+    <div class="message">
+      <p>Cargando críticas y reseñas...</p>
+    </div>
+  }
+
+  @if (errorMessage()) {
+    <div class="error-message">
+      {{ errorMessage() }}
+    </div>
+  }
+
+  @if (!loading() && filteredReviews.length === 0 && !errorMessage()) {
+    <div class="empty-state">
+      <h2>No hay reseñas disponibles</h2>
+      <p>
+        Todavía no encontramos opiniones para este contenido.
+      </p>
+    </div>
+  }
+
+  @if (!loading() && filteredReviews.length > 0) {
+
+    <div class="reviews-count">
+      <span>
+        {{ filteredReviews.length }}
+        reseñas encontradas
+      </span>
+    </div>
+
+    <div class="reviews-grid">
+
+      @for (review of filteredReviews; track review.id) {
+
+        <article class="review-card">
+
+          <div class="review-header">
+
+            <div class="author-avatar">
+              {{ getAuthorName(review).charAt(0).toUpperCase() }}
+            </div>
+
+            <div class="author-info">
+              <h3>{{ getAuthorName(review) }}</h3>
+
+              <span>
+                {{ review.created_at | date:'dd/MM/yyyy' }}
+              </span>
+            </div>
+
+            @if (getAuthorRating(review) !== null) {
+              <div class="rating">
+                <span>★</span>
+                {{ getAuthorRating(review) | number:'1.1-1' }}
+              </div>
+            }
+
+          </div>
+
+          <div class="media-info">
+            <span class="media-label">
+              {{ review.mediaType === 'movie' ? 'PELÍCULA' : 'SERIE' }}
+            </span>
+
+            <h2>{{ review.mediaTitle }}</h2>
+          </div>
+
+          <div class="review-content">
+            <p>{{ review.content }}</p>
+          </div>
+
+          <footer class="review-footer">
+
+            <a
+              [href]="review.url"
+              target="_blank"
+              rel="noopener noreferrer">
+
+              Leer reseña completa
+
+              <span>↗</span>
+
+            </a>
+
+          </footer>
+
+        </article>
+
+      }
+
+    </div>
+
+  }
+
+</section>

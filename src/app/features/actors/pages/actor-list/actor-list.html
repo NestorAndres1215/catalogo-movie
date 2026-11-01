@@ -1,0 +1,115 @@
+<section class="actors-page">
+  <header class="page-header">
+    <div>
+      <span class="eyebrow">CINEVERSE / PERSONAS</span>
+      <h1>Explora actores y actrices</h1>
+      <p>Conoce a los artistas que dan vida a tus películas y series favoritas.</p>
+    </div>
+  </header>
+
+  <div class="search-container">
+    <span class="search-icon">⌕</span>
+
+    <input
+      type="search"
+      placeholder="Buscar actores, actrices y artistas..."
+      [value]="searchQuery()"
+      (change)="onSearch($event)"
+      (keyup.enter)="onSearch($event)"
+    />
+
+    @if (searchQuery()) {
+      <button class="clear-search" type="button" (click)="clearSearch()">Limpiar</button>
+    }
+  </div>
+
+  <app-actor-filters [filters]="filters()" (filtersChange)="onFiltersChange($event)" />
+
+  <div class="section-heading">
+    <div>
+      <h2>
+        {{ searchQuery() ? 'Resultados de búsqueda' : 'Personas populares' }}
+      </h2>
+      <p>Página {{ currentPage() }} de {{ totalPages() }}</p>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Cargando personas...</p>
+    </div>
+  }
+
+  @if (errorMessage() && !loading()) {
+    <div class="error-state">
+      <span>⚠</span>
+      <p>{{ errorMessage() }}</p>
+
+      <button type="button" (click)="loadActors()">Intentar nuevamente</button>
+    </div>
+  }
+
+  @if (!loading() && !errorMessage() && actors().length === 0) {
+    <div class="empty-state">
+      <span>👤</span>
+      <h3>No encontramos personas</h3>
+      <p>Prueba con otro nombre o departamento profesional.</p>
+    </div>
+  }
+
+  @if (!loading() && actors().length > 0) {
+    <div class="actors-grid">
+      @for (actor of actors(); track actor.id) {
+        <a class="actor-card" [routerLink]="['/actors', actor.id]">
+          <div class="profile-container">
+            @if (actor.profile_path) {
+              <img [src]="getProfile(actor.profile_path)" [alt]="actor.name" loading="lazy" />
+            } @else {
+              <div class="no-profile">
+                <span>👤</span>
+                <p>Sin fotografía</p>
+              </div>
+            }
+
+            <span class="popularity"> ★ {{ actor.popularity.toFixed(1) }} </span>
+          </div>
+
+          <div class="actor-info">
+            <h3>{{ actor.name }}</h3>
+
+            <p class="department">
+              {{ getDepartment(actor.known_for_department) }}
+            </p>
+
+            <p class="known-for">
+              {{ getKnownFor(actor) }}
+            </p>
+          </div>
+        </a>
+      }
+    </div>
+
+    @if (totalPages() > 1) {
+      <div class="pagination">
+        <button
+          type="button"
+          [disabled]="currentPage() === 1"
+          (click)="changePage(currentPage() - 1)"
+        >
+          ← Anterior
+        </button>
+
+        <span>{{ currentPage() }} / {{ totalPages() }}</span>
+
+        <button
+          type="button"
+          [disabled]="currentPage() === totalPages()"
+          (click)="changePage(currentPage() + 1)"
+        >
+          Siguiente →
+        </button>
+      </div>
+    }
+  }
+</section>
