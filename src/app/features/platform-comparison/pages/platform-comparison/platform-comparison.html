@@ -30,24 +30,31 @@
         Series
       </button>
     </div>
+<div class="search-form">
+  <input
+    type="search"
+    placeholder="Ejemplo: Interstellar, Breaking Bad..."
+    [value]="searchQuery()"
+    (input)="onSearchInput($event)"
+    (keydown.enter)="searchMedia()"
+  />
 
-    <div class="search-form">
-      <input
-        type="search"
-        placeholder="Ejemplo: Interstellar, Breaking Bad..."
-        [value]="searchQuery()"
-        (input)="onSearchInput($event)"
-        (keydown.enter)="searchMedia()"
-      />
+  <button
+    type="button"
+    (click)="searchMedia()"
+    [disabled]="loadingSearch()"
+  >
+    {{ loadingSearch() ? 'Buscando...' : 'Buscar' }}
+  </button>
 
-      <button
-        type="button"
-        (click)="searchMedia()"
-        [disabled]="loadingSearch()"
-      >
-        {{ loadingSearch() ? 'Buscando...' : 'Buscar' }}
-      </button>
-    </div>
+  <button
+    type="button"
+    class="clear-button"
+    (click)="clearSearch()"
+  >
+    Limpiar
+  </button>
+</div>
 
   </section>
 

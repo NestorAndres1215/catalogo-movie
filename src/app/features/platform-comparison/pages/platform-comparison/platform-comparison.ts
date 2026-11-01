@@ -158,7 +158,19 @@ export class PlatformComparisonComponent {
   getImageUrl(path: string | null): string {
     return this.catalogService.getImageUrl(path, 'w500');
   }
+clearSearch(): void {
+  this.searchVersion++;
+  this.providerVersion++;
 
+  this.searchQuery.set('');
+  this.searchResults.set([]);
+  this.selectedMedia.set(null);
+  this.selectedRegion.set(null);
+
+  this.loadingSearch.set(false);
+  this.loadingProviders.set(false);
+  this.errorMessage.set('');
+}
   getProviderLogo(path: string): string {
     return this.catalogService.getImageUrl(path, 'w92');
   }
