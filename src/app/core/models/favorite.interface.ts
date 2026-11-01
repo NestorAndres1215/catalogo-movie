@@ -1,5 +1,6 @@
 export interface Favorite {
   id: number;
+  userId: string;
   mediaType: 'movie' | 'tv';
   title: string;
   overview: string;

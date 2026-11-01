@@ -5,22 +5,21 @@ import { RouterLink } from '@angular/router';
 import { FavoriteService } from '../../../../core/service/favorite.service';
 import { Favorite } from '../../../../core/models/favorite.interface';
 import { TmdbService } from '../../../../core/service/tmdb.service';
-import { FavoriteButtonComponent } from '../../../../shared/components/favorite-button/favorite-button';
 
 @Component({
   selector: 'app-favorite-list',
   standalone: true,
   imports: [RouterLink, DecimalPipe],
   templateUrl: './favorite-list.html',
-  styleUrl: './favorite-list.css'
+  styleUrl: './favorite-list.css',
 })
 export class FavoriteListComponent {
-
   private readonly favoriteService = inject(FavoriteService);
   private readonly tmdbService = inject(TmdbService);
 
   readonly selectedType = signal<'all' | 'movie' | 'tv'>('all');
 
+  // Solo obtiene los favoritos del usuario autenticado.
   readonly favorites = this.favoriteService.favorites;
 
   readonly filteredFavorites = computed(() => {
@@ -31,16 +30,16 @@ export class FavoriteListComponent {
     }
 
     return this.favorites().filter(
-      favorite => favorite.mediaType === type
+      (favorite) => favorite.mediaType === type,
     );
   });
 
   readonly totalMovies = computed(() =>
-    this.favorites().filter(item => item.mediaType === 'movie').length
+    this.favorites().filter((item) => item.mediaType === 'movie').length,
   );
 
   readonly totalSeries = computed(() =>
-    this.favorites().filter(item => item.mediaType === 'tv').length
+    this.favorites().filter((item) => item.mediaType === 'tv').length,
   );
 
   readonly totalFavorites = computed(() => this.favorites().length);
@@ -62,7 +61,7 @@ export class FavoriteListComponent {
   removeFavorite(favorite: Favorite): void {
     this.favoriteService.removeFavorite(
       favorite.id,
-      favorite.mediaType
+      favorite.mediaType,
     );
   }
 }

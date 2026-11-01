@@ -1,3 +1,4 @@
+
 <main class="roulette-page">
 
   <header class="page-header">
@@ -42,6 +43,17 @@
           Buscar
         }
       </button>
+
+      @if (searchQuery() || searchResults().length > 0 || searchError()) {
+        <button
+          type="button"
+          class="clear-search-button"
+          (click)="clearSearch()"
+          [disabled]="searching()"
+        >
+          ✕ Limpiar búsqueda
+        </button>
+      }
     </div>
 
     @if (searchError()) {
@@ -68,7 +80,7 @@
             </div>
 
             @if (selectedMovies().some(item => item.id === movie.id)) {
-              <button class="added-button" disabled>
+              <button class="added-button" type="button" disabled>
                 <span>✓</span> Agregada
               </button>
             } @else {

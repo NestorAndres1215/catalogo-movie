@@ -7,10 +7,9 @@ import { Favorite } from '../../../core/models/favorite.interface';
   selector: 'app-favorite-button',
   standalone: true,
   templateUrl: './favorite-button.html',
-  styleUrl: './favorite-button.css'
+  styleUrl: './favorite-button.css',
 })
 export class FavoriteButtonComponent {
-
   private readonly favoriteService = inject(FavoriteService);
 
   @Input({ required: true }) mediaId!: number;
@@ -25,7 +24,7 @@ export class FavoriteButtonComponent {
   isFavorite(): boolean {
     return this.favoriteService.isFavorite(
       this.mediaId,
-      this.mediaType
+      this.mediaType,
     );
   }
 
@@ -33,14 +32,14 @@ export class FavoriteButtonComponent {
     event.preventDefault();
     event.stopPropagation();
 
-    const favorite: Favorite = {
+    const favorite: Omit<Favorite, 'userId'> = {
       id: this.mediaId,
       mediaType: this.mediaType,
       title: this.title,
       overview: this.overview,
       posterPath: this.posterPath,
       voteAverage: this.voteAverage,
-      releaseDate: this.releaseDate
+      releaseDate: this.releaseDate,
     };
 
     this.favoriteService.toggleFavorite(favorite);

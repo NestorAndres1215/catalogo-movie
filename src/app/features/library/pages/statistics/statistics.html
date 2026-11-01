@@ -1,0 +1,182 @@
+
+<section class="statistics-page">
+
+  <header class="page-header">
+    <div>
+      <span class="page-subtitle">MI BIBLIOTECA</span>
+      <h1>Mis estadísticas</h1>
+      <p>Descubre tus gustos cinematográficos y tus hábitos como espectador.</p>
+    </div>
+
+    <span class="statistics-badge">📊 Mi resumen</span>
+  </header>
+
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="loader"></div>
+      <p>Analizando tus películas vistas...</p>
+    </div>
+  } @else if (error()) {
+    <div class="empty-state">
+      <h2>No se pudieron cargar las estadísticas</h2>
+      <p>{{ error() }}</p>
+      <button type="button" (click)="loadStatistics()">
+        Intentar nuevamente
+      </button>
+    </div>
+  } @else if (totalMovies() > 0) {
+
+    <!-- RESUMEN -->
+    <div class="stats-summary">
+
+      <article class="summary-card">
+        <span>🎬</span>
+        <strong>{{ totalMovies() }}</strong>
+        <p>Películas vistas</p>
+      </article>
+
+      <article class="summary-card">
+        <span>⭐</span>
+        <strong>
+          {{ averageRating() > 0
+            ? (averageRating() | number:'1.1-1')
+            : '—' }}
+        </strong>
+        <p>Promedio personal</p>
+      </article>
+
+      <article class="summary-card">
+        <span>🎭</span>
+        <strong>{{ genreStatistics().length }}</strong>
+        <p>Géneros diferentes</p>
+      </article>
+
+      <article class="summary-card">
+        <span>🌟</span>
+        <strong>{{ topFiveActors().length }}</strong>
+        <p>Actores destacados</p>
+      </article>
+
+    </div>
+
+    <!-- GÉNEROS -->
+    <section class="statistics-section">
+      <div class="section-heading">
+        <div>
+          <span class="section-subtitle">TUS PREFERENCIAS</span>
+          <h2>Películas por género</h2>
+          <p>Los géneros que más aparecen en tu historial.</p>
+        </div>
+      </div>
+
+      @if (genreStatistics().length > 0) {
+        <div class="genre-list">
+          @for (genre of genreStatistics(); track genre.id) {
+            <article class="genre-item">
+              <div class="genre-heading">
+                <strong>{{ genre.name }}</strong>
+                <span>{{ genre.count }} películas</span>
+              </div>
+
+              <div class="progress-track">
+                <div
+                  class="progress-value"
+                  [style.width.%]="getGenrePercentage(genre.count)">
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+      } @else {
+        <p class="no-data">No hay información de géneros disponible.</p>
+      }
+    </section>
+
+    <!-- TOP 5 PELÍCULAS -->
+    <section class="statistics-section">
+      <div class="section-heading">
+        <div>
+          <span class="section-subtitle">TUS FAVORITAS</span>
+          <h2>Top 5 películas mejor calificadas</h2>
+          <p>Ordenadas según tu puntuación personal.</p>
+        </div>
+      </div>
+
+      <div class="top-movies">
+        @for (movie of topFiveMovies(); track movie.id; let i = $index) {
+          <article class="top-movie-card">
+            <span class="ranking">#{{ i + 1 }}</span>
+
+            <img
+              [src]="getImageUrl(movie.posterPath)"
+              [alt]="movie.title"
+              loading="lazy">
+
+            <div class="top-movie-info">
+              <h3>{{ movie.title }}</h3>
+              <span>Tu puntuación</span>
+            </div>
+
+            <strong class="movie-rating">
+              ⭐ {{ movie.personalRating }}/10
+            </strong>
+          </article>
+        }
+      </div>
+    </section>
+
+    <!-- TOP 5 ACTORES -->
+    <section class="statistics-section">
+      <div class="section-heading">
+        <div>
+          <span class="section-subtitle">TUS ACTORES FRECUENTES</span>
+          <h2>Actores que más has visto</h2>
+          <p>Actores que aparecen en más películas de tu historial.</p>
+        </div>
+      </div>
+
+      @if (topFiveActors().length > 0) {
+        <div class="actors-grid">
+          @for (actor of topFiveActors(); track actor.id; let i = $index) {
+            <article class="actor-card">
+
+              <span class="actor-ranking">#{{ i + 1 }}</span>
+
+              <img
+                [src]="getImageUrl(actor.profilePath, 'w185')"
+                [alt]="actor.name"
+                loading="lazy">
+
+              <div class="actor-info">
+                <h3>{{ actor.name }}</h3>
+                <strong>{{ actor.count }} películas</strong>
+
+                <div class="actor-movies">
+                  @for (movie of actor.movies; track movie) {
+                    <span>{{ movie }}</span>
+                  }
+                </div>
+              </div>
+
+            </article>
+          }
+        </div>
+      } @else {
+        <p class="no-data">No hay información de actores disponible.</p>
+      }
+    </section>
+
+  } @else {
+
+    <div class="empty-state">
+      <div class="empty-icon">📊</div>
+      <h2>Aún no tienes estadísticas</h2>
+      <p>
+        Marca películas como vistas para comenzar a descubrir
+        tus géneros y actores favoritos.
+      </p>
+    </div>
+
+  }
+
+</section>

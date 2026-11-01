@@ -89,6 +89,7 @@
 
         <article class="media-card">
 
+          <!-- POSTER -->
           <div class="poster-container">
 
             <img
@@ -115,6 +116,7 @@
 
           </div>
 
+          <!-- INFORMACIÓN -->
           <div class="media-info">
 
             <h3>{{ item.title }}</h3>
@@ -123,10 +125,66 @@
               {{ getReleaseYear(item.releaseDate) }}
             </span>
 
+            <!-- ESTADO Y PUNTUACIÓN PERSONAL -->
+            <div class="personal-controls">
+
+              <div class="control-group">
+                <label [for]="'status-' + item.mediaType + '-' + item.id">
+                  Estado de visualización
+                </label>
+
+                <select
+                  class="status-select"
+                  [id]="'status-' + item.mediaType + '-' + item.id"
+                  #statusSelect
+                  [value]="item.status ?? 'pending'"
+                  (change)="updateStatus(
+                    item.id,
+                    item.mediaType,
+                    statusSelect.value
+                  )">
+
+                  <option value="pending">⏳ Pendiente</option>
+                  <option value="watched">✅ Visto</option>
+
+                </select>
+              </div>
+
+              <div class="control-group">
+                <label [for]="'rating-' + item.mediaType + '-' + item.id">
+                  Mi puntuación
+                </label>
+
+                <select
+                  class="rating-select"
+                  [id]="'rating-' + item.mediaType + '-' + item.id"
+                  #ratingSelect
+                  [value]="item.personalRating ?? ''"
+                  (change)="updatePersonalRating(
+                    item.id,
+                    item.mediaType,
+                    ratingSelect.value
+                  )">
+
+                  <option value="">Sin calificar</option>
+
+                  @for (rating of ratings; track rating) {
+                    <option [value]="rating">
+                      ⭐ {{ rating }} / 10
+                    </option>
+                  }
+
+                </select>
+              </div>
+
+            </div>
+
+            <!-- DESCRIPCIÓN -->
             <p class="overview">
               {{ item.overview || 'Sin descripción disponible.' }}
             </p>
 
+            <!-- DETALLES -->
             <button
               class="details-button"
               type="button"
@@ -169,7 +227,7 @@
       <button
         type="button"
         class="explore-button"
-        (click)="router.navigate(['/movies'])">
+        (click)="exploreMovies()">
         Explorar películas
       </button>
 

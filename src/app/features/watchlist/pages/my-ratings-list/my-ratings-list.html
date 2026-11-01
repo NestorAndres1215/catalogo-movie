@@ -1,0 +1,196 @@
+
+<section class="ratings-page">
+
+  <!-- ENCABEZADO -->
+  <header class="page-header">
+    <div>
+      <span class="page-subtitle">MI BIBLIOTECA</span>
+      <h1>Mis calificaciones</h1>
+      <p>Todos los títulos que has calificado en CINEVERSE.</p>
+    </div>
+
+    <span class="ratings-badge">
+      ⭐ Mis puntuaciones
+    </span>
+  </header>
+
+  <!-- ESTADÍSTICAS -->
+  <div class="stats-container">
+
+    <div class="stat-card">
+      <span class="stat-icon">⭐</span>
+      <div>
+        <strong>{{ totalRated() }}</strong>
+        <span>Títulos calificados</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <span class="stat-icon">🎬</span>
+      <div>
+        <strong>{{ totalMovies() }}</strong>
+        <span>Películas</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <span class="stat-icon">📺</span>
+      <div>
+        <strong>{{ totalSeries() }}</strong>
+        <span>Series</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <span class="stat-icon">🏆</span>
+      <div>
+        <strong>
+          {{ averageRating() > 0
+            ? (averageRating() | number:'1.1-1')
+            : '—' }}
+        </strong>
+        <span>Promedio personal</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FILTROS -->
+  <div class="list-header">
+    <div>
+      <h2>Mis puntuaciones</h2>
+      <p>{{ totalRated() }} títulos registrados</p>
+    </div>
+
+    <div class="filter-container">
+      <button
+        type="button"
+        [class.active]="selectedFilter() === 'all'"
+        (click)="selectFilter('all')">
+        Todos
+      </button>
+
+      <button
+        type="button"
+        [class.active]="selectedFilter() === 'movie'"
+        (click)="selectFilter('movie')">
+        Películas
+      </button>
+
+      <button
+        type="button"
+        [class.active]="selectedFilter() === 'tv'"
+        (click)="selectFilter('tv')">
+        Series
+      </button>
+    </div>
+  </div>
+
+  <!-- LISTADO -->
+  @if (ratedItems().length > 0) {
+
+    <div class="media-grid">
+
+      @for (item of ratedItems(); track item.mediaType + '-' + item.id) {
+
+        <article class="media-card">
+
+          <!-- POSTER -->
+          <div class="poster-container">
+
+            <img
+              [src]="getImageUrl(item.posterPath)"
+              [alt]="item.title"
+              loading="lazy">
+
+            <span class="personal-rating-badge">
+              ⭐ {{ item.personalRating }} / 10
+            </span>
+
+            <span class="media-type-badge">
+              {{ getMediaTypeLabel(item.mediaType) }}
+            </span>
+
+          </div>
+
+          <!-- INFORMACIÓN -->
+          <div class="media-info">
+
+            <h3>{{ item.title }}</h3>
+
+            <span class="release-year">
+              {{ getReleaseYear(item.releaseDate) }}
+            </span>
+
+            <div class="rating-comparison">
+
+              <div class="rating-item">
+                <span>Mi puntuación</span>
+                <strong>
+                  ⭐ {{ item.personalRating }} / 10
+                </strong>
+              </div>
+
+              <div class="rating-item">
+                <span>Calificación TMDB</span>
+                <strong>
+                  ⭐ {{ item.voteAverage | number:'1.1-1' }}
+                </strong>
+              </div>
+
+            </div>
+
+            <p class="overview">
+              {{ item.overview || 'Sin descripción disponible.' }}
+            </p>
+
+            <button
+              class="details-button"
+              type="button"
+              (click)="openDetails(item.id, item.mediaType)">
+              Ver detalles
+              <span>→</span>
+            </button>
+
+          </div>
+
+        </article>
+
+      }
+
+    </div>
+
+  } @else {
+
+    <!-- ESTADO VACÍO -->
+    <div class="empty-state">
+
+      <div class="empty-icon">⭐</div>
+
+      <h2>
+        @if (selectedFilter() === 'all') {
+          Todavía no tienes calificaciones
+        } @else if (selectedFilter() === 'movie') {
+          No tienes películas calificadas
+        } @else {
+          No tienes series calificadas
+        }
+      </h2>
+
+      <p>
+        Asigna una puntuación personal a tus películas o series
+        desde tu lista para ver y aparecerán aquí.
+      </p>
+
+      <button
+        type="button"
+        class="explore-button"
+        (click)="goToWatchlist()">
+        Ir a mi lista para ver
+      </button>
+
+    </div>
+
+  }
+
+</section>

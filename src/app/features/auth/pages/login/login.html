@@ -1,0 +1,140 @@
+<div class="auth-page">
+  <div class="auth-background">
+    <div class="glow glow-one"></div>
+    <div class="glow glow-two"></div>
+  </div>
+
+  <main class="auth-container">
+    <a class="brand" routerLink="/login">
+      <span class="brand-icon">🎬</span>
+
+      <span class="brand-name">
+        CINE<span>VERSE</span>
+      </span>
+    </a>
+
+    <section class="auth-card">
+      <div class="auth-heading">
+        <span class="heading-icon">✦</span>
+
+        <p class="eyebrow">TU UNIVERSO CINEMATOGRÁFICO</p>
+
+        <h1>¡Bienvenido de nuevo!</h1>
+
+        <p class="subtitle">
+          Inicia sesión y continúa explorando el mundo del cine.
+        </p>
+      </div>
+
+      @if (errorMessage()) {
+        <div class="alert alert-error" role="alert">
+          <span>⚠</span>
+          {{ errorMessage() }}
+        </div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+        <div class="form-group">
+          <label for="email">Correo electrónico</label>
+
+          <div
+            class="input-wrapper"
+            [class.input-invalid]="
+              form.controls.email.invalid &&
+              form.controls.email.touched
+            "
+          >
+            <span class="input-icon">✉</span>
+
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="tu@correo.com"
+              autocomplete="email"
+            />
+          </div>
+
+          @if (
+            form.controls.email.touched &&
+            form.controls.email.hasError('required')
+          ) {
+            <small class="field-error">
+              El correo electrónico es obligatorio.
+            </small>
+          } @else if (
+            form.controls.email.touched &&
+            form.controls.email.hasError('email')
+          ) {
+            <small class="field-error">
+              Introduce un correo electrónico válido.
+            </small>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+
+          <div
+            class="input-wrapper"
+            [class.input-invalid]="
+              form.controls.password.invalid &&
+              form.controls.password.touched
+            "
+          >
+            <span class="input-icon">🔒</span>
+
+            <input
+              id="password"
+              type="password"
+              formControlName="password"
+              placeholder="Ingresa tu contraseña"
+              autocomplete="current-password"
+            />
+          </div>
+
+          @if (
+            form.controls.password.touched &&
+            form.controls.password.hasError('required')
+          ) {
+            <small class="field-error">
+              La contraseña es obligatoria.
+            </small>
+          }
+        </div>
+
+        <button
+          class="submit-button"
+          type="submit"
+          [disabled]="loading()"
+        >
+          @if (loading()) {
+            <span class="spinner"></span>
+            Iniciando sesión...
+          } @else {
+            Iniciar sesión
+            <span>→</span>
+          }
+        </button>
+      </form>
+
+      <div class="auth-divider">
+        <span>¿Aún no tienes una cuenta?</span>
+      </div>
+
+      <a class="secondary-button" routerLink="/register">
+        Crear una cuenta
+      </a>
+
+      <p class="terms">
+        Al continuar, podrás disfrutar de tu biblioteca cinematográfica
+        personal.
+      </p>
+    </section>
+
+    <footer class="auth-footer">
+      <span>© 2026 CINEVERSE</span>
+      <span>Hecho para amantes del cine ✦</span>
+    </footer>
+  </main>
+</div>

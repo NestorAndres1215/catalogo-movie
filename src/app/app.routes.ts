@@ -1,8 +1,21 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './features/auth/guards/auth.guard';
 
 export const routes: Routes = [
   {
+    path: 'login',
+    loadComponent: () => import('./features/auth/pages/login/login').then((m) => m.LoginComponent),
+  },
+  {
+    path: 'register',
+    loadComponent: () =>
+      import('./features/auth/pages/register/register').then((m) => m.RegisterComponent),
+  },
+
+  {
     path: '',
+    canActivate: [authGuard],
+    canActivateChild: [authGuard],
     loadComponent: () =>
       import('./shared/main-layout/main-layout').then((m) => m.MainLayoutComponent),
 
@@ -128,6 +141,27 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/watchlist/pages/watchlist-list/watchlist-list').then(
             (m) => m.WatchlistListComponent,
+          ),
+      },
+      {
+        path: 'watched',
+        loadComponent: () =>
+          import('./features/watchlist/pages/watched-movies-list/watched-movies-list').then(
+            (m) => m.WatchedMoviesListComponent,
+          ),
+      },
+      {
+        path: 'ratings',
+        loadComponent: () =>
+          import('./features/watchlist/pages/my-ratings-list/my-ratings-list').then(
+            (m) => m.MyRatingsListComponent,
+          ),
+      },
+      {
+        path: 'statistics',
+        loadComponent: () =>
+          import('./features/library/pages/statistics/statistics').then(
+            (m) => m.StatisticsComponent,
           ),
       },
       {
@@ -266,7 +300,7 @@ export const routes: Routes = [
             (m) => m.SagaRankingsComponent,
           ),
       },
-        {
+      {
         path: 'rankings/streaming',
         loadComponent: () =>
           import('./features/rankings/pages/streaming-rankings/streaming-rankings').then(

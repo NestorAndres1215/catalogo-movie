@@ -1,14 +1,31 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
+
 import { Favorite } from '../models/favorite.interface';
+import { AuthService } from './auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FavoriteService {
-
   private readonly storageKey = 'cineverse_favorites';
 
-  readonly favorites = signal<Favorite[]>(this.loadFavorites());
+  private readonly authService = inject(AuthService);
+
+  // Todos los favoritos de todas las cuentas.
+  private readonly allFavorites = signal<Favorite[]>(this.loadFavorites());
+
+  // Solo muestra los favoritos del usuario autenticado.
+  readonly favorites = computed(() => {
+    const userId = this.authService.currentUser()?.id;
+
+    if (!userId) {
+      return [];
+    }
+
+    return this.allFavorites().filter(
+      (favorite) => favorite.userId === userId,
+    );
+  });
 
   private loadFavorites(): Favorite[] {
     if (typeof localStorage === 'undefined') {
@@ -42,52 +59,82 @@ export class FavoriteService {
 
     localStorage.setItem(
       this.storageKey,
-      JSON.stringify(this.favorites())
+      JSON.stringify(this.allFavorites()),
     );
   }
 
   isFavorite(id: number, mediaType: 'movie' | 'tv'): boolean {
     return this.favorites().some(
-      favorite =>
+      (favorite) =>
         favorite.id === id &&
-        favorite.mediaType === mediaType
+        favorite.mediaType === mediaType,
     );
   }
 
-  toggleFavorite(favorite: Favorite): void {
-    this.favorites.update(current => {
+  toggleFavorite(favorite: Omit<Favorite, 'userId'>): void {
+    const userId = this.authService.currentUser()?.id;
+
+    if (!userId) {
+      return;
+    }
+
+    this.allFavorites.update((current) => {
       const exists = current.some(
-        item =>
+        (item) =>
+          item.userId === userId &&
           item.id === favorite.id &&
-          item.mediaType === favorite.mediaType
+          item.mediaType === favorite.mediaType,
       );
 
-      return exists
-        ? current.filter(
-            item =>
-              item.id !== favorite.id ||
-              item.mediaType !== favorite.mediaType
-          )
-        : [...current, favorite];
+      if (exists) {
+        return current.filter(
+          (item) =>
+            !(
+              item.userId === userId &&
+              item.id === favorite.id &&
+              item.mediaType === favorite.mediaType
+            ),
+        );
+      }
+
+      return [...current, { ...favorite, userId }];
     });
 
     this.saveFavorites();
   }
 
   removeFavorite(id: number, mediaType: 'movie' | 'tv'): void {
-    this.favorites.update(current =>
+    const userId = this.authService.currentUser()?.id;
+
+    if (!userId) {
+      return;
+    }
+
+    this.allFavorites.update((current) =>
       current.filter(
-        item =>
-          item.id !== id ||
-          item.mediaType !== mediaType
-      )
+        (item) =>
+          !(
+            item.userId === userId &&
+            item.id === id &&
+            item.mediaType === mediaType
+          ),
+      ),
     );
 
     this.saveFavorites();
   }
 
   clearFavorites(): void {
-    this.favorites.set([]);
+    const userId = this.authService.currentUser()?.id;
+
+    if (!userId) {
+      return;
+    }
+
+    this.allFavorites.update((current) =>
+      current.filter((favorite) => favorite.userId !== userId),
+    );
+
     this.saveFavorites();
   }
 }

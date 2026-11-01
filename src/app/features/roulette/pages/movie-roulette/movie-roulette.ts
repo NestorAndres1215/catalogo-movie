@@ -1,3 +1,4 @@
+
 import { Component, inject, signal } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 
@@ -23,6 +24,7 @@ interface RouletteWinner {
   styleUrl: './movie-roulette.css',
 })
 export class MovieRouletteComponent {
+
   private readonly catalogService = inject(CatalogService);
   private readonly watchlistService = inject(WatchlistService);
 
@@ -88,13 +90,15 @@ export class MovieRouletteComponent {
   }
 
   addMovie(movie: CatalogMedia): void {
-    const alreadyAdded = this.selectedMovies().some((selected) => selected.id === movie.id);
+    const alreadyAdded = this.selectedMovies().some(
+      selected => selected.id === movie.id
+    );
 
     if (alreadyAdded) {
       return;
     }
 
-    this.selectedMovies.update((current) => [...current, movie]);
+    this.selectedMovies.update(current => [...current, movie]);
 
     this.message.set('');
     this.adjustWinnerCount();
@@ -105,7 +109,9 @@ export class MovieRouletteComponent {
       return;
     }
 
-    this.selectedMovies.update((current) => current.filter((movie) => movie.id !== movieId));
+    this.selectedMovies.update(
+      current => current.filter(movie => movie.id !== movieId)
+    );
 
     this.adjustWinnerCount();
   }
@@ -136,17 +142,25 @@ export class MovieRouletteComponent {
       return;
     }
 
-    this.winnerCount.set(Math.min(value, this.selectedMovies().length));
+    this.winnerCount.set(
+      Math.min(value, this.selectedMovies().length)
+    );
   }
 
   getAvailableMovies(): CatalogMedia[] {
-    const drawnIds = this.winners().map((winner) => winner.movie.id);
+    const drawnIds = this.winners().map(
+      winner => winner.movie.id
+    );
 
-    return this.selectedMovies().filter((movie) => !drawnIds.includes(movie.id));
+    return this.selectedMovies().filter(
+      movie => !drawnIds.includes(movie.id)
+    );
   }
 
   getPendingWinner(): RouletteWinner | undefined {
-    return this.winners().find((winner) => winner.status === 'pending');
+    return this.winners().find(
+      winner => winner.status === 'pending'
+    );
   }
 
   canSpin(): boolean {
@@ -161,7 +175,10 @@ export class MovieRouletteComponent {
   }
 
   getWinnerOptions(): number[] {
-    return Array.from({ length: this.selectedMovies().length }, (_, index) => index + 1);
+    return Array.from(
+      { length: this.selectedMovies().length },
+      (_, index) => index + 1
+    );
   }
 
   spinRoulette(): void {
@@ -180,7 +197,10 @@ export class MovieRouletteComponent {
     this.message.set('');
 
     // Selección aleatoria sin repetir ganadores.
-    const randomIndex = Math.floor(Math.random() * available.length);
+    const randomIndex = Math.floor(
+      Math.random() * available.length
+    );
+
     const selectedMovie = available[randomIndex];
 
     this.spinTimeout = setTimeout(() => {
@@ -192,43 +212,52 @@ export class MovieRouletteComponent {
         status: 'pending',
       };
 
-      this.winners.update((current) => [...current, winner]);
+      this.winners.update(current => [...current, winner]);
 
       this.currentWinner.set(selectedMovie);
       this.spinning.set(false);
 
       this.message.set(
-        `¡La película ganadora número ${position} es ${this.getTitle(selectedMovie)}!`,
+        `¡La película ganadora número ${position} es ${this.getTitle(selectedMovie)}!`
       );
+
     }, 3000);
   }
 
-  acceptWinner(winner: RouletteWinner): void {
-    if (winner.status !== 'pending') {
-      return;
-    }
-
-    const item: FavoriteWatchlistItem = {
-      id: winner.movie.id,
-      mediaType: 'movie',
-      title: this.getTitle(winner.movie),
-      overview: winner.movie.overview || '',
-      posterPath: winner.movie.poster_path,
-      voteAverage: winner.movie.vote_average,
-      releaseDate: winner.movie.release_date || '',
-    };
-
-    // Evita que toggle quite una película que ya estaba guardada.
-    if (!this.watchlistService.isInWatchlist(item.id, item.mediaType)) {
-      this.watchlistService.toggle(item);
-    }
-
-    this.updateWinnerStatus(winner.movie.id, 'accepted');
-
-    this.message.set(`${item.title} fue agregada a Mi lista.`);
-
-    this.checkCompletion();
+  /**
+   * Registra siempre una nueva entrada en Mi lista,
+   * aunque la película ya esté registrada.
+   */
+ /**
+ * Registra una nueva entrada en Mi lista,
+ * aunque la película ya esté registrada.
+ */
+acceptWinner(winner: RouletteWinner): void {
+  if (winner.status !== 'pending') {
+    return;
   }
+
+  const item: Omit<FavoriteWatchlistItem, 'userId'> = {
+    id: winner.movie.id,
+    mediaType: 'movie',
+    title: this.getTitle(winner.movie),
+    overview: winner.movie.overview || '',
+    posterPath: winner.movie.poster_path,
+    voteAverage: winner.movie.vote_average,
+    releaseDate: winner.movie.release_date || '',
+  };
+
+  // El servicio asigna automáticamente el userId.
+  this.watchlistService.add(item);
+
+  this.updateWinnerStatus(winner.movie.id, 'accepted');
+
+  this.message.set(
+    `${item.title} fue agregada a Mi lista.`,
+  );
+
+  this.checkCompletion();
+}
 
   rejectWinner(winner: RouletteWinner): void {
     if (winner.status !== 'pending') {
@@ -237,21 +266,32 @@ export class MovieRouletteComponent {
 
     this.updateWinnerStatus(winner.movie.id, 'rejected');
 
-    this.message.set(`${this.getTitle(winner.movie)} fue rechazada.`);
+    this.message.set(
+      `${this.getTitle(winner.movie)} fue rechazada.`
+    );
 
     this.checkCompletion();
   }
 
-  updateWinnerStatus(movieId: number, status: 'accepted' | 'rejected'): void {
-    this.winners.update((current) =>
-      current.map((winner) => (winner.movie.id === movieId ? { ...winner, status } : winner)),
+  updateWinnerStatus(
+    movieId: number,
+    status: 'accepted' | 'rejected'
+  ): void {
+    this.winners.update(current =>
+      current.map(winner =>
+        winner.movie.id === movieId
+          ? { ...winner, status }
+          : winner
+      )
     );
   }
 
   checkCompletion(): void {
     const allDecided =
       this.winners().length === this.winnerCount() &&
-      this.winners().every((winner) => winner.status !== 'pending');
+      this.winners().every(
+        winner => winner.status !== 'pending'
+      );
 
     if (allDecided) {
       this.completed.set(true);
@@ -305,10 +345,24 @@ export class MovieRouletteComponent {
   }
 
   getAcceptedCount(): number {
-    return this.winners().filter((winner) => winner.status === 'accepted').length;
+    return this.winners().filter(
+      winner => winner.status === 'accepted'
+    ).length;
   }
 
   getRejectedCount(): number {
-    return this.winners().filter((winner) => winner.status === 'rejected').length;
+    return this.winners().filter(
+      winner => winner.status === 'rejected'
+    ).length;
   }
+
+  clearSearch(): void {
+  this.searchQuery.set('');
+  this.searchResults.set([]);
+  this.searchError.set('');
+  this.searching.set(false);
+
+  // Invalida cualquier búsqueda anterior.
+  this.searchVersion++;
+}
 }

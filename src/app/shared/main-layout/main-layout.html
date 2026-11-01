@@ -205,6 +205,32 @@
         >
           <span>📋</span> Mi lista para ver
         </a>
+        <a
+          class="sidebar-link"
+          routerLink="/watched"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>🎬</span> Películas y series vistas
+        </a>
+
+        <a
+          class="sidebar-link"
+          routerLink="/ratings"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>⭐</span> Mis calificaciones
+        </a>
+        <a
+          class="sidebar-link"
+          routerLink="/statistics"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>📊</span>
+          Estadísticas
+        </a>
       </div>
 
       <!-- TOP Y RANKINGS -->
@@ -435,7 +461,43 @@
           }
         </div>
 
-        <button class="profile-button" type="button" aria-label="Perfil">N</button>
+<div class="profile-container">
+  <button
+    class="profile-button"
+    type="button"
+    aria-label="Abrir menú de usuario"
+    [attr.aria-expanded]="profileMenuOpen()"
+    (click)="toggleProfileMenu()"
+  >
+    {{ getUserInitial() }}
+  </button>
+
+  @if (profileMenuOpen()) {
+    <div class="profile-menu">
+      <div class="profile-info">
+        <div class="profile-avatar">
+          {{ getUserInitial() }}
+        </div>
+
+        <div class="profile-details">
+          <strong>{{ currentUser()?.name }}</strong>
+          <small>{{ currentUser()?.email }}</small>
+        </div>
+      </div>
+
+      <div class="profile-divider"></div>
+
+      <button
+        class="logout-button"
+        type="button"
+        (click)="logout()"
+      >
+        <span>↪</span>
+        Cerrar sesión
+      </button>
+    </div>
+  }
+</div>
       </div>
     </header>
 

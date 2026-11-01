@@ -193,3 +193,20 @@ export interface CompanySearchResponse {
   total_pages: number;
   total_results: number;
 }
+
+export type WatchlistStatus = 'pending' | 'watched';
+
+export interface FavoriteWatchlistItem {
+  id: number;
+  userId: string;
+  mediaType: 'movie' | 'tv';
+  title: string;
+  overview: string;
+  posterPath: string | null;
+  voteAverage: number;
+  releaseDate: string;
+
+  // Datos personales del usuario
+  status?: WatchlistStatus;
+  personalRating?: number | null;
+}

@@ -9,6 +9,7 @@ import {
 import { TmdbService } from '../../core/service/tmdb.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Subject, debounceTime, distinctUntilChanged, switchMap, catchError, of } from 'rxjs';
+import { AuthService } from '../../core/service/auth.service';
 type SearchMediaType = 'movie' | 'tv' | 'person';
 
 interface GlobalSearchResult {
@@ -41,7 +42,29 @@ interface GlobalSearchResponse {
 export class MainLayoutComponent {
 
   sidebarOpen = signal<boolean>(false);
+private readonly authService = inject(AuthService);
 
+readonly currentUser = this.authService.currentUser;
+
+profileMenuOpen = signal(false);
+
+getUserInitial(): string {
+  return this.currentUser()?.name.charAt(0).toUpperCase() ?? 'U';
+}
+
+toggleProfileMenu(): void {
+  this.profileMenuOpen.update((open) => !open);
+}
+
+closeProfileMenu(): void {
+  this.profileMenuOpen.set(false);
+}
+
+logout(): void {
+  this.closeProfileMenu();
+  this.authService.logout();
+  this.router.navigate(['/login']);
+}
   toggleSidebar(): void {
     this.sidebarOpen.update(open => !open);
   }
