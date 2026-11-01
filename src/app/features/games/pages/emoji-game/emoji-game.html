@@ -1,26 +1,77 @@
 <section class="game-container">
 
-  <!-- ENCABEZADO -->
-  <header class="game-header">
-    <span class="eyebrow">CINEVERSE · CENTRO DE JUEGOS</span>
+  @if (!gameStarted()) {
 
-    <h1>Adivina la película 🎬</h1>
+    <!-- PANTALLA DE BIENVENIDA -->
+    <section class="welcome-card">
 
-    <p>
-      ¿Cuánto sabes de cine? Descubre las películas
-      ocultas detrás de los emojis.
-    </p>
-  </header>
+      <div class="welcome-icon">🎬</div>
 
-  @if (!gameFinished()) {
+      <span class="eyebrow">CINEVERSE · CENTRO DE JUEGOS</span>
+
+      <h2>¿Cuánto sabes de cine?</h2>
+
+      <p>
+        Pon a prueba tus conocimientos e intenta descubrir
+        las películas escondidas detrás de los emojis.
+      </p>
+
+      <div class="welcome-rules">
+
+        <div class="rule-card">
+          <span>🎯</span>
+          <strong>10 preguntas</strong>
+        </div>
+
+        <div class="rule-card">
+          <span>⏱️</span>
+          <strong>30 segundos por pregunta</strong>
+        </div>
+
+        <div class="rule-card">
+          <span>⭐</span>
+          <strong>1 punto por acierto</strong>
+        </div>
+
+      </div>
+
+      <button
+        type="button"
+        class="start-button"
+        (click)="startGame()">
+
+        ▶ Jugar adivinanza
+
+      </button>
+
+    </section>
+
+  } @else if (!gameFinished()) {
 
     @if (currentQuestion(); as question) {
+
+      <!-- ENCABEZADO -->
+      <header class="game-header">
+
+        <span class="eyebrow">
+          CINEVERSE · CENTRO DE JUEGOS
+        </span>
+
+        <h1>Adivina la película 🎬</h1>
+
+        <p>
+          ¿Cuánto sabes de cine? Descubre las películas
+          ocultas detrás de los emojis.
+        </p>
+
+      </header>
 
       <!-- INFORMACIÓN DEL JUEGO -->
       <div class="game-stats">
 
         <div class="stat-card">
           <span>Pregunta</span>
+
           <strong>
             {{ currentQuestionIndex() + 1 }}/{{ totalQuestions }}
           </strong>
@@ -28,26 +79,42 @@
 
         <div class="stat-card">
           <span>Puntuación</span>
+
           <strong>⭐ {{ score() }}</strong>
+        </div>
+
+        <div
+          class="stat-card timer-card"
+          [class.timer-danger]="timeLeft() <= 10">
+
+          <span>Tiempo restante</span>
+
+          <strong>⏱️ {{ timeLeft() }}s</strong>
+
         </div>
 
       </div>
 
       <!-- PROGRESO -->
       <div class="progress-container">
+
         <div class="progress-info">
           <span>Tu progreso</span>
+
           <span>
             {{ currentQuestionIndex() + 1 }} de {{ totalQuestions }}
           </span>
         </div>
 
         <div class="progress-bar">
+
           <div
             class="progress-fill"
             [style.width.%]="getProgress()">
           </div>
+
         </div>
+
       </div>
 
       <!-- PREGUNTA -->
@@ -74,18 +141,27 @@
               type="button"
               class="answer-option"
               [class.correct]="answered() && isCorrect(option)"
-              [class.incorrect]="answered() && isSelected(option) && !isCorrect(option)"
-              [class.disabled]="answered()"
+              [class.incorrect]="
+                answered() &&
+                isSelected(option) &&
+                !isCorrect(option)
+              "
               [disabled]="answered()"
               (click)="answerQuestion(option)">
 
-              <span class="option-text">{{ option }}</span>
+              <span class="option-text">
+                {{ option }}
+              </span>
 
               @if (answered() && isCorrect(option)) {
                 <span class="option-icon">✓</span>
               }
 
-              @if (answered() && isSelected(option) && !isCorrect(option)) {
+              @if (
+                answered() &&
+                isSelected(option) &&
+                !isCorrect(option)
+              ) {
                 <span class="option-icon">✕</span>
               }
 
@@ -104,20 +180,43 @@
             [class.failure]="!isCorrect(selectedAnswer() ?? '')">
 
             @if (isCorrect(selectedAnswer() ?? '')) {
+
               <span class="feedback-icon">🎉</span>
+
               <div>
                 <strong>¡Respuesta correcta!</strong>
-                <p>¡Muy bien! Has ganado un punto.</p>
+
+                <p>
+                  ¡Muy bien! Has ganado un punto.
+                </p>
               </div>
+
+            } @else if (selectedAnswer() === null) {
+
+              <span class="feedback-icon">⏰</span>
+
+              <div>
+                <strong>¡Se acabó el tiempo!</strong>
+
+                <p>
+                  No respondiste a tiempo. La respuesta correcta era:
+                  <b>{{ question.answer }}</b>
+                </p>
+              </div>
+
             } @else {
+
               <span class="feedback-icon">😅</span>
+
               <div>
                 <strong>¡Respuesta incorrecta!</strong>
+
                 <p>
                   La respuesta correcta era:
                   <b>{{ question.answer }}</b>
                 </p>
               </div>
+
             }
 
           </div>
@@ -132,9 +231,11 @@
             class="next-button"
             (click)="nextQuestion()">
 
-            {{ currentQuestionIndex() + 1 === totalQuestions
-              ? 'Ver resultados'
-              : 'Siguiente pregunta →' }}
+            {{
+              currentQuestionIndex() + 1 === totalQuestions
+                ? 'Ver resultados'
+                : 'Siguiente pregunta →'
+            }}
 
           </button>
 
@@ -150,6 +251,7 @@
     <section class="result-card">
 
       <div class="result-icon">
+
         @if (score() >= 8) {
           🏆
         } @else if (score() >= 5) {
@@ -157,6 +259,7 @@
         } @else {
           🍿
         }
+
       </div>
 
       <span class="eyebrow">RESULTADO FINAL</span>
@@ -173,6 +276,7 @@
       </p>
 
       <div class="result-details">
+
         <div>
           <strong>{{ score() }}</strong>
           <span>Correctas</span>
@@ -187,22 +291,29 @@
           <strong>{{ score() * 10 }}%</strong>
           <span>Resultado</span>
         </div>
+
       </div>
 
       <button
         type="button"
         class="restart-button"
         (click)="startGame()">
+
         🔄 Jugar nuevamente
+
       </button>
 
     </section>
 
   }
 
+  <!-- FOOTER -->
   <footer class="game-footer">
+
     <span>🎥</span>
+
     CINEVERSE · Pon a prueba tus conocimientos de cine.
+
   </footer>
 
 </section>

@@ -307,6 +307,18 @@ export const routes: Routes = [
             (m) => m.StreamingRankingsComponent,
           ),
       },
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./features/profile/pages/cinematic-profile/cinematic-profile').then(
+            (m) => m.CinematicProfile,
+          ),
+      },
+      {
+        path: 'settings',
+        loadComponent: () =>
+          import('./features/settings/pages/settings/settings').then((m) => m.Settings),
+      },
     ],
   },
   {

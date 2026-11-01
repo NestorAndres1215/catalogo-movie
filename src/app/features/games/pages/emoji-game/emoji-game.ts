@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnDestroy, signal } from '@angular/core';
 
 interface EmojiQuestion {
   id: number;
@@ -15,7 +15,7 @@ interface EmojiQuestion {
   templateUrl: './emoji-game.html',
   styleUrl: './emoji-game.css',
 })
-export class EmojiGameComponent {
+export class EmojiGameComponent implements OnDestroy {
   private readonly questionBank: EmojiQuestion[] = [
     {
       id: 1,
@@ -97,14 +97,24 @@ export class EmojiGameComponent {
       emojis: '💍 🧙 🏔️ 🧝',
       hint: 'Un pequeño hobbit debe destruir un poderoso anillo.',
       answer: 'El señor de los anillos',
-      options: ['Harry Potter', 'El hobbit', 'El señor de los anillos', 'Las crónicas de Narnia'],
+      options: [
+        'Harry Potter',
+        'El hobbit',
+        'El señor de los anillos',
+        'Las crónicas de Narnia',
+      ],
     },
     {
       id: 12,
       emojis: '🏴‍☠️ 🚢 🦜 ⚔️',
       hint: 'Un pirata muy peculiar busca un barco legendario.',
       answer: 'Piratas del Caribe',
-      options: ['Piratas del Caribe', 'Peter Pan', 'La isla del tesoro', 'Master and Commander'],
+      options: [
+        'Piratas del Caribe',
+        'Peter Pan',
+        'La isla del tesoro',
+        'Master and Commander',
+      ],
     },
     {
       id: 13,
@@ -195,7 +205,12 @@ export class EmojiGameComponent {
       emojis: '🦇 🌃 🃏 💰',
       hint: 'Un héroe de Gotham se enfrenta a un villano llamado Joker.',
       answer: 'Batman: El caballero de la noche',
-      options: ['Superman', 'Batman: El caballero de la noche', 'Joker', 'Iron Man'],
+      options: [
+        'Superman',
+        'Batman: El caballero de la noche',
+        'Joker',
+        'Iron Man',
+      ],
     },
     {
       id: 26,
@@ -289,7 +304,12 @@ export class EmojiGameComponent {
       emojis: '🚀 🌌 🤖 ⭐',
       hint: 'Un grupo de héroes viaja por el espacio con un mapache.',
       answer: 'Guardianes de la Galaxia',
-      options: ['Star Trek', 'Guardianes de la Galaxia', 'Star Wars', 'Interstellar'],
+      options: [
+        'Star Trek',
+        'Guardianes de la Galaxia',
+        'Star Wars',
+        'Interstellar',
+      ],
     },
     {
       id: 38,
@@ -336,21 +356,36 @@ export class EmojiGameComponent {
       emojis: '🧙‍♀️ 🧹 🐈 🌙',
       hint: 'Una joven bruja aprende a vivir por su cuenta.',
       answer: 'Kiki: Entregas a domicilio',
-      options: ['El viaje de Chihiro', 'Kiki: Entregas a domicilio', 'Mi vecino Totoro', 'Ponyo'],
+      options: [
+        'El viaje de Chihiro',
+        'Kiki: Entregas a domicilio',
+        'Mi vecino Totoro',
+        'Ponyo',
+      ],
     },
     {
       id: 44,
       emojis: '🐉 🏯 👧 👻',
       hint: 'Una niña entra en un misterioso mundo de espíritus.',
       answer: 'El viaje de Chihiro',
-      options: ['Ponyo', 'El viaje de Chihiro', 'La princesa Mononoke', 'Mi vecino Totoro'],
+      options: [
+        'Ponyo',
+        'El viaje de Chihiro',
+        'La princesa Mononoke',
+        'Mi vecino Totoro',
+      ],
     },
     {
       id: 45,
       emojis: '🌳 🐱 👧 🌧️',
       hint: 'Dos niñas conocen a una criatura gigante del bosque.',
       answer: 'Mi vecino Totoro',
-      options: ['Mi vecino Totoro', 'Ponyo', 'El viaje de Chihiro', 'El castillo ambulante'],
+      options: [
+        'Mi vecino Totoro',
+        'Ponyo',
+        'El viaje de Chihiro',
+        'El castillo ambulante',
+      ],
     },
     {
       id: 46,
@@ -395,14 +430,21 @@ export class EmojiGameComponent {
   readonly score = signal(0);
   readonly answered = signal(false);
   readonly gameFinished = signal(false);
+  readonly gameStarted = signal(false);
 
   readonly totalQuestions = 10;
+  readonly totalTime = 30;
+  readonly timeLeft = signal(30);
+
+  private timerInterval: ReturnType<typeof setInterval> | null = null;
 
   constructor() {
-    this.startGame();
+    // El juego espera a que el usuario pulse el botón de inicio.
   }
 
   startGame(): void {
+    this.stopTimer();
+
     const shuffled = this.shuffle([...this.questionBank]);
 
     this.questions.set(shuffled.slice(0, this.totalQuestions));
@@ -411,6 +453,47 @@ export class EmojiGameComponent {
     this.score.set(0);
     this.answered.set(false);
     this.gameFinished.set(false);
+    this.timeLeft.set(this.totalTime);
+    this.gameStarted.set(true);
+
+    this.startTimer();
+  }
+
+  private startTimer(): void {
+    this.stopTimer();
+    this.timeLeft.set(this.totalTime);
+
+    this.timerInterval = setInterval(() => {
+      if (this.answered() || this.gameFinished()) {
+        this.stopTimer();
+        return;
+      }
+
+      if (this.timeLeft() > 1) {
+        this.timeLeft.update((time) => time - 1);
+        return;
+      }
+
+      this.timeLeft.set(0);
+      this.timeExpired();
+    }, 1000);
+  }
+
+  private stopTimer(): void {
+    if (this.timerInterval !== null) {
+      clearInterval(this.timerInterval);
+      this.timerInterval = null;
+    }
+  }
+
+  private timeExpired(): void {
+    if (this.answered() || this.gameFinished()) {
+      return;
+    }
+
+    this.stopTimer();
+    this.selectedAnswer.set(null);
+    this.answered.set(true);
   }
 
   answerQuestion(option: string): void {
@@ -424,6 +507,7 @@ export class EmojiGameComponent {
       return;
     }
 
+    this.stopTimer();
     this.selectedAnswer.set(option);
     this.answered.set(true);
 
@@ -437,6 +521,8 @@ export class EmojiGameComponent {
       return;
     }
 
+    this.stopTimer();
+
     const nextIndex = this.currentQuestionIndex() + 1;
 
     if (nextIndex >= this.questions().length) {
@@ -447,6 +533,8 @@ export class EmojiGameComponent {
     this.currentQuestionIndex.set(nextIndex);
     this.selectedAnswer.set(null);
     this.answered.set(false);
+
+    this.startTimer();
   }
 
   currentQuestion(): EmojiQuestion | undefined {
@@ -462,7 +550,9 @@ export class EmojiGameComponent {
   }
 
   getProgress(): number {
-    return ((this.currentQuestionIndex() + 1) / this.totalQuestions) * 100;
+    return (
+      ((this.currentQuestionIndex() + 1) / this.totalQuestions) * 100
+    );
   }
 
   getResultMessage(): string {
@@ -495,5 +585,9 @@ export class EmojiGameComponent {
     }
 
     return items;
+  }
+
+  ngOnDestroy(): void {
+    this.stopTimer();
   }
 }

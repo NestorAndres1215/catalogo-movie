@@ -10,15 +10,99 @@
   padding: 35px 25px;
 }
 
-.game-header {
-  margin-bottom: 35px;
-}
+/* TEXTOS GENERALES */
 
 .eyebrow {
   color: #a78bfa;
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 2px;
+}
+
+/* PANTALLA DE BIENVENIDA */
+
+.welcome-card {
+  max-width: 700px;
+  margin: 45px auto;
+  padding: 45px 35px;
+  background: linear-gradient(145deg, #202438, #171b29);
+  border: 1px solid #393e55;
+  border-radius: 24px;
+  text-align: center;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
+}
+
+.welcome-icon {
+  margin-bottom: 20px;
+  font-size: 75px;
+}
+
+.welcome-card h2 {
+  margin: 15px 0;
+  font-size: clamp(25px, 5vw, 36px);
+  font-weight: 800;
+}
+
+.welcome-card > p {
+  max-width: 480px;
+  margin: 0 auto;
+  color: #a3a9bb;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.welcome-rules {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 35px 0;
+}
+
+.rule-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 110px;
+  padding: 20px 10px;
+  background: #252a3c;
+  border: 1px solid #3a4057;
+  border-radius: 14px;
+}
+
+.rule-card span {
+  font-size: 28px;
+}
+
+.rule-card strong {
+  color: #d1d5e2;
+  font-size: 12px;
+}
+
+.start-button {
+  width: 100%;
+  max-width: 350px;
+  padding: 17px;
+  border: none;
+  border-radius: 13px;
+  background: linear-gradient(135deg, #7c3aed, #5b4be7);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.start-button:hover {
+  filter: brightness(1.15);
+  transform: translateY(-3px);
+}
+
+/* ENCABEZADO DEL JUEGO */
+
+.game-header {
+  margin-bottom: 35px;
 }
 
 .game-header h1 {
@@ -38,7 +122,7 @@
 
 .game-stats {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 15px;
   margin-bottom: 25px;
 }
@@ -60,6 +144,28 @@
 
 .stat-card strong {
   font-size: 23px;
+}
+
+/* CRONÓMETRO */
+
+.timer-card strong {
+  color: #a78bfa;
+  font-variant-numeric: tabular-nums;
+}
+
+.timer-card.timer-danger {
+  border-color: #ef4444;
+  animation: timer-pulse 1s infinite;
+}
+
+.timer-card.timer-danger strong {
+  color: #f87171;
+}
+
+@keyframes timer-pulse {
+  50% {
+    background: rgba(220, 38, 38, 0.15);
+  }
 }
 
 /* PROGRESO */
@@ -91,7 +197,7 @@
   transition: width 0.4s ease;
 }
 
-/* PREGUNTA */
+/* TARJETA DE PREGUNTA */
 
 .question-card {
   padding: 35px;
@@ -224,6 +330,10 @@
   line-height: 1.5;
 }
 
+.answer-feedback b {
+  color: #ffffff;
+}
+
 .hint-container {
   margin-top: 15px;
   color: #b4bad0;
@@ -340,6 +450,7 @@
   margin-top: 40px;
   color: #777f95;
   font-size: 12px;
+  text-align: center;
 }
 
 /* RESPONSIVE */
@@ -347,6 +458,29 @@
 @media (max-width: 650px) {
   .game-container {
     padding: 25px 15px;
+  }
+
+  .welcome-card {
+    margin: 20px auto;
+    padding: 30px 18px;
+  }
+
+  .welcome-rules {
+    grid-template-columns: 1fr;
+  }
+
+  .rule-card {
+    flex-direction: row;
+    min-height: auto;
+  }
+
+  .game-stats {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .stat-card {
+    padding: 14px;
   }
 
   .question-card {

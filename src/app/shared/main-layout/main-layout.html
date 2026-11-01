@@ -187,7 +187,14 @@
       <!-- MI BIBLIOTECA -->
       <div class="sidebar-section">
         <p class="sidebar-title">MI BIBLIOTECA</p>
-
+        <a
+          class="sidebar-link"
+          routerLink="/profile"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>🎭</span> Mi perfil cinematográfico
+        </a>
         <a
           class="sidebar-link"
           routerLink="/favorites"
@@ -387,6 +394,18 @@
           <span>🧠</span> Trivia de películas
         </a>
       </div>
+      <div class="sidebar-section">
+        <p class="sidebar-title">Configuracion</p>
+        <a
+          class="sidebar-link"
+          routerLink="/settings"
+          routerLinkActive="active"
+          (click)="closeSidebar()"
+        >
+          <span>⚙️</span>
+          Configuración
+        </a>
+      </div>
     </nav>
 
     <!-- FOOTER -->
@@ -461,43 +480,39 @@
           }
         </div>
 
-<div class="profile-container">
-  <button
-    class="profile-button"
-    type="button"
-    aria-label="Abrir menú de usuario"
-    [attr.aria-expanded]="profileMenuOpen()"
-    (click)="toggleProfileMenu()"
-  >
-    {{ getUserInitial() }}
-  </button>
+        <div class="profile-container">
+          <button
+            class="profile-button"
+            type="button"
+            aria-label="Abrir menú de usuario"
+            [attr.aria-expanded]="profileMenuOpen()"
+            (click)="toggleProfileMenu()"
+          >
+            {{ getUserInitial() }}
+          </button>
 
-  @if (profileMenuOpen()) {
-    <div class="profile-menu">
-      <div class="profile-info">
-        <div class="profile-avatar">
-          {{ getUserInitial() }}
+          @if (profileMenuOpen()) {
+            <div class="profile-menu">
+              <div class="profile-info">
+                <div class="profile-avatar">
+                  {{ getUserInitial() }}
+                </div>
+
+                <div class="profile-details">
+                  <strong>{{ currentUser()?.name }}</strong>
+                  <small>{{ currentUser()?.email }}</small>
+                </div>
+              </div>
+
+              <div class="profile-divider"></div>
+
+              <button class="logout-button" type="button" (click)="logout()">
+                <span>↪</span>
+                Cerrar sesión
+              </button>
+            </div>
+          }
         </div>
-
-        <div class="profile-details">
-          <strong>{{ currentUser()?.name }}</strong>
-          <small>{{ currentUser()?.email }}</small>
-        </div>
-      </div>
-
-      <div class="profile-divider"></div>
-
-      <button
-        class="logout-button"
-        type="button"
-        (click)="logout()"
-      >
-        <span>↪</span>
-        Cerrar sesión
-      </button>
-    </div>
-  }
-</div>
       </div>
     </header>
 

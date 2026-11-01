@@ -1,0 +1,206 @@
+
+<main class="settings-page">
+
+  <header class="page-header">
+    <div class="header-icon">⚙️</div>
+    <div>
+      <span class="section-label">CINEVERSE</span>
+      <h1>Configuración</h1>
+      <p>Conoce más sobre nuestra plataforma.</p>
+    </div>
+  </header>
+
+  <section class="settings-layout">
+
+    <aside class="settings-sidebar">
+      <h2>Información</h2>
+
+      @for (section of sections; track section.id) {
+        <button
+          type="button"
+          class="settings-menu-item"
+          [class.active]="activeSection() === section.id"
+          (click)="selectSection(section.id)"
+        >
+          <span class="menu-icon">{{ section.icon }}</span>
+
+          <span class="menu-text">
+            <strong>{{ section.title }}</strong>
+            <small>{{ section.description }}</small>
+          </span>
+
+          <span class="menu-arrow">›</span>
+        </button>
+      }
+    </aside>
+
+    <section class="settings-content">
+
+      @if (activeSection() === 'privacy') {
+        <div class="content-header">
+          <span class="content-icon">🛡️</span>
+          <div>
+            <h2>Tu privacidad</h2>
+            <p>Tu experiencia y tu información son importantes para nosotros.</p>
+          </div>
+        </div>
+
+        <article class="info-card">
+          <h3>Tu información personal</h3>
+          <p>
+            En CINEVERSE valoramos tu privacidad. Nos comprometemos a
+            tratar tu información con responsabilidad y a ofrecerte
+            una experiencia segura y transparente.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <h3>Uso de la información</h3>
+          <p>
+            La información asociada a tu cuenta y tus preferencias
+            permite ofrecerte una experiencia cinematográfica
+            personalizada, como organizar tus favoritos y tu lista
+            de películas pendientes.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <h3>Servicios de terceros</h3>
+          <p>
+            CINEVERSE utiliza servicios externos para ofrecer
+            información cinematográfica. Estos servicios pueden
+            contar con sus propias políticas de privacidad.
+          </p>
+        </article>
+
+        <div class="notice-card">
+          <span>💜</span>
+          <p>
+            Queremos que disfrutes de CINEVERSE con confianza.
+            Gracias por formar parte de nuestra comunidad.
+          </p>
+        </div>
+      }
+
+      @if (activeSection() === 'about') {
+        <div class="content-header">
+          <span class="content-icon">🎬</span>
+          <div>
+            <h2>Acerca de CINEVERSE</h2>
+            <p>Todo un universo cinematográfico por descubrir.</p>
+          </div>
+        </div>
+
+        <div class="about-banner">
+          <div class="brand-symbol">🎥</div>
+          <h3>CINEVERSE</h3>
+          <span>EXPLORA · DESCUBRE · DISFRUTA</span>
+        </div>
+
+        <article class="info-card">
+          <h3>¿Qué es CINEVERSE?</h3>
+          <p>
+            CINEVERSE es un espacio dedicado a los amantes del cine
+            y las series. Aquí podrás explorar grandes historias,
+            descubrir nuevos títulos y conocer más sobre el mundo
+            cinematográfico.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <h3>Descubre todo lo que tenemos para ti</h3>
+          <ul class="feature-list">
+            <li>Explora películas y series de todos los géneros.</li>
+            <li>Conoce a tus actores y directores favoritos.</li>
+            <li>Descubre películas populares y mejor valoradas.</li>
+            <li>Guarda tus películas favoritas.</li>
+            <li>Organiza tu lista de contenido por ver.</li>
+            <li>Descubre próximos estrenos.</li>
+            <li>Diviértete con nuestros juegos y trivias.</li>
+            <li>Construye tu propio perfil cinematográfico.</li>
+          </ul>
+        </article>
+
+        <article class="info-card">
+          <h3>Nuestra misión</h3>
+          <p>
+            Queremos que descubrir una nueva película o serie
+            sea una experiencia sencilla, entretenida y especial.
+            CINEVERSE reúne todo lo que necesitas para disfrutar
+            aún más de tu pasión por el entretenimiento.
+          </p>
+        </article>
+      }
+
+      @if (activeSection() === 'credits') {
+        <div class="content-header">
+          <span class="content-icon">💜</span>
+          <div>
+            <h2>Créditos</h2>
+            <p>Un reconocimiento a quienes contribuyen a esta experiencia.</p>
+          </div>
+        </div>
+
+        <article class="credit-card">
+          <div class="credit-logo tmdb-logo">TMDB</div>
+
+          <div class="credit-information">
+            <h3>The Movie Database</h3>
+            <p>
+              Gracias a TMDB por proporcionar información
+              cinematográfica que permite descubrir películas,
+              series y personas del mundo del entretenimiento.
+            </p>
+
+            <a
+              href="https://www.themoviedb.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="external-link"
+            >
+              Conocer TMDB ↗
+            </a>
+          </div>
+        </article>
+
+        <div class="tmdb-attribution">
+          <p>
+            This product uses the TMDB API but is not endorsed or
+            certified by TMDB.
+          </p>
+
+          <a
+            href="https://www.themoviedb.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <strong>THE MOVIE DATABASE</strong>
+          </a>
+        </div>
+
+        <article class="info-card">
+          <h3>Desarrollador</h3>
+          <p>
+            CINEVERSE es un proyecto desarrollado con dedicación
+            para todos los amantes del cine y las series.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <h3>Agradecimientos</h3>
+          <p>
+            A todas las herramientas, servicios y personas que
+            contribuyen a hacer posible este proyecto.
+          </p>
+        </article>
+      }
+
+    </section>
+  </section>
+
+  <footer class="settings-footer">
+    <span>🎬</span>
+    <p>CINEVERSE · Explora el universo cinematográfico.</p>
+  </footer>
+
+</main>
