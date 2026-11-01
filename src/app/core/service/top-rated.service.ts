@@ -1,12 +1,10 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, Service, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { TmdbService } from './tmdb.service';
 import { TopRatedResponse } from '../models/top-rated.interface';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Service()
 export class TopRatedService {
 
   private readonly tmdb = inject(TmdbService);

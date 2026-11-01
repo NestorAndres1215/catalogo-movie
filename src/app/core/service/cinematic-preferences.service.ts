@@ -1,9 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Service } from '@angular/core';
 import { CinematicPreferences } from '../models/cinematic-preferences.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Service()
 export class CinematicPreferencesService {
 
   private getStorageKey(userId: string): string {

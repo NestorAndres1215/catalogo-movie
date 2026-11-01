@@ -1,0 +1,49 @@
+:host {
+  --bg: #0d1018;
+  --surface: #151925;
+  --surface-2: #1c2130;
+  --surface-3: #262d3f;
+  --border: #272d3d;
+  --text: #ffffff;
+  --text-muted: #8b93a5;
+  --text-soft: #b6bccb;
+  --accent: #e5b94b;
+  --accent-hover: #f3cd69;
+  --sidebar-w: 260px;
+  --radius: 14px;
+
+  display: block;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    'Segoe UI',
+    system-ui,
+    -apple-system,
+    Arial,
+    sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  min-width: 0;
+}

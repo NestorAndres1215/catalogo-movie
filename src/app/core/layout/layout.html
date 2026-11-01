@@ -1,0 +1,32 @@
+<div class="app-container">
+
+  <!-- FONDO OSCURO -->
+  @if (sidebarOpen()) {
+    <div
+      class="sidebar-overlay"
+      (click)="closeSidebar()"
+      aria-hidden="true"
+    ></div>
+  }
+
+  <!-- SIDEBAR -->
+  <app-sidebar
+    [sidebarOpen]="sidebarOpen()"
+    (close)="closeSidebar()"
+  />
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main-content">
+
+    <!-- NAVBAR -->
+    <app-navbar
+      [sidebarOpen]="sidebarOpen()"
+      (toggleSidebar)="toggleSidebar()"
+    />
+
+    <!-- PÁGINAS -->
+    <router-outlet />
+
+  </main>
+
+</div>

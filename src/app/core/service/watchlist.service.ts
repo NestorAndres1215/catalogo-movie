@@ -1,24 +1,17 @@
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Injectable, Service, computed, inject, signal } from '@angular/core';
 
-import {
-  FavoriteWatchlistItem,
-  WatchlistStatus,
-} from '../models/catalog.interface';
+import { FavoriteWatchlistItem, WatchlistStatus } from '../models/catalog.interface';
 
 import { AuthService } from './auth.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class WatchlistService {
   private readonly storageKey = 'cineverse_watchlist';
 
   private readonly authService = inject(AuthService);
 
   // Todos los elementos de todas las cuentas.
-  private readonly allWatchlist = signal<FavoriteWatchlistItem[]>(
-    this.loadWatchlist(),
-  );
+  private readonly allWatchlist = signal<FavoriteWatchlistItem[]>(this.loadWatchlist());
 
   // Solo los elementos del usuario conectado.
   readonly watchlist = computed(() => {
@@ -28,9 +21,7 @@ export class WatchlistService {
       return [];
     }
 
-    return this.allWatchlist().filter(
-      (item) => item.userId === userId,
-    );
+    return this.allWatchlist().filter((item) => item.userId === userId);
   });
 
   /**
@@ -75,10 +66,7 @@ export class WatchlistService {
     }
 
     try {
-      localStorage.setItem(
-        this.storageKey,
-        JSON.stringify(this.allWatchlist()),
-      );
+      localStorage.setItem(this.storageKey, JSON.stringify(this.allWatchlist()));
     } catch (error) {
       console.error('No se pudo guardar la lista:', error);
     }
@@ -88,23 +76,14 @@ export class WatchlistService {
    * Comprueba si una película o serie está en la lista
    * del usuario conectado.
    */
-  isInWatchlist(
-    id: number,
-    mediaType: 'movie' | 'tv',
-  ): boolean {
-    return this.watchlist().some(
-      (item) =>
-        item.id === id &&
-        item.mediaType === mediaType,
-    );
+  isInWatchlist(id: number, mediaType: 'movie' | 'tv'): boolean {
+    return this.watchlist().some((item) => item.id === id && item.mediaType === mediaType);
   }
 
   /**
    * Agrega o elimina una película o serie.
    */
-  toggle(
-    item: Omit<FavoriteWatchlistItem, 'userId'>,
-  ): void {
+  toggle(item: Omit<FavoriteWatchlistItem, 'userId'>): void {
     const userId = this.authService.currentUser()?.id;
 
     if (!userId) {
@@ -124,9 +103,7 @@ export class WatchlistService {
   /**
    * Agrega un nuevo elemento a la cuenta actual.
    */
-  add(
-    item: Omit<FavoriteWatchlistItem, 'userId'>,
-  ): void {
+  add(item: Omit<FavoriteWatchlistItem, 'userId'>): void {
     const userId = this.authService.currentUser()?.id;
 
     if (!userId || this.isInWatchlist(item.id, item.mediaType)) {
@@ -150,11 +127,7 @@ export class WatchlistService {
    * Actualiza el estado de visualización
    * únicamente en la cuenta actual.
    */
-  updateStatus(
-    id: number,
-    mediaType: 'movie' | 'tv',
-    status: WatchlistStatus,
-  ): void {
+  updateStatus(id: number, mediaType: 'movie' | 'tv', status: WatchlistStatus): void {
     const userId = this.authService.currentUser()?.id;
 
     if (!userId) {
@@ -163,9 +136,7 @@ export class WatchlistService {
 
     this.allWatchlist.update((items) =>
       items.map((item) =>
-        item.userId === userId &&
-        item.id === id &&
-        item.mediaType === mediaType
+        item.userId === userId && item.id === id && item.mediaType === mediaType
           ? { ...item, status }
           : item,
       ),
@@ -178,11 +149,7 @@ export class WatchlistService {
    * Actualiza la calificación personal
    * únicamente en la cuenta actual.
    */
-  updatePersonalRating(
-    id: number,
-    mediaType: 'movie' | 'tv',
-    rating: number | null,
-  ): void {
+  updatePersonalRating(id: number, mediaType: 'movie' | 'tv', rating: number | null): void {
     const userId = this.authService.currentUser()?.id;
 
     if (!userId) {
@@ -191,9 +158,7 @@ export class WatchlistService {
 
     this.allWatchlist.update((items) =>
       items.map((item) =>
-        item.userId === userId &&
-        item.id === id &&
-        item.mediaType === mediaType
+        item.userId === userId && item.id === id && item.mediaType === mediaType
           ? { ...item, personalRating: rating }
           : item,
       ),
@@ -206,10 +171,7 @@ export class WatchlistService {
    * Elimina una película o serie
    * únicamente de la cuenta actual.
    */
-  remove(
-    id: number,
-    mediaType: 'movie' | 'tv',
-  ): void {
+  remove(id: number, mediaType: 'movie' | 'tv'): void {
     const userId = this.authService.currentUser()?.id;
 
     if (!userId) {
@@ -218,12 +180,7 @@ export class WatchlistService {
 
     this.allWatchlist.update((items) =>
       items.filter(
-        (item) =>
-          !(
-            item.userId === userId &&
-            item.id === id &&
-            item.mediaType === mediaType
-          ),
+        (item) => !(item.userId === userId && item.id === id && item.mediaType === mediaType),
       ),
     );
 
@@ -240,9 +197,7 @@ export class WatchlistService {
       return;
     }
 
-    this.allWatchlist.update((items) =>
-      items.filter((item) => item.userId !== userId),
-    );
+    this.allWatchlist.update((items) => items.filter((item) => item.userId !== userId));
 
     this.saveWatchlist();
   }

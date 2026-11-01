@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, Service, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { TmdbService } from './tmdb.service';
@@ -10,9 +10,7 @@ import { GenreResponse } from '../models/genre.interface';
 import { MovieCredits } from '../models/movie-credits.interface';
 import { Collection, CollectionResponse } from '../models/collection.interface';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class MovieService {
   private readonly tmdb = inject(TmdbService);
 
@@ -98,17 +96,17 @@ export class MovieService {
   }
 
   getTrendingMovies(page: number = 1): Observable<MovieResponse> {
-  return this.tmdb.get<MovieResponse>('/trending/movie/week', { page });
-}
+    return this.tmdb.get<MovieResponse>('/trending/movie/week', { page });
+  }
 
-getUpcomingMovies(page: number = 1): Observable<MovieResponse> {
-  return this.tmdb.get<MovieResponse>('/movie/upcoming', { page });
-}
+  getUpcomingMovies(page: number = 1): Observable<MovieResponse> {
+    return this.tmdb.get<MovieResponse>('/movie/upcoming', { page });
+  }
 
-getTopRatedMovies(page: number = 1): Observable<MovieResponse> {
-  return this.tmdb.get<MovieResponse>('/movie/top_rated', { page });
-}
-getMovieVideos(id: number): Observable<MovieVideoResponse> {
-  return this.tmdb.get<MovieVideoResponse>(`/movie/${id}/videos`);
-}
+  getTopRatedMovies(page: number = 1): Observable<MovieResponse> {
+    return this.tmdb.get<MovieResponse>('/movie/top_rated', { page });
+  }
+  getMovieVideos(id: number): Observable<MovieVideoResponse> {
+    return this.tmdb.get<MovieVideoResponse>(`/movie/${id}/videos`);
+  }
 }

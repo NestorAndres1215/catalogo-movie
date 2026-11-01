@@ -1,0 +1,122 @@
+<header class="navbar">
+
+  <div class="navbar-left">
+    <button
+      class="menu-button"
+      type="button"
+      (click)="toggleSidebar.emit()"
+      [attr.aria-expanded]="sidebarOpen()"
+      aria-controls="sidebar"
+      aria-label="Abrir menú"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <div class="breadcrumb">
+      <span>CINEVERSE</span>
+      <span class="separator">/</span>
+      <strong>Descubrir</strong>
+    </div>
+  </div>
+
+  <div class="navbar-actions">
+
+    <!-- BUSCADOR -->
+    <div class="search-box">
+      <span class="search-icon">⌕</span>
+
+      <input
+        #searchInput
+        type="text"
+        placeholder="Buscar películas, series y actores..."
+        autocomplete="off"
+        (input)="onSearch(searchInput.value)"
+        (focus)="onSearchFocus()"
+        (keydown.escape)="closeSearch()"
+      />
+
+      @if (searching()) {
+        <span class="search-loader"></span>
+      }
+
+      @if (searchOpen()) {
+        <div class="search-results">
+
+          @if (searchResults().length > 0) {
+            @for (result of searchResults(); track result.id + result.media_type) {
+              <button
+                type="button"
+                class="search-result"
+                (click)="openSearchResult(result)"
+              >
+                <img
+                  [src]="getSearchImage(result)"
+                  [alt]="getSearchTitle(result)"
+                />
+
+                <span class="search-result-info">
+                  <strong>{{ getSearchTitle(result) }}</strong>
+                  <small>{{ getSearchType(result) }}</small>
+                </span>
+
+                <span class="result-arrow">→</span>
+              </button>
+            }
+          } @else if (!searching()) {
+            <p class="search-empty">
+              No se encontraron resultados.
+            </p>
+          }
+
+        </div>
+      }
+    </div>
+
+    <!-- PERFIL -->
+    <div class="profile-container">
+
+      <button
+        class="profile-button"
+        type="button"
+        aria-label="Abrir menú de usuario"
+        [attr.aria-expanded]="profileMenuOpen()"
+        (click)="toggleProfileMenu()"
+      >
+        {{ getUserInitial() }}
+      </button>
+
+      @if (profileMenuOpen()) {
+        <div class="profile-menu">
+
+          <div class="profile-info">
+            <div class="profile-avatar">
+              {{ getUserInitial() }}
+            </div>
+
+            <div class="profile-details">
+              <strong>{{ currentUser()?.name }}</strong>
+              <small>{{ currentUser()?.email }}</small>
+            </div>
+          </div>
+
+          <div class="profile-divider"></div>
+
+          <button
+            class="logout-button"
+            type="button"
+            (click)="logout()"
+          >
+            <span>↪</span>
+            Cerrar sesión
+          </button>
+
+        </div>
+      }
+
+    </div>
+
+  </div>
+
+</header>

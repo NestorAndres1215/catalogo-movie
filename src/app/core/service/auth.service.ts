@@ -1,9 +1,7 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, Service, signal } from '@angular/core';
 import { AuthResult, StoredUser, User } from '../models/user.interface';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class AuthService {
   private readonly usersKey = 'cineverse_users';
   private readonly sessionKey = 'cineverse_session';
@@ -17,7 +15,6 @@ export class AuthService {
   constructor() {
     this.restoreSession();
   }
-
   async register(name: string, email: string, password: string): Promise<AuthResult> {
     const normalizedEmail = email.trim().toLowerCase();
 

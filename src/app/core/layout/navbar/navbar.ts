@@ -1,9 +1,18 @@
-import { Component, inject, signal } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { TmdbService } from '../../core/service/tmdb.service';
+import { Component, inject, input, output, signal } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Subject, debounceTime, distinctUntilChanged, switchMap, catchError, of } from 'rxjs';
-import { AuthService } from '../../core/service/auth.service';
+import {
+  Subject,
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+  catchError,
+  of,
+} from 'rxjs';
+import { AuthService } from '../../service/auth.service';
+import { TmdbService } from '../../service/tmdb.service';
+
 type SearchMediaType = 'movie' | 'tv' | 'person';
 
 interface GlobalSearchResult {
@@ -22,53 +31,29 @@ interface GlobalSearchResult {
 interface GlobalSearchResponse {
   results: GlobalSearchResult[];
 }
+
 @Component({
-  selector: 'app-main-layout',
+  selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, RouterOutlet],
-  templateUrl: './main-layout.html',
-  styleUrl: './main-layout.css',
+  imports: [],
+  templateUrl: './navbar.html',
+  styleUrl: './navbar.css',
 })
-export class MainLayoutComponent {
-  sidebarOpen = signal<boolean>(false);
+export class NavbarComponent {
+
   private readonly authService = inject(AuthService);
+  private readonly tmdbService = inject(TmdbService);
+  private readonly router = inject(Router);
 
   readonly currentUser = this.authService.currentUser;
 
   profileMenuOpen = signal(false);
 
-  getUserInitial(): string {
-    return this.currentUser()?.name.charAt(0).toUpperCase() ?? 'U';
-  }
-
-  toggleProfileMenu(): void {
-    this.profileMenuOpen.update((open) => !open);
-  }
-
-  closeProfileMenu(): void {
-    this.profileMenuOpen.set(false);
-  }
-
-  logout(): void {
-    this.closeProfileMenu();
-    this.authService.logout();
-    this.router.navigate(['/login']);
-  }
-  toggleSidebar(): void {
-    this.sidebarOpen.update((open) => !open);
-  }
-
-  closeSidebar(): void {
-    this.sidebarOpen.set(false);
-  }
-  private readonly tmdbService = inject(TmdbService);
-  private readonly router = inject(Router);
-
-  private readonly searchTerms = new Subject<string>();
-
   searchResults = signal<GlobalSearchResult[]>([]);
   searching = signal(false);
   searchOpen = signal(false);
+
+  private readonly searchTerms = new Subject<string>();
 
   constructor() {
     this.searchTerms
@@ -104,6 +89,24 @@ export class MainLayoutComponent {
       });
   }
 
+  getUserInitial(): string {
+    return this.currentUser()?.name.charAt(0).toUpperCase() ?? 'U';
+  }
+
+  toggleProfileMenu(): void {
+    this.profileMenuOpen.update((open) => !open);
+  }
+
+  closeProfileMenu(): void {
+    this.profileMenuOpen.set(false);
+  }
+
+  logout(): void {
+    this.closeProfileMenu();
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
+
   onSearch(query: string): void {
     const value = query.trim();
 
@@ -136,15 +139,20 @@ export class MainLayoutComponent {
     switch (result.media_type) {
       case 'movie':
         return 'Película';
+
       case 'tv':
         return 'Serie';
+
       case 'person':
         return result.known_for_department || 'Actor';
     }
   }
 
   getSearchImage(result: GlobalSearchResult): string {
-    const path = result.media_type === 'person' ? result.profile_path : result.poster_path;
+    const path =
+      result.media_type === 'person'
+        ? result.profile_path
+        : result.poster_path;
 
     return this.tmdbService.getImageUrl(
       path ?? null,
@@ -159,9 +167,11 @@ export class MainLayoutComponent {
       case 'movie':
         route = `/movies/${result.id}`;
         break;
+
       case 'tv':
         route = `/series/${result.id}`;
         break;
+
       case 'person':
         route = `/actors/${result.id}`;
         break;
@@ -172,4 +182,6 @@ export class MainLayoutComponent {
 
     this.router.navigateByUrl(route);
   }
+  sidebarOpen = input<boolean>(false);
+toggleSidebar = output<void>();
 }

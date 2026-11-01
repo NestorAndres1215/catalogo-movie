@@ -1,11 +1,9 @@
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Injectable, Service, computed, inject, signal } from '@angular/core';
 
 import { Favorite } from '../models/favorite.interface';
 import { AuthService } from './auth.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class FavoriteService {
   private readonly storageKey = 'cineverse_favorites';
 

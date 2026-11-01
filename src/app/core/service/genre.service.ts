@@ -1,13 +1,11 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, Service, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { TmdbService } from './tmdb.service';
 
 import { GenreResponse, GenreMediaResponse } from '../models/genre.interface';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class GenreService {
   private readonly tmdb = inject(TmdbService);
 

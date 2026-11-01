@@ -14,10 +14,9 @@ import { MediaVideo } from '../../../../core/models/video.interface';
   standalone: true,
   imports: [DatePipe],
   templateUrl: './video-list.html',
-  styleUrl: './video-list.css'
+  styleUrl: './video-list.css',
 })
 export class VideoListComponent {
-
   private readonly movieService = inject(MovieService);
   private readonly seriesService = inject(SeriesService);
   private readonly videoService = inject(VideoService);
@@ -42,21 +41,17 @@ export class VideoListComponent {
     this.errorMessage.set('');
 
     this.movieService.getPopularMovies().subscribe({
-      next: response => {
+      next: (response) => {
         const requests = response.results
           .slice(0, 10)
-          .map(movie =>
-            this.videoService.getVideos('movie', movie.id)
-          );
+          .map((movie) => this.videoService.getVideos('movie', movie.id));
 
         this.loadVideoResults(requests);
       },
       error: () => {
         this.loading.set(false);
-        this.errorMessage.set(
-          'No se pudieron cargar las películas.'
-        );
-      }
+        this.errorMessage.set('No se pudieron cargar las películas.');
+      },
     });
   }
 
@@ -65,26 +60,21 @@ export class VideoListComponent {
     this.errorMessage.set('');
 
     this.seriesService.getPopularSeries().subscribe({
-      next: response => {
+      next: (response) => {
         const requests = response.results
           .slice(0, 10)
-          .map(series =>
-            this.videoService.getVideos('tv', series.id)
-          );
+          .map((series) => this.videoService.getVideos('tv', series.id));
 
         this.loadVideoResults(requests);
       },
       error: () => {
         this.loading.set(false);
-        this.errorMessage.set(
-          'No se pudieron cargar las series.'
-        );
-      }
+        this.errorMessage.set('No se pudieron cargar las series.');
+      },
     });
   }
 
   private loadVideoResults(requests: ReturnType<VideoService['getVideos']>[]): void {
-
     if (requests.length === 0) {
       this.videos.set([]);
       this.loading.set(false);
@@ -92,19 +82,13 @@ export class VideoListComponent {
     }
 
     forkJoin(requests).subscribe({
-      next: responses => {
-        const allVideos = responses.flatMap(
-          response => response.results
-        );
+      next: (responses) => {
+        const allVideos = responses.flatMap((response) => response.results);
 
-        const youtubeVideos = allVideos.filter(
-          video => video.site === 'YouTube'
-        );
+        const youtubeVideos = allVideos.filter((video) => video.site === 'YouTube');
 
         const uniqueVideos = Array.from(
-          new Map(
-            youtubeVideos.map(video => [video.id, video])
-          ).values()
+          new Map(youtubeVideos.map((video) => [video.id, video])).values(),
         );
 
         this.videos.set(uniqueVideos);
@@ -112,10 +96,8 @@ export class VideoListComponent {
       },
       error: () => {
         this.loading.set(false);
-        this.errorMessage.set(
-          'No se pudieron cargar los trailers y videos.'
-        );
-      }
+        this.errorMessage.set('No se pudieron cargar los trailers y videos.');
+      },
     });
   }
 
@@ -144,12 +126,10 @@ export class VideoListComponent {
     }
 
     if (filter === 'official') {
-      return this.videos().filter(video => video.official);
+      return this.videos().filter((video) => video.official);
     }
 
-    return this.videos().filter(
-      video => video.type === filter
-    );
+    return this.videos().filter((video) => video.type === filter);
   }
 
   playVideo(video: MediaVideo): void {
@@ -164,16 +144,11 @@ export class VideoListComponent {
     return this.videoService.getYoutubeUrl(key);
   }
 
+  getSafeYoutubeUrl(key: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(this.getYoutubeUrl(key));
+  }
 
-
-
-getSafeYoutubeUrl(key: string): SafeResourceUrl {
-  return this.sanitizer.bypassSecurityTrustResourceUrl(
-    this.getYoutubeUrl(key)
-  );
-}
-
-getYoutubeThumbnail(key: string): string {
-  return `https://img.youtube.com/vi/${key}/hqdefault.jpg`;
-}
+  getYoutubeThumbnail(key: string): string {
+    return `https://img.youtube.com/vi/${key}/hqdefault.jpg`;
+  }
 }

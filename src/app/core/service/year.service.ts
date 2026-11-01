@@ -1,14 +1,11 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, Service, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { TmdbService } from './tmdb.service';
 import { YearMediaResponse } from '../models/year.interface';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Service()
 export class YearService {
-
   private readonly tmdb = inject(TmdbService);
 
   getMoviesByYear(year: number, page: number = 1): Observable<YearMediaResponse> {
@@ -16,7 +13,7 @@ export class YearService {
       primary_release_year: year,
       sort_by: 'popularity.desc',
       page,
-      include_adult: false
+      include_adult: false,
     });
   }
 
@@ -25,7 +22,7 @@ export class YearService {
       first_air_date_year: year,
       sort_by: 'popularity.desc',
       page,
-      include_adult: false
+      include_adult: false,
     });
   }
 

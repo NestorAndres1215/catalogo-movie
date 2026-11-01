@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, Service, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { TmdbService } from './tmdb.service';
@@ -7,9 +7,7 @@ import { Company, CompanyDetails, CompanyResponse } from '../models/company.inte
 
 import { CompanyMovieResponse } from '../models/company-movie.interface';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class CompanyService {
   private readonly tmdb = inject(TmdbService);
 
