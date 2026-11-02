@@ -1,41 +1,8 @@
 :host {
-  --bg: #0d1018;
-  --surface: #151925;
-  --surface-2: #1c2130;
-  --surface-3: #262d3f;
-  --border: #272d3d;
-  --text: #ffffff;
-  --text-muted: #8b93a5;
-  --text-soft: #b6bccb;
-  --accent: #e5b94b;
-  --accent-hover: #f3cd69;
-  --sidebar-w: 260px;
-  --radius: 14px;
-
   display: block;
   min-height: 100vh;
-  background: var(--bg);
-  color: var(--text);
-  font-family:
-    'Segoe UI',
-    system-ui,
-    -apple-system,
-    Arial,
-    sans-serif;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-a,
-button {
-  -webkit-tap-highlight-color: transparent;
-}
-
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  background: var(--color-fondo);
+  color: var(--color-texto);
 }
 
 .app-container {
@@ -46,4 +13,28 @@ button {
 .main-content {
   flex: 1;
   min-width: 0;
+}
+
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 900;
+  animation: fade-in 0.25s ease;
+}
+
+@media (min-width: 993px) {
+  .sidebar-overlay {
+    display: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }

@@ -18,7 +18,7 @@
   min-height: 430px;
   padding: 48px;
   overflow: hidden;
-  border: 1px solid rgba(255,255,255,.08);
+  border: 1px solid var(--color-borde);
   border-radius: 22px;
   background-position: center 30%;
   background-size: cover;
@@ -31,7 +31,7 @@
 
 .hero-label,
 .section-label {
-  color: #ad8cff;
+  color: var(--color-acento);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 2px;
@@ -49,23 +49,23 @@
   flex-wrap: wrap;
   gap: 18px;
   margin-bottom: 18px;
-  color: #ddd9e8;
+  color: var(--color-texto);
   font-size: 13px;
 }
 
 .hero-meta span:first-child {
-  color: #ffd36b;
+  color: var(--color-valoracion);
 }
 
 .hero-content > p {
   display: -webkit-box;
   max-width: 560px;
   overflow: hidden;
-  color: #d2cfda;
+  color: var(--color-secundario);
   font-size: 14px;
   line-height: 1.8;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  line-clamp: 3;
 }
 
 .hero-actions {
@@ -85,23 +85,23 @@
   text-decoration: none;
   font-size: 13px;
   font-weight: 750;
-  transition: .2s;
+  transition: 0.2s;
 }
 
 .btn-primary {
-  color: white;
-  background: #7953d2;
+  color: var(--color-texto);
+  background: var(--color-acento);
 }
 
 .btn-primary:hover {
-  background: #906be8;
+  background: var(--color-acento-hover);
   transform: translateY(-2px);
 }
 
 .btn-secondary {
   color: white;
-  border: 1px solid rgba(255,255,255,.2);
-  background: rgba(30,28,40,.75);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(30, 28, 40, 0.75);
 }
 
 .btn-secondary:hover {
@@ -125,7 +125,7 @@
 
 .hero-indicator span:first-child {
   width: 23px;
-  background: #a78bfa;
+  background: var(--color-acento);
 }
 
 /* ACCESOS RÁPIDOS */
@@ -148,11 +148,11 @@
   color: white;
   background: #191821;
   text-decoration: none;
-  transition: .2s;
+  transition: 0.2s;
 }
 
 .quick-card:hover {
-  border-color: #7953d2;
+  border-color: var(--color-acento);
   background: #211d2e;
   transform: translateY(-3px);
 }
@@ -179,7 +179,7 @@
 }
 
 .quick-arrow {
-  color: #a78bfa;
+  color: var(--color-acento);
 }
 
 /* SECCIONES */
@@ -209,7 +209,7 @@
 
 .see-all {
   flex-shrink: 0;
-  color: #b69aff;
+  color: var(--color-acento);
   font-size: 12px;
   font-weight: 700;
   text-decoration: none;
@@ -228,7 +228,7 @@
   gap: 18px;
   overflow-x: auto;
   padding: 5px 2px 18px;
-  scrollbar-color: #51436e #201e29;
+  scrollbar-color: var(--color-acento) #201e29;
   scrollbar-width: thin;
 }
 
@@ -250,7 +250,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform .3s;
+  transition: transform 0.3s;
 }
 
 .media-card:hover .poster img {
@@ -264,9 +264,12 @@
   padding: 6px 8px;
   border-radius: 7px;
   color: white;
-  background: rgba(15,14,22,.9);
+  background: rgba(15, 14, 22, 0.9);
   font-size: 11px;
   font-weight: 750;
+}
+.rating i {
+  color: var(--color-valoracion);
 }
 
 .media-card h3 {
@@ -277,6 +280,7 @@
   line-height: 1.5;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
 .media-year {
@@ -305,8 +309,7 @@
   border: 1px solid #3a3150;
   border-radius: 18px;
   background:
-    radial-gradient(circle at 90% 30%, rgba(121,83,210,.25), transparent 30%),
-    #191821;
+    radial-gradient(circle at 90% 30%, rgba(254, 219, 148, 0.25), transparent 30%), #211b18;
 }
 
 .library-banner h2 {
@@ -339,7 +342,7 @@
 }
 
 .library-actions a:hover {
-  border-color: #906be8;
+  border-color: var(--color-acento);
 }
 
 .library-icon {
@@ -380,9 +383,9 @@
   width: 42px;
   height: 42px;
   border: 3px solid #373142;
-  border-top-color: #a78bfa;
+  border-top-color: var(--color-acento);
   border-radius: 50%;
-  animation: spin .8s linear infinite;
+  animation: spin 0.8s linear infinite;
 }
 
 @keyframes spin {
@@ -404,7 +407,7 @@
   border: 0;
   border-radius: 7px;
   color: white;
-  background: #7953d2;
+  background: var(--color-acento);
   cursor: pointer;
 }
 

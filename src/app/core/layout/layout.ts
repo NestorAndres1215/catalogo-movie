@@ -31,7 +31,6 @@ interface GlobalSearchResponse {
   templateUrl: './layout.html',
 })
 export class Layout {
- 
   sidebarOpen = signal(false);
 
   toggleSidebar(): void {

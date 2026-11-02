@@ -16,8 +16,84 @@ body {
   color: #ffffff;
   font-family: Arial, Helvetica, sans-serif;
 }
+
 button,
 input,
 select {
   font: inherit;
+}
+
+:root {
+  /* ==============================
+     FONDOS Y SUPERFICIES
+  ============================== */
+  --color-fondo: #0b0b0f;
+  --color-superficie: rgba(21, 25, 37, 0.85);
+  --color-superficie-secundaria: #1b1b24;
+  --color-superficie-elevada: #262632;
+  --color-superficie-hover: #302a3d;
+
+  /* ==============================
+     BORDES
+  ============================== */
+  --color-borde: #2a2a37;
+  --color-borde-hover: #414154;
+
+  /* ==============================
+     TEXTOS
+  ============================== */
+  --color-texto: #f4f4f6;
+  --color-texto-secundario: #b4b4c0;
+  --color-texto-atenuado: #7b7b8a;
+  --color-texto-placeholder: #858190;
+
+  /* ==============================
+     COLOR PRINCIPAL
+  ============================== */
+  --color-acento: #ff8a1f;
+  --color-acento-hover: #ffa047;
+  --color-acento-suave: rgba(255, 138, 31, 0.15);
+  --color-texto-sobre-acento: #1a0f05;
+
+  /* ==============================
+     ESTADOS Y VALORACIONES
+  ============================== */
+  --color-valoracion: #f5c518;
+  --color-exito: #22c55e;
+  --color-advertencia: #f59e0b;
+  --color-danger: #f35169;
+  --color-danger-hover: rgba(255, 100, 125, 0.1);
+  --color-info: #38bdf8;
+
+  /* ==============================
+     SOMBRAS
+  ============================== */
+  --box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45);
+  --box-shadow-hover: 0 0 18px var(--color-acento-hover);
+
+  /* ==============================
+     DIMENSIONES
+  ============================== */
+  --ancho-sidebar: 260px;
+  --alto-navbar: 80px;
+
+  /* ==============================
+     BORDES REDONDEADOS
+  ============================== */
+  --radio-borde: 14px;
+  --radio-borde-pequeno: 8px;
+  --radio-borde-grande: 20px;
+  --radio-circular: 50%;
+
+  /* ==============================
+     TRANSICIONES
+  ============================== */
+  --transicion-rapida: 0.2s ease;
+  --transicion-normal: 0.3s ease;
+
+  /* SIDEBAR */
+  --color-sidebar-titulo: #636b7e;
+  --color-sidebar-texto: #5a6275;
+  --ancho-sidebar: 260px;
+  --espaciado-sidebar: 24px;
 }

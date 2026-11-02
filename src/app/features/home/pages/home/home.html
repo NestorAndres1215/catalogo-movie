@@ -1,12 +1,4 @@
 <div class="home-page">
-
-  @if (loading()) {
-    <div class="loading-state">
-      <div class="loader"></div>
-      <p>Preparando tu universo cinematográfico...</p>
-    </div>
-  }
-
   @if (error()) {
     <div class="error-message">
       <p>{{ error() }}</p>
@@ -14,8 +6,7 @@
     </div>
   }
 
-  @if (!loading() && !error()) {
-
+  @if (!error()) {
     <!-- BANNER PRINCIPAL -->
     @if (featuredMovie(); as movie) {
       <section
@@ -23,33 +14,42 @@
         [style.background-image]="
           movie.backdrop_path
             ? 'linear-gradient(90deg, #101018 5%, rgba(16,16,24,.85) 45%, rgba(16,16,24,.15)), url(' +
-              getBackdrop(movie.backdrop_path) + ')'
+              getBackdrop(movie.backdrop_path) +
+              ')'
             : 'linear-gradient(90deg, #101018, #29223b)'
         "
       >
         <div class="hero-content">
-          <span class="hero-label">🎬 DESTACADO DE LA SEMANA</span>
+          <span class="hero-label">
+            <i class="fas fa-clapperboard"></i>
+            DESTACADO DE LA SEMANA
+          </span>
 
           <h1>{{ movie.title }}</h1>
 
           <div class="hero-meta">
-            <span>⭐ {{ getRating(movie.vote_average) }}</span>
+            <span>
+              <i class="fas fa-star" style="color: #ffd700"></i>
+              {{ getRating(movie.vote_average) }}
+            </span>
             <span>{{ getYear(movie.release_date) }}</span>
-            <span>🎞 Película</span>
+            <span>
+              <i class="fas fa-film"></i>
+              Película
+            </span>
           </div>
 
           <p>{{ movie.overview || 'Descubre esta película en CINEVERSE.' }}</p>
 
           <div class="hero-actions">
-            <a
-              class="btn-primary"
-              [routerLink]="['/movies', movie.id]"
-            >
+            <a class="btn-primary gap-2" [routerLink]="['/movies', movie.id]">
+              <i class="fas fa-circle-info"></i>
               Ver detalles
             </a>
 
-            <a class="btn-secondary" routerLink="/videos">
-              ▶ Explorar tráilers
+            <a class="btn-secondary gap-2" routerLink="/videos">
+              <i class="fas fa-circle-play"></i>
+              Explorar tráilers
             </a>
           </div>
         </div>
@@ -65,7 +65,7 @@
     <!-- ACCESOS RÁPIDOS -->
     <section class="quick-access">
       <a routerLink="/movies" class="quick-card">
-        <span>🎞️</span>
+        <span><i class="fas fa-film"></i></span>
         <div>
           <strong>Películas</strong>
           <small>Explora el catálogo</small>
@@ -74,7 +74,7 @@
       </a>
 
       <a routerLink="/series" class="quick-card">
-        <span>📺</span>
+        <span><i class="fas fa-tv"></i></span>
         <div>
           <strong>Series</strong>
           <small>Descubre nuevas historias</small>
@@ -83,7 +83,7 @@
       </a>
 
       <a routerLink="/universes" class="quick-card">
-        <span>🌌</span>
+        <span><i class="fas fa-globe"></i></span>
         <div>
           <strong>Universos</strong>
           <small>Explora tus sagas favoritas</small>
@@ -92,7 +92,7 @@
       </a>
 
       <a routerLink="/rankings/movies" class="quick-card">
-        <span>🏆</span>
+        <span><i class="fas fa-trophy"></i></span>
         <div>
           <strong>Rankings</strong>
           <small>Descubre los mejores títulos</small>
@@ -106,7 +106,7 @@
       <div class="section-header">
         <div>
           <span class="section-label">LO MÁS POPULAR</span>
-          <h2>Películas en tendencia 🔥</h2>
+          <h2>Películas en tendencia <i class="fas fa-fire"></i></h2>
           <p>Las películas que están destacando esta semana.</p>
         </div>
 
@@ -115,22 +115,18 @@
 
       <div class="media-row">
         @for (movie of trendingMovies(); track trackMovie($index, movie)) {
-          <a
-            class="media-card"
-            [routerLink]="['/movies', movie.id]"
-          >
+          <a class="media-card" [routerLink]="['/movies', movie.id]">
             <div class="poster">
               @if (movie.poster_path) {
-                <img
-                  [src]="getMovieImage(movie.poster_path)"
-                  [alt]="movie.title"
-                  loading="lazy"
-                />
+                <img [src]="getMovieImage(movie.poster_path)" [alt]="movie.title" loading="lazy" />
               } @else {
                 <div class="poster-placeholder">🎬</div>
               }
 
-              <span class="rating">⭐ {{ getRating(movie.vote_average) }}</span>
+              <span class="rating">
+                <i class="fas fa-star"></i>
+                {{ getRating(movie.vote_average) }}
+              </span>
             </div>
 
             <h3>{{ movie.title }}</h3>
@@ -154,10 +150,7 @@
 
       <div class="media-row">
         @for (series of trendingSeries(); track trackSeries($index, series)) {
-          <a
-            class="media-card"
-            [routerLink]="['/series', series.id]"
-          >
+          <a class="media-card" [routerLink]="['/series', series.id]">
             <div class="poster">
               @if (series.poster_path) {
                 <img
@@ -193,17 +186,10 @@
 
       <div class="media-row">
         @for (movie of upcomingMovies(); track trackMovie($index, movie)) {
-          <a
-            class="media-card"
-            [routerLink]="['/movies', movie.id]"
-          >
+          <a class="media-card" [routerLink]="['/movies', movie.id]">
             <div class="poster">
               @if (movie.poster_path) {
-                <img
-                  [src]="getMovieImage(movie.poster_path)"
-                  [alt]="movie.title"
-                  loading="lazy"
-                />
+                <img [src]="getMovieImage(movie.poster_path)" [alt]="movie.title" loading="lazy" />
               } @else {
                 <div class="poster-placeholder">🍿</div>
               }
@@ -232,17 +218,10 @@
 
       <div class="media-row">
         @for (movie of topRatedMovies(); track trackMovie($index, movie)) {
-          <a
-            class="media-card"
-            [routerLink]="['/movies', movie.id]"
-          >
+          <a class="media-card" [routerLink]="['/movies', movie.id]">
             <div class="poster">
               @if (movie.poster_path) {
-                <img
-                  [src]="getMovieImage(movie.poster_path)"
-                  [alt]="movie.title"
-                  loading="lazy"
-                />
+                <img [src]="getMovieImage(movie.poster_path)" [alt]="movie.title" loading="lazy" />
               } @else {
                 <div class="poster-placeholder">⭐</div>
               }
@@ -271,10 +250,7 @@
 
       <div class="media-row">
         @for (series of topRatedSeries(); track trackSeries($index, series)) {
-          <a
-            class="media-card"
-            [routerLink]="['/series', series.id]"
-          >
+          <a class="media-card" [routerLink]="['/series', series.id]">
             <div class="poster">
               @if (series.poster_path) {
                 <img
@@ -302,8 +278,8 @@
         <span class="section-label">TU ESPACIO PERSONAL</span>
         <h2>Tu universo, tus películas ❤️</h2>
         <p>
-          Organiza tus favoritos, guarda lo que quieres ver
-          y descubre tus preferencias cinematográficas.
+          Organiza tus favoritos, guarda lo que quieres ver y descubre tus preferencias
+          cinematográficas.
         </p>
 
         <div class="library-actions">
@@ -322,6 +298,5 @@
       <p>Explora, descubre y disfruta el universo del cine.</p>
       <span>Contenido cinematográfico proporcionado por TMDB.</span>
     </footer>
-
   }
 </div>

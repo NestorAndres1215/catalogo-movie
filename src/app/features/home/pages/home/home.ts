@@ -6,18 +6,17 @@ import { forkJoin } from 'rxjs';
 import { MovieService } from '../../../../core/service/movie.service';
 import { SeriesService } from '../../../../core/service/series.service';
 
-import { Movie, MovieResponse } from '../../../../core/models/movie.interface';
-import { TvSeries, SeriesResponse } from '../../../../core/models/series.interface';
+import { Movie } from '../../../../core/models/movie.interface';
+import { TvSeries } from '../../../../core/models/series.interface';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './home.html',
-  styleUrl: './home.css'
+  styleUrl: './home.css',
 })
 export class HomeComponent implements OnInit {
-
   private readonly movieService = inject(MovieService);
   private readonly seriesService = inject(SeriesService);
 
@@ -27,7 +26,6 @@ export class HomeComponent implements OnInit {
   topRatedMovies = signal<Movie[]>([]);
   topRatedSeries = signal<TvSeries[]>([]);
 
-  loading = signal(true);
   error = signal<string | null>(null);
 
   featuredMovie = computed(() => this.trendingMovies()[0] ?? null);
@@ -37,7 +35,6 @@ export class HomeComponent implements OnInit {
   }
 
   loadHome(): void {
-    this.loading.set(true);
     this.error.set(null);
 
     forkJoin({
@@ -45,21 +42,18 @@ export class HomeComponent implements OnInit {
       trendingSeries: this.seriesService.getTrendingSeries(),
       upcomingMovies: this.movieService.getUpcomingMovies(),
       topRatedMovies: this.movieService.getTopRatedMovies(),
-      topRatedSeries: this.seriesService.getTopRatedSeries()
+      topRatedSeries: this.seriesService.getTopRatedSeries(),
     }).subscribe({
-      next: response => {
+      next: (response) => {
         this.trendingMovies.set(response.trendingMovies.results);
         this.trendingSeries.set(response.trendingSeries.results);
         this.upcomingMovies.set(response.upcomingMovies.results);
         this.topRatedMovies.set(response.topRatedMovies.results);
         this.topRatedSeries.set(response.topRatedSeries.results);
-
-        this.loading.set(false);
       },
       error: () => {
         this.error.set('No se pudo cargar el contenido. Inténtalo nuevamente.');
-        this.loading.set(false);
-      }
+      },
     });
   }
 
