@@ -7,13 +7,14 @@ import {
   TvSeries,
   SeriesGenre
 } from '../../../../core/models/series.interface';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 type RankingType = 'best' | 'worst' | 'genre';
 
 @Component({
   selector: 'app-series-rankings',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PageHeaderComponent],
   templateUrl: './series-rankings.html',
   styleUrl: './series-rankings.css'
 })

@@ -1,41 +1,11 @@
-:host {
-  display: block;
-  color: #f5f5f5;
-}
+
 
 .roulette-page {
-  min-height: 100%;
-  padding: 30px;
-  background: #101014;
+ padding: 35px 40px;
+  max-width: 1600px;
+  margin: auto;
 }
 
-.page-header {
-  padding: 35px;
-  margin-bottom: 25px;
-  border: 1px solid #393044;
-  border-radius: 18px;
-  background: linear-gradient(120deg, #302044, #171722);
-}
-
-.eyebrow {
-  color: #c4a5ff;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 2px;
-}
-
-.page-header h1 {
-  margin: 12px 0;
-  font-size: 34px;
-  font-weight: 800;
-}
-
-.page-header p {
-  max-width: 650px;
-  margin: 0;
-  color: #aaa8b7;
-  line-height: 1.7;
-}
 
 .section-card {
   padding: 25px;

@@ -1,39 +1,9 @@
-:host {
-  display: block;
-  color: #ffffff;
-}
-
 .profile-page {
-  width: 100%;
-  max-width: 1250px;
-  margin: 0 auto;
-  padding: 35px 30px 60px;
+  padding: 35px 40px;
+  max-width: 1600px;
+  margin: auto;
 }
 
-.page-header {
-  margin-bottom: 30px;
-}
-
-.eyebrow,
-.section-eyebrow {
-  display: inline-block;
-  color: #a78bfa;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 2px;
-}
-
-.page-header h1 {
-  margin: 10px 0;
-  font-size: clamp(27px, 4vw, 38px);
-  font-weight: 850;
-}
-
-.page-header h1 span {
-  color: #a78bfa;
-}
-
-.page-header p,
 .section-heading p,
 .preference-heading p {
   color: #9994aa;

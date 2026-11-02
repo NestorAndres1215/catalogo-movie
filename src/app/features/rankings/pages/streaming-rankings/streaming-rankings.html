@@ -1,16 +1,11 @@
 
 <div class="streaming-page">
 
-  <header class="page-header">
-    <div>
-      <span class="eyebrow">CINEVERSE / RANKINGS</span>
-      <h1>Top 10 Streaming</h1>
-      <p>
-        Descubre las plataformas con mayor popularidad
-        en sus películas y series disponibles en Perú.
-      </p>
-    </div>
-
+<app-page-header
+  section="CINEVERSE / RANKINGS"
+  title="Top 10 Streaming"
+  description="Descubre las plataformas con mayor popularidad en sus películas y series disponibles en Perú."
+/>
     <button
       class="refresh-button"
       (click)="loadRankings()"
@@ -18,8 +13,6 @@
     >
       ↻ Actualizar
     </button>
-  </header>
-
   <div class="region-info">
     <span>🇵🇪 Perú</span>
     <span>Películas y series</span>

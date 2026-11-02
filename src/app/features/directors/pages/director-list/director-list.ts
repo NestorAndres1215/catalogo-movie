@@ -14,14 +14,16 @@ import {
 
 import { Person, PersonFilters } from '../../../../core/models/person.interface';
 import { PersonService } from '../../../../core/service/person.service';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 @Component({
   selector: 'app-director-list',
   standalone: true,
   imports: [
     RouterLink,
-    DecimalPipe
-  ],
+    DecimalPipe,
+    PageHeaderComponent
+],
   templateUrl: './director-list.html',
   styleUrl: './director-list.css'
 })

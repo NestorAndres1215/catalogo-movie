@@ -14,11 +14,12 @@ import type {
 
 import { PersonService } from '../../../../core/service/person.service';
 import { MovieService } from '../../../../core/service/movie.service';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 @Component({
   selector: 'app-cinematic-profile',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, PageHeaderComponent],
   templateUrl: './cinematic-profile.html',
   styleUrl: './cinematic-profile.css',
 })

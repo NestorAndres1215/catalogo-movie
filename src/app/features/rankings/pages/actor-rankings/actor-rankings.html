@@ -1,12 +1,11 @@
 
 <div class="rankings-container">
 
-  <header class="rankings-header">
-    <div>
-      <span class="section-label">CINEVERSE / RANKINGS</span>
-      <h1>Ranking de actores</h1>
-      <p>Descubre los actores más y menos populares de TMDB.</p>
-    </div>
+<app-page-header
+  section="CINEVERSE / RANKINGS"
+  title="Ranking de actores"
+  description="Descubre los actores más y menos populares de TMDB."
+/>
 
     <button
       class="reload-button"
@@ -15,8 +14,6 @@
       [disabled]="loading()">
       ↻ Actualizar
     </button>
-  </header>
-
   <nav class="ranking-tabs">
     <button
       type="button"

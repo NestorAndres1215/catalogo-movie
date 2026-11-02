@@ -1,4 +1,5 @@
 import { Component, OnDestroy, signal } from '@angular/core';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 interface EmojiQuestion {
   id: number;
@@ -11,7 +12,7 @@ interface EmojiQuestion {
 @Component({
   selector: 'app-emoji-game',
   standalone: true,
-  imports: [],
+  imports: [PageHeaderComponent],
   templateUrl: './emoji-game.html',
   styleUrl: './emoji-game.css',
 })

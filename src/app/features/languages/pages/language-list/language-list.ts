@@ -7,11 +7,12 @@ import {
   CatalogResponse,
   TmdbLanguage
 } from '../../../../core/models/catalog.interface';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 @Component({
   selector: 'app-language-list',
   standalone: true,
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, PageHeaderComponent],
   templateUrl: './language-list.html',
   styleUrl: './language-list.css'
 })

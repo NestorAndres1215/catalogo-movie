@@ -1,26 +1,9 @@
 .timeline-container {
-  padding: 30px;
-  color: #fff;
+  padding: 35px 40px;
+  max-width: 1600px;
+  margin: auto;
 }
 
-.page-header {
-  margin-bottom: 40px;
-}
-
-.eyebrow {
-  color: #a78bfa;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 2px;
-}
-
-.page-header h1 {
-  margin: 12px 0;
-  font-size: 34px;
-  font-weight: 800;
-}
-
-.page-header p,
 .section-heading p {
   color: #999;
   line-height: 1.6;

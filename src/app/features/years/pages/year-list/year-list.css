@@ -1,37 +1,11 @@
-:host {
-  display: block;
-}
+
 
 .years-page {
-  padding: 32px;
-  color: #f5f5f5;
+ padding: 35px 40px;
+  max-width: 1600px;
+  margin: auto;
 }
 
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 24px;
-  margin-bottom: 32px;
-}
-
-.eyebrow {
-  color: #a78bfa;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 2px;
-}
-
-.page-header h1 {
-  margin: 10px 0;
-  font-size: 32px;
-  font-weight: 800;
-}
-
-.page-header p {
-  color: #999;
-  margin: 0;
-}
 
 .year-selector {
   display: flex;

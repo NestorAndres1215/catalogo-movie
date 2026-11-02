@@ -1,154 +1,104 @@
 <section class="game-container">
-
+  <app-page-header
+    section="CINEVERSE · CENTRO DE JUEGOS"
+    title="¿Cuánto sabes de cine?"
+    description="Pon a prueba tus conocimientos e intenta descubrir las películas escondidas detrás de los emojis."
+  />
   @if (!gameStarted()) {
-
     <!-- PANTALLA DE BIENVENIDA -->
     <section class="welcome-card">
-
-      <div class="welcome-icon">🎬</div>
-
-      <span class="eyebrow">CINEVERSE · CENTRO DE JUEGOS</span>
-
-      <h2>¿Cuánto sabes de cine?</h2>
-
-      <p>
-        Pon a prueba tus conocimientos e intenta descubrir
-        las películas escondidas detrás de los emojis.
-      </p>
-
       <div class="welcome-rules">
-
         <div class="rule-card">
-          <span>🎯</span>
+          <span><i class="fas fa-bullseye"></i></span>
           <strong>10 preguntas</strong>
         </div>
 
         <div class="rule-card">
-          <span>⏱️</span>
+          <span><i class="fas fa-stopwatch"></i></span>
           <strong>30 segundos por pregunta</strong>
         </div>
 
         <div class="rule-card">
-          <span>⭐</span>
+          <span><i class="fas fa-star"></i></span>
           <strong>1 punto por acierto</strong>
         </div>
-
       </div>
 
-      <button
-        type="button"
-        class="start-button"
-        (click)="startGame()">
-
-        ▶ Jugar adivinanza
-
-      </button>
-
+      <button type="button" class="start-button" (click)="startGame()">▶ Jugar adivinanza</button>
     </section>
-
   } @else if (!gameFinished()) {
-
     @if (currentQuestion(); as question) {
-
       <!-- ENCABEZADO -->
       <header class="game-header">
+        <span class="eyebrow"> CINEVERSE · CENTRO DE JUEGOS </span>
+        <h1>
+          <i class="fas fa-film"></i>
+          Adivina la película
+        </h1>
 
-        <span class="eyebrow">
-          CINEVERSE · CENTRO DE JUEGOS
-        </span>
-
-        <h1>Adivina la película 🎬</h1>
-
-        <p>
-          ¿Cuánto sabes de cine? Descubre las películas
-          ocultas detrás de los emojis.
-        </p>
-
+        <p>¿Cuánto sabes de cine? Descubre las películas ocultas detrás de los emojis.</p>
       </header>
 
       <!-- INFORMACIÓN DEL JUEGO -->
       <div class="game-stats">
-
         <div class="stat-card">
           <span>Pregunta</span>
 
-          <strong>
-            {{ currentQuestionIndex() + 1 }}/{{ totalQuestions }}
-          </strong>
+          <strong> {{ currentQuestionIndex() + 1 }}/{{ totalQuestions }} </strong>
         </div>
 
         <div class="stat-card">
           <span>Puntuación</span>
-
-          <strong>⭐ {{ score() }}</strong>
+          <strong>
+            <i class="fas fa-star"></i>
+            {{ score() }}
+          </strong>
         </div>
 
-        <div
-          class="stat-card timer-card"
-          [class.timer-danger]="timeLeft() <= 10">
-
+        <div class="stat-card timer-card" [class.timer-danger]="timeLeft() <= 10">
           <span>Tiempo restante</span>
 
-          <strong>⏱️ {{ timeLeft() }}s</strong>
-
+          <strong>
+            <i class="fas fa-stopwatch"></i>
+            {{ timeLeft() }}s
+          </strong>
         </div>
-
       </div>
 
       <!-- PROGRESO -->
       <div class="progress-container">
-
         <div class="progress-info">
           <span>Tu progreso</span>
 
-          <span>
-            {{ currentQuestionIndex() + 1 }} de {{ totalQuestions }}
-          </span>
+          <span> {{ currentQuestionIndex() + 1 }} de {{ totalQuestions }} </span>
         </div>
 
         <div class="progress-bar">
-
-          <div
-            class="progress-fill"
-            [style.width.%]="getProgress()">
-          </div>
-
+          <div class="progress-fill" [style.width.%]="getProgress()"></div>
         </div>
-
       </div>
 
       <!-- PREGUNTA -->
       <main class="question-card">
-
-        <span class="question-label">
-          ¿QUÉ PELÍCULA REPRESENTAN ESTOS EMOJIS?
-        </span>
+        <span class="question-label"> ¿QUÉ PELÍCULA REPRESENTAN ESTOS EMOJIS? </span>
 
         <div class="emoji-container">
           {{ question.emojis }}
         </div>
 
-        <p class="question-description">
-          Observa las pistas y selecciona la respuesta correcta.
-        </p>
+        <p class="question-description">Observa las pistas y selecciona la respuesta correcta.</p>
 
         <!-- OPCIONES -->
         <div class="answers-grid">
-
           @for (option of question.options; track option) {
-
             <button
               type="button"
               class="answer-option"
               [class.correct]="answered() && isCorrect(option)"
-              [class.incorrect]="
-                answered() &&
-                isSelected(option) &&
-                !isCorrect(option)
-              "
+              [class.incorrect]="answered() && isSelected(option) && !isCorrect(option)"
               [disabled]="answered()"
-              (click)="answerQuestion(option)">
-
+              (click)="answerQuestion(option)"
+            >
               <span class="option-text">
                 {{ option }}
               </span>
@@ -157,42 +107,31 @@
                 <span class="option-icon">✓</span>
               }
 
-              @if (
-                answered() &&
-                isSelected(option) &&
-                !isCorrect(option)
-              ) {
+              @if (answered() && isSelected(option) && !isCorrect(option)) {
                 <span class="option-icon">✕</span>
               }
-
             </button>
-
           }
-
         </div>
 
         <!-- RESULTADO DE LA RESPUESTA -->
         @if (answered()) {
-
           <div
             class="answer-feedback"
             [class.success]="isCorrect(selectedAnswer() ?? '')"
-            [class.failure]="!isCorrect(selectedAnswer() ?? '')">
-
+            [class.failure]="!isCorrect(selectedAnswer() ?? '')"
+          >
             @if (isCorrect(selectedAnswer() ?? '')) {
-
-              <span class="feedback-icon">🎉</span>
+              <span class="feedback-icon">
+                <i class="fas fa-party-horn"></i>
+              </span>
 
               <div>
                 <strong>¡Respuesta correcta!</strong>
 
-                <p>
-                  ¡Muy bien! Has ganado un punto.
-                </p>
+                <p>¡Muy bien! Has ganado un punto.</p>
               </div>
-
             } @else if (selectedAnswer() === null) {
-
               <span class="feedback-icon">⏰</span>
 
               <div>
@@ -203,10 +142,10 @@
                   <b>{{ question.answer }}</b>
                 </p>
               </div>
-
             } @else {
-
-              <span class="feedback-icon">😅</span>
+              <span class="feedback-icon">
+                <i class="fas fa-face-smile-beam"></i>
+              </span>
 
               <div>
                 <strong>¡Respuesta incorrecta!</strong>
@@ -216,50 +155,38 @@
                   <b>{{ question.answer }}</b>
                 </p>
               </div>
-
             }
-
           </div>
 
           <div class="hint-container">
-            <span>💡 Pista:</span>
+            <span>
+              <i class="fas fa-lightbulb"></i>
+              Pista:
+            </span>
             {{ question.hint }}
           </div>
 
-          <button
-            type="button"
-            class="next-button"
-            (click)="nextQuestion()">
-
+          <button type="button" class="next-button" (click)="nextQuestion()">
             {{
               currentQuestionIndex() + 1 === totalQuestions
                 ? 'Ver resultados'
                 : 'Siguiente pregunta →'
             }}
-
           </button>
-
         }
-
       </main>
-
     }
-
   } @else {
-
     <!-- RESULTADO FINAL -->
     <section class="result-card">
-
       <div class="result-icon">
-
         @if (score() >= 8) {
-          🏆
+          <i class="fas fa-trophy"></i>
         } @else if (score() >= 5) {
-          🎬
+          <i class="fas fa-film"></i>
         } @else {
-          🍿
+          <i class="fas fa-popcorn"></i>
         }
-
       </div>
 
       <span class="eyebrow">RESULTADO FINAL</span>
@@ -276,7 +203,6 @@
       </p>
 
       <div class="result-details">
-
         <div>
           <strong>{{ score() }}</strong>
           <span>Correctas</span>
@@ -291,29 +217,19 @@
           <strong>{{ score() * 10 }}%</strong>
           <span>Resultado</span>
         </div>
-
       </div>
 
-      <button
-        type="button"
-        class="restart-button"
-        (click)="startGame()">
-
-        🔄 Jugar nuevamente
-
+      <button type="button" class="restart-button" (click)="startGame()">
+        <i class="fas fa-rotate-right"></i>
+        Jugar nuevamente
       </button>
-
     </section>
-
   }
 
   <!-- FOOTER -->
   <footer class="game-footer">
-
-    <span>🎥</span>
+    <span><i class="fas fa-film"></i></span>
 
     CINEVERSE · Pon a prueba tus conocimientos de cine.
-
   </footer>
-
 </section>

@@ -10,14 +10,15 @@ import {
   CollectionSummary
 } from '../../../../core/models/collection.interface';
 import { CollectionDetails } from '../../../../core/models/catalog.interface';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 @Component({
   selector: 'app-collection-list',
   standalone: true,
   imports: [
     DecimalPipe,
-
-  ],
+    PageHeaderComponent
+],
   templateUrl: './collection-list.html',
   styleUrl: './collection-list.css'
 })

@@ -1,25 +1,22 @@
 <section class="genres-page">
   <!-- ENCABEZADO -->
-
-  <header class="page-header">
-    <div>
-      <span class="section-label"> CINEVERSE / EXPLORAR </span>
-
-      <h1>Géneros</h1>
-
-      <p>Explora películas y series según tus géneros favoritos.</p>
-    </div>
-  </header>
+  <app-page-header
+    section="CINEVERSE / EXPLORAR"
+    title="Géneros"
+    description="Explora películas y series según tus géneros favoritos."
+  />
 
   <!-- SELECTOR DE TIPO -->
 
   <div class="type-selector">
     <button type="button" [class.active]="selectedType() === 'movie'" (click)="changeType('movie')">
-      🎬 Películas
+      <i class="fas fa-film"></i>
+      Películas
     </button>
 
     <button type="button" [class.active]="selectedType() === 'tv'" (click)="changeType('tv')">
-      📺 Series
+      <i class="fas fa-tv"></i>
+      Series
     </button>
   </div>
 

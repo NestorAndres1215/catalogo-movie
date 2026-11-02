@@ -1,34 +1,7 @@
-:host {
-  display: block;
-  min-height: 100%;
-  color: #f5f5f5;
-}
-
 .streaming-page {
-  padding: 32px;
-}
-
-.page-header {
-  margin-bottom: 32px;
-}
-
-.section-label {
-  color: #e50914;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 2px;
-}
-
-.page-header h1 {
-  margin: 10px 0;
-  font-size: 32px;
-  font-weight: 800;
-}
-
-.page-header p,
-.section-heading p {
-  color: #999;
-  font-size: 14px;
+  padding: 35px 40px;
+  max-width: 1600px;
+  margin: auto;
 }
 
 .media-selector {
@@ -141,7 +114,9 @@
   border: 1px solid #292929;
   border-radius: 12px;
   background: #171717;
-  transition: transform 0.2s, border-color 0.2s;
+  transition:
+    transform 0.2s,
+    border-color 0.2s;
 }
 
 .content-card:hover {

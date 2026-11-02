@@ -6,11 +6,12 @@ import {
   WatchProviderAvailability,
   WatchProviderRegion
 } from '../../../../core/models/catalog.interface';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 @Component({
   selector: 'app-platform-comparison',
   standalone: true,
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, PageHeaderComponent],
   templateUrl: './platform-comparison.html',
   styleUrl: './platform-comparison.css'
 })

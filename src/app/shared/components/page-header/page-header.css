@@ -1,0 +1,40 @@
+/* ENCABEZADO REUTILIZABLE */
+
+.page-header {
+  padding: 35px;
+  margin-bottom: 25px;
+  background: linear-gradient(
+    120deg,
+    var(--color-superficie-elevada),
+    var(--color-superficie-secundaria)
+  );
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-grande, 20px);
+}
+
+.eyebrow,
+.section-label {
+  color: var(--color-acento);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+}
+
+.page-header h1 {
+  margin: 12px 0;
+  color: var(--color-texto);
+  font-size: 34px;
+  font-weight: 800;
+}
+
+.page-header h1 i {
+  margin-right: 10px;
+  color: var(--color-acento);
+}
+
+.page-header p {
+  max-width: 650px;
+  margin: 0;
+  color: var(--color-texto-secundario);
+  line-height: 1.7;
+}

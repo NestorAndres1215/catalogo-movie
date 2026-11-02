@@ -4,11 +4,12 @@ import { RouterLink } from '@angular/router';
 
 import { Country } from '../../../../core/models/country.interface';
 import { CountryService } from '../../../../core/service/country.service';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 @Component({
   selector: 'app-country-list',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, PageHeaderComponent],
   templateUrl: './country-list.html',
   styleUrl: './country-list.css',
 })

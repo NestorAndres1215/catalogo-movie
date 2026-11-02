@@ -4,11 +4,12 @@ import { DecimalPipe } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { WatchlistService } from '../../../../core/service/watchlist.service';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 @Component({
   selector: 'app-watched-movies-list',
   standalone: true,
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, PageHeaderComponent],
   templateUrl: './watched-movies-list.html',
   styleUrl: './watched-movies-list.css',
 })

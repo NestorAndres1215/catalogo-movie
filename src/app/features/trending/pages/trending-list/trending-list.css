@@ -3,31 +3,12 @@
 }
 
 .trending-page {
-  padding: 32px;
-  color: #f5f5f5;
+ padding: 35px 40px;
+  max-width: 1600px;
+  margin: auto;
 }
 
-.page-header {
-  margin-bottom: 28px;
-}
 
-.eyebrow {
-  color: #a78bfa;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 2px;
-}
-
-.page-header h1 {
-  margin: 10px 0;
-  font-size: 32px;
-  font-weight: 800;
-}
-
-.page-header p {
-  margin: 0;
-  color: #999;
-}
 
 .trending-banner {
   position: relative;

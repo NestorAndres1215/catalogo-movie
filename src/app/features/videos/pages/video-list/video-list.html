@@ -1,8 +1,9 @@
 <section class="videos-page">
-  <header class="page-header">
-    <h1>Trailers y videos</h1>
-    <p>Descubre los avances y videos de tus películas y series favoritas.</p>
-  </header>
+<app-page-header
+  section="CINEVERSE / VIDEOTECA"
+  title="Trailers y videos"
+  description="Descubre los avances y videos de tus películas y series favoritas."
+/>
 
   <div class="media-selector">
     <button [class.active]="mediaType() === 'movie'" (click)="changeMediaType('movie')">

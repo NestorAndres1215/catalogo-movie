@@ -1,11 +1,9 @@
 <section class="movies-page">
-  <header class="page-header">
-    <div>
-      <span class="eyebrow">CINEVERSE / CATÁLOGO</span>
-      <h1>Explora películas</h1>
-      <p>Descubre historias, géneros y grandes producciones cinematográficas.</p>
-    </div>
-  </header>
+  <app-page-header
+    section="CINEVERSE / CATÁLOGO"
+    title="Películas"
+    description="Descubre historias, géneros y grandes producciones cinematográficas."
+  />
 
   <div class="search-container">
     <span class="search-icon">⌕</span>
@@ -19,16 +17,11 @@
     />
 
     @if (searchQuery()) {
-      <button class="clear-search" type="button" (click)="clearSearch()">
-        Limpiar
-      </button>
+      <button class="clear-search" type="button" (click)="clearSearch()">Limpiar</button>
     }
   </div>
 
-  <app-movie-filters
-    [genres]="genres()"
-    (filtersChange)="onFiltersChange($event)"
-  />
+  <app-movie-filters [genres]="genres()" (filtersChange)="onFiltersChange($event)" />
 
   <div class="section-heading">
     <div>
@@ -65,11 +58,7 @@
         <a class="movie-card" [routerLink]="['/movies', movie.id]">
           <div class="poster-container">
             @if (movie.poster_path) {
-              <img
-                [src]="getPoster(movie.poster_path)"
-                [alt]="movie.title"
-                loading="lazy"
-              />
+              <img [src]="getPoster(movie.poster_path)" [alt]="movie.title" loading="lazy" />
             } @else {
               <div class="no-poster">
                 <span>🎬</span>
@@ -94,21 +83,13 @@
 
     @if (totalPages() > 1) {
       <div class="pagination">
-        <button
-          type="button"
-          [disabled]="!canGoPrev()"
-          (click)="changePage(currentPage() - 1)"
-        >
+        <button type="button" [disabled]="!canGoPrev()" (click)="changePage(currentPage() - 1)">
           ← Anterior
         </button>
 
         <span>{{ currentPage() }} / {{ totalPages() }}</span>
 
-        <button
-          type="button"
-          [disabled]="!canGoNext()"
-          (click)="changePage(currentPage() + 1)"
-        >
+        <button type="button" [disabled]="!canGoNext()" (click)="changePage(currentPage() + 1)">
           Siguiente →
         </button>
       </div>

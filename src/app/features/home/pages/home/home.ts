@@ -28,7 +28,10 @@ export class HomeComponent implements OnInit {
 
   error = signal<string | null>(null);
 
-  featuredMovie = computed(() => this.trendingMovies()[0] ?? null);
+  // Primeras 5 películas para el carrusel
+  featuredMovies = computed(() =>
+    this.trendingMovies().slice(0, 5)
+  );
 
   ngOnInit(): void {
     this.loadHome();
@@ -52,7 +55,9 @@ export class HomeComponent implements OnInit {
         this.topRatedSeries.set(response.topRatedSeries.results);
       },
       error: () => {
-        this.error.set('No se pudo cargar el contenido. Inténtalo nuevamente.');
+        this.error.set(
+          'No se pudo cargar el contenido. Inténtalo nuevamente.'
+        );
       },
     });
   }
@@ -84,4 +89,16 @@ export class HomeComponent implements OnInit {
   trackSeries(_: number, series: TvSeries): number {
     return series.id;
   }
+
+getMovieGroups(): Movie[][] {
+  const movies = this.trendingMovies();
+  const groups: Movie[][] = [];
+  const itemsPerSlide = 5;
+
+  for (let i = 0; i < movies.length; i += itemsPerSlide) {
+    groups.push(movies.slice(i, i + itemsPerSlide));
+  }
+
+  return groups;
+}
 }

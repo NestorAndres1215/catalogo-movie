@@ -1,24 +1,7 @@
 .videos-page {
-  padding: 30px;
-  min-height: 100vh;
-  color: #ffffff;
-}
-
-/* ENCABEZADO */
-
-.page-header {
-  margin-bottom: 30px;
-}
-
-.page-header h1 {
-  font-size: 30px;
-  font-weight: 800;
-  margin-bottom: 10px;
-}
-
-.page-header p {
-  color: #a1a1aa;
-  font-size: 15px;
+  padding: 35px 40px;
+  max-width: 1600px;
+  margin: auto;
 }
 
 /* SELECTOR DE PELÍCULAS Y SERIES */
@@ -84,7 +67,9 @@
   border: 1px solid #292936;
   border-radius: 12px;
   overflow: hidden;
-  transition: transform 0.25s ease, border-color 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease;
 }
 
 .video-card:hover {

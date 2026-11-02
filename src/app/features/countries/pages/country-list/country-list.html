@@ -1,29 +1,16 @@
 <section class="countries-page">
-
   <!-- ENCABEZADO -->
 
-  <header class="page-header">
-
-    <div>
-      <span class="section-label">
-        CINEVERSE / EXPLORAR
-      </span>
-
-      <h1>Países</h1>
-
-      <p>
-        Descubre películas y series de diferentes países del mundo.
-      </p>
-    </div>
-
-  </header>
+  <app-page-header
+    section="CINEVERSE / EXPLORAR"
+    title="Países"
+    description="Descubre películas y series de diferentes países del mundo."
+  />
 
   <!-- BÚSQUEDA -->
 
   <div class="search-section">
-
     <div class="search-box">
-
       <span class="search-icon">⌕</span>
 
       <input
@@ -34,126 +21,66 @@
       />
 
       @if (searchQuery()) {
-
-        <button
-          type="button"
-          (click)="clearSearch()"
-        >
-          ✕
-        </button>
-
+        <button type="button" (click)="clearSearch()">✕</button>
       }
-
     </div>
-
   </div>
 
   <!-- INFORMACIÓN -->
 
   @if (!loading() && !errorMessage()) {
-
     <div class="results-header">
-
       <div>
         <h2>Explorar países</h2>
 
-        <p>
-          {{ filteredCountries().length }} países encontrados
-        </p>
+        <p>{{ filteredCountries().length }} países encontrados</p>
       </div>
 
-      <span class="country-count">
-        Página {{ currentPage() }} de {{ totalPages() }}
-      </span>
-
+      <span class="country-count"> Página {{ currentPage() }} de {{ totalPages() }} </span>
     </div>
-
   }
 
   <!-- CARGANDO -->
 
   @if (loading()) {
-
     <div class="message">
-
       <div class="loader"></div>
 
-      <p>
-        Cargando países...
-      </p>
-
+      <p>Cargando países...</p>
     </div>
-
   }
 
   <!-- ERROR -->
 
   @if (errorMessage()) {
-
     <div class="message error">
-
       <p>{{ errorMessage() }}</p>
 
-      <button
-        type="button"
-        (click)="loadCountries()"
-      >
-        Reintentar
-      </button>
-
+      <button type="button" (click)="loadCountries()">Reintentar</button>
     </div>
-
   }
 
   <!-- SIN RESULTADOS -->
 
-  @if (
-    !loading() &&
-    !errorMessage() &&
-    filteredCountries().length === 0
-  ) {
-
+  @if (!loading() && !errorMessage() && filteredCountries().length === 0) {
     <div class="message">
-
       <h2>No se encontraron países</h2>
 
-      <p>
-        Intenta buscar con otro nombre o código.
-      </p>
-
+      <p>Intenta buscar con otro nombre o código.</p>
     </div>
-
   }
 
   <!-- GRID DE PAÍSES -->
 
-  @if (
-    !loading() &&
-    !errorMessage() &&
-    paginatedCountries().length > 0
-  ) {
-
+  @if (!loading() && !errorMessage() && paginatedCountries().length > 0) {
     <div class="countries-grid">
-
-      @for (
-        country of paginatedCountries();
-        track country.iso_3166_1
-      ) {
-
-        <a
-          class="country-card"
-          [routerLink]="[
-            '/countries',
-            country.iso_3166_1
-          ]"
-        >
-
+      @for (country of paginatedCountries(); track country.iso_3166_1) {
+        <a class="country-card" [routerLink]="['/countries', country.iso_3166_1]">
           <div class="country-flag">
             {{ getFlag(country.iso_3166_1) }}
           </div>
 
           <div class="country-info">
-
             <h3>
               {{ country.english_name }}
             </h3>
@@ -162,26 +89,17 @@
               {{ country.native_name }}
             </span>
 
-            <small>
-              Código: {{ country.iso_3166_1 }}
-            </small>
-
+            <small> Código: {{ country.iso_3166_1 }} </small>
           </div>
 
-          <span class="country-arrow">
-            →
-          </span>
-
+          <span class="country-arrow"> → </span>
         </a>
-
       }
-
     </div>
 
     <!-- PAGINACIÓN -->
 
     <nav class="pagination">
-
       <button
         type="button"
         [disabled]="currentPage() === 1"
@@ -190,9 +108,7 @@
         Anterior
       </button>
 
-      <span>
-        Página {{ currentPage() }} de {{ totalPages() }}
-      </span>
+      <span> Página {{ currentPage() }} de {{ totalPages() }} </span>
 
       <button
         type="button"
@@ -201,9 +117,6 @@
       >
         Siguiente
       </button>
-
     </nav>
-
   }
-
 </section>

@@ -1,5 +1,6 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { MovieService } from '../../../../core/service/movie.service';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 type RankingType = 'best' | 'worst';
 
@@ -7,7 +8,8 @@ type RankingType = 'best' | 'worst';
   selector: 'app-movie-rankings',
   standalone: true,
   templateUrl: './movie-rankings.html',
-  styleUrl: './movie-rankings.css'
+  styleUrl: './movie-rankings.css',
+  imports: [PageHeaderComponent]
 })
 export class MovieRankingsComponent implements OnInit {
 

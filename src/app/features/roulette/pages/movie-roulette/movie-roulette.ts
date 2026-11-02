@@ -9,6 +9,7 @@ import {
   FavoriteWatchlistItem,
 } from '../../../../core/models/catalog.interface';
 import { WatchlistService } from '../../../../core/service/watchlist.service';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 interface RouletteWinner {
   movie: CatalogMedia;
@@ -19,7 +20,7 @@ interface RouletteWinner {
 @Component({
   selector: 'app-movie-roulette',
   standalone: true,
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, PageHeaderComponent],
   templateUrl: './movie-roulette.html',
   styleUrl: './movie-roulette.css',
 })

@@ -5,11 +5,12 @@ import { RouterLink } from '@angular/router';
 import { FavoriteService } from '../../../../core/service/favorite.service';
 import { Favorite } from '../../../../core/models/favorite.interface';
 import { TmdbService } from '../../../../core/service/tmdb.service';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 @Component({
   selector: 'app-favorite-list',
   standalone: true,
-  imports: [RouterLink, DecimalPipe],
+  imports: [RouterLink, DecimalPipe, PageHeaderComponent],
   templateUrl: './favorite-list.html',
   styleUrl: './favorite-list.css',
 })

@@ -8,57 +8,107 @@
 
   @if (!error()) {
     <!-- BANNER PRINCIPAL -->
-    @if (featuredMovie(); as movie) {
+    @if (featuredMovies().length > 0) {
       <section
-        class="hero"
-        [style.background-image]="
-          movie.backdrop_path
-            ? 'linear-gradient(90deg, #101018 5%, rgba(16,16,24,.85) 45%, rgba(16,16,24,.15)), url(' +
-              getBackdrop(movie.backdrop_path) +
-              ')'
-            : 'linear-gradient(90deg, #101018, #29223b)'
-        "
+        id="featuredCarousel"
+        class="carousel slide carousel-fade"
+        data-bs-ride="carousel"
+        data-bs-interval="5000"
       >
-        <div class="hero-content">
-          <span class="hero-label">
-            <i class="fas fa-clapperboard"></i>
-            DESTACADO DE LA SEMANA
-          </span>
-
-          <h1>{{ movie.title }}</h1>
-
-          <div class="hero-meta">
-            <span>
-              <i class="fas fa-star" style="color: #ffd700"></i>
-              {{ getRating(movie.vote_average) }}
-            </span>
-            <span>{{ getYear(movie.release_date) }}</span>
-            <span>
-              <i class="fas fa-film"></i>
-              Película
-            </span>
-          </div>
-
-          <p>{{ movie.overview || 'Descubre esta película en CINEVERSE.' }}</p>
-
-          <div class="hero-actions">
-            <a class="btn-primary gap-2" [routerLink]="['/movies', movie.id]">
-              <i class="fas fa-circle-info"></i>
-              Ver detalles
-            </a>
-
-            <a class="btn-secondary gap-2" routerLink="/videos">
-              <i class="fas fa-circle-play"></i>
-              Explorar tráilers
-            </a>
-          </div>
+        <!-- INDICADORES -->
+        <div class="carousel-indicators">
+          @for (movie of featuredMovies(); track movie.id; let i = $index) {
+            <button
+              type="button"
+              data-bs-target="#featuredCarousel"
+              [attr.data-bs-slide-to]="i"
+              [class.active]="i === 0"
+              [attr.aria-current]="i === 0 ? 'true' : null"
+              [attr.aria-label]="'Película ' + (i + 1)"
+            ></button>
+          }
         </div>
 
-        <div class="hero-indicator">
-          <span></span>
-          <span></span>
-          <span></span>
+        <!-- PELÍCULAS -->
+        <div class="carousel-inner">
+          @for (movie of featuredMovies(); track movie.id; let i = $index) {
+            <div class="carousel-item" [class.active]="i === 0">
+              <section
+                class="hero"
+                [style.background-image]="
+                  movie.backdrop_path
+                    ? 'linear-gradient(90deg, #0b0b0f 5%, rgba(11,11,15,.85) 45%, rgba(11,11,15,.15)), url(' +
+                      getBackdrop(movie.backdrop_path) +
+                      ')'
+                    : 'linear-gradient(90deg, #0b0b0f, #262632)'
+                "
+              >
+                <div class="hero-content">
+                  <span class="hero-label">
+                    <i class="fas fa-film"></i>
+                    DESTACADO DE LA SEMANA
+                  </span>
+
+                  <h1>{{ movie.title }}</h1>
+
+                  <div class="hero-meta">
+                    <span>
+                      <i class="fas fa-star"></i>
+                      {{ getRating(movie.vote_average) }}
+                    </span>
+
+                    <span>
+                      {{ getYear(movie.release_date) }}
+                    </span>
+
+                    <span>
+                      <i class="fas fa-film"></i>
+                      Película
+                    </span>
+                  </div>
+
+                  <p>
+                    {{ movie.overview || 'Descubre esta película en CINEVERSE.' }}
+                  </p>
+
+                  <div class="hero-actions">
+                    <a class="btn-primary gap-2" [routerLink]="['/movies', movie.id]">
+                      <i class="fas fa-circle-info"></i>
+                      Ver detalles
+                    </a>
+
+                    <a class="btn-secondary gap-2" routerLink="/videos">
+                      <i class="fas fa-circle-play"></i>
+                      Explorar tráilers
+                    </a>
+                  </div>
+                </div>
+              </section>
+            </div>
+          }
         </div>
+
+        <!-- BOTÓN ANTERIOR -->
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#featuredCarousel"
+          data-bs-slide="prev"
+          aria-label="Película anterior"
+        >
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+
+        <!-- BOTÓN SIGUIENTE -->
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#featuredCarousel"
+          data-bs-slide="next"
+          aria-label="Película siguiente"
+        >
+          <span class="carousel-control-next-icon"></span>
+        </button>
       </section>
     }
 
@@ -141,7 +191,10 @@
       <div class="section-header">
         <div>
           <span class="section-label">PARA MARATONEAR</span>
-          <h2>Series en tendencia 📺</h2>
+          <h2>
+            Series en tendencia
+            <i class="fas fa-tv"></i>
+          </h2>
           <p>Las series más populares de esta semana.</p>
         </div>
 
@@ -177,7 +230,10 @@
       <div class="section-header">
         <div>
           <span class="section-label">PRÓXIMAMENTE</span>
-          <h2>Próximos estrenos 🍿</h2>
+          <h2>
+            Próximos estrenos
+            <i class="fas fa-calendar-plus"></i>
+          </h2>
           <p>Prepárate para los próximos lanzamientos.</p>
         </div>
 
@@ -209,7 +265,10 @@
       <div class="section-header">
         <div>
           <span class="section-label">RECOMENDACIONES DE LA COMUNIDAD</span>
-          <h2>Películas mejor valoradas ⭐</h2>
+          <h2>
+            Películas mejor valoradas
+            <i class="fas fa-star"></i>
+          </h2>
           <p>Grandes películas según las puntuaciones de TMDB.</p>
         </div>
 
@@ -241,7 +300,10 @@
       <div class="section-header">
         <div>
           <span class="section-label">GRANDES HISTORIAS</span>
-          <h2>Series mejor valoradas 🏅</h2>
+          <h2>
+            Series mejor valoradas
+            <i class="fas fa-trophy"></i>
+          </h2>
           <p>Series destacadas por la comunidad de TMDB.</p>
         </div>
 
@@ -276,25 +338,46 @@
     <section class="library-banner">
       <div>
         <span class="section-label">TU ESPACIO PERSONAL</span>
-        <h2>Tu universo, tus películas ❤️</h2>
+
+        <h2>
+          Tu universo, tus películas
+          <i class="fas fa-heart"></i>
+        </h2>
+
         <p>
           Organiza tus favoritos, guarda lo que quieres ver y descubre tus preferencias
           cinematográficas.
         </p>
 
         <div class="library-actions">
-          <a routerLink="/favorites">❤️ Mis favoritos</a>
-          <a routerLink="/watchlist">📋 Mi lista para ver</a>
-          <a routerLink="/statistics">📊 Mis estadísticas</a>
+          <a routerLink="/favorites" class="d-flex align-items-center gap-2">
+            <i class="fas fa-heart"></i>
+            <span>Mis favoritos</span>
+          </a>
+
+          <a routerLink="/watchlist" class="d-flex align-items-center gap-2">
+            <i class="fas fa-clipboard-list"></i>
+            <span>Mi lista para ver</span>
+          </a>
+
+          <a routerLink="/statistics" class="d-flex align-items-center gap-2">
+            <i class="fas fa-chart-pie"></i>
+            <span>Mis estadísticas</span>
+          </a>
         </div>
       </div>
 
-      <span class="library-icon">🎬</span>
+      <span class="library-icon">
+        <i class="fas fa-film"></i>
+      </span>
     </section>
 
     <!-- FOOTER -->
     <footer class="home-footer">
-      <h3>🎬 CINEVERSE</h3>
+      <h3>
+        <i class="fas fa-film"></i>
+        CINEVERSE
+      </h3>
       <p>Explora, descubre y disfruta el universo del cine.</p>
       <span>Contenido cinematográfico proporcionado por TMDB.</span>
     </footer>

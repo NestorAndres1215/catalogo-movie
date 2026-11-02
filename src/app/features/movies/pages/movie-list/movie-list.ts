@@ -7,6 +7,7 @@ import { Movie, MovieFilters } from '../../../../core/models/movie.interface';
 import { Genre } from '../../../../core/models/genre.interface';
 import { MovieFiltersComponent } from '../movie-filters/movie-filters';
 import { MovieService } from '../../../../core/service/movie.service';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 interface MoviesRequest {
   query: string;
@@ -25,7 +26,7 @@ interface MoviesResult {
 @Component({
   selector: 'app-movie-list',
   standalone: true,
-  imports: [RouterLink, MovieFiltersComponent],
+  imports: [RouterLink, MovieFiltersComponent, PageHeaderComponent],
   templateUrl: './movie-list.html',
   styleUrl: './movie-list.css'
 })

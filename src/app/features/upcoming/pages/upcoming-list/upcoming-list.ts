@@ -5,11 +5,12 @@ import { DecimalPipe } from '@angular/common';
 import { UpcomingService } from '../../../../core/service/upcoming.service';
 import { UpcomingMedia } from '../../../../core/models/upcoming.interface';
 import { FavoriteButtonComponent } from '../../../../shared/components/favorite-button/favorite-button';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 @Component({
   selector: 'app-upcoming-list',
   standalone: true,
-  imports: [DecimalPipe, FavoriteButtonComponent],
+  imports: [DecimalPipe, FavoriteButtonComponent, PageHeaderComponent],
   templateUrl: './upcoming-list.html',
   styleUrl: './upcoming-list.css',
 })

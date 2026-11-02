@@ -1,19 +1,15 @@
 <section class="favorites-page">
-
-  <header class="page-header">
-    <div>
-      <span class="eyebrow">TU COLECCIÓN PERSONAL</span>
-      <h1>Mis favoritos <span class="heart-icon">♥</span></h1>
-      <p>
-        Aquí encontrarás todas las películas y series que has guardado.
-      </p>
-    </div>
-  </header>
+  <app-page-header
+    section="TU COLECCIÓN PERSONAL"
+    title="Mis favoritos"
+    description="Aquí encontrarás todas las películas y series que has guardado."
+  />
 
   <div class="favorites-stats">
-
     <div class="stat-card">
-      <span class="stat-icon">♥</span>
+      <span class="stat-icon">
+        <i class="fas fa-heart"></i>
+      </span>
       <div>
         <strong>{{ totalFavorites() }}</strong>
         <span>Favoritos</span>
@@ -21,7 +17,9 @@
     </div>
 
     <div class="stat-card">
-      <span class="stat-icon">🎬</span>
+      <span class="stat-icon">
+        <i class="fas fa-film"></i>
+      </span>
       <div>
         <strong>{{ totalMovies() }}</strong>
         <span>Películas</span>
@@ -29,23 +27,19 @@
     </div>
 
     <div class="stat-card">
-      <span class="stat-icon">📺</span>
+      <span class="stat-icon">
+        <i class="fas fa-tv"></i>
+      </span>
       <div>
         <strong>{{ totalSeries() }}</strong>
         <span>Series</span>
       </div>
     </div>
-
   </div>
 
   <div class="favorites-toolbar">
-
     <div class="filter-tabs">
-      <button
-        type="button"
-        [class.active]="selectedType() === 'all'"
-        (click)="changeType('all')"
-      >
+      <button type="button" [class.active]="selectedType() === 'all'" (click)="changeType('all')">
         Todos
       </button>
 
@@ -57,59 +51,33 @@
         Películas
       </button>
 
-      <button
-        type="button"
-        [class.active]="selectedType() === 'tv'"
-        (click)="changeType('tv')"
-      >
+      <button type="button" [class.active]="selectedType() === 'tv'" (click)="changeType('tv')">
         Series
       </button>
     </div>
 
-    <span class="results-count">
-      {{ filteredFavorites().length }} resultados
-    </span>
-
+    <span class="results-count"> {{ filteredFavorites().length }} resultados </span>
   </div>
 
   @if (filteredFavorites().length > 0) {
-
     <div class="favorites-grid">
-
       @for (favorite of filteredFavorites(); track favorite.mediaType + '-' + favorite.id) {
-
         <article class="favorite-card">
-
-          <a
-            class="poster-container"
-            [routerLink]="getMediaRoute(favorite)"
-          >
-
+          <a class="poster-container" [routerLink]="getMediaRoute(favorite)">
             @if (favorite.posterPath) {
-              <img
-                [src]="getImageUrl(favorite.posterPath)"
-                [alt]="favorite.title"
-                loading="lazy"
-              />
+              <img [src]="getImageUrl(favorite.posterPath)" [alt]="favorite.title" loading="lazy" />
             } @else {
               <div class="no-poster">
                 <span>Sin imagen</span>
               </div>
             }
 
-            <span class="rating">
-              ★ {{ favorite.voteAverage | number:'1.1-1' }}
-            </span>
-
+            <span class="rating"> ★ {{ favorite.voteAverage | number: '1.1-1' }} </span>
           </a>
 
           <div class="favorite-card-info">
-
             <div class="title-row">
-              <a
-                [routerLink]="getMediaRoute(favorite)"
-                class="media-title"
-              >
+              <a [routerLink]="getMediaRoute(favorite)" class="media-title">
                 {{ favorite.title }}
               </a>
 
@@ -135,38 +103,23 @@
             <p>
               {{ favorite.overview || 'Sin descripción disponible.' }}
             </p>
-
           </div>
-
         </article>
-
       }
-
     </div>
-
   } @else {
-
     <div class="empty-state">
       <span class="empty-heart">♡</span>
 
       @if (totalFavorites() === 0) {
         <h2>Aún no tienes favoritos</h2>
-        <p>
-          Explora las películas y series y presiona el corazón
-          para guardar tus favoritas.
-        </p>
+        <p>Explora las películas y series y presiona el corazón para guardar tus favoritas.</p>
       } @else {
         <h2>No hay resultados en esta categoría</h2>
-        <p>
-          Prueba seleccionando otra categoría.
-        </p>
+        <p>Prueba seleccionando otra categoría.</p>
       }
 
-      <a routerLink="/movies" class="explore-button">
-        Explorar películas
-      </a>
+      <a routerLink="/movies" class="explore-button"> Explorar películas </a>
     </div>
-
   }
-
 </section>

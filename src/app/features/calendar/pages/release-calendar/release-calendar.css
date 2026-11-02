@@ -4,38 +4,9 @@
 }
 
 .calendar-page {
-  min-height: 100%;
-  padding: 30px;
-  background: #101014;
-}
-
-.page-header {
-  padding: 35px;
-  margin-bottom: 25px;
-  background: linear-gradient(120deg, #282044, #171722);
-  border: 1px solid #393044;
-  border-radius: 18px;
-}
-
-.eyebrow,
-.section-label {
-  color: #b99aff;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1.8px;
-}
-
-.page-header h1 {
-  margin: 12px 0;
-  font-size: 34px;
-  font-weight: 800;
-}
-
-.page-header p {
-  max-width: 650px;
-  margin: 0;
-  color: #aaa8b7;
-  line-height: 1.7;
+  padding: 35px 40px;
+  max-width: 1600px;
+  margin: auto;
 }
 
 /* CALENDARIO */
@@ -136,7 +107,9 @@
   border-radius: 9px;
   text-align: left;
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
 }
 
 .calendar-day:hover:not(:disabled) {
@@ -269,7 +242,9 @@
   background: #22212b;
   border: 1px solid #353341;
   border-radius: 12px;
-  transition: transform 0.2s, border-color 0.2s;
+  transition:
+    transform 0.2s,
+    border-color 0.2s;
 }
 
 .movie-card:hover {

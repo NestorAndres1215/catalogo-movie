@@ -4,13 +4,14 @@ import { DecimalPipe } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { WatchlistService } from '../../../../core/service/watchlist.service';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 type RatingFilter = 'all' | 'movie' | 'tv';
 
 @Component({
   selector: 'app-my-ratings-list',
   standalone: true,
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, PageHeaderComponent],
   templateUrl: './my-ratings-list.html',
   styleUrl: './my-ratings-list.css',
 })

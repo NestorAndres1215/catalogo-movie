@@ -1,25 +1,7 @@
 .reviews-page {
-  min-height: 100vh;
-  padding: 30px;
-  color: #ffffff;
-}
-
-/* ENCABEZADO */
-
-.page-header {
-  margin-bottom: 30px;
-}
-
-.page-header h1 {
-  font-size: 30px;
-  font-weight: 800;
-  margin-bottom: 10px;
-}
-
-.page-header p {
-  color: #a1a1aa;
-  font-size: 15px;
-  line-height: 1.6;
+  padding: 35px 40px;
+  max-width: 1600px;
+  margin: auto;
 }
 
 /* SELECTOR */

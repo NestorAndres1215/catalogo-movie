@@ -1,30 +1,10 @@
 .collections-page {
-  padding: 30px;
-  color: #fff;
-  min-height: 100%;
+ padding: 35px 40px;
+  max-width: 1600px;
+  margin: auto;
 }
 
-.page-header {
-  margin-bottom: 30px;
-}
 
-.page-subtitle {
-  color: #a78bfa;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 2px;
-}
-
-.page-header h1 {
-  font-size: 30px;
-  margin: 10px 0;
-}
-
-.page-header p {
-  color: #999;
-  line-height: 1.6;
-  max-width: 650px;
-}
 
 .search-container {
   display: flex;

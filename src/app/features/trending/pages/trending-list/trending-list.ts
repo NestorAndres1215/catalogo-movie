@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { TrendingService } from '../../../../core/service/trending.service';
 import { TrendingMedia } from '../../../../core/models/trending.interface';
 import { FavoriteButtonComponent } from '../../../../shared/components/favorite-button/favorite-button';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 @Component({
   selector: 'app-trending-list',
@@ -12,8 +13,9 @@ import { FavoriteButtonComponent } from '../../../../shared/components/favorite-
   imports: [
     RouterLink,
     DecimalPipe,
-    FavoriteButtonComponent
-  ],
+    FavoriteButtonComponent,
+    PageHeaderComponent
+],
   templateUrl: './trending-list.html',
   styleUrl: './trending-list.css'
 })

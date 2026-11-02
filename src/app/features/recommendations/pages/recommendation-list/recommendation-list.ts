@@ -6,11 +6,12 @@ import { RecommendationService } from '../../../../core/service/recommendation.s
 import {
   RecommendationMedia
 } from '../../../../core/models/recommendation.interface';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 @Component({
   selector: 'app-recommendation-list',
   standalone: true,
-  imports: [RouterLink, DecimalPipe],
+  imports: [RouterLink, DecimalPipe, PageHeaderComponent],
   templateUrl: './recommendation-list.html',
   styleUrl: './recommendation-list.css'
 })

@@ -8,6 +8,7 @@ import { SeriesService } from '../../../../core/service/series.service';
 import { CatalogService } from '../../../../core/service/catalog.service';
 
 import { MediaReview } from '../../../../core/models/catalog.interface';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 interface ReviewItem extends MediaReview {
   mediaTitle: string;
@@ -17,7 +18,7 @@ interface ReviewItem extends MediaReview {
 @Component({
   selector: 'app-review-list',
   standalone: true,
-  imports: [DatePipe, DecimalPipe],
+  imports: [DatePipe, DecimalPipe, PageHeaderComponent],
   templateUrl: './review-list.html',
   styleUrl: './review-list.css',
 })

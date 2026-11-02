@@ -10,10 +10,8 @@
   padding: 35px 25px;
 }
 
-/* TEXTOS GENERALES */
-
 .eyebrow {
-  color: #a78bfa;
+  color: var(--color-acento);
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 2px;
@@ -22,7 +20,7 @@
 /* PANTALLA DE BIENVENIDA */
 
 .welcome-card {
-  max-width: 700px;
+
   margin: 45px auto;
   padding: 45px 35px;
   background: linear-gradient(145deg, #202438, #171b29);
@@ -46,11 +44,10 @@
 .welcome-card > p {
   max-width: 480px;
   margin: 0 auto;
-  color: #a3a9bb;
+  color: var(--color-texto-secundario);
   font-size: 15px;
   line-height: 1.7;
 }
-
 .welcome-rules {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -76,7 +73,7 @@
 }
 
 .rule-card strong {
-  color: #d1d5e2;
+  color: var(--color-texto);
   font-size: 12px;
 }
 
@@ -86,8 +83,8 @@
   padding: 17px;
   border: none;
   border-radius: 13px;
-  background: linear-gradient(135deg, #7c3aed, #5b4be7);
-  color: #ffffff;
+  background: var(--color-acento);
+  color: var(--color-texto-sobre-acento);
   font-size: 16px;
   font-weight: 800;
   cursor: pointer;
@@ -113,7 +110,7 @@
 }
 
 .game-header p {
-  color: #9ca3b5;
+  color: var(--color-texto-secundario);
   font-size: 15px;
   line-height: 1.6;
 }
@@ -138,10 +135,9 @@
 }
 
 .stat-card span {
-  color: #969caf;
+  color: var(--color-texto-secundario);
   font-size: 13px;
 }
-
 .stat-card strong {
   font-size: 23px;
 }
@@ -149,7 +145,7 @@
 /* CRONÓMETRO */
 
 .timer-card strong {
-  color: #a78bfa;
+  color: var(--color-acento);
   font-variant-numeric: tabular-nums;
 }
 
@@ -178,7 +174,7 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
-  color: #a5aabe;
+  color: var(--color-texto-secundario);
   font-size: 13px;
 }
 
@@ -192,7 +188,7 @@
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #7c3aed, #a78bfa);
+  background: linear-gradient(90deg, var(--color-acento), var(--color-acento-hover));
   border-radius: 20px;
   transition: width 0.4s ease;
 }
@@ -209,7 +205,7 @@
 }
 
 .question-label {
-  color: #a78bfa;
+  color: var(--color-acento);
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 1.5px;
@@ -233,7 +229,7 @@
 
 .question-description {
   margin-bottom: 25px;
-  color: #a3a9bb;
+  color: var(--color-texto-secundario);
   font-size: 14px;
 }
 
@@ -263,8 +259,8 @@
 }
 
 .answer-option:not(:disabled):hover {
-  background: #343052;
-  border-color: #8b5cf6;
+  background: var(--color-superficie-elevada);
+  border-color: var(--color-acento);
   transform: translateY(-2px);
 }
 
@@ -315,7 +311,15 @@
   border: 1px solid rgba(239, 68, 68, 0.4);
 }
 
+.timer-card strong {
+  color: var(--color-acento);
+  font-variant-numeric: tabular-nums;
+}
+.stat-card strong i {
+  color: var(--color-valoracion);
+}
 .feedback-icon {
+  color: var(--color-acento);
   font-size: 30px;
 }
 
@@ -325,24 +329,24 @@
 
 .answer-feedback p {
   margin-top: 5px;
-  color: #b6bdce;
+  color: var(--color-texto-secundario);
   font-size: 13px;
   line-height: 1.5;
 }
 
 .answer-feedback b {
-  color: #ffffff;
+  color: var(--color-texto);
 }
 
 .hint-container {
   margin-top: 15px;
-  color: #b4bad0;
+  color: var(--color-texto-secundario);
   font-size: 13px;
   line-height: 1.6;
 }
 
 .hint-container span {
-  color: #c4a6ff;
+  color: var(--color-acento);
   font-weight: 700;
 }
 
@@ -354,9 +358,9 @@
   margin-top: 25px;
   padding: 15px;
   border: none;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #7c3aed, #5b4be7);
-  color: #ffffff;
+  border-radius: var(--radio-borde-pequeno, 8px);
+  background: var(--color-acento);
+  color: var(--color-texto-sobre-acento);
   font-size: 15px;
   font-weight: 700;
   cursor: pointer;
@@ -365,10 +369,9 @@
 
 .next-button:hover,
 .restart-button:hover {
-  filter: brightness(1.15);
+  background: var(--color-acento-hover);
   transform: translateY(-2px);
 }
-
 /* RESULTADO FINAL */
 
 .result-card {
@@ -400,18 +403,18 @@
 }
 
 .final-score strong {
-  color: #c4a6ff;
+  color: var(--color-acento);
   font-size: 75px;
   font-weight: 900;
 }
 
 .final-score span {
-  color: #9ca3b5;
+  color: var(--color-texto-secundario);
   font-size: 25px;
 }
 
 .result-message {
-  color: #b5bbcc;
+  color: var(--color-texto-secundario);
   line-height: 1.6;
 }
 
@@ -436,7 +439,7 @@
 }
 
 .result-details span {
-  color: #9ca3b5;
+  color: var(--color-texto-secundario);
   font-size: 12px;
 }
 
@@ -511,4 +514,13 @@
   .result-details strong {
     font-size: 18px;
   }
+}
+
+.rule-card > span {
+  color: var(--color-acento);
+  font-size: 24px;
+}
+
+.rule-card strong {
+  color: var(--color-texto);
 }

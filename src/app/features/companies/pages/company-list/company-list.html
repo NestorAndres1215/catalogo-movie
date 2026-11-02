@@ -1,26 +1,14 @@
-
 <section class="companies-page">
-
   <!-- ENCABEZADO -->
-  <header class="page-header">
-    <div>
-      <span class="section-label">
-        CINEVERSE / INDUSTRIA CINEMATOGRÁFICA
-      </span>
-
-      <h1>Productoras</h1>
-
-      <p>
-        Descubre los estudios y compañías responsables
-        de producir grandes películas.
-      </p>
-    </div>
-  </header>
+  <app-page-header
+    section="CINEVERSE / INDUSTRIA CINEMATOGRÁFICA"
+    title="Productoras"
+    description="Descubre los estudios y compañías responsables de producir grandes películas."
+  />
 
   <!-- BÚSQUEDA -->
   <section class="search-section">
     <div class="search-box">
-
       <span class="search-icon">⌕</span>
 
       <input
@@ -31,44 +19,28 @@
         (keyup.enter)="searchCompanies(searchQuery())"
       />
 
-      <button
-        type="button"
-        (click)="searchCompanies(searchQuery())"
-        [disabled]="loading()"
-      >
+      <button type="button" (click)="searchCompanies(searchQuery())" [disabled]="loading()">
         Buscar
       </button>
 
       @if (searchQuery()) {
-        <button
-          type="button"
-          class="clear-button"
-          (click)="clearSearch()"
-          [disabled]="loading()"
-        >
+        <button type="button" class="clear-button" (click)="clearSearch()" [disabled]="loading()">
           Limpiar
         </button>
       }
-
     </div>
   </section>
 
   <!-- DESCUBRIR PRODUCTORAS -->
   @if (!searchQuery()) {
-
     <section class="quick-search-section">
-
       <div class="discover-heading">
         <div>
-          <span class="section-label">
-            DESCUBRE NUEVOS ESTUDIOS
-          </span>
+          <span class="section-label"> DESCUBRE NUEVOS ESTUDIOS </span>
 
           <h2>Productoras para descubrir</h2>
 
-          <p>
-            Explora una selección aleatoria de compañías cinematográficas.
-          </p>
+          <p>Explora una selección aleatoria de compañías cinematográficas.</p>
         </div>
 
         <button
@@ -84,42 +56,29 @@
 
       <div class="quick-search-list">
         @for (company of popularSearches; track company) {
-          <button
-            type="button"
-            (click)="searchPopularCompany(company)"
-          >
+          <button type="button" (click)="searchPopularCompany(company)">
             {{ company }}
           </button>
         }
       </div>
-
     </section>
-
   }
 
   <!-- RESULTADOS DE BÚSQUEDA -->
   @if (searchQuery()) {
-
     <div class="results-header">
       <div>
-        <span class="section-label">
-          RESULTADOS
-        </span>
+        <span class="section-label"> RESULTADOS </span>
 
         <h2>Productoras encontradas</h2>
 
-        <p>
-          {{ totalResults() }} resultados para
-          "{{ searchQuery() }}"
-        </p>
+        <p>{{ totalResults() }} resultados para "{{ searchQuery() }}"</p>
       </div>
     </div>
-
   }
 
   <!-- CARGANDO -->
   @if (loading()) {
-
     <div class="message">
       <div class="loader"></div>
 
@@ -127,89 +86,57 @@
 
       <p>Estamos preparando los resultados.</p>
     </div>
-
   }
 
   <!-- ERROR -->
   @if (errorMessage()) {
-
     <div class="message error">
-
       <h2>No se pudieron cargar las productoras</h2>
 
       <p>{{ errorMessage() }}</p>
 
       <button
         type="button"
-        (click)="searchQuery()
-          ? searchCompanies(searchQuery(), currentPage())
-          : loadRandomCompanies()"
+        (click)="
+          searchQuery() ? searchCompanies(searchQuery(), currentPage()) : loadRandomCompanies()
+        "
       >
         Reintentar
       </button>
-
     </div>
-
   }
 
   <!-- SIN RESULTADOS -->
-  @if (
-    !loading() &&
-    !errorMessage() &&
-    searchQuery() &&
-    companies().length === 0
-  ) {
-
+  @if (!loading() && !errorMessage() && searchQuery() && companies().length === 0) {
     <div class="message">
-
       <h2>No se encontraron productoras</h2>
 
-      <p>
-        Intenta buscar con otro nombre.
-      </p>
-
+      <p>Intenta buscar con otro nombre.</p>
     </div>
-
   }
 
   <!-- GRID DE PRODUCTORAS -->
   @if (!loading() && companies().length > 0) {
-
     <div class="companies-grid">
-
       @for (company of companies(); track company.id) {
-
-        <a
-          class="company-card"
-          [routerLink]="['/companies', company.id]"
-        >
-
+        <a class="company-card" [routerLink]="['/companies', company.id]">
           <div class="company-logo">
-
             @if (company.logo_path) {
-
               <img
                 [src]="getLogo(company.logo_path)"
                 [alt]="'Logotipo de ' + company.name"
                 loading="lazy"
               />
-
             } @else {
-
               <div class="no-logo">
                 <span>🎬</span>
                 <p>Logotipo no disponible</p>
               </div>
-
             }
-
           </div>
 
           <div class="company-info">
-
-            <span class="company-label">
-              PRODUCTORA CINEMATOGRÁFICA
-            </span>
+            <span class="company-label"> PRODUCTORA CINEMATOGRÁFICA </span>
 
             <h2>
               {{ company.name }}
@@ -219,32 +146,20 @@
               <span>🌎</span>
               {{ company.origin_country || 'País no disponible' }}
             </span>
-
           </div>
 
           <div class="company-card-footer">
             <span>Explorar productora</span>
             <span class="arrow">→</span>
           </div>
-
         </a>
-
       }
-
     </div>
-
   }
 
   <!-- PAGINACIÓN -->
-  @if (
-    searchQuery() &&
-    !loading() &&
-    companies().length > 0 &&
-    totalPages() > 1
-  ) {
-
+  @if (searchQuery() && !loading() && companies().length > 0 && totalPages() > 1) {
     <nav class="pagination">
-
       <button
         type="button"
         [disabled]="currentPage() === 1"
@@ -253,9 +168,7 @@
         ← Anterior
       </button>
 
-      <span>
-        Página {{ currentPage() }} de {{ totalPages() }}
-      </span>
+      <span> Página {{ currentPage() }} de {{ totalPages() }} </span>
 
       <button
         type="button"
@@ -264,9 +177,6 @@
       >
         Siguiente →
       </button>
-
     </nav>
-
   }
-
 </section>

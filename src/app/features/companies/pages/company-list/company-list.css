@@ -1,35 +1,8 @@
 
 .companies-page {
-  width: 100%;
-  padding: 40px;
-  color: #f5f5f5;
-}
-
-/* ENCABEZADO */
-
-.page-header {
-  margin-bottom: 40px;
-}
-
-.section-label {
-  color: #e5a00d;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 2px;
-}
-
-.page-header h1 {
-  margin: 12px 0;
-  font-size: 42px;
-  font-weight: 850;
-  letter-spacing: -1px;
-}
-
-.page-header p {
-  max-width: 600px;
-  color: #a1a1aa;
-  font-size: 15px;
-  line-height: 1.7;
+  padding: 35px 40px;
+  max-width: 1600px;
+  margin: auto;
 }
 
 /* BÚSQUEDA */

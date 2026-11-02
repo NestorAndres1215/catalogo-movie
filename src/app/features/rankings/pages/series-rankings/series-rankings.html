@@ -1,95 +1,56 @@
 <div class="rankings-container">
-
-  <!-- ENCABEZADO -->
-  <header class="rankings-header">
-
-    <div>
-      <span class="section-label">CINEVERSE / RANKINGS</span>
-
-      <h1>Ranking de series</h1>
-
-      <p>
-        Descubre las series mejor y peor valoradas por la comunidad.
-      </p>
-    </div>
-
-    <button
-      class="reload-button"
-      (click)="reloadRanking()">
-      ↻ Actualizar
-    </button>
-
-  </header>
-
+  <app-page-header
+    section="CINEVERSE / RANKINGS"
+    title=" Top 10 de series"
+    description="Descubre las series mejor y peor valoradas por la comunidad."
+  />
+  <button class="reload-button" (click)="reloadRanking()">↻ Actualizar</button>
   <!-- PESTAÑAS -->
   <div class="ranking-tabs">
-
-    <button
-      [class.active]="activeRanking() === 'best'"
-      (click)="changeRanking('best')">
+    <button [class.active]="activeRanking() === 'best'" (click)="changeRanking('best')">
       🏆 Mejor valoradas
     </button>
 
-    <button
-      [class.active]="activeRanking() === 'worst'"
-      (click)="changeRanking('worst')">
+    <button [class.active]="activeRanking() === 'worst'" (click)="changeRanking('worst')">
       📉 Peor valoradas
     </button>
 
-    <button
-      [class.active]="activeRanking() === 'genre'"
-      (click)="changeRanking('genre')">
+    <button [class.active]="activeRanking() === 'genre'" (click)="changeRanking('genre')">
       🎨 Por género
     </button>
-
   </div>
 
   <!-- MEJORES SERIES -->
   @if (activeRanking() === 'best') {
-
     <section class="ranking-section">
-
       <div class="ranking-title">
         <h2>Top 10 mejores series</h2>
         <span>Más valoradas</span>
       </div>
 
       @if (loadingBest()) {
-        <div class="loading-message">
-          Cargando mejores series...
-        </div>
+        <div class="loading-message">Cargando mejores series...</div>
       }
 
       @if (errorBest()) {
         <div class="error-message">
           {{ errorBest() }}
 
-          <button (click)="loadBestSeries()">
-            Reintentar
-          </button>
+          <button (click)="loadBestSeries()">Reintentar</button>
         </div>
       }
 
       @if (!loadingBest() && !errorBest()) {
-
         <div class="ranking-list">
-
           @for (serie of bestSeries(); track serie.id; let i = $index) {
-
             <article class="ranking-card">
-
               <div class="ranking-position">
                 {{ i + 1 }}
               </div>
 
-              <img
-                class="serie-poster"
-                [src]="getPoster(serie.poster_path)"
-                [alt]="serie.name"
-              >
+              <img class="serie-poster" [src]="getPoster(serie.poster_path)" [alt]="serie.name" />
 
               <div class="serie-information">
-
                 <h3>{{ serie.name }}</h3>
 
                 <span class="serie-year">
@@ -100,10 +61,7 @@
                   {{ serie.overview || 'Sin descripción disponible.' }}
                 </p>
 
-                <div class="serie-votes">
-                  {{ serie.vote_count | number }} votos
-                </div>
-
+                <div class="serie-votes">{{ serie.vote_count | number }} votos</div>
               </div>
 
               <div class="serie-rating">
@@ -111,71 +69,46 @@
                 <strong>{{ getRating(serie.vote_average) }}</strong>
                 <small>/ 10</small>
               </div>
-
             </article>
-
           } @empty {
-
-            <p class="empty-message">
-              No hay series disponibles.
-            </p>
-
+            <p class="empty-message">No hay series disponibles.</p>
           }
-
         </div>
-
       }
-
     </section>
-
   }
 
   <!-- PEORES SERIES -->
   @if (activeRanking() === 'worst') {
-
     <section class="ranking-section">
-
       <div class="ranking-title">
         <h2>Top 10 peores series</h2>
         <span>Menos valoradas</span>
       </div>
 
       @if (loadingWorst()) {
-        <div class="loading-message">
-          Cargando peores series...
-        </div>
+        <div class="loading-message">Cargando peores series...</div>
       }
 
       @if (errorWorst()) {
         <div class="error-message">
           {{ errorWorst() }}
 
-          <button (click)="loadWorstSeries()">
-            Reintentar
-          </button>
+          <button (click)="loadWorstSeries()">Reintentar</button>
         </div>
       }
 
       @if (!loadingWorst() && !errorWorst()) {
-
         <div class="ranking-list">
-
           @for (serie of worstSeries(); track serie.id; let i = $index) {
-
             <article class="ranking-card">
-
               <div class="ranking-position">
                 {{ i + 1 }}
               </div>
 
-              <img
-                class="serie-poster"
-                [src]="getPoster(serie.poster_path)"
-                [alt]="serie.name"
-              >
+              <img class="serie-poster" [src]="getPoster(serie.poster_path)" [alt]="serie.name" />
 
               <div class="serie-information">
-
                 <h3>{{ serie.name }}</h3>
 
                 <span class="serie-year">
@@ -186,10 +119,7 @@
                   {{ serie.overview || 'Sin descripción disponible.' }}
                 </p>
 
-                <div class="serie-votes">
-                  {{ serie.vote_count | number }} votos
-                </div>
-
+                <div class="serie-votes">{{ serie.vote_count | number }} votos</div>
               </div>
 
               <div class="serie-rating worst-rating">
@@ -197,30 +127,18 @@
                 <strong>{{ getRating(serie.vote_average) }}</strong>
                 <small>/ 10</small>
               </div>
-
             </article>
-
           } @empty {
-
-            <p class="empty-message">
-              No hay series disponibles.
-            </p>
-
+            <p class="empty-message">No hay series disponibles.</p>
           }
-
         </div>
-
       }
-
     </section>
-
   }
 
   <!-- SERIES POR GÉNERO -->
   @if (activeRanking() === 'genre') {
-
     <section class="ranking-section">
-
       <div class="ranking-title">
         <h2>Top 10 series por género</h2>
         <span>Mejor valoradas</span>
@@ -228,64 +146,44 @@
 
       <!-- FILTRO -->
       <div class="genre-filter">
-
-        <label for="genreSelect">
-          Selecciona un género
-        </label>
+        <label for="genreSelect"> Selecciona un género </label>
 
         <select
           id="genreSelect"
           [value]="selectedGenre()"
-          (change)="filterByGenre(+$any($event.target).value)">
-
+          (change)="filterByGenre(+$any($event.target).value)"
+        >
           @for (genre of genres(); track genre.id) {
-
             <option [value]="genre.id">
               {{ genre.name }}
             </option>
-
           }
-
         </select>
-
       </div>
 
       @if (loadingGenre()) {
-        <div class="loading-message">
-          Cargando series del género seleccionado...
-        </div>
+        <div class="loading-message">Cargando series del género seleccionado...</div>
       }
 
       @if (errorGenre()) {
         <div class="error-message">
           {{ errorGenre() }}
 
-          <button (click)="loadGenreSeries()">
-            Reintentar
-          </button>
+          <button (click)="loadGenreSeries()">Reintentar</button>
         </div>
       }
 
       @if (!loadingGenre() && !errorGenre()) {
-
         <div class="ranking-list">
-
           @for (serie of genreSeries(); track serie.id; let i = $index) {
-
             <article class="ranking-card">
-
               <div class="ranking-position">
                 {{ i + 1 }}
               </div>
 
-              <img
-                class="serie-poster"
-                [src]="getPoster(serie.poster_path)"
-                [alt]="serie.name"
-              >
+              <img class="serie-poster" [src]="getPoster(serie.poster_path)" [alt]="serie.name" />
 
               <div class="serie-information">
-
                 <h3>{{ serie.name }}</h3>
 
                 <span class="serie-year">
@@ -296,10 +194,7 @@
                   {{ serie.overview || 'Sin descripción disponible.' }}
                 </p>
 
-                <div class="serie-votes">
-                  {{ serie.vote_count | number }} votos
-                </div>
-
+                <div class="serie-votes">{{ serie.vote_count | number }} votos</div>
               </div>
 
               <div class="serie-rating">
@@ -307,37 +202,19 @@
                 <strong>{{ getRating(serie.vote_average) }}</strong>
                 <small>/ 10</small>
               </div>
-
             </article>
-
           } @empty {
-
-            <p class="empty-message">
-              No hay series disponibles para este género.
-            </p>
-
+            <p class="empty-message">No hay series disponibles para este género.</p>
           }
-
         </div>
-
       }
-
     </section>
-
   }
 
   <!-- FOOTER -->
   <footer class="ranking-footer">
+    <p>Clasificación basada en las puntuaciones de TMDB.</p>
 
-    <p>
-      Clasificación basada en las puntuaciones de TMDB.
-    </p>
-
-    <p>
-      Mejores y peores series: mínimo 500 votos.
-      Ranking por género: mínimo 100 votos.
-    </p>
-
+    <p>Mejores y peores series: mínimo 500 votos. Ranking por género: mínimo 100 votos.</p>
   </footer>
-
 </div>

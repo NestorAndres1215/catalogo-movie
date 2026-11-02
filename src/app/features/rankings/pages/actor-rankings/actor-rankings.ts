@@ -5,13 +5,14 @@ import { forkJoin } from 'rxjs';
 
 import { CatalogService } from '../../../../core/service/catalog.service';
 import { TmdbPerson } from '../../../../core/models/catalog.interface';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 type RankingType = 'best' | 'worst';
 
 @Component({
   selector: 'app-actor-rankings',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PageHeaderComponent],
   templateUrl: './actor-rankings.html',
   styleUrl: './actor-rankings.css'
 })

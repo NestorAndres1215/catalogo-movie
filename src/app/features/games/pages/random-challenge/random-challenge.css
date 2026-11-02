@@ -1,34 +1,9 @@
-:host {
-  display: block;
-  min-height: 100%;
-  color: #f5f5f5;
-}
-
 .game-container {
-  width: min(1100px, 100%);
-  margin: 0 auto;
-  padding: 35px 24px 60px;
+  padding: 35px 40px;
+  max-width: 1600px;
+  margin: auto;
 }
 
-.game-header {
-  text-align: center;
-  margin-bottom: 35px;
-}
-
-.game-label {
-  color: #eab308;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 3px;
-}
-
-.game-header h1 {
-  margin: 12px 0;
-  font-size: clamp(30px, 5vw, 44px);
-  font-weight: 900;
-}
-
-.game-header p,
 .search-section > p,
 .battle-section > p {
   color: #a3a3a3;
@@ -140,7 +115,9 @@
   color: white;
   text-align: left;
   cursor: pointer;
-  transition: transform 0.2s, border-color 0.2s;
+  transition:
+    transform 0.2s,
+    border-color 0.2s;
 }
 
 .result-card:hover {

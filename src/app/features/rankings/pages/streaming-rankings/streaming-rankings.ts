@@ -14,11 +14,12 @@ import {
   StreamingSeries,
   StreamingDiscoverResponse,
 } from '../../../../core/models/streaming.interface';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 @Component({
   selector: 'app-streaming-rankings',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PageHeaderComponent],
   templateUrl: './streaming-rankings.html',
   styleUrl: './streaming-rankings.css',
 })

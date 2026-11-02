@@ -4,13 +4,14 @@ import { Router } from '@angular/router';
 
 import { WatchlistService } from '../../../../core/service/watchlist.service';
 import { WatchlistStatus } from '../../../../core/models/catalog.interface';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 type WatchlistFilter = 'all' | 'movie' | 'tv';
 
 @Component({
   selector: 'app-watchlist-list',
   standalone: true,
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, PageHeaderComponent],
   templateUrl: './watchlist-list.html',
   styleUrl: './watchlist-list.css',
 })

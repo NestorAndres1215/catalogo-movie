@@ -6,11 +6,12 @@ import {
   CatalogMedia,
   StreamingProvider
 } from '../../../../core/models/catalog.interface';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 @Component({
   selector: 'app-streaming-list',
   standalone: true,
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, PageHeaderComponent],
   templateUrl: './streaming-list.html',
   styleUrl: './streaming-list.css'
 })

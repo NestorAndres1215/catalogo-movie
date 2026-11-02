@@ -1,43 +1,12 @@
-:host {
-  display: block;
-  color: #f5f5f5;
-}
+
 
 .languages-page {
-  padding: 30px;
-  min-height: 100%;
-  background: #101014;
+ padding: 35px 40px;
+  max-width: 1600px;
+  margin: auto;
 }
 
-/* Encabezado */
 
-.page-header {
-  padding: 35px;
-  margin-bottom: 30px;
-  border-radius: 18px;
-  background: linear-gradient(120deg, #24213a, #171722);
-  border: 1px solid #333044;
-}
-
-.section-label {
-  color: #a78bfa;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 2px;
-}
-
-.header-content h1 {
-  margin: 12px 0;
-  font-size: 34px;
-  font-weight: 800;
-}
-
-.header-content p {
-  margin: 0;
-  color: #aaa8b7;
-  font-size: 15px;
-  line-height: 1.6;
-}
 
 /* Filtros */
 

@@ -11,14 +11,16 @@ import { TopRatedService } from '../../../../core/service/top-rated.service';
 import { FavoriteButtonComponent } from '../../../../shared/components/favorite-button/favorite-button';
 
 import { TopRatedMedia } from '../../../../core/models/top-rated.interface';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 @Component({
   selector: 'app-top-rated-list',
   standalone: true,
   imports: [
     DecimalPipe,
-    FavoriteButtonComponent
-  ],
+    FavoriteButtonComponent,
+    PageHeaderComponent
+],
   templateUrl: './top-rated-list.html',
   styleUrl: './top-rated-list.css'
 })

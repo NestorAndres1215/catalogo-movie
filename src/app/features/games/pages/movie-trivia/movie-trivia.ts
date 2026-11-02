@@ -25,6 +25,7 @@ import {
   TmdbPerson,
   ProductionCompany
 } from '../../../../core/models/catalog.interface';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 type TriviaCategory = 'movie' | 'tv' | 'person' | 'company';
 
@@ -39,7 +40,8 @@ interface TriviaItem {
   selector: 'app-movie-trivia',
   standalone: true,
   templateUrl: './movie-trivia.html',
-  styleUrl: './movie-trivia.css'
+  styleUrl: './movie-trivia.css',
+  imports: [PageHeaderComponent]
 })
 export class MovieTriviaComponent implements OnDestroy {
 

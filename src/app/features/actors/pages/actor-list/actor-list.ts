@@ -4,12 +4,13 @@ import { RouterLink } from '@angular/router';
 import { Person, PersonFilters } from '../../../../core/models/person.interface';
 import { ActorFiltersComponent } from '../actor-filters/actor-filters';
 import { PersonService } from '../../../../core/service/person.service';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 
 @Component({
   selector: 'app-actor-list',
   standalone: true,
-  imports: [RouterLink, ActorFiltersComponent],
+  imports: [RouterLink, ActorFiltersComponent, PageHeaderComponent],
   templateUrl: './actor-list.html',
   styleUrl: './actor-list.css',
 })

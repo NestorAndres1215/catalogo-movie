@@ -8,11 +8,12 @@ import { SeriesService } from '../../../../core/service/series.service';
 import { VideoService } from '../../../../core/service/video.service';
 
 import { MediaVideo } from '../../../../core/models/video.interface';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 @Component({
   selector: 'app-video-list',
   standalone: true,
-  imports: [DatePipe],
+  imports: [DatePipe, PageHeaderComponent],
   templateUrl: './video-list.html',
   styleUrl: './video-list.css',
 })

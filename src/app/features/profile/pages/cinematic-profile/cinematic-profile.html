@@ -1,20 +1,14 @@
-
 <div class="profile-page">
-
   <!-- CABECERA -->
-  <header class="page-header">
-    <div>
-      <span class="eyebrow">CINEVERSE · MI ESPACIO</span>
-      <h1>Perfil <span>cinematográfico</span></h1>
-      <p>Tu identidad y tus gustos dentro del universo del cine.</p>
-    </div>
-  </header>
+  <app-page-header
+    section="CINEVERSE · MI ESPACIO"
+    title="Perfil cinematográfico"
+    description="Tu identidad y tus gustos dentro del universo del cine."
+  />
 
   @if (user(); as currentUser) {
-
     <!-- TARJETA PRINCIPAL -->
     <section class="profile-banner">
-
       <div class="banner-decoration">🎬</div>
 
       <div class="user-avatar">
@@ -31,12 +25,10 @@
         <span>✦</span>
         Cinéfilo
       </div>
-
     </section>
 
     <!-- NAVEGACIÓN -->
     <nav class="profile-tabs">
-
       <button
         type="button"
         [class.active]="activeSection() === 'profile'"
@@ -54,7 +46,6 @@
         <span>❤️</span>
         Mis preferencias
       </button>
-
     </nav>
 
     <!-- ================================= -->
@@ -62,9 +53,7 @@
     <!-- ================================= -->
 
     @if (activeSection() === 'profile') {
-
       <section class="content-section">
-
         <div class="section-heading">
           <div>
             <span class="section-eyebrow">INFORMACIÓN PERSONAL</span>
@@ -74,7 +63,6 @@
         </div>
 
         <div class="information-grid">
-
           <article class="information-card">
             <span class="card-icon">👤</span>
             <div>
@@ -98,11 +86,9 @@
               <strong class="user-id">{{ currentUser.id }}</strong>
             </div>
           </article>
-
         </div>
 
         <div class="quick-access">
-
           <div>
             <span class="section-eyebrow">TU ACTIVIDAD</span>
             <h3>Tu biblioteca cinematográfica</h3>
@@ -115,9 +101,7 @@
             <a routerLink="/ratings">⭐ Calificaciones</a>
             <a routerLink="/statistics">📊 Estadísticas</a>
           </div>
-
         </div>
-
       </section>
     }
 
@@ -126,9 +110,7 @@
     <!-- ================================= -->
 
     @if (activeSection() === 'preferences') {
-
       <section class="content-section">
-
         <div class="section-heading">
           <div>
             <span class="section-eyebrow">TUS GUSTOS CINEMATOGRÁFICOS</span>
@@ -139,7 +121,6 @@
 
         <!-- GÉNEROS -->
         <article class="preference-card">
-
           <div class="preference-heading">
             <div class="preference-icon">🎭</div>
             <div>
@@ -149,9 +130,7 @@
           </div>
 
           <div class="genre-list">
-
             @for (genre of availableGenres; track genre) {
-
               <button
                 type="button"
                 class="genre-chip"
@@ -159,23 +138,18 @@
                 [attr.aria-pressed]="isGenreSelected(genre)"
                 (click)="toggleGenre(genre)"
               >
-
                 @if (isGenreSelected(genre)) {
                   <span>✓</span>
                 }
 
                 {{ genre }}
-
               </button>
-
             }
-
           </div>
 
           <p class="selection-count">
             {{ preferences().favoriteGenres.length }} géneros seleccionados
           </p>
-
         </article>
 
         <!-- ================================= -->
@@ -183,7 +157,6 @@
         <!-- ================================= -->
 
         <article class="preference-card">
-
           <div class="preference-heading">
             <div class="preference-icon">🎭</div>
             <div>
@@ -194,7 +167,6 @@
 
           <!-- BUSCADOR -->
           <div class="add-form">
-
             <input
               #actorField
               type="text"
@@ -203,33 +175,19 @@
               (input)="actorInput.set(actorField.value); searchActors()"
               maxlength="80"
             />
-
           </div>
 
           <!-- CARGANDO -->
           @if (loadingActors()) {
-            <p class="loading-message">
-              Buscando actores...
-            </p>
+            <p class="loading-message">Buscando actores...</p>
           }
 
           <!-- RESULTADOS -->
           @if (actorResults().length > 0) {
-
             <div class="person-results">
-
               @for (person of actorResults(); track person.id) {
-
-                <button
-                  type="button"
-                  class="person-result"
-                  (click)="selectActor(person)"
-                >
-
-                  <img
-                    [src]="getPersonImage(person.profile_path)"
-                    [alt]="person.name"
-                  />
+                <button type="button" class="person-result" (click)="selectActor(person)">
+                  <img [src]="getPersonImage(person.profile_path)" [alt]="person.name" />
 
                   <span class="person-result-info">
                     <strong>{{ person.name }}</strong>
@@ -237,105 +195,62 @@
                   </span>
 
                   <span class="select-icon">+</span>
-
                 </button>
-
               }
-
             </div>
-
           }
 
           <!-- ACTOR SELECCIONADO -->
           @if (selectedActor(); as actor) {
-
             <div class="selected-person">
-
               <div class="selected-person-header">
-
-                <img
-                  [src]="getPersonImage(actor.profile_path)"
-                  [alt]="actor.name"
-                />
+                <img [src]="getPersonImage(actor.profile_path)" [alt]="actor.name" />
 
                 <div>
                   <span class="section-eyebrow">ACTOR SELECCIONADO</span>
                   <h4>{{ actor.name }}</h4>
                   <p>Filmografía disponible en TMDB</p>
                 </div>
-
               </div>
 
-              <button
-                type="button"
-                class="add-button"
-                (click)="addActor()"
-              >
+              <button type="button" class="add-button" (click)="addActor()">
                 ❤️ Agregar a mis favoritos
               </button>
-
             </div>
 
             @if (loadingActorMovies()) {
-              <p class="loading-message">
-                Cargando películas del actor...
-              </p>
+              <p class="loading-message">Cargando películas del actor...</p>
             }
 
             <div class="filmography-section">
-
               <h4>🎬 Películas de {{ actor.name }}</h4>
 
               @if (actorMovies().length > 0) {
-
                 <div class="filmography-grid">
-
                   @for (movie of actorMovies(); track movie.id) {
-
-                    <button
-                      type="button"
-                      class="filmography-card"
-                      (click)="openMovie(movie)"
-                    >
-
-                      <img
-                        [src]="getMovieImage(movie.poster_path)"
-                        [alt]="getCreditTitle(movie)"
-                      />
+                    <button type="button" class="filmography-card" (click)="openMovie(movie)">
+                      <img [src]="getMovieImage(movie.poster_path)" [alt]="getCreditTitle(movie)" />
 
                       <span>{{ getCreditTitle(movie) }}</span>
 
                       <small>
                         {{ movie.release_date || 'Fecha no disponible' }}
                       </small>
-
                     </button>
-
                   }
-
                 </div>
-
               } @else if (!loadingActorMovies()) {
-
-                <p class="empty-message">
-                  No se encontraron películas para este actor.
-                </p>
-
+                <p class="empty-message">No se encontraron películas para este actor.</p>
               }
-
             </div>
-
           }
 
           <!-- ACTORES GUARDADOS -->
           <div class="tag-list">
-
             <h4>Actores que guardaste</h4>
 
             @for (actor of preferences().favoriteActors; track actor) {
-
               <span class="person-tag">
-
                 {{ actor }}
 
                 <button
@@ -345,19 +260,11 @@
                 >
                   ×
                 </button>
-
               </span>
-
             } @empty {
-
-              <p class="empty-message">
-                Todavía no has agregado actores favoritos.
-              </p>
-
+              <p class="empty-message">Todavía no has agregado actores favoritos.</p>
             }
-
           </div>
-
         </article>
 
         <!-- ================================= -->
@@ -365,7 +272,6 @@
         <!-- ================================= -->
 
         <article class="preference-card">
-
           <div class="preference-heading">
             <div class="preference-icon">🎬</div>
             <div>
@@ -376,7 +282,6 @@
 
           <!-- BUSCADOR -->
           <div class="add-form">
-
             <input
               #directorField
               type="text"
@@ -385,33 +290,19 @@
               (input)="directorInput.set(directorField.value); searchDirectors()"
               maxlength="80"
             />
-
           </div>
 
           <!-- CARGANDO -->
           @if (loadingDirectors()) {
-            <p class="loading-message">
-              Buscando directores...
-            </p>
+            <p class="loading-message">Buscando directores...</p>
           }
 
           <!-- RESULTADOS -->
           @if (directorResults().length > 0) {
-
             <div class="person-results">
-
               @for (person of directorResults(); track person.id) {
-
-                <button
-                  type="button"
-                  class="person-result"
-                  (click)="selectDirector(person)"
-                >
-
-                  <img
-                    [src]="getPersonImage(person.profile_path)"
-                    [alt]="person.name"
-                  />
+                <button type="button" class="person-result" (click)="selectDirector(person)">
+                  <img [src]="getPersonImage(person.profile_path)" [alt]="person.name" />
 
                   <span class="person-result-info">
                     <strong>{{ person.name }}</strong>
@@ -419,105 +310,62 @@
                   </span>
 
                   <span class="select-icon">+</span>
-
                 </button>
-
               }
-
             </div>
-
           }
 
           <!-- DIRECTOR SELECCIONADO -->
           @if (selectedDirector(); as director) {
-
             <div class="selected-person">
-
               <div class="selected-person-header">
-
-                <img
-                  [src]="getPersonImage(director.profile_path)"
-                  [alt]="director.name"
-                />
+                <img [src]="getPersonImage(director.profile_path)" [alt]="director.name" />
 
                 <div>
                   <span class="section-eyebrow">DIRECTOR SELECCIONADO</span>
                   <h4>{{ director.name }}</h4>
                   <p>Filmografía disponible en TMDB</p>
                 </div>
-
               </div>
 
-              <button
-                type="button"
-                class="add-button"
-                (click)="addDirector()"
-              >
+              <button type="button" class="add-button" (click)="addDirector()">
                 ❤️ Agregar a mis favoritos
               </button>
-
             </div>
 
             @if (loadingDirectorMovies()) {
-              <p class="loading-message">
-                Cargando películas del director...
-              </p>
+              <p class="loading-message">Cargando películas del director...</p>
             }
 
             <div class="filmography-section">
-
               <h4>🎬 Películas de {{ director.name }}</h4>
 
               @if (directorMovies().length > 0) {
-
                 <div class="filmography-grid">
-
                   @for (movie of directorMovies(); track movie.id) {
-
-                    <button
-                      type="button"
-                      class="filmography-card"
-                      (click)="openMovie(movie)"
-                    >
-
-                      <img
-                        [src]="getMovieImage(movie.poster_path)"
-                        [alt]="getCreditTitle(movie)"
-                      />
+                    <button type="button" class="filmography-card" (click)="openMovie(movie)">
+                      <img [src]="getMovieImage(movie.poster_path)" [alt]="getCreditTitle(movie)" />
 
                       <span>{{ getCreditTitle(movie) }}</span>
 
                       <small>
                         {{ movie.release_date || 'Fecha no disponible' }}
                       </small>
-
                     </button>
-
                   }
-
                 </div>
-
               } @else if (!loadingDirectorMovies()) {
-
-                <p class="empty-message">
-                  No se encontraron películas dirigidas por esta persona.
-                </p>
-
+                <p class="empty-message">No se encontraron películas dirigidas por esta persona.</p>
               }
-
             </div>
-
           }
 
           <!-- DIRECTORES GUARDADOS -->
           <div class="tag-list">
-
             <h4>Directores que guardaste</h4>
 
             @for (director of preferences().favoriteDirectors; track director) {
-
               <span class="person-tag">
-
                 {{ director }}
 
                 <button
@@ -527,19 +375,11 @@
                 >
                   ×
                 </button>
-
               </span>
-
             } @empty {
-
-              <p class="empty-message">
-                Todavía no has agregado directores favoritos.
-              </p>
-
+              <p class="empty-message">Todavía no has agregado directores favoritos.</p>
             }
-
           </div>
-
         </article>
 
         <!-- ================================= -->
@@ -547,37 +387,23 @@
         <!-- ================================= -->
 
         <div class="save-section">
-
           @if (savedMessage()) {
-            <span class="saved-message">
-              ✓ Tus preferencias se guardaron correctamente.
-            </span>
+            <span class="saved-message"> ✓ Tus preferencias se guardaron correctamente. </span>
           }
 
-          <button
-            type="button"
-            class="save-button"
-            (click)="savePreferences()"
-          >
+          <button type="button" class="save-button" (click)="savePreferences()">
             <span>💾</span>
             Guardar preferencias
           </button>
-
         </div>
-
       </section>
-
     }
-
   } @else {
-
     <!-- SIN SESIÓN -->
     <div class="empty-profile">
       <span>👤</span>
       <h2>No hay una sesión activa</h2>
       <p>Inicia sesión para consultar tu perfil cinematográfico.</p>
     </div>
-
   }
-
 </div>

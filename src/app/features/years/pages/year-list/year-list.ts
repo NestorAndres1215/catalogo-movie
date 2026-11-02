@@ -4,11 +4,12 @@ import { RouterLink } from '@angular/router';
 
 import { YearService } from '../../../../core/service/year.service';
 import { YearMedia } from '../../../../core/models/year.interface';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 @Component({
   selector: 'app-year-list',
   standalone: true,
-  imports: [RouterLink, DecimalPipe],
+  imports: [RouterLink, DecimalPipe, PageHeaderComponent],
   templateUrl: './year-list.html',
   styleUrl: './year-list.css'
 })

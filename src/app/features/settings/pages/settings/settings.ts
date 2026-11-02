@@ -1,5 +1,6 @@
 
 import { Component, signal } from '@angular/core';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 type SettingsSection = 'privacy' | 'about' | 'credits';
 
@@ -7,7 +8,8 @@ type SettingsSection = 'privacy' | 'about' | 'credits';
   selector: 'app-settings',
   standalone: true,
   templateUrl: './settings.html',
-  styleUrl: './settings.css'
+  styleUrl: './settings.css',
+  imports: [PageHeaderComponent]
 })
 export class Settings {
   readonly activeSection = signal<SettingsSection>('privacy');

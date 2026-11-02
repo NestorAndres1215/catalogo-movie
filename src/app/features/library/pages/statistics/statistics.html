@@ -1,15 +1,11 @@
 
 <section class="statistics-page">
 
-  <header class="page-header">
-    <div>
-      <span class="page-subtitle">MI BIBLIOTECA</span>
-      <h1>Mis estadísticas</h1>
-      <p>Descubre tus gustos cinematográficos y tus hábitos como espectador.</p>
-    </div>
-
-    <span class="statistics-badge">📊 Mi resumen</span>
-  </header>
+<app-page-header
+  section="MI BIBLIOTECA"
+  title="Mis estadísticas"
+  description="Descubre tus gustos cinematográficos y tus hábitos como espectador."
+/>
 
   @if (loading()) {
     <div class="loading-state">

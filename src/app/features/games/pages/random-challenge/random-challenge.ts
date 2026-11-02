@@ -5,6 +5,7 @@ import {
   CatalogMedia,
   TmdbPerson
 } from '../../../../core/models/catalog.interface';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 type GameType = 'movie' | 'tv' | 'person';
 
@@ -23,7 +24,7 @@ type GameResult = 'user' | 'system' | 'tie';
 @Component({
   selector: 'app-random-challenge',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, PageHeaderComponent],
   templateUrl: './random-challenge.html',
   styleUrl: './random-challenge.css'
 })
