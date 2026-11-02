@@ -24,7 +24,6 @@ export class RegisterComponent {
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
 
-  readonly loading = signal(false);
   readonly errorMessage = signal('');
   readonly successMessage = signal('');
 
@@ -38,29 +37,14 @@ export class RegisterComponent {
       return null;
     }
 
-    return password === confirmPassword
-      ? null
-      : { passwordsMismatch: true };
+    return password === confirmPassword ? null : { passwordsMismatch: true };
   };
 
   readonly form = this.formBuilder.nonNullable.group(
     {
-      name: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(50),
-        ],
-      ],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.email]],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(8),
-        ],
-      ],
+      password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', [Validators.required]],
     },
     {
@@ -77,16 +61,11 @@ export class RegisterComponent {
       return;
     }
 
-    this.loading.set(true);
 
     try {
       const { name, email, password } = this.form.getRawValue();
 
-      const result = await this.authService.register(
-        name,
-        email,
-        password,
-      );
+      const result = await this.authService.register(name, email, password);
 
       if (!result.success) {
         this.errorMessage.set(result.message);
@@ -95,21 +74,14 @@ export class RegisterComponent {
 
       this.successMessage.set('¡Tu cuenta ha sido creada correctamente!');
 
-      const returnUrl =
-        this.activatedRoute.snapshot.queryParamMap.get('returnUrl');
+      const returnUrl = this.activatedRoute.snapshot.queryParamMap.get('returnUrl');
 
       const destination =
-        returnUrl?.startsWith('/') && !returnUrl.startsWith('//')
-          ? returnUrl
-          : '/';
+        returnUrl?.startsWith('/') && !returnUrl.startsWith('//') ? returnUrl : '/';
 
       await this.router.navigateByUrl(destination);
     } catch {
-      this.errorMessage.set(
-        'Ocurrió un problema al crear tu cuenta. Inténtalo nuevamente.',
-      );
-    } finally {
-      this.loading.set(false);
-    }
+      this.errorMessage.set('Ocurrió un problema al crear tu cuenta. Inténtalo nuevamente.');
+    } 
   }
 }

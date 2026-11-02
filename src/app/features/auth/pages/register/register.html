@@ -149,14 +149,9 @@
           }
         </div>
 
-        <button class="submit-button" type="submit" [disabled]="loading()">
-          @if (loading()) {
-            <span class="spinner"></span>
-            Creando cuenta...
-          } @else {
-            Crear mi cuenta
-            <span>→</span>
-          }
+        <button class="submit-button" type="submit">
+          Crear mi cuenta
+          <span>→</span>
         </button>
       </form>
 

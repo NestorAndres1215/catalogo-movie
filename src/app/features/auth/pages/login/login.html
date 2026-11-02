@@ -8,9 +8,7 @@
     <a class="brand" routerLink="/login">
       <span class="brand-icon">🎬</span>
 
-      <span class="brand-name">
-        CINE<span>VERSE</span>
-      </span>
+      <span class="brand-name"> CINE<span>VERSE</span> </span>
     </a>
 
     <section class="auth-card">
@@ -21,9 +19,7 @@
 
         <h1>¡Bienvenido de nuevo!</h1>
 
-        <p class="subtitle">
-          Inicia sesión y continúa explorando el mundo del cine.
-        </p>
+        <p class="subtitle">Inicia sesión y continúa explorando el mundo del cine.</p>
       </div>
 
       @if (errorMessage()) {
@@ -39,10 +35,7 @@
 
           <div
             class="input-wrapper"
-            [class.input-invalid]="
-              form.controls.email.invalid &&
-              form.controls.email.touched
-            "
+            [class.input-invalid]="form.controls.email.invalid && form.controls.email.touched"
           >
             <span class="input-icon">✉</span>
 
@@ -55,20 +48,10 @@
             />
           </div>
 
-          @if (
-            form.controls.email.touched &&
-            form.controls.email.hasError('required')
-          ) {
-            <small class="field-error">
-              El correo electrónico es obligatorio.
-            </small>
-          } @else if (
-            form.controls.email.touched &&
-            form.controls.email.hasError('email')
-          ) {
-            <small class="field-error">
-              Introduce un correo electrónico válido.
-            </small>
+          @if (form.controls.email.touched && form.controls.email.hasError('required')) {
+            <small class="field-error"> El correo electrónico es obligatorio. </small>
+          } @else if (form.controls.email.touched && form.controls.email.hasError('email')) {
+            <small class="field-error"> Introduce un correo electrónico válido. </small>
           }
         </div>
 
@@ -77,10 +60,7 @@
 
           <div
             class="input-wrapper"
-            [class.input-invalid]="
-              form.controls.password.invalid &&
-              form.controls.password.touched
-            "
+            [class.input-invalid]="form.controls.password.invalid && form.controls.password.touched"
           >
             <span class="input-icon">🔒</span>
 
@@ -93,28 +73,14 @@
             />
           </div>
 
-          @if (
-            form.controls.password.touched &&
-            form.controls.password.hasError('required')
-          ) {
-            <small class="field-error">
-              La contraseña es obligatoria.
-            </small>
+          @if (form.controls.password.touched && form.controls.password.hasError('required')) {
+            <small class="field-error"> La contraseña es obligatoria. </small>
           }
         </div>
 
-        <button
-          class="submit-button"
-          type="submit"
-          [disabled]="loading()"
-        >
-          @if (loading()) {
-            <span class="spinner"></span>
-            Iniciando sesión...
-          } @else {
-            Iniciar sesión
-            <span>→</span>
-          }
+        <button class="submit-button" type="submit">
+          Iniciar sesión
+          <span>→</span>
         </button>
       </form>
 
@@ -122,14 +88,9 @@
         <span>¿Aún no tienes una cuenta?</span>
       </div>
 
-      <a class="secondary-button" routerLink="/register">
-        Crear una cuenta
-      </a>
+      <a class="secondary-button" routerLink="/register"> Crear una cuenta </a>
 
-      <p class="terms">
-        Al continuar, podrás disfrutar de tu biblioteca cinematográfica
-        personal.
-      </p>
+      <p class="terms">Al continuar, podrás disfrutar de tu biblioteca cinematográfica personal.</p>
     </section>
 
     <footer class="auth-footer">

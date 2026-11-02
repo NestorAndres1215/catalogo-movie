@@ -1,9 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { AuthService } from '../../../../core/service/auth.service';
@@ -21,7 +17,6 @@ export class LoginComponent {
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
 
-  readonly loading = signal(false);
   readonly errorMessage = signal('');
 
   readonly form = this.formBuilder.nonNullable.group({
@@ -37,8 +32,6 @@ export class LoginComponent {
       return;
     }
 
-    this.loading.set(true);
-
     try {
       const { email, password } = this.form.getRawValue();
 
@@ -49,21 +42,14 @@ export class LoginComponent {
         return;
       }
 
-      const returnUrl =
-        this.activatedRoute.snapshot.queryParamMap.get('returnUrl');
+      const returnUrl = this.activatedRoute.snapshot.queryParamMap.get('returnUrl');
 
       const destination =
-        returnUrl?.startsWith('/') && !returnUrl.startsWith('//')
-          ? returnUrl
-          : '/';
+        returnUrl?.startsWith('/') && !returnUrl.startsWith('//') ? returnUrl : '/';
 
       await this.router.navigateByUrl(destination);
     } catch {
-      this.errorMessage.set(
-        'Ocurrió un problema al iniciar sesión. Inténtalo nuevamente.',
-      );
-    } finally {
-      this.loading.set(false);
+      this.errorMessage.set('Ocurrió un problema al iniciar sesión. Inténtalo nuevamente.');
     }
   }
 }

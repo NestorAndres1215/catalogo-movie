@@ -9,6 +9,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './sidebar.css',
 })
 export class Sidebar {
+  
   sidebarOpen = input(false);
 
   close = output<void>();

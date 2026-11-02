@@ -1,10 +1,11 @@
 <aside class="sidebar" id="sidebar" [class.open]="sidebarOpen()" aria-label="Navegación principal">
   <div class="sidebar-top">
     <a class="logo" routerLink="/" (click)="closeSidebar()">
-      <span class="logo-icon">🎬</span>
+      <span class="logo-icon">
+        <i class="fas fa-film"></i>
+      </span>
       <h2>CINE<span>VERSE</span></h2>
     </a>
-
     <button class="sidebar-close" type="button" (click)="closeSidebar()" aria-label="Cerrar menú">
       ✕
     </button>
@@ -21,7 +22,8 @@
         [routerLinkActiveOptions]="{ exact: true }"
         (click)="closeSidebar()"
       >
-        <span>⌂</span> Inicio
+        <i class="fas fa-house"></i>
+        Inicio
       </a>
 
       <a
@@ -30,16 +32,17 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>🎞</span> Películas
+        <i class="fas fa-clapperboard"></i>
+        Películas
       </a>
-
       <a
         class="sidebar-link"
         routerLink="/series"
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>📺</span> Series
+        <i class="fas fa-tv"></i>
+        Series
       </a>
 
       <a
@@ -48,7 +51,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>👤</span> Actores
+        <i class="fas fa-user-astronaut"></i>
+        Actores
       </a>
 
       <a
@@ -57,7 +61,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>🎥</span> Directores
+        <i class="fas fa-video"></i>
+        Directores
       </a>
 
       <a
@@ -66,7 +71,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>🏢</span> Productoras
+        <i class="fas fa-building"></i>
+        Productoras
       </a>
     </div>
 
@@ -79,7 +85,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>🎭</span> Géneros
+        <i class="fas fa-masks-theater"></i>
+        Géneros
       </a>
 
       <a
@@ -88,7 +95,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>🌎</span> Países
+        <i class="fas fa-earth-americas"></i>
+        Países
       </a>
 
       <a
@@ -97,7 +105,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>📅</span> Por año
+        <i class="fas fa-calendar-days"></i>
+        Por año
       </a>
 
       <a
@@ -106,7 +115,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>🎞</span> Por décadas
+        <i class="fas fa-clock-rotate-left"></i>
+        Por décadas
       </a>
 
       <a
@@ -115,7 +125,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>⏳</span> Línea de tiempo
+        <i class="fas fa-timeline"></i>
+        Línea de tiempo
       </a>
 
       <a
@@ -124,7 +135,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>🌐</span> Idiomas
+        <i class="fas fa-language"></i>
+        Idiomas
       </a>
 
       <a
@@ -133,7 +145,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>✨</span> Recomendaciones
+        <i class="fas fa-wand-magic-sparkles"></i>
+        Recomendaciones
       </a>
 
       <a
@@ -142,7 +155,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>🎲</span> Aleatorio
+        <i class="fas fa-shuffle"></i>
+        Aleatorio
       </a>
     </div>
 
@@ -155,7 +169,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>🗓</span> Calendario de estrenos
+        <i class="fas fa-calendar-days"></i>
+        Calendario de estrenos
       </a>
 
       <a
@@ -164,7 +179,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>🍿</span> Próximos estrenos
+        <i class="fas fa-ticket"></i>
+        Próximos estrenos
       </a>
     </div>
 
@@ -177,7 +193,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>🎭</span> Mi perfil cinematográfico
+        <i class="fas fa-user-astronaut"></i>
+        Mi perfil cinematográfico
       </a>
 
       <a
@@ -186,7 +203,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>❤️</span> Favoritos
+        <i class="fas fa-heart"></i>
+        Favoritos
       </a>
 
       <a
@@ -195,7 +213,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>📋</span> Mi lista para ver
+        <i class="fas fa-bookmark"></i>
+        Mi lista para ver
       </a>
 
       <a
@@ -204,7 +223,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>🎬</span> Películas y series vistas
+        <i class="fas fa-eye"></i>
+        Películas y series vistas
       </a>
 
       <a
@@ -213,7 +233,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>⭐</span> Mis calificaciones
+        <i class="fas fa-star"></i>
+        Mis calificaciones
       </a>
 
       <a
@@ -222,7 +243,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>📊</span> Estadísticas
+        <i class="fas fa-chart-line"></i>
+        Estadísticas
       </a>
     </div>
 
@@ -235,7 +257,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>🏆</span> Top de películas
+        <i class="fas fa-trophy"></i>
+        Top de películas
       </a>
 
       <a
@@ -244,7 +267,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>📺</span> Top de series
+        <i class="fas fa-tv"></i>
+        Top de series
       </a>
 
       <a
@@ -253,7 +277,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>🎭</span> Top de actores
+        <i class="fas fa-users"></i>
+        Top de actores
       </a>
 
       <a
@@ -262,7 +287,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>🎬</span> Top de sagas
+        <i class="fas fa-film"></i>
+        Top de sagas
       </a>
 
       <a
@@ -271,7 +297,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>📺</span> Top de streaming
+        <i class="fas fa-tv"></i>
+        Top de streaming
       </a>
     </div>
 
@@ -284,7 +311,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>🔥</span> Tendencias
+        <i class="fas fa-fire"></i>
+        Tendencias
       </a>
 
       <a
@@ -293,7 +321,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>⭐</span> Mejor valoradas
+        <i class="fas fa-star"></i>
+        Mejor valoradas
       </a>
 
       <a
@@ -302,7 +331,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>🎬</span> Colecciones y sagas
+        <i class="fas fa-film"></i>
+        Colecciones y sagas
       </a>
     </div>
 
@@ -315,7 +345,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>▶️</span> Tráilers y videos
+        <i class="fas fa-circle-play"></i>
+        Tráilers y videos
       </a>
 
       <a
@@ -324,7 +355,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>📝</span> Críticas y reseñas
+        <i class="fas fa-pen-to-square"></i>
+        Críticas y reseñas
       </a>
 
       <a
@@ -333,7 +365,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>📺</span> Plataformas de streaming
+        <i class="fas fa-tv"></i>
+        Plataformas de streaming
       </a>
 
       <a
@@ -342,7 +375,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>📡</span> Comparar streaming
+        <i class="fas fa-tower-broadcast"></i>
+        Comparar streaming
       </a>
     </div>
 
@@ -355,7 +389,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>🤔</span> Adivina con emojis
+        <i class="fas fa-puzzle-piece"></i>
+        Adivina con emojis
       </a>
 
       <a
@@ -364,7 +399,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>🎲</span> Reto random
+        <i class="fas fa-dice"></i>
+        Reto random
       </a>
 
       <a
@@ -373,7 +409,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>🧠</span> Trivia de películas
+        <i class="fas fa-brain"></i>
+        Trivia de películas
       </a>
     </div>
 
@@ -386,7 +423,8 @@
         routerLinkActive="active"
         (click)="closeSidebar()"
       >
-        <span>⚙️</span> Configuración
+        <i class="fas fa-gear"></i>
+        Configuración
       </a>
     </div>
   </nav>
