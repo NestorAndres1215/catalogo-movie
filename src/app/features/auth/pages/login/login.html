@@ -37,7 +37,9 @@
             class="input-wrapper"
             [class.input-invalid]="form.controls.email.invalid && form.controls.email.touched"
           >
-            <span class="input-icon">✉</span>
+            <span class="input-icon">
+              <i class="fas fa-envelope"></i>
+            </span>
 
             <input
               id="email"
@@ -62,7 +64,9 @@
             class="input-wrapper"
             [class.input-invalid]="form.controls.password.invalid && form.controls.password.touched"
           >
-            <span class="input-icon">🔒</span>
+            <span class="input-icon">
+              <i class="fas fa-lock"></i>
+            </span>
 
             <input
               id="password"
@@ -80,7 +84,7 @@
 
         <button class="submit-button" type="submit">
           Iniciar sesión
-          <span>→</span>
+          <i class="fas fa-arrow-right"></i>
         </button>
       </form>
 
