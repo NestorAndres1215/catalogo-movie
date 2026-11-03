@@ -1,37 +1,25 @@
 <section class="reviews-page">
-
-<app-page-header
-  section="CINEVERSE / COMUNIDAD"
-  title="Críticas y reseñas"
-  description="Descubre las opiniones y valoraciones de la comunidad sobre películas y series."
-/>
+  <app-page-header
+    section="CINEVERSE / COMUNIDAD"
+    title="Críticas y reseñas"
+    description="Descubre las opiniones y valoraciones de la comunidad sobre películas y series."
+  />
 
   <div class="media-selector">
-
-    <button
-      [class.active]="mediaType() === 'movie'"
-      (click)="changeMediaType('movie')">
-
-      Películas
-
-    </button>
-
-    <button
-      [class.active]="mediaType() === 'tv'"
-      (click)="changeMediaType('tv')">
-
-      Series
-
-    </button>
-
+    <app-filter-tabs
+      [tabs]="mediaTabs"
+      [selected]="mediaType()"
+      (selectionChange)="changeMediaType($event)"
+    />
   </div>
-
   @if (loading()) {
-    <div class="message">
-      <p>Cargando críticas y reseñas...</p>
-    </div>
+    <app-page-loading
+      title="Cargando críticas y reseñas"
+      description="Estamos recopilando las opiniones y valoraciones."
+      detail="Consultando información de TMDB..."
+      icon="fa-comments"
+    />
   }
-
   @if (errorMessage()) {
     <div class="error-message">
       {{ errorMessage() }}
@@ -41,14 +29,11 @@
   @if (!loading() && filteredReviews.length === 0 && !errorMessage()) {
     <div class="empty-state">
       <h2>No hay reseñas disponibles</h2>
-      <p>
-        Todavía no encontramos opiniones para este contenido.
-      </p>
+      <p>Todavía no encontramos opiniones para este contenido.</p>
     </div>
   }
 
   @if (!loading() && filteredReviews.length > 0) {
-
     <div class="reviews-count">
       <span>
         {{ filteredReviews.length }}
@@ -57,13 +42,9 @@
     </div>
 
     <div class="reviews-grid">
-
       @for (review of filteredReviews; track review.id) {
-
         <article class="review-card">
-
           <div class="review-header">
-
             <div class="author-avatar">
               {{ getAuthorName(review).charAt(0).toUpperCase() }}
             </div>
@@ -72,17 +53,16 @@
               <h3>{{ getAuthorName(review) }}</h3>
 
               <span>
-                {{ review.created_at | date:'dd/MM/yyyy' }}
+                {{ review.created_at | date: 'dd/MM/yyyy' }}
               </span>
             </div>
 
             @if (getAuthorRating(review) !== null) {
               <div class="rating">
-                <span>★</span>
-                {{ getAuthorRating(review) | number:'1.1-1' }}
+                <i class="fas fa-star"></i>
+                {{ getAuthorRating(review) | number: '1.1-1' }}
               </div>
             }
-
           </div>
 
           <div class="media-info">
@@ -98,26 +78,14 @@
           </div>
 
           <footer class="review-footer">
-
-            <a
-              [href]="review.url"
-              target="_blank"
-              rel="noopener noreferrer">
-
+            <a [href]="review.url" target="_blank" rel="noopener noreferrer">
               Leer reseña completa
 
               <span>↗</span>
-
             </a>
-
           </footer>
-
         </article>
-
       }
-
     </div>
-
   }
-
 </section>

@@ -1,0 +1,38 @@
+.filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 5px;
+  background: var(--color-superficie-secundaria);
+  border: 1px solid var(--color-borde);
+  border-radius: 10px;
+}
+
+.filter-tabs button {
+  padding: 10px 18px;
+  color: var(--color-texto-secundario);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.filter-tabs button:hover {
+  color: var(--color-acento);
+  background: var(--color-acento-suave);
+}
+
+.filter-tabs button.active {
+  color: var(--color-acento);
+  background: var(--color-acento-suave);
+  border-color: var(--color-acento);
+}
+
+@media (max-width: 480px) {
+  .filter-tabs button {
+    padding: 9px 13px;
+    font-size: 12px;
+  }
+}

@@ -9,16 +9,25 @@ import { CatalogService } from '../../../../core/service/catalog.service';
 
 import { MediaReview } from '../../../../core/models/catalog.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
+
+import {
+  FilterTabsComponent,
+  FilterTab,
+  FilterType,
+} from '../../../../shared/components/filter-tabs/filter-tabs';
+
+type ReviewMediaType = 'movie' | 'tv';
 
 interface ReviewItem extends MediaReview {
   mediaTitle: string;
-  mediaType: 'movie' | 'tv';
+  mediaType: ReviewMediaType;
 }
 
 @Component({
   selector: 'app-review-list',
   standalone: true,
-  imports: [DatePipe, DecimalPipe, PageHeaderComponent],
+  imports: [DatePipe, DecimalPipe, PageHeaderComponent, PageLoadingComponent, FilterTabsComponent],
   templateUrl: './review-list.html',
   styleUrl: './review-list.css',
 })
@@ -27,7 +36,12 @@ export class ReviewListComponent {
   private readonly seriesService = inject(SeriesService);
   private readonly catalogService = inject(CatalogService);
 
-  readonly mediaType = signal<'movie' | 'tv'>('movie');
+  readonly mediaType = signal<ReviewMediaType>('movie');
+
+  readonly mediaTabs: FilterTab[] = [
+    { label: 'Películas', value: 'movie' },
+    { label: 'Series', value: 'tv' },
+  ];
 
   readonly reviews = signal<ReviewItem[]>([]);
 
@@ -139,8 +153,10 @@ export class ReviewListComponent {
     });
   }
 
-  changeMediaType(type: 'movie' | 'tv'): void {
-    if (this.mediaType() === type) return;
+  changeMediaType(type: FilterType): void {
+    if (type === 'all' || this.mediaType() === type) {
+      return;
+    }
 
     this.mediaType.set(type);
     this.reviews.set([]);
@@ -152,6 +168,7 @@ export class ReviewListComponent {
     }
   }
 
+  
   getAuthorName(review: ReviewItem): string {
     return review.author_details.name || review.author_details.username || review.author;
   }

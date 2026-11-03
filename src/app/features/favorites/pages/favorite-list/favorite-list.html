@@ -38,23 +38,11 @@
   </div>
 
   <div class="favorites-toolbar">
-    <div class="filter-tabs">
-      <button type="button" [class.active]="selectedType() === 'all'" (click)="changeType('all')">
-        Todos
-      </button>
-
-      <button
-        type="button"
-        [class.active]="selectedType() === 'movie'"
-        (click)="changeType('movie')"
-      >
-        Películas
-      </button>
-
-      <button type="button" [class.active]="selectedType() === 'tv'" (click)="changeType('tv')">
-        Series
-      </button>
-    </div>
+    <app-filter-tabs
+      [tabs]="favoriteTabs"
+      [selected]="selectedType()"
+      (selectionChange)="changeType($event)"
+    />
 
     <span class="results-count"> {{ filteredFavorites().length }} resultados </span>
   </div>
@@ -119,7 +107,12 @@
         <p>Prueba seleccionando otra categoría.</p>
       }
 
-      <a routerLink="/movies" class="explore-button"> Explorar películas </a>
+      <app-button
+        text="Explorar películas"
+        icon="fa-film"
+        endIcon="fa-arrow-right"
+        routerLink="/movies"
+      />
     </div>
   }
 </section>

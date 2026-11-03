@@ -37,27 +37,11 @@
 
   <!-- FILTROS -->
   <div class="filter-container">
-    <div class="filter-tabs">
-      <button
-        type="button"
-        [class.active]="selectedFilter() === 'all'"
-        (click)="selectFilter('all')"
-      >
-        Todas
-      </button>
-
-      <button
-        type="button"
-        [class.active]="selectedFilter() === 'movie'"
-        (click)="selectFilter('movie')"
-      >
-        🎬 Películas
-      </button>
-
-      <button type="button" [class.active]="selectedFilter() === 'tv'" (click)="selectFilter('tv')">
-        📺 Series
-      </button>
-    </div>
+    <app-filter-tabs
+      [tabs]="watchlistTabs"
+      [selected]="selectedFilter()"
+      (selectionChange)="selectFilter($event)"
+    />
 
     <span class="results-count"> {{ filteredItems().length }} resultados </span>
   </div>

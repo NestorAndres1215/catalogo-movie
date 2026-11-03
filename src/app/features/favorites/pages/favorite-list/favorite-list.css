@@ -1,13 +1,8 @@
-
-
 .favorites-page {
- padding: 35px 40px;
+  padding: 35px 40px;
   max-width: 1600px;
   margin: auto;
 }
-
-
-
 
 .favorites-stats {
   display: grid;
@@ -32,10 +27,12 @@
   justify-content: center;
   width: 45px;
   height: 45px;
-  color: #ff3b65;
-  background: rgb(255 59 101 / 12%);
+  color: var(--color-acento);
+  background: var(--color-acento-suave);
+  border: 1px solid var(--color-borde);
   border-radius: 10px;
   font-size: 23px;
+  flex-shrink: 0;
 }
 
 .stat-card div {
@@ -59,30 +56,6 @@
   justify-content: space-between;
   gap: 16px;
   margin-bottom: 24px;
-}
-
-.filter-tabs {
-  display: flex;
-  gap: 6px;
-  padding: 5px;
-  background: #1c1c27;
-  border-radius: 10px;
-}
-
-.filter-tabs button {
-  padding: 10px 18px;
-  color: #aaa;
-  background: transparent;
-  border: none;
-  border-radius: 7px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.2s;
-}
-
-.filter-tabs button.active {
-  color: white;
-  background: #7c3aed;
 }
 
 .results-count {
@@ -142,8 +115,9 @@
   top: 10px;
   left: 10px;
   padding: 6px 9px;
-  color: #facc15;
-  background: rgb(0 0 0 / 75%);
+  color: var(--color-valoracion);
+  background: rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(245, 197, 24, 0.2);
   border-radius: 6px;
   font-size: 12px;
   font-weight: 700;
@@ -163,37 +137,38 @@
 .media-title {
   min-width: 0;
   overflow: hidden;
-  color: white;
+  color: var(--color-texto);
   font-size: 14px;
   font-weight: 700;
   text-decoration: none;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition: color 0.2s ease;
 }
 
 .media-title:hover {
-  color: #c4b5fd;
+  color: var(--color-acento);
 }
 
 .remove-button {
   flex-shrink: 0;
   padding: 0;
-  color: #ff3b65;
+  color: var(--color-danger);
   background: transparent;
   border: none;
   font-size: 20px;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .remove-button:hover {
-  color: #ff7895;
+  color: var(--color-danger-hover);
   transform: scale(1.15);
 }
-
 .media-type {
   display: block;
   margin-top: 8px;
-  color: #a78bfa;
+  color: var(--color-acento);
   font-size: 11px;
   font-weight: 700;
 }
@@ -201,7 +176,7 @@
 .release-date {
   display: block;
   margin-top: 4px;
-  color: #999;
+  color: var(--color-texto-atenuado);
   font-size: 11px;
 }
 
@@ -209,11 +184,12 @@
   display: -webkit-box;
   margin: 9px 0 0;
   overflow: hidden;
-  color: #999;
+  color: var(--color-texto-secundario);
   font-size: 12px;
   line-height: 1.5;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
 .empty-state {
@@ -225,36 +201,22 @@
 }
 
 .empty-heart {
-  color: #ff3b65;
+  color: var(--color-danger);
   font-size: 70px;
   line-height: 1;
 }
 
 .empty-state h2 {
   margin: 20px 0 8px;
+  color: var(--color-texto);
   font-size: 22px;
 }
 
 .empty-state p {
   max-width: 430px;
   margin: 0 0 24px;
-  color: #999;
+  color: var(--color-texto-secundario);
   line-height: 1.6;
-}
-
-.explore-button {
-  padding: 12px 20px;
-  color: white;
-  background: #7c3aed;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: background 0.2s;
-}
-
-.explore-button:hover {
-  background: #6d28d9;
 }
 
 @media (max-width: 650px) {

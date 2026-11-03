@@ -5,13 +5,16 @@ import { Router } from '@angular/router';
 import { WatchlistService } from '../../../../core/service/watchlist.service';
 import { WatchlistStatus } from '../../../../core/models/catalog.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
-
-type WatchlistFilter = 'all' | 'movie' | 'tv';
+import {
+  FilterTab,
+  FilterType,
+  FilterTabsComponent,
+} from '../../../../shared/components/filter-tabs/filter-tabs';
 
 @Component({
   selector: 'app-watchlist-list',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent],
+  imports: [DecimalPipe, PageHeaderComponent, FilterTabsComponent],
   templateUrl: './watchlist-list.html',
   styleUrl: './watchlist-list.css',
 })
@@ -19,17 +22,24 @@ export class WatchlistListComponent {
   private readonly watchlistService = inject(WatchlistService);
   private readonly router = inject(Router);
 
-  // FILTRO
-  readonly selectedFilter = signal<WatchlistFilter>('all');
+  readonly selectedFilter = signal<FilterType>('all');
+
+  readonly watchlistTabs: FilterTab[] = [
+    { label: 'Todas', value: 'all' },
+    { label: 'Películas', value: 'movie' },
+    { label: 'Series', value: 'tv' },
+  ];
+
+  // CAMBIAR FILTRO
+  selectFilter(filter: FilterType): void {
+    this.selectedFilter.set(filter);
+  }
 
   // LISTA DEL USUARIO ACTUAL
   readonly watchlist = this.watchlistService.watchlist;
 
   // PUNTUACIONES DISPONIBLES
-  readonly ratings = Array.from(
-    { length: 10 },
-    (_, index) => index + 1,
-  );
+  readonly ratings = Array.from({ length: 10 }, (_, index) => index + 1);
 
   // ELEMENTOS FILTRADOS
   readonly filteredItems = computed(() => {
@@ -39,77 +49,43 @@ export class WatchlistListComponent {
       return this.watchlist();
     }
 
-    return this.watchlist().filter(
-      (item) => item.mediaType === filter,
-    );
+    return this.watchlist().filter((item) => item.mediaType === filter);
   });
 
   // TOTAL DE PELÍCULAS
   readonly totalMovies = computed(
-    () =>
-      this.watchlist().filter(
-        (item) => item.mediaType === 'movie',
-      ).length,
+    () => this.watchlist().filter((item) => item.mediaType === 'movie').length,
   );
 
   // TOTAL DE SERIES
   readonly totalSeries = computed(
-    () =>
-      this.watchlist().filter(
-        (item) => item.mediaType === 'tv',
-      ).length,
+    () => this.watchlist().filter((item) => item.mediaType === 'tv').length,
   );
 
-  // CAMBIAR FILTRO
-  selectFilter(filter: WatchlistFilter): void {
-    this.selectedFilter.set(filter);
-  }
-
   // ACTUALIZAR ESTADO
-  updateStatus(
-    id: number,
-    mediaType: 'movie' | 'tv',
-    value: string,
-  ): void {
+  updateStatus(id: number, mediaType: 'movie' | 'tv', value: string): void {
     if (value !== 'pending' && value !== 'watched') {
       return;
     }
 
     const status: WatchlistStatus = value;
 
-    this.watchlistService.updateStatus(
-      id,
-      mediaType,
-      status,
-    );
+    this.watchlistService.updateStatus(id, mediaType, status);
   }
 
   // ACTUALIZAR PUNTUACIÓN PERSONAL
-  updatePersonalRating(
-    id: number,
-    mediaType: 'movie' | 'tv',
-    value: string,
-  ): void {
+  updatePersonalRating(id: number, mediaType: 'movie' | 'tv', value: string): void {
     const rating = value === '' ? null : Number(value);
 
-    if (
-      rating !== null &&
-      (!Number.isInteger(rating) || rating < 1 || rating > 10)
-    ) {
+    if (rating !== null && (!Number.isInteger(rating) || rating < 1 || rating > 10)) {
       return;
     }
 
-    this.watchlistService.updatePersonalRating(
-      id,
-      mediaType,
-      rating,
-    );
+    this.watchlistService.updatePersonalRating(id, mediaType, rating);
   }
 
   // ABRIR DETALLES
-  openDetails(
-    item: { id: number; mediaType: 'movie' | 'tv' },
-  ): void {
+  openDetails(item: { id: number; mediaType: 'movie' | 'tv' }): void {
     if (item.mediaType === 'movie') {
       this.router.navigate(['/movies', item.id]);
       return;
@@ -124,10 +100,7 @@ export class WatchlistListComponent {
   }
 
   // ELIMINAR ELEMENTO
-  removeItem(
-    id: number,
-    mediaType: 'movie' | 'tv',
-  ): void {
+  removeItem(id: number, mediaType: 'movie' | 'tv'): void {
     this.watchlistService.remove(id, mediaType);
   }
 

@@ -1,0 +1,38 @@
+@if (routerLink()) {
+  <a
+    [routerLink]="routerLink()"
+    class="app-button"
+    [class.button-secondary]="variant() === 'secondary'"
+    [class.button-disabled]="disabled()"
+    [attr.aria-disabled]="disabled()"
+    (click)="disabled() && $event.preventDefault()"
+  >
+    @if (icon()) {
+      <i class="fas" [class]="icon()"></i>
+    }
+
+    <span>{{ text() }}</span>
+
+    @if (endIcon()) {
+      <i class="fas" [class]="endIcon()"></i>
+    }
+  </a>
+} @else {
+  <button
+    [type]="type()"
+    class="app-button"
+    [class.button-secondary]="variant() === 'secondary'"
+    [disabled]="disabled()"
+    (click)="clicked.emit()"
+  >
+    @if (icon()) {
+      <i class="fas" [class]="icon()"></i>
+    }
+
+    <span>{{ text() }}</span>
+
+    @if (endIcon()) {
+      <i class="fas" [class]="endIcon()"></i>
+    }
+  </button>
+}
