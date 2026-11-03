@@ -1,26 +1,18 @@
-
 <div class="streaming-page">
-
-<app-page-header
-  section="CINEVERSE / RANKINGS"
-  title="Top 10 Streaming"
-  description="Descubre las plataformas con mayor popularidad en sus películas y series disponibles en Perú."
-/>
-    <button
-      class="refresh-button"
-      (click)="loadRankings()"
-      [disabled]="loading()"
-    >
-      ↻ Actualizar
-    </button>
+  <app-page-header
+    section="CINEVERSE / RANKINGS"
+    title="Top 10 Streaming"
+    description="Descubre las plataformas con mayor popularidad en sus películas y series disponibles en Perú."
+  />
+  <button class="refresh-button" (click)="loadRankings()" [disabled]="loading()">
+    ↻ Actualizar
+  </button>
   <div class="region-info">
     <span>🇵🇪 Perú</span>
     <span>Películas y series</span>
     <span>Suscripción</span>
     <span>Promedio de popularidad</span>
   </div>
-
-
 
   @if (error()) {
     <div class="error-message">
@@ -29,9 +21,7 @@
   }
 
   @if (!loading() && rankings().length > 0) {
-
     <section class="ranking-section">
-
       <div class="section-heading">
         <div>
           <h2>Las 10 plataformas más populares</h2>
@@ -40,32 +30,22 @@
       </div>
 
       <div class="provider-grid">
-
         @for (provider of rankings(); track provider.provider_id; let i = $index) {
-
           <article
             class="provider-card"
             [class.selected]="selectedProvider()?.provider_id === provider.provider_id"
             (click)="selectProvider(provider)"
           >
-
-            <div class="provider-position">
-              #{{ i + 1 }}
-            </div>
+            <div class="provider-position">#{{ i + 1 }}</div>
 
             <div class="provider-logo">
-              <img
-                [src]="getProviderLogo(provider.logo_path)"
-                [alt]="provider.provider_name"
-              >
+              <img [src]="getProviderLogo(provider.logo_path)" [alt]="provider.provider_name" />
             </div>
 
             <div class="provider-information">
               <h3>{{ provider.provider_name }}</h3>
 
-              <div class="average-label">
-                Popularidad promedio
-              </div>
+              <div class="average-label">Popularidad promedio</div>
 
               <div class="average-value">
                 {{ getPopularity(provider.averagePopularity) }}
@@ -76,33 +56,21 @@
                 <span>{{ provider.seriesCount }} series</span>
               </div>
 
-              <div class="total-titles">
-                {{ provider.totalTitles }} títulos analizados
-              </div>
+              <div class="total-titles">{{ provider.totalTitles }} títulos analizados</div>
             </div>
 
             <span class="view-details">Ver catálogo →</span>
-
           </article>
-
         }
-
       </div>
-
     </section>
   }
 
   @if (selectedProvider(); as provider) {
-
     <section class="catalog-section">
-
       <div class="catalog-header">
-
         <div class="catalog-provider">
-          <img
-            [src]="getProviderLogo(provider.logo_path)"
-            [alt]="provider.provider_name"
-          >
+          <img [src]="getProviderLogo(provider.logo_path)" [alt]="provider.provider_name" />
 
           <div>
             <span class="eyebrow">CATÁLOGO DE STREAMING</span>
@@ -114,13 +82,7 @@
           </div>
         </div>
 
-        <button
-          class="close-button"
-          (click)="closeDetails()"
-        >
-          Cerrar
-        </button>
-
+        <button class="close-button" (click)="closeDetails()">Cerrar</button>
       </div>
 
       <div class="catalog-summary">
@@ -141,7 +103,6 @@
       </div>
 
       <div class="media-section">
-
         <div class="media-heading">
           <h3>Top 10 películas</h3>
           <span>Ordenadas por popularidad</span>
@@ -149,16 +110,10 @@
 
         @if (provider.topMovies.length > 0) {
           <div class="media-grid">
-
             @for (movie of provider.topMovies; track movie.id; let i = $index) {
-
               <article class="media-card">
-
                 <div class="media-poster">
-                  <img
-                    [src]="getImageUrl(movie.poster_path)"
-                    [alt]="movie.title"
-                  >
+                  <img [src]="getImageUrl(movie.poster_path)" [alt]="movie.title" />
                   <span class="media-position">#{{ i + 1 }}</span>
                 </div>
 
@@ -170,24 +125,17 @@
                     <span>★ {{ movie.vote_average.toFixed(1) }}</span>
                   </div>
 
-                  <div class="popularity">
-                    Popularidad: {{ getPopularity(movie.popularity) }}
-                  </div>
+                  <div class="popularity">Popularidad: {{ getPopularity(movie.popularity) }}</div>
                 </div>
-
               </article>
-
             }
-
           </div>
         } @else {
           <p class="empty-message">No se encontraron películas.</p>
         }
-
       </div>
 
       <div class="media-section">
-
         <div class="media-heading">
           <h3>Top 10 series</h3>
           <span>Ordenadas por popularidad</span>
@@ -195,16 +143,10 @@
 
         @if (provider.topSeries.length > 0) {
           <div class="media-grid">
-
             @for (show of provider.topSeries; track show.id; let i = $index) {
-
               <article class="media-card">
-
                 <div class="media-poster">
-                  <img
-                    [src]="getImageUrl(show.poster_path)"
-                    [alt]="show.name"
-                  >
+                  <img [src]="getImageUrl(show.poster_path)" [alt]="show.name" />
                   <span class="media-position">#{{ i + 1 }}</span>
                 </div>
 
@@ -216,35 +158,23 @@
                     <span>★ {{ show.vote_average.toFixed(1) }}</span>
                   </div>
 
-                  <div class="popularity">
-                    Popularidad: {{ getPopularity(show.popularity) }}
-                  </div>
+                  <div class="popularity">Popularidad: {{ getPopularity(show.popularity) }}</div>
                 </div>
-
               </article>
-
             }
-
           </div>
         } @else {
           <p class="empty-message">No se encontraron series.</p>
         }
-
       </div>
-
     </section>
   }
 
   <footer class="data-disclaimer">
+    <p>Datos proporcionados por TMDB y disponibilidad de streaming proporcionada por JustWatch.</p>
     <p>
-      Datos proporcionados por TMDB y disponibilidad de streaming
-      proporcionada por JustWatch.
-    </p>
-    <p>
-      El ranking utiliza una muestra de hasta 100 películas y
-      100 series por plataforma. Los promedios pueden variar
-      según los resultados disponibles en TMDB.
+      El ranking utiliza una muestra de hasta 100 películas y 100 series por plataforma. Los
+      promedios pueden variar según los resultados disponibles en TMDB.
     </p>
   </footer>
-
 </div>

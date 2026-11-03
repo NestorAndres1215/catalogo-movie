@@ -5,11 +5,12 @@ import { RouterLink } from '@angular/router';
 import { YearService } from '../../../../core/service/year.service';
 import { YearMedia } from '../../../../core/models/year.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 
 @Component({
   selector: 'app-year-list',
   standalone: true,
-  imports: [RouterLink, DecimalPipe, PageHeaderComponent],
+  imports: [RouterLink, DecimalPipe, PageHeaderComponent, PageLoadingComponent],
   templateUrl: './year-list.html',
   styleUrl: './year-list.css'
 })

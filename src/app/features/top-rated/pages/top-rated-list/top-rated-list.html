@@ -30,12 +30,14 @@
 
   </div>
 
-  @if (loading()) {
-    <div class="loading">
-      <div class="spinner"></div>
-      <p>Cargando las más valoradas...</p>
-    </div>
-  }
+@if (loading()) {
+  <app-page-loading
+    title="Cargando las más valoradas"
+    description="Descubriendo las películas mejor calificadas por los espectadores."
+    detail="Consultando las valoraciones en TMDB..."
+    icon="fa-star"
+  />
+}
 
   @if (errorMessage()) {
     <div class="error-message">

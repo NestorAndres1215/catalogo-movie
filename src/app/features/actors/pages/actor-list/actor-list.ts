@@ -5,12 +5,13 @@ import { Person, PersonFilters } from '../../../../core/models/person.interface'
 import { ActorFiltersComponent } from '../actor-filters/actor-filters';
 import { PersonService } from '../../../../core/service/person.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 
 
 @Component({
   selector: 'app-actor-list',
   standalone: true,
-  imports: [RouterLink, ActorFiltersComponent, PageHeaderComponent],
+  imports: [RouterLink, ActorFiltersComponent, PageHeaderComponent, PageLoadingComponent],
   templateUrl: './actor-list.html',
   styleUrl: './actor-list.css',
 })

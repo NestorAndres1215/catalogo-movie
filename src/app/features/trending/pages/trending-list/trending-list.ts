@@ -6,6 +6,7 @@ import { TrendingService } from '../../../../core/service/trending.service';
 import { TrendingMedia } from '../../../../core/models/trending.interface';
 import { FavoriteButtonComponent } from '../../../../shared/components/favorite-button/favorite-button';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 
 @Component({
   selector: 'app-trending-list',
@@ -14,7 +15,8 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
     RouterLink,
     DecimalPipe,
     FavoriteButtonComponent,
-    PageHeaderComponent
+    PageHeaderComponent,
+    PageLoadingComponent
 ],
   templateUrl: './trending-list.html',
   styleUrl: './trending-list.css'

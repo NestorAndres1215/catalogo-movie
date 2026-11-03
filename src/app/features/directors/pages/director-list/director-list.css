@@ -4,8 +4,6 @@
   margin: auto;
 }
 
-
-
 .filters {
   display: flex;
   gap: 15px;
@@ -121,43 +119,6 @@
 
 .popularity strong {
   color: #f5f5f5;
-}
-
-.message {
-  padding: 50px 20px;
-  color: #aaa;
-  text-align: center;
-}
-
-.message.error {
-  color: #f87171;
-}
-
-.message button {
-  display: block;
-  margin: 15px auto;
-  padding: 10px 18px;
-  color: white;
-  background: #7c3aed;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.loader {
-  width: 35px;
-  height: 35px;
-  margin: 0 auto 15px;
-  border: 3px solid #444;
-  border-top-color: #a78bfa;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 .pagination {

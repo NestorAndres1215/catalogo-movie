@@ -7,6 +7,7 @@ import { catchError, map } from 'rxjs/operators';
 import { WatchlistService } from '../../../../core/service/watchlist.service';
 import { TmdbService } from '../../../../core/service/tmdb.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 
 interface TmdbGenre {
   id: number;
@@ -52,7 +53,7 @@ interface ActorStatistic {
 @Component({
   selector: 'app-statistics',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent],
+  imports: [DecimalPipe, PageHeaderComponent, PageLoadingComponent],
   templateUrl: './statistics.html',
   styleUrl: './statistics.css',
 })

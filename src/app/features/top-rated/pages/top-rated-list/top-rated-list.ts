@@ -12,6 +12,7 @@ import { FavoriteButtonComponent } from '../../../../shared/components/favorite-
 
 import { TopRatedMedia } from '../../../../core/models/top-rated.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 
 @Component({
   selector: 'app-top-rated-list',
@@ -19,7 +20,8 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
   imports: [
     DecimalPipe,
     FavoriteButtonComponent,
-    PageHeaderComponent
+    PageHeaderComponent,
+    PageLoadingComponent
 ],
   templateUrl: './top-rated-list.html',
   styleUrl: './top-rated-list.css'

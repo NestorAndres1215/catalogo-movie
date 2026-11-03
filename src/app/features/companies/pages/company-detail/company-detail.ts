@@ -18,13 +18,15 @@ import {
 } from '../../../../core/models/company-movie.interface';
 
 import { CompanyService } from '../../../../core/service/company.service';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 
 @Component({
   selector: 'app-company-detail',
   standalone: true,
   imports: [
-    RouterLink
-  ],
+    RouterLink,
+    PageLoadingComponent
+],
   templateUrl: './company-detail.html',
   styleUrl: './company-detail.css'
 })

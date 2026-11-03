@@ -1,0 +1,111 @@
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 65px 20px;
+  text-align: center;
+  color: var(--color-texto-secundario);
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde);
+  animation: fade-in 0.4s ease;
+}
+
+.loading-container h3 {
+  margin: 20px 0 8px;
+  color: var(--color-texto);
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.loading-container p {
+  margin: 0 0 12px;
+  color: var(--color-texto-secundario);
+  font-size: 14px;
+}
+
+.loading-container small {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--color-texto-atenuado);
+  font-size: 12px;
+}
+
+.loading-container small i {
+  color: var(--color-acento);
+}
+
+/* Loader */
+.loader-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 65px;
+  height: 65px;
+}
+
+.loader {
+  position: absolute;
+  inset: 0;
+  border: 3px solid var(--color-borde);
+  border-top-color: var(--color-acento);
+  border-right-color: var(--color-acento);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+.loader-icon {
+  color: var(--color-acento);
+  font-size: 21px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Animaciones */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(0.9);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .loading-container {
+    padding: 45px 15px;
+  }
+
+  .loading-container h3 {
+    font-size: 17px;
+  }
+
+  .loading-container p {
+    font-size: 13px;
+  }
+}

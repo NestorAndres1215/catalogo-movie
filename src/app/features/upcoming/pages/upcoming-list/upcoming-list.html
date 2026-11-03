@@ -28,13 +28,14 @@
       Las series mostradas tienen episodios programados para emitirse próximamente.
     </p>
   }
-
-  @if (loading()) {
-    <div class="loading">
-      <div class="spinner"></div>
-      <p>Buscando próximos estrenos...</p>
-    </div>
-  }
+@if (loading()) {
+  <app-page-loading
+    title="Buscando próximos estrenos"
+    description="Descubre las películas que llegarán próximamente."
+    detail="Consultando fechas de lanzamiento en TMDB..."
+    icon="fa-calendar-days"
+  />
+}
 
   @if (errorMessage()) {
     <div class="error-message">

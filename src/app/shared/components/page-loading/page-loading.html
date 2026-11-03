@@ -1,0 +1,16 @@
+<div class="loading-container">
+  <div class="loader-container">
+    <div class="loader"></div>
+
+    <i [class]="'fas ' + icon() + ' loader-icon'"></i>
+  </div>
+
+  <h3>{{ title() }}</h3>
+
+  <p>{{ description() }}</p>
+
+  <small>
+    <i class="fas fa-database"></i>
+    {{ detail() }}
+  </small>
+</div>

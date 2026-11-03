@@ -49,12 +49,14 @@
     }
   </div>
 
-  @if (loading()) {
-    <div class="loading-container">
-      <div class="spinner"></div>
-      <p>Cargando producciones de {{ year() }}...</p>
-    </div>
-  }
+@if (loading()) {
+  <app-page-loading
+    title="Cargando producciones de {{ year() }}"
+    description="Explorando las películas y series de este año."
+    detail="Consultando producciones en TMDB..."
+    icon="fa-calendar-days"
+  />
+}
 
   @if (errorMessage()) {
     <div class="error-message">

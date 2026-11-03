@@ -9,6 +9,7 @@ import {
   CatalogResponse
 } from '../../../../core/models/catalog.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 
 interface CalendarDay {
   date: Date;
@@ -21,7 +22,7 @@ interface CalendarDay {
 @Component({
   selector: 'app-release-calendar',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent],
+  imports: [DecimalPipe, PageHeaderComponent, PageLoadingComponent],
   templateUrl: './release-calendar.html',
   styleUrl: './release-calendar.css'
 })

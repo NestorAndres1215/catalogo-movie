@@ -42,12 +42,14 @@
       </span>
     </div>
 
-    @if (loading()) {
-      <div class="loading">
-        <div class="spinner"></div>
-        <p>Cargando películas...</p>
-      </div>
-    }
+@if (loading()) {
+  <app-page-loading
+    title="Cargando películas"
+    description="Descubriendo películas para ti."
+    detail="Consultando el catálogo cinematográfico de TMDB..."
+    icon="fa-film"
+  />
+}
 
     @if (errorMessage()) {
       <div class="error-message">

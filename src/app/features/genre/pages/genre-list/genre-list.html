@@ -43,13 +43,13 @@
   <!-- CARGANDO -->
 
   @if (loading()) {
-    <div class="message">
-      <div class="loader"></div>
-
-      <p>Cargando géneros...</p>
-    </div>
+    <app-page-loading
+      title="Cargando géneros"
+      description="Explorando las categorías del universo cinematográfico."
+      detail="Consultando géneros disponibles en TMDB..."
+      icon="fa-layer-group"
+    />
   }
-
   <!-- ERROR -->
 
   @if (errorMessage()) {

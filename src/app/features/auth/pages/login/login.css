@@ -237,21 +237,6 @@
   cursor: not-allowed;
 }
 
-.spinner {
-  width: 16px;
-  height: 16px;
-  border: 2px solid var(--color-acento-suave);
-  border-top-color: var(--color-texto-sobre-acento);
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .auth-divider {
   display: flex;
   align-items: center;

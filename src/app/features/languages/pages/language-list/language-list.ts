@@ -8,11 +8,12 @@ import {
   TmdbLanguage
 } from '../../../../core/models/catalog.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 
 @Component({
   selector: 'app-language-list',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent],
+  imports: [DecimalPipe, PageHeaderComponent, PageLoadingComponent],
   templateUrl: './language-list.html',
   styleUrl: './language-list.css'
 })

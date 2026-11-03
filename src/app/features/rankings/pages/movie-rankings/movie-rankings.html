@@ -1,99 +1,72 @@
 <main class="rankings-container">
-
-<app-page-header
-  section="CINEVERSE RANKINGS"
-  title=" Top 10 de películas"
-  description="Descubre las películas mejor y peor valoradas de TMDB."
-/>
+  <app-page-header
+    section="CINEVERSE RANKINGS"
+    title=" Top 10 de películas"
+    description="Descubre las películas mejor y peor valoradas de TMDB."
+  />
 
   <!-- Selector de rankings -->
   <section class="ranking-tabs">
-
     <button
       type="button"
       [class.active]="activeRanking() === 'best'"
-      (click)="changeRanking('best')">
-
+      (click)="changeRanking('best')"
+    >
       🏆 Mejor valoradas
-
     </button>
 
     <button
       type="button"
       [class.active]="activeRanking() === 'worst'"
-      (click)="changeRanking('worst')">
-
+      (click)="changeRanking('worst')"
+    >
       💀 Peor valoradas
-
     </button>
-
   </section>
 
   <!-- MEJORES PELÍCULAS -->
   @if (activeRanking() === 'best') {
-
     <section class="ranking-section">
-
       <div class="section-heading">
-
         <div>
           <span class="section-label">RANKING TMDB</span>
           <h2>🏆 Las 10 mejores películas</h2>
           <p>Ordenadas por puntuación promedio.</p>
         </div>
 
-        <button
-          type="button"
-          class="refresh-button"
-          (click)="reloadRanking()">
-          ↻ Actualizar
-        </button>
-
+        <button type="button" class="refresh-button" (click)="reloadRanking()">↻ Actualizar</button>
       </div>
 
       @if (loadingBest()) {
-        <div class="loading-state">
-          <div class="spinner"></div>
-          <p>Cargando mejores películas...</p>
-        </div>
+        <app-page-loading
+          title="Cargando mejores películas"
+          description="Descubriendo las películas mejor valoradas."
+          detail="Consultando las puntuaciones en TMDB..."
+          icon="fa-trophy"
+        />
       }
 
       @if (errorBest()) {
         <div class="error-state">
           {{ errorBest() }}
 
-          <button type="button" (click)="loadBestMovies()">
-            Intentar nuevamente
-          </button>
+          <button type="button" (click)="loadBestMovies()">Intentar nuevamente</button>
         </div>
       }
 
       @if (!loadingBest() && bestMovies().length > 0) {
-
         <div class="movies-grid">
-
           @for (movie of bestMovies(); track movie.id; let i = $index) {
-
             <article class="movie-card">
-
               <div class="poster-container">
+                <img [src]="getPoster(movie.poster_path)" [alt]="movie.title ?? 'Película'" />
 
-                <img
-                  [src]="getPoster(movie.poster_path)"
-                  [alt]="movie.title ?? 'Película'">
+                <span class="ranking-position"> #{{ i + 1 }} </span>
 
-                <span class="ranking-position">
-                  #{{ i + 1 }}
-                </span>
-
-                <span class="rating-badge">
-                  ⭐ {{ getRating(movie.vote_average) }}
-                </span>
-
+                <span class="rating-badge"> ⭐ {{ getRating(movie.vote_average) }} </span>
               </div>
 
               <div class="movie-information">
-
                 <h3>{{ movie.title }}</h3>
 
                 <span class="movie-year">
@@ -104,93 +77,63 @@
                   {{ movie.overview || 'Sin descripción disponible.' }}
                 </p>
 
-                <span class="vote-count">
-                  {{ movie.vote_count }} votos
-                </span>
-
+                <span class="vote-count"> {{ movie.vote_count }} votos </span>
               </div>
-
             </article>
-
           }
-
         </div>
-
       }
 
       @if (!loadingBest() && bestMovies().length === 0 && !errorBest()) {
         <p class="empty-state">No hay películas disponibles.</p>
       }
-
     </section>
-
   }
 
   <!-- PEORES PELÍCULAS -->
   @if (activeRanking() === 'worst') {
-
     <section class="ranking-section">
-
       <div class="section-heading">
-
         <div>
           <span class="section-label">RANKING TMDB</span>
           <h2>💀 Las 10 peores películas</h2>
           <p>Ordenadas de menor a mayor puntuación.</p>
         </div>
 
-        <button
-          type="button"
-          class="refresh-button"
-          (click)="reloadRanking()">
-          ↻ Actualizar
-        </button>
-
+        <button type="button" class="refresh-button" (click)="reloadRanking()">↻ Actualizar</button>
       </div>
 
       @if (loadingWorst()) {
-        <div class="loading-state">
-          <div class="spinner"></div>
-          <p>Cargando películas...</p>
-        </div>
+        <app-page-loading
+          title="Cargando películas peor valoradas"
+          description="Explorando las películas con las puntuaciones más bajas."
+          detail="Consultando valoraciones en TMDB..."
+          icon="fa-arrow-down-wide-short"
+        />
       }
-
       @if (errorWorst()) {
         <div class="error-state">
           {{ errorWorst() }}
 
-          <button type="button" (click)="loadWorstMovies()">
-            Intentar nuevamente
-          </button>
+          <button type="button" (click)="loadWorstMovies()">Intentar nuevamente</button>
         </div>
       }
 
       @if (!loadingWorst() && worstMovies().length > 0) {
-
         <div class="movies-grid">
-
           @for (movie of worstMovies(); track movie.id; let i = $index) {
-
             <article class="movie-card">
-
               <div class="poster-container">
+                <img [src]="getPoster(movie.poster_path)" [alt]="movie.title ?? 'Película'" />
 
-                <img
-                  [src]="getPoster(movie.poster_path)"
-                  [alt]="movie.title ?? 'Película'">
-
-                <span class="ranking-position worst-position">
-                  #{{ i + 1 }}
-                </span>
+                <span class="ranking-position worst-position"> #{{ i + 1 }} </span>
 
                 <span class="rating-badge worst-rating">
                   ⭐ {{ getRating(movie.vote_average) }}
                 </span>
-
               </div>
 
               <div class="movie-information">
-
                 <h3>{{ movie.title }}</h3>
 
                 <span class="movie-year">
@@ -201,33 +144,23 @@
                   {{ movie.overview || 'Sin descripción disponible.' }}
                 </p>
 
-                <span class="vote-count">
-                  {{ movie.vote_count }} votos
-                </span>
-
+                <span class="vote-count"> {{ movie.vote_count }} votos </span>
               </div>
-
             </article>
-
           }
-
         </div>
-
       }
 
       @if (!loadingWorst() && worstMovies().length === 0 && !errorWorst()) {
         <p class="empty-state">No hay películas disponibles.</p>
       }
-
     </section>
-
   }
 
   <footer class="ranking-footer">
     <p>
-      Datos proporcionados por TMDB.
-      Los rankings se calculan usando sus valoraciones y cantidad de votos.
+      Datos proporcionados por TMDB. Los rankings se calculan usando sus valoraciones y cantidad de
+      votos.
     </p>
   </footer>
-
 </main>

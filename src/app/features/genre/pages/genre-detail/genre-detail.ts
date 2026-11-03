@@ -18,6 +18,7 @@ import {
 import {
   GenreService
 } from '../../../../core/service/genre.service';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 
 type GenreType = 'movie' | 'tv';
 
@@ -25,8 +26,9 @@ type GenreType = 'movie' | 'tv';
   selector: 'app-genre-detail',
   standalone: true,
   imports: [
-    RouterLink
-  ],
+    RouterLink,
+    PageLoadingComponent
+],
   templateUrl: './genre-detail.html',
   styleUrl: './genre-detail.css'
 })

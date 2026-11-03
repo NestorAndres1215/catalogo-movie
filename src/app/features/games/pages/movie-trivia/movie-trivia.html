@@ -63,12 +63,14 @@
   }
 
   <!-- Cargando -->
-  @if (loading() && !gameFinished()) {
-    <section class="loading-section">
-      <div class="spinner"></div>
-      <p>Preparando la siguiente pregunta...</p>
-    </section>
-  }
+@if (loading() && !gameFinished()) {
+  <app-page-loading
+    title="Preparando la siguiente pregunta"
+    description="Pon a prueba tus conocimientos cinematográficos."
+    detail="Generando tu desafío de cine..."
+    icon="fa-brain"
+  />
+}
 
   <!-- Pregunta -->
   @if (!gameFinished() && currentQuestion(); as question) {

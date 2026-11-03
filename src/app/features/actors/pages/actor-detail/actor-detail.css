@@ -196,7 +196,7 @@
   border-radius: 10px;
 }
 
-.detail-loading,
+
 .detail-error {
   padding: 70px 20px;
   color: #929aaa;
@@ -207,21 +207,6 @@
   color: #e5b94b;
 }
 
-.spinner {
-  width: 35px;
-  height: 35px;
-  margin: 0 auto 15px;
-  border: 3px solid #343b4a;
-  border-top-color: #e5b94b;
-  border-radius: 50%;
-  animation: spin .8s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 @media (max-width: 1000px) {
   .credits-grid {

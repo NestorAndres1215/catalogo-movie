@@ -1,9 +1,9 @@
 <section class="collections-page">
-<app-page-header
-  section="UNIVERSOS CINEMATOGRÁFICOS"
-  title="Colecciones y sagas"
-  description="Descubre las grandes franquicias del cine y explora todas las películas que forman parte de ellas."
-/>
+  <app-page-header
+    section="UNIVERSOS CINEMATOGRÁFICOS"
+    title="Colecciones y sagas"
+    description="Descubre las grandes franquicias del cine y explora todas las películas que forman parte de ellas."
+  />
 
   <div class="search-container">
     <div class="search-box">
@@ -55,17 +55,21 @@
   }
 
   @if (loading()) {
-    <div class="loading-state">
-      <div class="spinner"></div>
-      <p>Buscando colecciones...</p>
-    </div>
+    <app-page-loading
+      title="Buscando colecciones"
+      description="Explorando las grandes sagas cinematográficas."
+      detail="Consultando colecciones en TMDB..."
+      icon="fa-layer-group"
+    />
   }
 
   @if (loadingDetails()) {
-    <div class="loading-state">
-      <div class="spinner"></div>
-      <p>Cargando películas de la saga...</p>
-    </div>
+    <app-page-loading
+      title="Cargando películas de la saga"
+      description="Reuniendo todas las películas de esta colección."
+      detail="Consultando los detalles en TMDB..."
+      icon="fa-film"
+    />
   }
 
   @if (errorMessage()) {

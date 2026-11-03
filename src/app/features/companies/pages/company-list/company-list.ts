@@ -18,11 +18,12 @@ import {
 
 import { CompanyService } from '../../../../core/service/company.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 
 @Component({
   selector: 'app-company-list',
   standalone: true,
-  imports: [RouterLink, PageHeaderComponent],
+  imports: [RouterLink, PageHeaderComponent, PageLoadingComponent],
   templateUrl: './company-list.html',
   styleUrl: './company-list.css'
 })

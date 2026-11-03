@@ -1,8 +1,10 @@
 @if (loading()) {
-  <div class="message">
-    <div class="loader"></div>
-    <p>Cargando información del director...</p>
-  </div>
+  <app-page-loading
+    title="Cargando información del director"
+    description="Descubriendo su trayectoria y obras cinematográficas."
+    detail="Consultando información y créditos en TMDB..."
+    icon="fa-video"
+  />
 }
 
 @if (errorMessage()) {

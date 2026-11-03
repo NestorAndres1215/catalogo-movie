@@ -1,8 +1,10 @@
 @if (loading()) {
-  <div class="detail-loading">
-    <div class="spinner"></div>
-    <p>Cargando información de la serie...</p>
-  </div>
+  <app-page-loading
+    title="Cargando información de la serie"
+    description="Descubriendo temporadas, episodios y detalles de esta serie."
+    detail="Consultando información en TMDB..."
+    icon="fa-tv"
+  />
 }
 
 @if (errorMessage() && !loading()) {

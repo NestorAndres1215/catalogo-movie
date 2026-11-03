@@ -9,11 +9,12 @@ import {
   PersonCredit,
   PersonCombinedCredits
 } from '../../../../core/models/person.interface';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 
 @Component({
   selector: 'app-actor-detail',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, PageLoadingComponent],
   templateUrl: './actor-detail.html',
   styleUrl: './actor-detail.css'
 })

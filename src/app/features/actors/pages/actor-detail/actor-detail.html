@@ -1,9 +1,10 @@
-
 @if (loading()) {
-  <div class="detail-loading">
-    <div class="spinner"></div>
-    <p>Cargando perfil...</p>
-  </div>
+  <app-page-loading
+    title="Cargando perfil del actor"
+    description="Estamos explorando su trayectoria cinematográfica."
+    detail="Consultando información y créditos en TMDB..."
+    icon="fa-user"
+  />
 }
 
 @if (errorMessage() && !loading()) {

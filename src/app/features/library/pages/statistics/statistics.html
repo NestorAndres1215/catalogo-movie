@@ -8,10 +8,12 @@
 />
 
   @if (loading()) {
-    <div class="loading-state">
-      <div class="loader"></div>
-      <p>Analizando tus películas vistas...</p>
-    </div>
+<app-page-loading
+  title="Analizando tus películas vistas"
+  description="Estamos procesando tu historial cinematográfico."
+  detail="Preparando tus estadísticas y resultados..."
+  icon="fa-chart-pie"
+/>
   } @else if (error()) {
     <div class="empty-state">
       <h2>No se pudieron cargar las estadísticas</h2>

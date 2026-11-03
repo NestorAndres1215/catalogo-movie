@@ -1,9 +1,9 @@
 <section class="trending-page">
-<app-page-header
-  section="LO MÁS POPULAR"
-  title="Tendencias"
-  description="Descubre las películas y series que están dando de qué hablar."
-/>
+  <app-page-header
+    section="LO MÁS POPULAR"
+    title="Tendencias"
+    description="Descubre las películas y series que están dando de qué hablar."
+  />
   <div class="trending-banner">
     <div class="banner-content">
       <span>EN CINEVERSE</span>
@@ -91,10 +91,12 @@
   </div>
 
   @if (loading()) {
-    <div class="loading-container">
-      <div class="spinner"></div>
-      <p>Cargando tendencias...</p>
-    </div>
+    <app-page-loading
+      title="Cargando tendencias"
+      description="Descubriendo las películas y series más populares del momento."
+      detail="Consultando tendencias actuales en TMDB..."
+      icon="fa-fire"
+    />
   }
 
   @if (errorMessage()) {

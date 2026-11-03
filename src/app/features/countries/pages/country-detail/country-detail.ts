@@ -20,6 +20,7 @@ import {
 import {
   CountryService
 } from '../../../../core/service/country.service';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 
 type CountryMediaType = 'movie' | 'tv';
 
@@ -33,8 +34,9 @@ type CountrySortOption =
   selector: 'app-country-detail',
   standalone: true,
   imports: [
-    RouterLink
-  ],
+    RouterLink,
+    PageLoadingComponent
+],
   templateUrl: './country-detail.html',
   styleUrl: './country-detail.css'
 })

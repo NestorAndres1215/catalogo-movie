@@ -84,12 +84,14 @@
     }
   </div>
 
-  @if (loadingSources() || loading()) {
-    <div class="loading-container">
-      <div class="spinner"></div>
-      <p>Buscando recomendaciones...</p>
-    </div>
-  }
+@if (loadingSources() || loading()) {
+  <app-page-loading
+    title="Buscando recomendaciones"
+    description="Encontrando películas que podrían gustarte."
+    detail="Analizando tus preferencias cinematográficas..."
+    icon="fa-lightbulb"
+  />
+}
 
   @if (errorMessage()) {
     <div class="error-message">

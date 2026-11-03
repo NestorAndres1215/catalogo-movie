@@ -78,15 +78,14 @@
   }
 
   <!-- CARGANDO -->
-  @if (loading()) {
-    <div class="message">
-      <div class="loader"></div>
-
-      <h2>Buscando productoras...</h2>
-
-      <p>Estamos preparando los resultados.</p>
-    </div>
-  }
+@if (loading()) {
+  <app-page-loading
+    title="Buscando productoras"
+    description="Estamos preparando los resultados."
+    detail="Consultando productoras en TMDB..."
+    icon="fa-building"
+  />
+}
 
   <!-- ERROR -->
   @if (errorMessage()) {

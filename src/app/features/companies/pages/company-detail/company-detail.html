@@ -1,78 +1,44 @@
 <section class="company-detail-page">
-
   <!-- CARGANDO -->
 
   @if (loading()) {
-
-    <div class="message">
-
-      <div class="loader"></div>
-
-      <p>
-        Cargando información de la productora...
-      </p>
-
-    </div>
-
+    <app-page-loading
+      title="Cargando información de la productora"
+      description="Explorando su trayectoria en la industria cinematográfica."
+      detail="Consultando información en TMDB..."
+      icon="fa-building"
+    />
   }
-
   <!-- ERROR -->
 
   @if (!loading() && errorMessage()) {
-
     <div class="message error">
-
       <h2>Error</h2>
 
       <p>{{ errorMessage() }}</p>
 
-      <a routerLink="/companies">
-        Volver a productoras
-      </a>
-
+      <a routerLink="/companies"> Volver a productoras </a>
     </div>
-
   }
 
   <!-- DETALLE -->
 
   @if (!loading() && company(); as companyData) {
-
-    <a
-      class="back-link"
-      routerLink="/companies"
-    >
-      ← Volver a productoras
-    </a>
+    <a class="back-link" routerLink="/companies"> ← Volver a productoras </a>
 
     <!-- ENCABEZADO -->
 
     <header class="company-header">
-
       <div class="company-logo">
-
         @if (companyData.logo_path) {
-
-          <img
-            [src]="getLogo(companyData.logo_path)"
-            [alt]="companyData.name"
-          />
-
+          <img [src]="getLogo(companyData.logo_path)" [alt]="companyData.name" />
         } @else {
-
-          <span>
-            Sin logotipo
-          </span>
-
+          <span> Sin logotipo </span>
         }
-
       </div>
 
       <div class="company-heading-info">
-
-        <span class="section-label">
-          CINEVERSE / PRODUCTORA
-        </span>
+        <span class="section-label"> CINEVERSE / PRODUCTORA </span>
 
         <h1>
           {{ companyData.name }}
@@ -83,7 +49,6 @@
         </p>
 
         @if (companyData.homepage) {
-
           <a
             class="homepage-link"
             [href]="companyData.homepage"
@@ -92,138 +57,88 @@
           >
             Visitar sitio web →
           </a>
-
         }
-
       </div>
-
     </header>
 
     <!-- INFORMACIÓN -->
 
     <section class="information-section">
-
       <h2>Información de la productora</h2>
 
       <div class="information-grid">
-
         <div class="information-card">
-
           <span>País de origen</span>
 
           <strong>
             {{ companyData.origin_country || 'No disponible' }}
           </strong>
-
         </div>
 
         <div class="information-card">
-
           <span>Ubicación principal</span>
 
           <strong>
             {{ companyData.headquarters || 'No disponible' }}
           </strong>
-
         </div>
 
         <div class="information-card">
-
           <span>Empresa matriz</span>
 
           <strong>
             {{ companyData.parent_company?.name || 'No disponible' }}
           </strong>
-
         </div>
 
         <div class="information-card">
-
           <span>Identificador TMDB</span>
 
           <strong>
             {{ companyData.id }}
           </strong>
-
         </div>
-
       </div>
-
     </section>
 
     <!-- DESCRIPCIÓN -->
 
     @if (companyData.description) {
-
       <section class="description-section">
-
         <h2>Descripción</h2>
 
         <p>
           {{ companyData.description }}
         </p>
-
       </section>
-
     }
 
     <!-- PELÍCULAS -->
 
     <section class="movies-section">
-
       <div class="section-heading">
-
         <div>
-          <span class="section-label">
-            FILMOGRAFÍA
-          </span>
+          <span class="section-label"> FILMOGRAFÍA </span>
 
-          <h2>
-            Películas de {{ companyData.name }}
-          </h2>
+          <h2>Películas de {{ companyData.name }}</h2>
         </div>
 
-        <span class="movie-count">
-          {{ movies().length }} películas
-        </span>
-
+        <span class="movie-count"> {{ movies().length }} películas </span>
       </div>
 
       @if (movies().length > 0) {
-
         <div class="movies-grid">
-
-          @for (
-            movie of movies();
-            track movie.id
-          ) {
-
-            <a
-              class="movie-card"
-              [routerLink]="['/movies', movie.id]"
-            >
-
+          @for (movie of movies(); track movie.id) {
+            <a class="movie-card" [routerLink]="['/movies', movie.id]">
               <div class="movie-poster">
-
                 @if (movie.poster_path) {
-
-                  <img
-                    [src]="getPoster(movie.poster_path)"
-                    [alt]="movie.title"
-                  />
-
+                  <img [src]="getPoster(movie.poster_path)" [alt]="movie.title" />
                 } @else {
-
-                  <div class="no-poster">
-                    Sin imagen
-                  </div>
-
+                  <div class="no-poster">Sin imagen</div>
                 }
-
               </div>
 
               <div class="movie-info">
-
                 <h3>
                   {{ movie.title }}
                 </h3>
@@ -232,32 +147,16 @@
                   {{ formatDate(movie.release_date) }}
                 </span>
 
-                <strong>
-                  ★ {{ movie.vote_average.toFixed(1) }}
-                </strong>
-
+                <strong> ★ {{ movie.vote_average.toFixed(1) }} </strong>
               </div>
-
             </a>
-
           }
-
         </div>
-
       } @else {
-
         <div class="empty-movies">
-
-          <p>
-            No se encontraron películas asociadas a esta productora.
-          </p>
-
+          <p>No se encontraron películas asociadas a esta productora.</p>
         </div>
-
       }
-
     </section>
-
   }
-
 </section>

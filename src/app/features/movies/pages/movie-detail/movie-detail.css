@@ -272,21 +272,6 @@
   text-decoration: underline;
 }
 
-.spinner {
-  width: 35px;
-  height: 35px;
-  margin: auto;
-  border: 3px solid #343b49;
-  border-top-color: #e5b94b;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 /* RESPONSIVE */
 

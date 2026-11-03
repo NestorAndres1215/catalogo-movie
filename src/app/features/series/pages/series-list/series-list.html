@@ -34,10 +34,12 @@
   </div>
 
   @if (loading()) {
-    <div class="loading-state">
-      <div class="spinner"></div>
-      <p>Cargando series...</p>
-    </div>
+    <app-page-loading
+      title="Cargando series"
+      description="Explorando las mejores series para ti."
+      detail="Consultando el catálogo de series en TMDB..."
+      icon="fa-tv"
+    />
   }
 
   @if (errorMessage() && !loading()) {

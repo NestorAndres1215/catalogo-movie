@@ -9,14 +9,15 @@ import {
 } from '../../../../core/models/person.interface';
 
 import { PersonService } from '../../../../core/service/person.service';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 
 @Component({
   selector: 'app-director-detail',
   standalone: true,
   imports: [
     RouterLink,
-
-  ],
+    PageLoadingComponent
+],
   templateUrl: './director-detail.html',
   styleUrl: './director-detail.css'
 })

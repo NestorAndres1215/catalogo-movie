@@ -154,21 +154,7 @@
   color: #a9afbd;
 }
 
-.spinner {
-  width: 35px;
-  height: 35px;
-  margin: 0 auto 15px;
-  border: 3px solid #343b49;
-  border-top-color: #e5b94b;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 .empty-state span,
 .error-state span {

@@ -36,15 +36,13 @@
   <!-- CARGANDO -->
 
   @if (loading()) {
-    <div class="message">
-      <div class="loader"></div>
-
-      <p>Buscando directores...</p>
-
-      <small> Estamos verificando sus créditos en TMDB. </small>
-    </div>
+    <app-page-loading
+      title="Buscando películas"
+      description="Descubriendo películas para ti."
+      detail="Consultando el catálogo de TMDB..."
+      icon="fa-film"
+    />
   }
-
   <!-- ERROR -->
 
   @if (errorMessage()) {

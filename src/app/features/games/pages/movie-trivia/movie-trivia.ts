@@ -26,6 +26,7 @@ import {
   ProductionCompany
 } from '../../../../core/models/catalog.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 
 type TriviaCategory = 'movie' | 'tv' | 'person' | 'company';
 
@@ -41,7 +42,7 @@ interface TriviaItem {
   standalone: true,
   templateUrl: './movie-trivia.html',
   styleUrl: './movie-trivia.css',
-  imports: [PageHeaderComponent]
+  imports: [PageHeaderComponent, PageLoadingComponent]
 })
 export class MovieTriviaComponent implements OnDestroy {
 

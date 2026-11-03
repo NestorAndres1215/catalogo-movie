@@ -41,13 +41,13 @@
   }
 
   <!-- CARGANDO -->
-
   @if (loading()) {
-    <div class="message">
-      <div class="loader"></div>
-
-      <p>Cargando países...</p>
-    </div>
+    <app-page-loading
+      title="Cargando países"
+      description="Preparando los países disponibles en el catálogo."
+      detail="Consultando información en TMDB..."
+      icon="fa-globe"
+    />
   }
 
   <!-- ERROR -->

@@ -173,21 +173,7 @@
   color: #ff7777;
 }
 
-.loader {
-  width: 35px;
-  height: 35px;
-  margin-bottom: 15px;
-  border: 3px solid #333;
-  border-top-color: #e5a00d;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 /* PAGINACIÓN */
 

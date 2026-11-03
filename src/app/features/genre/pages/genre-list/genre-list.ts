@@ -6,13 +6,14 @@ import { Genre } from '../../../../core/models/genre.interface';
 
 import { GenreService } from '../../../../core/service/genre.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 
 type GenreType = 'movie' | 'tv';
 
 @Component({
   selector: 'app-genre-list',
   standalone: true,
-  imports: [RouterLink, PageHeaderComponent],
+  imports: [RouterLink, PageHeaderComponent, PageLoadingComponent],
   templateUrl: './genre-list.html',
   styleUrl: './genre-list.css',
 })

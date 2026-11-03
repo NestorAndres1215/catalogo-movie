@@ -15,6 +15,7 @@ import {
 import { Person, PersonFilters } from '../../../../core/models/person.interface';
 import { PersonService } from '../../../../core/service/person.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 
 @Component({
   selector: 'app-director-list',
@@ -22,7 +23,8 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
   imports: [
     RouterLink,
     DecimalPipe,
-    PageHeaderComponent
+    PageHeaderComponent,
+    PageLoadingComponent
 ],
   templateUrl: './director-list.html',
   styleUrl: './director-list.css'

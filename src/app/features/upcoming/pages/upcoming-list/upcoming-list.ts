@@ -6,11 +6,12 @@ import { UpcomingService } from '../../../../core/service/upcoming.service';
 import { UpcomingMedia } from '../../../../core/models/upcoming.interface';
 import { FavoriteButtonComponent } from '../../../../shared/components/favorite-button/favorite-button';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 
 @Component({
   selector: 'app-upcoming-list',
   standalone: true,
-  imports: [DecimalPipe, FavoriteButtonComponent, PageHeaderComponent],
+  imports: [DecimalPipe, FavoriteButtonComponent, PageHeaderComponent, PageLoadingComponent],
   templateUrl: './upcoming-list.html',
   styleUrl: './upcoming-list.css',
 })

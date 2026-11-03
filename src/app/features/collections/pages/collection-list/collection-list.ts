@@ -11,13 +11,15 @@ import {
 } from '../../../../core/models/collection.interface';
 import { CollectionDetails } from '../../../../core/models/catalog.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 
 @Component({
   selector: 'app-collection-list',
   standalone: true,
   imports: [
     DecimalPipe,
-    PageHeaderComponent
+    PageHeaderComponent,
+    PageLoadingComponent
 ],
   templateUrl: './collection-list.html',
   styleUrl: './collection-list.css'

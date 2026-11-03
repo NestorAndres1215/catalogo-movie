@@ -8,6 +8,7 @@ import { Genre } from '../../../../core/models/genre.interface';
 import { SeriesService } from '../../../../core/service/series.service';
 import { SeriesFiltersComponent } from '../series-filters/series-filters';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 
 @Component({
   selector: 'app-series-list',
@@ -15,7 +16,8 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
   imports: [
     RouterLink,
     SeriesFiltersComponent,
-    PageHeaderComponent
+    PageHeaderComponent,
+    PageLoadingComponent
 ],
   templateUrl: './series-list.html',
   styleUrl: './series-list.css'

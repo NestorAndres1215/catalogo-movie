@@ -2,19 +2,14 @@
 
   <!-- CARGANDO -->
 
-  @if (loading()) {
-
-    <div class="message">
-
-      <div class="loader"></div>
-
-      <p>
-        Cargando contenido...
-      </p>
-
-    </div>
-
-  }
+ @if (loading()) {
+  <app-page-loading
+    title="Cargando contenido"
+    description="Estamos preparando el contenido para ti."
+    detail="Consultando información en TMDB..."
+    icon="fa-film"
+  />
+}
 
   <!-- ERROR -->
 

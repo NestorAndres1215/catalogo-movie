@@ -4,11 +4,12 @@ import { DatePipe, DecimalPipe } from '@angular/common';
 import { MovieService } from '../../../../core/service/movie.service';
 import { Movie } from '../../../../core/models/movie.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 
 @Component({
   selector: 'app-decades-list',
   standalone: true,
-  imports: [DatePipe, DecimalPipe, PageHeaderComponent],
+  imports: [DatePipe, DecimalPipe, PageHeaderComponent, PageLoadingComponent],
   templateUrl: './decades-list.html',
   styleUrl: './decades-list.css'
 })

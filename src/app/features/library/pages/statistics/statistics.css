@@ -222,7 +222,6 @@
   font-size: 13px;
 }
 
-.loading-state,
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -263,20 +262,7 @@
   cursor: pointer;
 }
 
-.loader {
-  width: 35px;
-  height: 35px;
-  border: 3px solid #45404f;
-  border-top-color: #a78bfa;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 /* RESPONSIVE */
 @media (max-width: 900px) {

@@ -1,9 +1,9 @@
 <section class="actors-page">
-<app-page-header
-  section="CINEVERSE / PERSONAS"
-  title="Actores y Actrices"
-  description="Conoce a los artistas que dan vida a tus películas y series favoritas."
-/>
+  <app-page-header
+    section="CINEVERSE / PERSONAS"
+    title="Actores y Actrices"
+    description="Conoce a los artistas que dan vida a tus películas y series favoritas."
+  />
 
   <div class="search-container">
     <span class="search-icon">⌕</span>
@@ -33,10 +33,12 @@
   </div>
 
   @if (loading()) {
-    <div class="loading-state">
-      <div class="spinner"></div>
-      <p>Cargando personas...</p>
-    </div>
+    <app-page-loading
+      title="Cargando perfil del actor"
+      description="Estamos explorando su trayectoria cinematográfica."
+      detail="Consultando información y créditos en TMDB..."
+      icon="fa-user"
+    />
   }
 
   @if (errorMessage() && !loading()) {
