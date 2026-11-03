@@ -1,0 +1,18 @@
+.settings-footer {
+  padding: 30px 10px 10px;
+  color: var(--color-texto-atenuado);
+  font-size: 12px;
+  text-align: center;
+}
+
+.settings-footer > span {
+  color: var(--color-acento);
+  font-size: 17px;
+  flex-shrink: 0;
+}
+
+.footer-developer {
+  margin-left: 5px;
+  color: var(--color-texto-secundario);
+  font-weight: 600;
+}

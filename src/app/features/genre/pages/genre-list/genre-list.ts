@@ -1,19 +1,10 @@
-import {
-  Component,
-  OnInit,
-  inject,
-  signal
-} from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 
 import { RouterLink } from '@angular/router';
 
-import {
-  Genre
-} from '../../../../core/models/genre.interface';
+import { Genre } from '../../../../core/models/genre.interface';
 
-import {
-  GenreService
-} from '../../../../core/service/genre.service';
+import { GenreService } from '../../../../core/service/genre.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 type GenreType = 'movie' | 'tv';
@@ -21,20 +12,12 @@ type GenreType = 'movie' | 'tv';
 @Component({
   selector: 'app-genre-list',
   standalone: true,
-  imports: [
-    RouterLink,
-    PageHeaderComponent
-],
+  imports: [RouterLink, PageHeaderComponent],
   templateUrl: './genre-list.html',
-  styleUrl: './genre-list.css'
+  styleUrl: './genre-list.css',
 })
 export class GenreListComponent implements OnInit {
-
   private readonly genreService = inject(GenreService);
-
-  // =========================================
-  // ESTADOS
-  // =========================================
 
   genres = signal<Genre[]>([]);
 
@@ -46,21 +29,11 @@ export class GenreListComponent implements OnInit {
 
   private requestVersion = 0;
 
-  // =========================================
-  // INICIALIZACIÓN
-  // =========================================
-
   ngOnInit(): void {
-
     this.loadGenres();
   }
 
-  // =========================================
-  // CARGAR GÉNEROS
-  // =========================================
-
   loadGenres(): void {
-
     const version = ++this.requestVersion;
 
     this.loading.set(true);
@@ -69,14 +42,13 @@ export class GenreListComponent implements OnInit {
 
     this.genres.set([]);
 
-    const request = this.selectedType() === 'movie'
-      ? this.genreService.getMovieGenres()
-      : this.genreService.getTvGenres();
+    const request =
+      this.selectedType() === 'movie'
+        ? this.genreService.getMovieGenres()
+        : this.genreService.getTvGenres();
 
     request.subscribe({
-
-      next: response => {
-
+      next: (response) => {
         if (version !== this.requestVersion) {
           return;
         }
@@ -86,33 +58,21 @@ export class GenreListComponent implements OnInit {
         this.loading.set(false);
       },
 
-      error: error => {
-
+      error: (error) => {
         if (version !== this.requestVersion) {
           return;
         }
 
-        console.error(
-          'Error cargando géneros:',
-          error
-        );
+        console.error('Error cargando géneros:', error);
 
-        this.errorMessage.set(
-          'No se pudieron cargar los géneros. Verifica tu conexión y API Key.'
-        );
+        this.errorMessage.set('No se pudieron cargar los géneros. Verifica tu conexión y API Key.');
 
         this.loading.set(false);
-      }
-
+      },
     });
   }
 
-  // =========================================
-  // CAMBIAR TIPO
-  // =========================================
-
   changeType(type: GenreType): void {
-
     if (this.selectedType() === type) {
       return;
     }
@@ -122,43 +82,37 @@ export class GenreListComponent implements OnInit {
     this.loadGenres();
   }
 
-  // =========================================
-  // ICONOS
-  // =========================================
-
   getGenreIcon(genreName: string): string {
-
     const icons: Record<string, string> = {
-      'Acción': '⚔',
-      'Aventura': '🧭',
-      'Animación': '🎨',
-      'Comedia': '😂',
-      'Crimen': '🔎',
-      'Documental': '🎥',
-      'Drama': '🎭',
-      'Familia': '👨‍👩‍👧‍👦',
-      'Fantasía': '🪄',
-      'Historia': '🏛',
-      'Terror': '👻',
-      'Música': '🎵',
-      'Misterio': '🔍',
-      'Romance': '❤️',
-      'Ciencia ficción': '🚀',
-      'Película de TV': '📺',
-      'Suspense': '🕵',
-      'Bélica': '🪖',
-      'Western': '🤠',
-      'Action & Adventure': '⚔',
-      'Kids': '🧸',
-      'News': '📰',
-      'Reality': '🎬',
-      'Sci-Fi & Fantasy': '🚀',
-      'Soap': '💞',
-      'Talk': '🎙',
-      'War & Politics': '🌍'
+      Acción: 'fa-khanda',
+      Aventura: 'fa-compass',
+      Animación: 'fa-palette',
+      Comedia: 'fa-face-laugh',
+      Crimen: 'fa-magnifying-glass',
+      Documental: 'fa-video',
+      Drama: 'fa-masks-theater',
+      Familia: 'fa-people-roof',
+      Fantasía: 'fa-wand-magic-sparkles',
+      Historia: 'fa-landmark',
+      Terror: 'fa-ghost',
+      Música: 'fa-music',
+      Misterio: 'fa-user-secret',
+      Romance: 'fa-heart',
+      'Ciencia ficción': 'fa-rocket',
+      'Película de TV': 'fa-tv',
+      Suspense: 'fa-user-secret',
+      Bélica: 'fa-shield-halved',
+      Western: 'fa-hat-cowboy',
+      'Action & Adventure': 'fa-khanda',
+      Kids: 'fa-child',
+      News: 'fa-newspaper',
+      Reality: 'fa-video',
+      'Sci-Fi & Fantasy': 'fa-rocket',
+      Soap: 'fa-heart',
+      Talk: 'fa-microphone',
+      'War & Politics': 'fa-earth-americas',
     };
 
-    return icons[genreName] ?? '🎬';
+    return icons[genreName] ?? 'fa-film';
   }
-
 }

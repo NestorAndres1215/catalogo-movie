@@ -67,7 +67,7 @@
       @for (genre of genres(); track genre.id) {
         <a class="genre-card" [routerLink]="['/genres', selectedType(), genre.id]">
           <div class="genre-icon">
-            {{ getGenreIcon(genre.name) }}
+            <i [class]="'fas ' + getGenreIcon(genre.name)"></i>
           </div>
 
           <div class="genre-info">

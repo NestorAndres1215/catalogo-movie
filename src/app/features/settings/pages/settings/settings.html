@@ -1,15 +1,16 @@
-
 <main class="settings-page">
+  <app-page-header
+    section="CINEVERSE"
+    title="Configuración"
+    description="Conoce más sobre nuestra plataforma."
+  />
 
-<app-page-header
-  section="CINEVERSE"
-  title="Configuración"
-  description="Conoce más sobre nuestra plataforma."
-/>
   <section class="settings-layout">
-
     <aside class="settings-sidebar">
-      <h2>Información</h2>
+      <h2>
+        <i class="fas fa-sliders"></i>
+        Información
+      </h2>
 
       @for (section of sections; track section.id) {
         <button
@@ -18,23 +19,29 @@
           [class.active]="activeSection() === section.id"
           (click)="selectSection(section.id)"
         >
-          <span class="menu-icon">{{ section.icon }}</span>
+          <span class="menu-icon">
+            <i [class]="'fas ' + section.icon"></i>
+          </span>
 
           <span class="menu-text">
             <strong>{{ section.title }}</strong>
             <small>{{ section.description }}</small>
           </span>
 
-          <span class="menu-arrow">›</span>
+          <span class="menu-arrow">
+            <i class="fas fa-chevron-right"></i>
+          </span>
         </button>
       }
     </aside>
 
     <section class="settings-content">
-
       @if (activeSection() === 'privacy') {
         <div class="content-header">
-          <span class="content-icon">🛡️</span>
+          <span class="content-icon">
+            <i class="fas fa-shield-alt"></i>
+          </span>
+
           <div>
             <h2>Tu privacidad</h2>
             <p>Tu experiencia y tu información son importantes para nosotros.</p>
@@ -42,45 +49,45 @@
         </div>
 
         <article class="info-card">
-          <h3>Tu información personal</h3>
+          <h3><i class="fas fa-user-lock"></i> Tu información personal</h3>
           <p>
-            En CINEVERSE valoramos tu privacidad. Nos comprometemos a
-            tratar tu información con responsabilidad y a ofrecerte
-            una experiencia segura y transparente.
+            En CINEVERSE valoramos tu privacidad. Nos comprometemos a tratar tu información con
+            responsabilidad y a ofrecerte una experiencia segura y transparente.
           </p>
         </article>
 
         <article class="info-card">
-          <h3>Uso de la información</h3>
+          <h3><i class="fas fa-database"></i> Uso de la información</h3>
           <p>
-            La información asociada a tu cuenta y tus preferencias
-            permite ofrecerte una experiencia cinematográfica
-            personalizada, como organizar tus favoritos y tu lista
-            de películas pendientes.
+            La información asociada a tu cuenta y tus preferencias permite ofrecerte una experiencia
+            cinematográfica personalizada, como organizar tus favoritos y tu lista de películas
+            pendientes.
           </p>
         </article>
 
         <article class="info-card">
-          <h3>Servicios de terceros</h3>
+          <h3><i class="fas fa-globe"></i> Servicios de terceros</h3>
           <p>
-            CINEVERSE utiliza servicios externos para ofrecer
-            información cinematográfica. Estos servicios pueden
-            contar con sus propias políticas de privacidad.
+            CINEVERSE utiliza servicios externos para ofrecer información cinematográfica. Estos
+            servicios pueden contar con sus propias políticas de privacidad.
           </p>
         </article>
 
         <div class="notice-card">
-          <span>💜</span>
+          <span><i class="fas fa-heart"></i></span>
           <p>
-            Queremos que disfrutes de CINEVERSE con confianza.
-            Gracias por formar parte de nuestra comunidad.
+            Queremos que disfrutes de CINEVERSE con confianza. Gracias por formar parte de nuestra
+            comunidad.
           </p>
         </div>
       }
 
       @if (activeSection() === 'about') {
         <div class="content-header">
-          <span class="content-icon">🎬</span>
+          <span class="content-icon">
+            <i class="fas fa-film"></i>
+          </span>
+
           <div>
             <h2>Acerca de CINEVERSE</h2>
             <p>Todo un universo cinematográfico por descubrir.</p>
@@ -88,49 +95,53 @@
         </div>
 
         <div class="about-banner">
-          <div class="brand-symbol">🎥</div>
+          <div class="brand-symbol">
+            <i class="fas fa-clapperboard"></i>
+          </div>
           <h3>CINEVERSE</h3>
           <span>EXPLORA · DESCUBRE · DISFRUTA</span>
         </div>
 
         <article class="info-card">
-          <h3>¿Qué es CINEVERSE?</h3>
+          <h3><i class="fas fa-circle-info"></i> ¿Qué es CINEVERSE?</h3>
           <p>
-            CINEVERSE es un espacio dedicado a los amantes del cine
-            y las series. Aquí podrás explorar grandes historias,
-            descubrir nuevos títulos y conocer más sobre el mundo
+            CINEVERSE es un espacio dedicado a los amantes del cine y las series. Aquí podrás
+            explorar grandes historias, descubrir nuevos títulos y conocer más sobre el mundo
             cinematográfico.
           </p>
         </article>
 
         <article class="info-card">
-          <h3>Descubre todo lo que tenemos para ti</h3>
+          <h3><i class="fas fa-wand-magic-sparkles"></i> Descubre todo lo que tenemos para ti</h3>
+
           <ul class="feature-list">
-            <li>Explora películas y series de todos los géneros.</li>
-            <li>Conoce a tus actores y directores favoritos.</li>
-            <li>Descubre películas populares y mejor valoradas.</li>
-            <li>Guarda tus películas favoritas.</li>
-            <li>Organiza tu lista de contenido por ver.</li>
-            <li>Descubre próximos estrenos.</li>
-            <li>Diviértete con nuestros juegos y trivias.</li>
-            <li>Construye tu propio perfil cinematográfico.</li>
+            <li><i class="fas fa-film"></i> Explora películas y series de todos los géneros.</li>
+            <li><i class="fas fa-users"></i> Conoce a tus actores y directores favoritos.</li>
+            <li><i class="fas fa-fire"></i> Descubre películas populares y mejor valoradas.</li>
+            <li><i class="fas fa-heart"></i> Guarda tus películas favoritas.</li>
+            <li><i class="fas fa-bookmark"></i> Organiza tu lista de contenido por ver.</li>
+            <li><i class="fas fa-calendar-days"></i> Descubre próximos estrenos.</li>
+            <li><i class="fas fa-gamepad"></i> Diviértete con nuestros juegos y trivias.</li>
+            <li><i class="fas fa-user-circle"></i> Construye tu propio perfil cinematográfico.</li>
           </ul>
         </article>
 
         <article class="info-card">
-          <h3>Nuestra misión</h3>
+          <h3><i class="fas fa-bullseye"></i> Nuestra misión</h3>
           <p>
-            Queremos que descubrir una nueva película o serie
-            sea una experiencia sencilla, entretenida y especial.
-            CINEVERSE reúne todo lo que necesitas para disfrutar
-            aún más de tu pasión por el entretenimiento.
+            Queremos que descubrir una nueva película o serie sea una experiencia sencilla,
+            entretenida y especial. CINEVERSE reúne todo lo que necesitas para disfrutar aún más de
+            tu pasión por el entretenimiento.
           </p>
         </article>
       }
 
       @if (activeSection() === 'credits') {
         <div class="content-header">
-          <span class="content-icon">💜</span>
+          <span class="content-icon">
+            <i class="fas fa-award"></i>
+          </span>
+
           <div>
             <h2>Créditos</h2>
             <p>Un reconocimiento a quienes contribuyen a esta experiencia.</p>
@@ -143,9 +154,8 @@
           <div class="credit-information">
             <h3>The Movie Database</h3>
             <p>
-              Gracias a TMDB por proporcionar información
-              cinematográfica que permite descubrir películas,
-              series y personas del mundo del entretenimiento.
+              Gracias a TMDB por proporcionar información cinematográfica que permite descubrir
+              películas, series y personas del mundo del entretenimiento.
             </p>
 
             <a
@@ -154,49 +164,38 @@
               rel="noopener noreferrer"
               class="external-link"
             >
-              Conocer TMDB ↗
+              Conocer TMDB
+              <i class="fas fa-arrow-up-right-from-square"></i>
             </a>
           </div>
         </article>
 
         <div class="tmdb-attribution">
-          <p>
-            This product uses the TMDB API but is not endorsed or
-            certified by TMDB.
-          </p>
+          <p>This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
 
-          <a
-            href="https://www.themoviedb.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href="https://www.themoviedb.org/" target="_blank" rel="noopener noreferrer">
             <strong>THE MOVIE DATABASE</strong>
+            <i class="fas fa-external-link-alt"></i>
           </a>
         </div>
 
         <article class="info-card">
-          <h3>Desarrollador</h3>
+          <h3><i class="fas fa-code"></i> Desarrollador</h3>
           <p>
-            CINEVERSE es un proyecto desarrollado con dedicación
-            para todos los amantes del cine y las series.
+            CINEVERSE es un proyecto desarrollado con dedicación para todos los amantes del cine y
+            las series.
           </p>
         </article>
 
         <article class="info-card">
-          <h3>Agradecimientos</h3>
+          <h3><i class="fas fa-hands-helping"></i> Agradecimientos</h3>
           <p>
-            A todas las herramientas, servicios y personas que
-            contribuyen a hacer posible este proyecto.
+            A todas las herramientas, servicios y personas que contribuyen a hacer posible este
+            proyecto.
           </p>
         </article>
       }
-
     </section>
   </section>
-
-  <footer class="settings-footer">
-    <span>🎬</span>
-    <p>CINEVERSE · Explora el universo cinematográfico.</p>
-  </footer>
-
+  <app-footer />
 </main>
