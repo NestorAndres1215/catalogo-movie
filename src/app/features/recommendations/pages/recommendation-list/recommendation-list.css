@@ -287,13 +287,14 @@
   display: -webkit-box;
   margin: 8px 0 0;
   overflow: hidden;
-  color: #999;
+  color: var(--color-texto-secundario);
   font-size: 12px;
   line-height: 1.5;
+
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
-
 
 .empty-state,
 .error-message {

@@ -163,13 +163,14 @@
   min-height: 55px;
   margin: 10px 0;
   overflow: hidden;
-  color: #a3a3a3;
+  color: var(--color-texto-secundario);
   font-size: 12px;
   line-height: 1.5;
+
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
 }
-
 .vote-count {
   display: block;
   padding-top: 9px;

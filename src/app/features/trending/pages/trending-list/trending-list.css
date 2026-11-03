@@ -3,12 +3,10 @@
 }
 
 .trending-page {
- padding: 35px 40px;
+  padding: 35px 40px;
   max-width: 1600px;
   margin: auto;
 }
-
-
 
 .trending-banner {
   position: relative;
@@ -244,21 +242,21 @@
   display: -webkit-box;
   margin: 9px 0 0;
   overflow: hidden;
-  color: #999;
+  color: var(--color-texto-secundario);
   font-size: 12px;
   line-height: 1.5;
+
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
-.loading-container,
 .empty-state,
 .error-message {
   padding: 60px 20px;
   text-align: center;
   color: #aaa;
 }
-
 
 .error-message button {
   padding: 10px 18px;
