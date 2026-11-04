@@ -1,0 +1,90 @@
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 180px;
+}
+
+.filter-group label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--color-texto-secundario);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  transition: color var(--transicion-rapida);
+}
+
+.select-container {
+  position: relative;
+  width: 100%;
+}
+
+.select-container select {
+  appearance: none;
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 42px 12px 15px;
+  color: var(--color-texto);
+  background: var(--color-superficie-secundaria);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
+  outline: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+
+  transition:
+    border-color var(--transicion-rapida),
+    background var(--transicion-rapida),
+    box-shadow var(--transicion-rapida);
+}
+
+.select-container select:hover:not(:disabled) {
+  background: var(--color-superficie-elevada);
+  border-color: var(--color-borde-hover);
+}
+
+.select-container select:focus {
+  border-color: var(--color-acento);
+  background: var(--color-superficie-elevada);
+  box-shadow: 0 0 0 3px var(--color-acento-suave);
+}
+
+.select-container select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.select-icon {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  color: var(--color-texto-atenuado);
+  font-size: 11px;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition:
+    color var(--transicion-rapida),
+    transform var(--transicion-rapida);
+}
+
+.select-container:focus-within .select-icon {
+  color: var(--color-acento);
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.select-container select option {
+  padding: 10px;
+  color: var(--color-texto);
+  background: var(--color-superficie-secundaria);
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .filter-group {
+    min-width: 100%;
+  }
+}

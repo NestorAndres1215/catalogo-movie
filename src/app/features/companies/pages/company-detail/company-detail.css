@@ -22,9 +22,9 @@
   align-items: center;
   gap: 35px;
   padding: 35px;
-  border: 1px solid #292929;
-  border-radius: 14px;
-  background: #181818;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde);
+  background: var(--color-superficie-secundaria);
 }
 
 .company-logo {
@@ -35,9 +35,9 @@
   width: 250px;
   height: 170px;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: var(--radio-borde-pequeno);
   background: #f2f2f2;
-  color: #777;
+  color: var(--color-texto-atenuado);
 }
 
 .company-logo img {
@@ -56,7 +56,7 @@
 }
 
 .section-label {
-  color: #e5a00d;
+  color: var(--color-acento);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 2px;
@@ -65,7 +65,7 @@
 .homepage-link {
   display: inline-block;
   margin-top: 20px;
-  color: #e5a00d;
+  color: var(--color-acento);
   font-size: 14px;
   text-decoration: none;
 }
@@ -100,17 +100,18 @@
   gap: 12px;
   min-height: 100px;
   padding: 20px;
-  border: 1px solid #292929;
-  border-radius: 10px;
-  background: #181818;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
+  background: var(--color-superficie-secundaria);
 }
 
 .information-card span {
-  color: #999;
+  color: var(--color-texto-atenuado);
   font-size: 13px;
 }
 
 .information-card strong {
+  color: var(--color-texto);
   font-size: 14px;
   overflow-wrap: anywhere;
 }

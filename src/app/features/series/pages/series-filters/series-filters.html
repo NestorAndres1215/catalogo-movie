@@ -1,56 +1,39 @@
-
 <div class="filters-container">
-
-  <div class="filter-group">
-    <label for="series-genre">Género</label>
-
-    <select
-      id="series-genre"
-      (change)="onGenreChange($event)"
-    >
-      <option value="">Todos los géneros</option>
-
-      @for (genre of genres; track genre.id) {
-        <option [value]="genre.id">
-          {{ genre.name }}
-        </option>
-      }
-    </select>
-  </div>
+  <app-select-filter
+    id="series-genre"
+    label="Género"
+    placeholder="Todos los géneros"
+    [options]="genreOptions"
+    (selectionChange)="onGenreChange($event)"
+  />
 
   <div class="filter-group">
     <label for="series-year">Año</label>
 
     <input
-      id="series-year"
+      id="year"
       type="number"
       min="1900"
-      max="2100"
+      [max]="2100"
       placeholder="Ej. 2024"
+      [value]="filters.year ?? ''"
       (change)="onYearChange($event)"
     />
   </div>
 
-  <div class="filter-group">
-    <label for="series-sort">Ordenar por</label>
+  <app-select-filter
+    id="series-sort"
+    label="Ordenar por"
+    placeholder="Seleccionar orden"
+    [options]="sortOptions"
+    [selectedValue]="filters.sortBy"
+    (selectionChange)="onSortChange($event)"
+  />
 
-    <select
-      id="series-sort"
-      (change)="onSortChange($event)"
-    >
-      <option value="popularity.desc">Más populares</option>
-      <option value="vote_average.desc">Mejor valoradas</option>
-      <option value="first_air_date.desc">Más recientes</option>
-      <option value="first_air_date.asc">Más antiguas</option>
-    </select>
-  </div>
-
-  <button
-    class="clear-button"
-    type="button"
-    (click)="clearFilters()"
-  >
-    Limpiar filtros
-  </button>
-
+  <app-button
+    text="Limpiar filtros"
+    icon="fa-filter-circle-xmark"
+    variant="secondary"
+    (clicked)="clearFilters()"
+  />
 </div>

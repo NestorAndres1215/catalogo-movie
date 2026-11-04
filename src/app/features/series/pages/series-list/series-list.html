@@ -51,13 +51,13 @@
     </div>
   }
 
-@if (!loading() && !errorMessage() && series().length === 0) {
-  <app-empty-state
-    icon="fa-tv"
-    title="No encontramos series"
-    description="Prueba con otros filtros o términos de búsqueda."
-  />
-}
+  @if (!loading() && !errorMessage() && series().length === 0) {
+    <app-empty-state
+      icon="fa-tv"
+      title="No encontramos series"
+      description="Prueba con otros filtros o términos de búsqueda."
+    />
+  }
 
   @if (!loading() && series().length > 0) {
     <div class="series-grid">

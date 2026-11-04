@@ -8,8 +8,6 @@
   <!-- Selector de idioma -->
   <section class="filters-section">
     <div class="filter-group">
-      <label for="language-select">Selecciona un idioma</label>
-
       @if (loadingLanguages()) {
         <app-page-loading
           title="Cargando idiomas..."
@@ -18,14 +16,14 @@
           icon="fa-language"
         />
       } @else {
-        <select id="language-select" [value]="selectedLanguage()" (change)="changeLanguage($event)">
-          @for (language of languages(); track language.iso_639_1) {
-            <option [value]="language.iso_639_1">
-              {{ language.name || language.english_name }}
-              ({{ language.iso_639_1 }})
-            </option>
-          }
-        </select>
+        <app-select-filter
+          id="language-select"
+          label="Selecciona un idioma"
+          placeholder="Todos los idiomas"
+          [options]="languageOptions()"
+          [selectedValue]="selectedLanguage()"
+          (selectionChange)="changeLanguage($event)"
+        />
       }
     </div>
 

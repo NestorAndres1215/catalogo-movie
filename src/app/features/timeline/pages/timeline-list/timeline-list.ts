@@ -5,11 +5,12 @@ import { MovieService } from '../../../../core/service/movie.service';
 import { Movie } from '../../../../core/models/movie.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import { Footer } from '../../../../shared/components/footer/footer';
 
 @Component({
   selector: 'app-timeline-list',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent, EmptyStateComponent],
+  imports: [DecimalPipe, PageHeaderComponent, EmptyStateComponent, Footer],
   templateUrl: './timeline-list.html',
   styleUrl: './timeline-list.css',
 })

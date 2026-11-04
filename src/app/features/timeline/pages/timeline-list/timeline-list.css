@@ -12,9 +12,9 @@
 .year-selector {
   margin-bottom: 45px;
   padding: 22px;
-  border: 1px solid #292929;
-  border-radius: 14px;
-  background: #171717;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde);
+  background: var(--color-superficie-secundaria);
 }
 
 .section-heading {
@@ -31,7 +31,7 @@
 }
 
 .year-label {
-  color: #a78bfa;
+  color: var(--color-acento);
   font-size: 24px;
   font-weight: 800;
 }
@@ -42,30 +42,31 @@
   overflow-x: auto;
   padding-bottom: 10px;
   scrollbar-width: thin;
-  scrollbar-color: #7c3aed #252525;
+  scrollbar-color: var(--color-acento) var(--color-superficie-elevada);
 }
 
 .year-button {
   flex-shrink: 0;
   min-width: 65px;
   padding: 12px;
-  border: 1px solid #333;
-  border-radius: 9px;
-  background: #222;
-  color: #ccc;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
+  background: var(--color-superficie-secundaria);
+  color: var(--color-texto-secundario);
   cursor: pointer;
-  transition: 0.2s;
+  transition: var(--transicion-rapida);
 }
 
 .year-button:hover {
-  border-color: #8b5cf6;
-  color: #fff;
+  color: var(--color-acento);
+  background: var(--color-acento-suave);
+  border-color: var(--color-acento);
 }
 
 .year-button.active {
-  border-color: #7c3aed;
-  background: #7c3aed;
-  color: #fff;
+  color: var(--color-acento);
+  background: var(--color-acento-suave);
+  border-color: var(--color-acento);
   font-weight: 700;
 }
 
@@ -100,7 +101,7 @@
   bottom: 0;
   left: 125px;
   width: 2px;
-  background: #393044;
+  background: var(--color-borde-hover);
   content: '';
 }
 
@@ -120,14 +121,14 @@
 }
 
 .day {
-  color: #fff;
+  color: var(--color-texto);
   font-size: 27px;
   font-weight: 800;
 }
 
 .month {
   margin-top: 3px;
-  color: #a78bfa;
+  color: var(--color-acento);
   font-size: 12px;
 }
 
@@ -136,10 +137,10 @@
   width: 13px;
   height: 13px;
   margin: 24px auto 0;
-  border: 3px solid #a78bfa;
-  border-radius: 50%;
-  background: #171717;
-  box-shadow: 0 0 12px #7c3aed66;
+  border: 3px solid var(--color-acento);
+  border-radius: var(--radio-circular);
+  background: var(--color-superficie-secundaria);
+  box-shadow: 0 0 12px var(--color-acento-suave);
 }
 
 .timeline-card {
@@ -147,14 +148,14 @@
   gap: 20px;
   min-width: 0;
   padding: 15px;
-  border: 1px solid #292929;
-  border-radius: 13px;
-  background: #171717;
-  transition: 0.2s;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
+  background: var(--color-superficie-secundaria);
+  transition: var(--transicion-rapida);
 }
 
 .timeline-card:hover {
-  border-color: #7c3aed;
+  border-color: var(--color-acento);
   transform: translateX(4px);
 }
 
@@ -188,7 +189,7 @@
 }
 
 .movie-year {
-  color: #a78bfa;
+  color: var(--color-acento);
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 1px;
@@ -219,12 +220,12 @@
 }
 
 .rating {
-  color: #facc15;
+  color: var(--color-valoracion);
   font-weight: 700;
 }
 
 .votes {
-  color: #888;
+  color: var(--color-texto-atenuado);
 }
 
 .pagination {
@@ -273,14 +274,7 @@
   margin: 15px auto 0;
 }
 
-.attribution {
-  margin-top: 40px;
-  padding-top: 20px;
-  border-top: 1px solid #292929;
-  color: #777;
-  font-size: 11px;
-  text-align: center;
-}
+
 
 @media (max-width: 650px) {
   .timeline-container {

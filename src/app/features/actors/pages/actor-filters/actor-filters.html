@@ -1,47 +1,19 @@
-
 <div class="filters-container">
-
   <div class="filter-group">
-    <label for="department">Departamento profesional</label>
-
-    <select
-      id="department"
-      [value]="filters.department"
-      (change)="onDepartmentChange($event)"
-    >
-      <option value="">Todos</option>
-      <option value="Acting">Actuación</option>
-      <option value="Directing">Dirección</option>
-      <option value="Writing">Guion</option>
-      <option value="Production">Producción</option>
-      <option value="Camera">Cámara</option>
-      <option value="Editing">Edición</option>
-      <option value="Sound">Sonido</option>
-      <option value="Art">Arte</option>
-    </select>
-  </div>
-
-  <div class="filter-group">
-    <label for="sort">Ordenar por</label>
-
-    <select
+    <app-select-filter
       id="sort"
-      [value]="filters.sortBy"
-      (change)="onSortChange($event)"
-    >
-      <option value="popularity.desc">Más populares</option>
-      <option value="popularity.asc">Menos populares</option>
-      <option value="name.asc">Nombre A - Z</option>
-      <option value="name.desc">Nombre Z - A</option>
-    </select>
+      label="Ordenar por"
+      placeholder="Seleccionar orden"
+      [options]="sortOptions"
+      [selectedValue]="filters.sortBy"
+      (selectionChange)="onSortChange($event)"
+    />
   </div>
 
-  <button
-    class="clear-button"
-    type="button"
-    (click)="clearFilters()"
-  >
-    Limpiar filtros
-  </button>
-
+  <app-button
+    text="Limpiar filtros"
+    icon="fa-filter-circle-xmark"
+    variant="secondary"
+    (clicked)="clearFilters()"
+  />
 </div>

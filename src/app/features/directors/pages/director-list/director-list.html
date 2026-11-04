@@ -22,15 +22,14 @@
       }
     </div>
 
-    <select [value]="filters().sortBy" (change)="onSortChange($event)">
-      <option value="popularity.desc">Más populares</option>
-
-      <option value="popularity.asc">Menos populares</option>
-
-      <option value="name.asc">Nombre A - Z</option>
-
-      <option value="name.desc">Nombre Z - A</option>
-    </select>
+    <app-select-filter
+      id="sort"
+      label="Ordenar por"
+      placeholder="Seleccionar orden"
+      [options]="sortOptions"
+      [selectedValue]="filters().sortBy"
+      (selectionChange)="onSortChange($event)"
+    />
   </div>
 
   <!-- CARGANDO -->

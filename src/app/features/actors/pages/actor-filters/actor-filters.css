@@ -5,9 +5,9 @@
   gap: 16px;
   padding: 20px;
   margin-bottom: 28px;
-  background: #191d28;
-  border: 1px solid #292e3b;
-  border-radius: 12px;
+  background: var(--color-superficie-secundaria);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
 }
 
 .filter-group {
@@ -16,40 +16,6 @@
   flex: 1;
   min-width: 180px;
   gap: 8px;
-}
-
-.filter-group label {
-  color: #a6adbb;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.filter-group select {
-  width: 100%;
-  padding: 11px 12px;
-  color: #fff;
-  background: #11141d;
-  border: 1px solid #343b4a;
-  border-radius: 8px;
-  outline: none;
-}
-
-.filter-group select:focus {
-  border-color: #e5b94b;
-}
-
-.clear-button {
-  padding: 11px 16px;
-  color: #e5b94b;
-  background: transparent;
-  border: 1px solid #e5b94b;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.clear-button:hover {
-  color: #11141d;
-  background: #e5b94b;
 }
 
 @media (max-width: 600px) {

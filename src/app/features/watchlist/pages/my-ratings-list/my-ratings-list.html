@@ -16,13 +16,13 @@
       <p>{{ totalRated() }} títulos registrados</p>
     </div>
 
-  <div class="filter-container">
-  <app-filter-tabs
-    [tabs]="filterTabs"
-    [selected]="selectedFilter()"
-    (selectionChange)="selectFilter($event)"
-  />
-</div>
+    <div class="filter-container">
+      <app-filter-tabs
+        [tabs]="filterTabs"
+        [selected]="selectedFilter()"
+        (selectionChange)="selectFilter($event)"
+      />
+    </div>
   </div>
 
   <!-- LISTADO -->

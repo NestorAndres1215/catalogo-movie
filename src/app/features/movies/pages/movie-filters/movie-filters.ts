@@ -1,13 +1,17 @@
-
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Genre } from '../../../../core/models/genre.interface';
 import { MovieFilters } from '../../../../core/models/movie.interface';
+import {
+  FilterOption,
+  SelectFilterComponent
+} from '../../../../shared/components/select-filter/select-filter';
+import { ButtonComponent } from '../../../../shared/components/button/button';
 
 @Component({
   selector: 'app-movie-filters',
   standalone: true,
-  imports: [],
+  imports: [SelectFilterComponent, ButtonComponent],
   templateUrl: './movie-filters.html',
   styleUrl: './movie-filters.css'
 })
@@ -23,9 +27,22 @@ export class MovieFiltersComponent {
     sortBy: 'popularity.desc'
   };
 
-  onGenreChange(event: Event): void {
-    const value = (event.target as HTMLSelectElement).value;
+  get genreOptions(): FilterOption[] {
+    return this.genres.map(genre => ({
+      label: genre.name,
+      value: genre.id
+    }));
+  }
 
+  readonly sortOptions: FilterOption[] = [
+    { label: 'Más populares', value: 'popularity.desc' },
+    { label: 'Menos populares', value: 'popularity.asc' },
+    { label: 'Mejor valoradas', value: 'vote_average.desc' },
+    { label: 'Más recientes', value: 'primary_release_date.desc' },
+    { label: 'Más antiguas', value: 'primary_release_date.asc' }
+  ];
+
+  onGenreChange(value: string): void {
     this.filters.genreId = value ? Number(value) : null;
     this.emitFilters();
   }
@@ -37,8 +54,8 @@ export class MovieFiltersComponent {
     this.emitFilters();
   }
 
-  onSortChange(event: Event): void {
-    this.filters.sortBy = (event.target as HTMLSelectElement).value;
+  onSortChange(value: string): void {
+    this.filters.sortBy = value;
     this.emitFilters();
   }
 

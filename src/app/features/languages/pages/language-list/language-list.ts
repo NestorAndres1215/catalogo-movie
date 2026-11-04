@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 
 import { CatalogService } from '../../../../core/service/catalog.service';
@@ -15,11 +15,22 @@ import {
   FilterType,
 } from '../../../../shared/components/filter-tabs/filter-tabs';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import {
+  FilterOption,
+  SelectFilterComponent,
+} from '../../../../shared/components/select-filter/select-filter';
 
 @Component({
   selector: 'app-language-list',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent, PageLoadingComponent, FilterTabsComponent, EmptyStateComponent],
+  imports: [
+    DecimalPipe,
+    PageHeaderComponent,
+    PageLoadingComponent,
+    FilterTabsComponent,
+    EmptyStateComponent,
+    SelectFilterComponent,
+  ],
   templateUrl: './language-list.html',
   styleUrl: './language-list.css',
 })
@@ -102,14 +113,8 @@ export class LanguageListComponent implements OnInit {
       });
   }
 
-  changeLanguage(event: Event): void {
-    const target = event.target;
-
-    if (!(target instanceof HTMLSelectElement)) {
-      return;
-    }
-
-    this.selectedLanguage.set(target.value);
+  changeLanguage(value: string): void {
+    this.selectedLanguage.set(value);
     this.page.set(1);
     this.loadContent();
   }
@@ -167,7 +172,12 @@ export class LanguageListComponent implements OnInit {
   getTitle(media: CatalogMedia): string {
     return media.title || media.name || 'Sin título';
   }
-
+  readonly languageOptions = computed<FilterOption[]>(() =>
+    this.languages().map((language) => ({
+      label: `${language.name || language.english_name} (${language.iso_639_1})`,
+      value: language.iso_639_1,
+    })),
+  );
   getReleaseDate(media: CatalogMedia): string {
     const date = media.release_date || media.first_air_date;
 

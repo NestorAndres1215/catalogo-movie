@@ -1,0 +1,24 @@
+<div class="filter-group">
+  <label [for]="id()">
+    {{ label() }}
+  </label>
+
+  <div class="select-container">
+    <select
+      [id]="id()"
+      [value]="selectedValue()"
+      [disabled]="disabled()"
+      (change)="selectionChange.emit($any($event.target).value)"
+    >
+      <option value="">{{ placeholder() }}</option>
+
+      @for (option of options(); track option.value) {
+        <option [value]="option.value">
+          {{ option.label }}
+        </option>
+      }
+    </select>
+
+    <i class="fas fa-chevron-down select-icon"></i>
+  </div>
+</div>

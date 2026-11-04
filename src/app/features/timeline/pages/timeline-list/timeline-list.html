@@ -1,13 +1,11 @@
 <section class="timeline-container">
-
-<app-page-header
-  section="CINEVERSE · HISTORIA DEL CINE"
-  title="Línea de tiempo del cine"
-  description="Recorre los años y descubre las películas que marcaron cada época de la historia cinematográfica."
-/>
+  <app-page-header
+    section="CINEVERSE · HISTORIA DEL CINE"
+    title="Línea de tiempo del cine"
+    description="Recorre los años y descubre las películas que marcaron cada época de la historia cinematográfica."
+  />
 
   <section class="year-selector">
-
     <div class="section-heading">
       <div>
         <h2>Explora por año</h2>
@@ -29,46 +27,34 @@
         </button>
       }
     </div>
-
   </section>
 
   <section class="timeline-section">
-
     <div class="timeline-heading">
       <div>
         <span class="eyebrow">RECORRIDO CRONOLÓGICO</span>
         <h2>Estrenos de {{ selectedYear() }}</h2>
       </div>
 
-      <span class="movie-count">
-        {{ movies().length }} películas
-      </span>
+      <span class="movie-count"> {{ movies().length }} películas </span>
     </div>
 
     @if (loading()) {
-      <div class="status-message">
-        Cargando historia cinematográfica...
-      </div>
+      <div class="status-message">Cargando historia cinematográfica...</div>
     }
 
     @if (errorMessage()) {
       <div class="status-message error">
         {{ errorMessage() }}
 
-        <button type="button" (click)="loadMovies()">
-          Reintentar
-        </button>
+        <button type="button" (click)="loadMovies()">Reintentar</button>
       </div>
     }
 
     @if (!loading() && !errorMessage() && movies().length > 0) {
-
       <div class="timeline">
-
         @for (movie of movies(); track movie.id) {
-
           <article class="timeline-item">
-
             <div class="timeline-date">
               <span class="day">
                 {{ getDay(movie.release_date ?? '') }}
@@ -82,28 +68,16 @@
             <div class="timeline-marker"></div>
 
             <div class="timeline-card">
-
               <div class="movie-poster">
-
                 @if (movie.poster_path) {
-                  <img
-                    [src]="getImageUrl(movie.poster_path)"
-                    [alt]="movie.title"
-                    loading="lazy"
-                  />
+                  <img [src]="getImageUrl(movie.poster_path)" [alt]="movie.title" loading="lazy" />
                 } @else {
-                  <div class="no-poster">
-                    Sin imagen
-                  </div>
+                  <div class="no-poster">Sin imagen</div>
                 }
-
               </div>
 
               <div class="movie-details">
-
-                <span class="movie-year">
-                  ESTRENO · {{ selectedYear() }}
-                </span>
+                <span class="movie-year"> ESTRENO · {{ selectedYear() }} </span>
 
                 <h3>{{ movie.title }}</h3>
 
@@ -112,65 +86,35 @@
                 </p>
 
                 <div class="movie-metadata">
+                  <span class="rating"> ★ {{ movie.vote_average | number: '1.1-1' }}/10 </span>
 
-                  <span class="rating">
-                    ★ {{ movie.vote_average | number:'1.1-1' }}/10
-                  </span>
-
-                  <span class="votes">
-                    {{ movie.vote_count | number }} votos
-                  </span>
-
+                  <span class="votes"> {{ movie.vote_count | number }} votos </span>
                 </div>
-
               </div>
-
             </div>
-
           </article>
-
         }
-
       </div>
 
       <div class="pagination">
+        <button type="button" (click)="previousPage()" [disabled]="page() === 1">Anterior</button>
 
-        <button
-          type="button"
-          (click)="previousPage()"
-          [disabled]="page() === 1"
-        >
-          Anterior
-        </button>
+        <span> Página {{ page() }} de {{ totalPages() }} </span>
 
-        <span>
-          Página {{ page() }} de {{ totalPages() }}
-        </span>
-
-        <button
-          type="button"
-          (click)="nextPage()"
-          [disabled]="page() >= totalPages()"
-        >
+        <button type="button" (click)="nextPage()" [disabled]="page() >= totalPages()">
           Siguiente
         </button>
-
       </div>
-
     }
 
-@if (!loading() && !errorMessage() && movies().length === 0) {
-  <app-empty-state
-    icon="fa-calendar-xmark"
-    title="No encontramos estrenos"
-    description="No hay películas disponibles para este año."
-  />
-}
-
+    @if (!loading() && !errorMessage() && movies().length === 0) {
+      <app-empty-state
+        icon="fa-calendar-xmark"
+        title="No encontramos estrenos"
+        description="No hay películas disponibles para este año."
+      />
+    }
   </section>
 
-  <footer class="attribution">
-    Información cinematográfica proporcionada por TMDB.
-  </footer>
-
+  <app-footer />
 </section>

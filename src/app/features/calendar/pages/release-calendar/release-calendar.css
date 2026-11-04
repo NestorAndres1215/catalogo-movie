@@ -1,4 +1,3 @@
-
 .calendar-page {
   padding: 35px 40px;
   max-width: 1600px;
@@ -65,8 +64,6 @@
   color: var(--color-acento);
 }
 
-/* DÍAS DE LA SEMANA */
-
 .weekdays,
 .calendar-grid {
   display: grid;
@@ -84,8 +81,6 @@
   font-weight: 800;
   text-align: center;
 }
-
-/* CELDAS */
 
 .calendar-grid {
   gap: 7px;
@@ -166,8 +161,6 @@
   font-weight: 800;
 }
 
-/* LEYENDA */
-
 .calendar-legend {
   display: flex;
   flex-wrap: wrap;
@@ -197,8 +190,6 @@
 .legend-selected {
   background: var(--color-acento-hover);
 }
-
-/* RESULTADOS */
 
 .releases-section {
   padding: 25px;
@@ -230,8 +221,6 @@
   font-size: 12px;
   font-weight: 800;
 }
-
-/* PELÍCULAS */
 
 .movies-grid {
   display: grid;
