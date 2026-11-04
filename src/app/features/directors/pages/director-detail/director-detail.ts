@@ -10,13 +10,15 @@ import {
 
 import { PersonService } from '../../../../core/service/person.service';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-director-detail',
   standalone: true,
   imports: [
     RouterLink,
-    PageLoadingComponent
+    PageLoadingComponent,
+    EmptyStateComponent
 ],
   templateUrl: './director-detail.html',
   styleUrl: './director-detail.css'

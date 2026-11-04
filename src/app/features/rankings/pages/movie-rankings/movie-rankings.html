@@ -87,7 +87,11 @@
       }
 
       @if (!loadingBest() && bestMovies().length === 0 && !errorBest()) {
-        <p class="empty-state">No hay películas disponibles.</p>
+        <app-empty-state
+          icon="fa-film"
+          title="No hay películas disponibles"
+          description="No encontramos películas destacadas para mostrar en este momento."
+        />
       }
     </section>
   }
@@ -154,7 +158,11 @@
       }
 
       @if (!loadingWorst() && worstMovies().length === 0 && !errorWorst()) {
-        <p class="empty-state">No hay películas disponibles.</p>
+        <app-empty-state
+          icon="fa-film"
+          title="No hay películas disponibles"
+          description="No encontramos películas para mostrar en esta clasificación."
+        />
       }
     </section>
   }

@@ -45,11 +45,11 @@
   }
 
   @if (isEmpty()) {
-    <div class="empty-state">
-      <span>🎬</span>
-      <h3>No encontramos películas</h3>
-      <p>Prueba con otros filtros o términos de búsqueda.</p>
-    </div>
+    <app-empty-state
+      icon="fa-film"
+      title="No encontramos películas"
+      description="Prueba con otros filtros o términos de búsqueda."
+    />
   }
 
   @if (hasMovies()) {

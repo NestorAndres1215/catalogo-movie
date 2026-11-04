@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TopRatedList } from './top-rated-list';
+import { TopRatedListComponent } from './top-rated-list';
 
 describe('TopRatedList', () => {
-  let component: TopRatedList;
-  let fixture: ComponentFixture<TopRatedList>;
+  let component: TopRatedListComponent;
+  let fixture: ComponentFixture<TopRatedListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TopRatedList],
+      imports: [TopRatedListComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TopRatedList);
+    fixture = TestBed.createComponent(TopRatedListComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

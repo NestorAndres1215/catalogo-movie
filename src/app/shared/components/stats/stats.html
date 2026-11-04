@@ -1,0 +1,14 @@
+<div class="stats-container">
+  @for (stat of stats(); track stat.label) {
+    <article class="stat-card">
+      <span class="stat-icon">
+        <i [class]="'fas ' + stat.icon"></i>
+      </span>
+
+      <div class="stat-info">
+        <strong>{{ stat.value }}</strong>
+        <span>{{ stat.label }}</span>
+      </div>
+    </article>
+  }
+</div>

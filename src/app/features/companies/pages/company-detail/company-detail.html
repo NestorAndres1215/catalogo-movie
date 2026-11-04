@@ -153,9 +153,11 @@
           }
         </div>
       } @else {
-        <div class="empty-movies">
-          <p>No se encontraron películas asociadas a esta productora.</p>
-        </div>
+        <app-empty-state
+          icon="fa-film"
+          title="No se encontraron películas"
+          description="No se encontraron películas asociadas a esta productora."
+        />
       }
     </section>
   }

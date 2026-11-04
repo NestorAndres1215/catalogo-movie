@@ -190,13 +190,11 @@
       }
 
     } @else {
-      <div class="empty-state">
-        <h2>No encontramos recomendaciones</h2>
-        <p>
-          Esta producción no tiene recomendaciones disponibles.
-          Prueba seleccionando otra.
-        </p>
-      </div>
+<app-empty-state
+  icon="fa-lightbulb"
+  title="No encontramos recomendaciones"
+  description="Esta producción no tiene recomendaciones disponibles. Prueba seleccionando otra."
+/>
     }
 
   }

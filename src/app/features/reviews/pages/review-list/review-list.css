@@ -155,22 +155,13 @@
   color: var(--color-acento-hover);
 }
 
-.message,
-.empty-state {
+.message {
   padding: 50px 20px;
   text-align: center;
   color: var(--color-texto-secundario);
 }
 
-.empty-state h2 {
-  color: var(--color-texto);
-  font-size: 20px;
-  margin-bottom: 10px;
-}
 
-.empty-state p {
-  font-size: 14px;
-}
 
 .error-message {
   padding: 15px;

@@ -141,21 +141,19 @@
   line-height: 1.5;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
-
-.empty-state,
 .error-state {
   padding: 55px 20px;
   color: #929aaa;
   text-align: center;
 }
 
-.empty-state > span,
+
 .error-state > span {
   font-size: 38px;
 }
-
 
 .error-state button {
   padding: 10px 16px;

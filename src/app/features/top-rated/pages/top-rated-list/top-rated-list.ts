@@ -13,6 +13,8 @@ import { FavoriteButtonComponent } from '../../../../shared/components/favorite-
 import { TopRatedMedia } from '../../../../core/models/top-rated.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
+import { FilterTab, FilterTabsComponent, FilterType } from '../../../../shared/components/filter-tabs/filter-tabs';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-top-rated-list',
@@ -21,7 +23,9 @@ import { PageLoadingComponent } from '../../../../shared/components/page-loading
     DecimalPipe,
     FavoriteButtonComponent,
     PageHeaderComponent,
-    PageLoadingComponent
+    PageLoadingComponent,
+    FilterTabsComponent,
+    EmptyStateComponent
 ],
   templateUrl: './top-rated-list.html',
   styleUrl: './top-rated-list.css'
@@ -48,7 +52,10 @@ export class TopRatedListComponent {
   constructor() {
     this.loadTopRated();
   }
-
+readonly mediaTabs: FilterTab[] = [
+  { label: 'Películas', value: 'movie' },
+  { label: 'Series', value: 'tv' }
+];
   loadTopRated(): void {
     const requestId = ++this.requestVersion;
 
@@ -85,14 +92,20 @@ export class TopRatedListComponent {
     });
   }
 
-  changeMediaType(type: 'movie' | 'tv'): void {
-    if (this.mediaType() === type) return;
-
-    this.mediaType.set(type);
-    this.currentPage.set(1);
-
-    this.loadTopRated();
+changeMediaType(type: FilterType): void {
+  if (type !== 'movie' && type !== 'tv') {
+    return;
   }
+
+  if (this.mediaType() === type) {
+    return;
+  }
+
+  this.mediaType.set(type);
+  this.currentPage.set(1);
+
+  this.loadTopRated();
+}
 
   changePage(page: number): void {
     if (

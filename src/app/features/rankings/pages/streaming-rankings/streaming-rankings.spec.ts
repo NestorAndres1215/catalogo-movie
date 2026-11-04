@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { StreamingRankings } from './streaming-rankings';
+import { StreamingRankingsComponent } from './streaming-rankings';
 
 describe('StreamingRankings', () => {
-  let component: StreamingRankings;
-  let fixture: ComponentFixture<StreamingRankings>;
+  let component: StreamingRankingsComponent;
+  let fixture: ComponentFixture<StreamingRankingsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StreamingRankings],
+      imports: [StreamingRankingsComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(StreamingRankings);
+    fixture = TestBed.createComponent(StreamingRankingsComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

@@ -8,6 +8,7 @@ import { Genre } from '../../../../core/models/genre.interface';
 import { MovieFiltersComponent } from '../movie-filters/movie-filters';
 import { MovieService } from '../../../../core/service/movie.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 
 interface MoviesRequest {
   query: string;
@@ -26,7 +27,7 @@ interface MoviesResult {
 @Component({
   selector: 'app-movie-list',
   standalone: true,
-  imports: [RouterLink, MovieFiltersComponent, PageHeaderComponent],
+  imports: [RouterLink, MovieFiltersComponent, PageHeaderComponent, EmptyStateComponent],
   templateUrl: './movie-list.html',
   styleUrl: './movie-list.css'
 })

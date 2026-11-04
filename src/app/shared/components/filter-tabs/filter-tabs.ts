@@ -1,6 +1,13 @@
 import { Component, input, output } from '@angular/core';
 
-export type FilterType = 'all' | 'movie' | 'tv';
+export type FilterType =
+  | 'all'
+  | 'movie'
+  | 'tv'
+  | 'profile'
+  | 'preferences'
+  | 'day'
+  | 'week';
 
 export interface FilterTab {
   label: string;

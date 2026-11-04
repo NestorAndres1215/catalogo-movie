@@ -9,6 +9,7 @@ import { SeriesService } from '../../../../core/service/series.service';
 import { SeriesFiltersComponent } from '../series-filters/series-filters';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-series-list',
@@ -17,7 +18,8 @@ import { PageLoadingComponent } from '../../../../shared/components/page-loading
     RouterLink,
     SeriesFiltersComponent,
     PageHeaderComponent,
-    PageLoadingComponent
+    PageLoadingComponent,
+    EmptyStateComponent
 ],
   templateUrl: './series-list.html',
   styleUrl: './series-list.css'

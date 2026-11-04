@@ -19,13 +19,15 @@ import {
 
 import { CompanyService } from '../../../../core/service/company.service';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-company-detail',
   standalone: true,
   imports: [
     RouterLink,
-    PageLoadingComponent
+    PageLoadingComponent,
+    EmptyStateComponent
 ],
   templateUrl: './company-detail.html',
   styleUrl: './company-detail.css'

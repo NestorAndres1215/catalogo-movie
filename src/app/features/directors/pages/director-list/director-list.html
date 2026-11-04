@@ -56,11 +56,11 @@
   <!-- SIN RESULTADOS -->
 
   @if (!loading() && !errorMessage() && directors().length === 0) {
-    <div class="message">
-      <h2>No se encontraron directores</h2>
-
-      <p>Intenta con otro nombre o revisa tu búsqueda.</p>
-    </div>
+    <app-empty-state
+      icon="fa-clapperboard"
+      title="No se encontraron directores"
+      description="Intenta con otro nombre o revisa tu búsqueda."
+    />
   }
 
   <!-- LISTADO -->

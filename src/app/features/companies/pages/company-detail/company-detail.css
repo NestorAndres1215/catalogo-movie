@@ -206,15 +206,6 @@
   font-size: 13px;
 }
 
-.empty-movies {
-  padding: 40px;
-  border: 1px solid #292929;
-  border-radius: 10px;
-  background: #181818;
-  color: #999;
-  text-align: center;
-}
-
 /* MENSAJES */
 
 .message {

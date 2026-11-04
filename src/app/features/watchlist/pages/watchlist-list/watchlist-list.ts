@@ -10,11 +10,13 @@ import {
   FilterType,
   FilterTabsComponent,
 } from '../../../../shared/components/filter-tabs/filter-tabs';
+import { StatItem, StatsComponent } from '../../../../shared/components/stats/stats';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-watchlist-list',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent, FilterTabsComponent],
+  imports: [DecimalPipe, PageHeaderComponent, FilterTabsComponent, StatsComponent, EmptyStateComponent],
   templateUrl: './watchlist-list.html',
   styleUrl: './watchlist-list.css',
 })
@@ -30,6 +32,23 @@ export class WatchlistListComponent {
     { label: 'Series', value: 'tv' },
   ];
 
+  readonly stats = computed<StatItem[]>(() => [
+    {
+      icon: 'fa-clipboard-list',
+      value: this.watchlist().length,
+      label: 'En mi lista',
+    },
+    {
+      icon: 'fa-film',
+      value: this.totalMovies(),
+      label: 'Películas',
+    },
+    {
+      icon: 'fa-tv',
+      value: this.totalSeries(),
+      label: 'Series',
+    },
+  ]);
   // CAMBIAR FILTRO
   selectFilter(filter: FilterType): void {
     this.selectedFilter.set(filter);

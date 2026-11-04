@@ -202,6 +202,7 @@
 .overview {
   display: -webkit-box;
   -webkit-line-clamp: 4;
+  line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
   color: #999;
@@ -255,8 +256,7 @@
   font-size: 13px;
 }
 
-.status-message,
-.empty-state {
+.status-message {
   padding: 35px 20px;
   border-radius: 12px;
   background: #171717;
@@ -271,10 +271,6 @@
 .status-message button {
   display: block;
   margin: 15px auto 0;
-}
-
-.empty-state h2 {
-  color: #fff;
 }
 
 .attribution {
@@ -339,6 +335,7 @@
 
   .overview {
     -webkit-line-clamp: 3;
+    line-clamp: 3;
   }
 
   .pagination {

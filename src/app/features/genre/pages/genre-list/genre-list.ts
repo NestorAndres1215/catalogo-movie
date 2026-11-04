@@ -1,32 +1,38 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-
 import { RouterLink } from '@angular/router';
 
 import { Genre } from '../../../../core/models/genre.interface';
-
 import { GenreService } from '../../../../core/service/genre.service';
+
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
+import {
+  FilterTab,
+  FilterTabsComponent,
+  FilterType,
+} from '../../../../shared/components/filter-tabs/filter-tabs';
 
 type GenreType = 'movie' | 'tv';
 
 @Component({
   selector: 'app-genre-list',
   standalone: true,
-  imports: [RouterLink, PageHeaderComponent, PageLoadingComponent],
+  imports: [RouterLink, PageHeaderComponent, PageLoadingComponent, FilterTabsComponent],
   templateUrl: './genre-list.html',
   styleUrl: './genre-list.css',
 })
 export class GenreListComponent implements OnInit {
   private readonly genreService = inject(GenreService);
 
-  genres = signal<Genre[]>([]);
+  readonly genres = signal<Genre[]>([]);
+  readonly loading = signal<boolean>(true);
+  readonly errorMessage = signal<string>('');
+  readonly selectedType = signal<GenreType>('movie');
 
-  loading = signal<boolean>(true);
-
-  errorMessage = signal<string>('');
-
-  selectedType = signal<GenreType>('movie');
+  readonly mediaTabs: FilterTab[] = [
+    { label: 'Películas', value: 'movie' },
+    { label: 'Series', value: 'tv' },
+  ];
 
   private requestVersion = 0;
 
@@ -38,9 +44,7 @@ export class GenreListComponent implements OnInit {
     const version = ++this.requestVersion;
 
     this.loading.set(true);
-
     this.errorMessage.set('');
-
     this.genres.set([]);
 
     const request =
@@ -55,7 +59,6 @@ export class GenreListComponent implements OnInit {
         }
 
         this.genres.set(response.genres);
-
         this.loading.set(false);
       },
 
@@ -73,13 +76,16 @@ export class GenreListComponent implements OnInit {
     });
   }
 
-  changeType(type: GenreType): void {
+  changeType(type: FilterType): void {
+    if (type !== 'movie' && type !== 'tv') {
+      return;
+    }
+
     if (this.selectedType() === type) {
       return;
     }
 
     this.selectedType.set(type);
-
     this.loadGenres();
   }
 

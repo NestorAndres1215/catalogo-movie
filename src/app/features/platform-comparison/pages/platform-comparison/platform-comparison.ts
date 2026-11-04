@@ -4,19 +4,26 @@ import { CatalogService } from '../../../../core/service/catalog.service';
 import {
   CatalogMedia,
   WatchProviderAvailability,
-  WatchProviderRegion
+  WatchProviderRegion,
 } from '../../../../core/models/catalog.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import {
+  FilterTab,
+  FilterTabsComponent,
+  FilterType,
+} from '../../../../shared/components/filter-tabs/filter-tabs';
+import { ButtonComponent } from '../../../../shared/components/button/button';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import { Footer } from '../../../../shared/components/footer/footer';
 
 @Component({
   selector: 'app-platform-comparison',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent],
+  imports: [DecimalPipe, PageHeaderComponent, FilterTabsComponent, ButtonComponent, EmptyStateComponent, Footer],
   templateUrl: './platform-comparison.html',
-  styleUrl: './platform-comparison.css'
+  styleUrl: './platform-comparison.css',
 })
 export class PlatformComparisonComponent {
-
   private readonly catalogService = inject(CatalogService);
 
   private searchVersion = 0;
@@ -34,13 +41,22 @@ export class PlatformComparisonComponent {
   readonly errorMessage = signal('');
 
   readonly regionCode = 'PE';
+  readonly mediaTabs: FilterTab[] = [
+    { label: 'Películas', value: 'movie' },
+    { label: 'Series', value: 'tv' },
+  ];
+  setMediaType(type: FilterType): void {
+    if (type !== 'movie' && type !== 'tv') {
+      return;
+    }
 
-  setMediaType(type: 'movie' | 'tv'): void {
+    if (this.mediaType() === type) {
+      return;
+    }
     this.mediaType.set(type);
     this.searchResults.set([]);
     this.selectedMedia.set(null);
     this.selectedRegion.set(null);
-   
   }
 
   onSearchInput(event: Event): void {
@@ -68,12 +84,8 @@ export class PlatformComparisonComponent {
     this.selectedMedia.set(null);
     this.selectedRegion.set(null);
 
-    this.catalogService.searchMedia(
-      this.mediaType(),
-      query,
-      1
-    ).subscribe({
-      next: response => {
+    this.catalogService.searchMedia(this.mediaType(), query, 1).subscribe({
+      next: (response) => {
         if (version !== this.searchVersion) {
           return;
         }
@@ -93,7 +105,7 @@ export class PlatformComparisonComponent {
         this.searchResults.set([]);
         this.loadingSearch.set(false);
         this.errorMessage.set('No se pudo realizar la búsqueda.');
-      }
+      },
     });
   }
 
@@ -106,11 +118,8 @@ export class PlatformComparisonComponent {
     this.loadingProviders.set(true);
     this.errorMessage.set('');
 
-    this.catalogService.getMediaWatchProviders(
-      this.mediaType(),
-      media.id
-    ).subscribe({
-      next: response => {
+    this.catalogService.getMediaWatchProviders(this.mediaType(), media.id).subscribe({
+      next: (response) => {
         if (version !== this.providerVersion) {
           return;
         }
@@ -121,9 +130,7 @@ export class PlatformComparisonComponent {
         this.loadingProviders.set(false);
 
         if (!region || this.getTotalProviders(region) === 0) {
-          this.errorMessage.set(
-            'No hay información de plataformas disponible para Perú.'
-          );
+          this.errorMessage.set('No hay información de plataformas disponible para Perú.');
         }
       },
       error: () => {
@@ -133,15 +140,13 @@ export class PlatformComparisonComponent {
 
         this.selectedRegion.set(null);
         this.loadingProviders.set(false);
-        this.errorMessage.set(
-          'No se pudo consultar la disponibilidad de plataformas.'
-        );
-      }
+        this.errorMessage.set('No se pudo consultar la disponibilidad de plataformas.');
+      },
     });
   }
 
   getProviders(
-    category: 'flatrate' | 'rent' | 'buy' | 'free' | 'ads'
+    category: 'flatrate' | 'rent' | 'buy' | 'free' | 'ads',
   ): WatchProviderAvailability[] {
     return this.selectedRegion()?.[category] ?? [];
   }
@@ -159,19 +164,19 @@ export class PlatformComparisonComponent {
   getImageUrl(path: string | null): string {
     return this.catalogService.getImageUrl(path, 'w500');
   }
-clearSearch(): void {
-  this.searchVersion++;
-  this.providerVersion++;
+  clearSearch(): void {
+    this.searchVersion++;
+    this.providerVersion++;
 
-  this.searchQuery.set('');
-  this.searchResults.set([]);
-  this.selectedMedia.set(null);
-  this.selectedRegion.set(null);
+    this.searchQuery.set('');
+    this.searchResults.set([]);
+    this.selectedMedia.set(null);
+    this.selectedRegion.set(null);
 
-  this.loadingSearch.set(false);
-  this.loadingProviders.set(false);
-  this.errorMessage.set('');
-}
+    this.loadingSearch.set(false);
+    this.loadingProviders.set(false);
+    this.errorMessage.set('');
+  }
   getProviderLogo(path: string): string {
     return this.catalogService.getImageUrl(path, 'w92');
   }

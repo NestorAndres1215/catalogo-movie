@@ -13,11 +13,20 @@ import {
   FilterTab,
   FilterType,
 } from '../../../../shared/components/filter-tabs/filter-tabs';
+import { StatItem, StatsComponent } from '../../../../shared/components/stats/stats';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-favorite-list',
   standalone: true,
-  imports: [RouterLink, DecimalPipe, PageHeaderComponent, ButtonComponent, FilterTabsComponent],
+  imports: [
+    RouterLink,
+    DecimalPipe,
+    PageHeaderComponent,
+    FilterTabsComponent,
+    StatsComponent,
+    EmptyStateComponent,
+  ],
   templateUrl: './favorite-list.html',
   styleUrl: './favorite-list.css',
 })
@@ -32,7 +41,23 @@ export class FavoriteListComponent {
     { label: 'Películas', value: 'movie' },
     { label: 'Series', value: 'tv' },
   ];
-
+  readonly stats = computed<StatItem[]>(() => [
+    {
+      icon: 'fa-heart',
+      value: this.totalFavorites(),
+      label: 'Favoritos',
+    },
+    {
+      icon: 'fa-film',
+      value: this.totalMovies(),
+      label: 'Películas',
+    },
+    {
+      icon: 'fa-tv',
+      value: this.totalSeries(),
+      label: 'Series',
+    },
+  ]);
   // Solo obtiene los favoritos del usuario autenticado.
   readonly favorites = this.favoriteService.favorites;
 

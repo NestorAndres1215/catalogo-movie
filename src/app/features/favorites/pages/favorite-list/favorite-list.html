@@ -5,37 +5,7 @@
     description="Aquí encontrarás todas las películas y series que has guardado."
   />
 
-  <div class="favorites-stats">
-    <div class="stat-card">
-      <span class="stat-icon">
-        <i class="fas fa-heart"></i>
-      </span>
-      <div>
-        <strong>{{ totalFavorites() }}</strong>
-        <span>Favoritos</span>
-      </div>
-    </div>
-
-    <div class="stat-card">
-      <span class="stat-icon">
-        <i class="fas fa-film"></i>
-      </span>
-      <div>
-        <strong>{{ totalMovies() }}</strong>
-        <span>Películas</span>
-      </div>
-    </div>
-
-    <div class="stat-card">
-      <span class="stat-icon">
-        <i class="fas fa-tv"></i>
-      </span>
-      <div>
-        <strong>{{ totalSeries() }}</strong>
-        <span>Series</span>
-      </div>
-    </div>
-  </div>
+  <app-stats [stats]="stats()" />
 
   <div class="favorites-toolbar">
     <app-filter-tabs
@@ -96,23 +66,24 @@
       }
     </div>
   } @else {
-    <div class="empty-state">
-      <span class="empty-heart">♡</span>
-
-      @if (totalFavorites() === 0) {
-        <h2>Aún no tienes favoritos</h2>
-        <p>Explora las películas y series y presiona el corazón para guardar tus favoritas.</p>
-      } @else {
-        <h2>No hay resultados en esta categoría</h2>
-        <p>Prueba seleccionando otra categoría.</p>
-      }
-
-      <app-button
-        text="Explorar películas"
-        icon="fa-film"
-        endIcon="fa-arrow-right"
-        routerLink="/movies"
+    @if (totalFavorites() === 0) {
+      <app-empty-state
+        icon="fa-heart"
+        title="Aún no tienes favoritos"
+        description="Explora las películas y series y presiona el corazón para guardar tus favoritas."
+        actionText="Explorar películas"
+        actionIcon="fa-film"
+        actionRouterLink="/movies"
       />
-    </div>
+    } @else {
+      <app-empty-state
+        icon="fa-filter"
+        title="No hay resultados en esta categoría"
+        description="Prueba seleccionando otra categoría."
+        actionText="Explorar películas"
+        actionIcon="fa-film"
+        actionRouterLink="/movies"
+      />
+    }
   }
 </section>

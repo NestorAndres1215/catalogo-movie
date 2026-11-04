@@ -14,13 +14,16 @@ import {
   RankedCollection
 } from '../../../../core/models/collection.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
+import { Footer } from '../../../../shared/components/footer/footer';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 
 type RankingType = 'best' | 'worst';
 
 @Component({
   selector: 'app-saga-rankings',
   standalone: true,
-  imports: [CommonModule, FormsModule, PageHeaderComponent],
+  imports: [CommonModule, FormsModule, PageHeaderComponent, PageLoadingComponent, Footer, EmptyStateComponent],
   templateUrl: './saga-rankings.html',
   styleUrl: './saga-rankings.css'
 })

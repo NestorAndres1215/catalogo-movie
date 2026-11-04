@@ -16,28 +16,19 @@
 }
 
 @if (person(); as item) {
-
   <section class="actor-detail-page">
-
     <!-- PERFIL PRINCIPAL -->
     <div class="profile-header">
-
       <div class="profile-image">
         @if (item.profile_path) {
-          <img
-            [src]="getProfile(item.profile_path)"
-            [alt]="item.name"
-          />
+          <img [src]="getProfile(item.profile_path)" [alt]="item.name" />
         } @else {
           <div class="profile-placeholder">👤</div>
         }
       </div>
 
       <div class="profile-information">
-
-        <a class="back-link" routerLink="/actors">
-          ← Volver a actores
-        </a>
+        <a class="back-link" routerLink="/actors"> ← Volver a actores </a>
 
         <span class="eyebrow">CINEVERSE / PERSONAS</span>
 
@@ -74,16 +65,10 @@
         }
 
         @if (item.homepage) {
-          <a
-            class="homepage-link"
-            [href]="item.homepage"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a class="homepage-link" [href]="item.homepage" target="_blank" rel="noopener noreferrer">
             Sitio oficial ↗
           </a>
         }
-
       </div>
     </div>
 
@@ -111,7 +96,6 @@
 
     <!-- TRABAJOS -->
     <section class="detail-section">
-
       <div class="section-heading">
         <div>
           <h2>Películas y series</h2>
@@ -121,10 +105,8 @@
 
       @if (knownCredits.length > 0) {
         <div class="credits-grid">
-
           @for (credit of knownCredits; track credit.id) {
             <article class="credit-card">
-
               @if (credit.poster_path) {
                 <img
                   [src]="getPoster(credit.poster_path)"
@@ -151,23 +133,19 @@
                 }
 
                 @if (credit.vote_average > 0) {
-                  <span class="credit-rating">
-                    ⭐ {{ credit.vote_average.toFixed(1) }}
-                  </span>
+                  <span class="credit-rating"> ⭐ {{ credit.vote_average.toFixed(1) }} </span>
                 }
               </div>
-
             </article>
           }
-
         </div>
       } @else {
-        <div class="empty-credits">
-          <p>No hay producciones disponibles.</p>
-        </div>
+        <app-empty-state
+          icon="fa-film"
+          title="No hay producciones disponibles"
+          description="Este director todavía no tiene producciones registradas."
+        />
       }
-
     </section>
-
   </section>
 }

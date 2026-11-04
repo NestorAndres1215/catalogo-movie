@@ -147,16 +147,12 @@
 }
 
 .loading-state,
-.empty-state,
 .error-state {
   padding: 55px 20px;
   text-align: center;
   color: #a9afbd;
 }
 
-
-
-.empty-state span,
 .error-state span {
   font-size: 35px;
 }

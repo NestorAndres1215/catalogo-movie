@@ -8,13 +8,16 @@ import {
   SeriesGenre
 } from '../../../../core/models/series.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import { Footer } from '../../../../shared/components/footer/footer';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 
 type RankingType = 'best' | 'worst' | 'genre';
 
 @Component({
   selector: 'app-series-rankings',
   standalone: true,
-  imports: [CommonModule, PageHeaderComponent],
+  imports: [CommonModule, PageHeaderComponent, EmptyStateComponent, Footer, PageLoadingComponent],
   templateUrl: './series-rankings.html',
   styleUrl: './series-rankings.css'
 })

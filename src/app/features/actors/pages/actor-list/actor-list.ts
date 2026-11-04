@@ -6,12 +6,13 @@ import { ActorFiltersComponent } from '../actor-filters/actor-filters';
 import { PersonService } from '../../../../core/service/person.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 
 
 @Component({
   selector: 'app-actor-list',
   standalone: true,
-  imports: [RouterLink, ActorFiltersComponent, PageHeaderComponent, PageLoadingComponent],
+  imports: [RouterLink, ActorFiltersComponent, PageHeaderComponent, PageLoadingComponent, EmptyStateComponent],
   templateUrl: './actor-list.html',
   styleUrl: './actor-list.css',
 })

@@ -128,12 +128,11 @@
         </nav>
       }
     } @else {
-      <div class="empty-state">
-        <h2>No encontramos producciones</h2>
-        <p>
-          No hay resultados disponibles para el año {{ year() }}. Prueba seleccionando otro año.
-        </p>
-      </div>
+<app-empty-state
+  icon="fa-calendar-xmark"
+  title="No encontramos producciones"
+  [description]="'No hay resultados disponibles para el año ' + year() + '. Prueba seleccionando otro año.'"
+/>
     }
   }
 </section>

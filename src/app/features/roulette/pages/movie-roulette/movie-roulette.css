@@ -47,8 +47,8 @@
 
 .counter {
   padding: 7px 12px;
-  color: #c4b5fd;
-  background: #302541;
+  color: var(--color-acento);
+  background: var(--color-acento-suave);
   border-radius: 20px;
   font-size: 12px;
   font-weight: 700;
@@ -145,14 +145,15 @@
   line-height: 1.5;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
 .added-button {
   padding: 10px 13px;
-  color: #86efac;
-  background: #18382b;
-  border: 1px solid #285a43;
-  border-radius: 8px;
+  color: var(--color-exito);
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: var(--radio-borde-pequeno);
 }
 
 .error-message {
@@ -208,19 +209,7 @@
   cursor: pointer;
 }
 
-.empty-state {
-  padding: 35px 15px;
-  text-align: center;
-  color: #aaa8b7;
-}
 
-.empty-icon {
-  font-size: 35px;
-}
-
-.empty-state h3 {
-  color: white;
-}
 
 /* Configuración */
 
@@ -262,9 +251,13 @@
   padding: 30px;
   margin-bottom: 25px;
   text-align: center;
-  background: linear-gradient(145deg, #21172e, #171720);
-  border: 1px solid #49355e;
-  border-radius: 18px;
+  background: linear-gradient(
+    145deg,
+    var(--color-superficie-elevada),
+    var(--color-superficie-secundaria)
+  );
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-grande);
 }
 
 .roulette-title {
@@ -294,21 +287,21 @@
   width: 270px;
   height: 270px;
   place-items: center;
-  border: 8px solid #d5b6ff;
+  border: 8px solid var(--color-acento-hover);
   border-radius: 50%;
   background: conic-gradient(
-    #7045cf 0deg 45deg,
-    #292044 45deg 90deg,
-    #a855f7 90deg 135deg,
-    #30254c 135deg 180deg,
-    #7045cf 180deg 225deg,
-    #292044 225deg 270deg,
-    #a855f7 270deg 315deg,
-    #30254c 315deg 360deg
+    var(--color-acento) 0deg 45deg,
+    var(--color-superficie-secundaria) 45deg 90deg,
+    var(--color-acento-hover) 90deg 135deg,
+    var(--color-superficie-elevada) 135deg 180deg,
+    var(--color-acento) 180deg 225deg,
+    var(--color-superficie-secundaria) 225deg 270deg,
+    var(--color-acento-hover) 270deg 315deg,
+    var(--color-superficie-elevada) 315deg 360deg
   );
   box-shadow:
-    0 0 0 7px #392752,
-    0 0 40px #8b5cf688;
+    0 0 0 7px var(--color-borde),
+    0 0 40px rgba(255, 138, 31, 0.35);
 }
 
 .roulette-wheel.spinning {
@@ -320,12 +313,11 @@
   width: 75px;
   height: 75px;
   place-items: center;
-  background: #17121f;
-  border: 5px solid #d5b6ff;
+  background: var(--color-superficie-secundaria);
+  border: 5px solid var(--color-acento-hover);
   border-radius: 50%;
-  box-shadow: 0 0 20px #0008;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
-
 .wheel-center span {
   font-size: 30px;
 }
@@ -346,25 +338,31 @@
 
 .spin-button {
   padding: 15px 35px;
-  color: white;
-  background: linear-gradient(100deg, #7948d6, #a044d5);
+  color: var(--color-texto-sobre-acento);
+  background: linear-gradient(
+    100deg,
+    var(--color-acento),
+    var(--color-acento-hover)
+  );
   border: none;
   border-radius: 30px;
   font-size: 16px;
   font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 5px 25px #874bd966;
+  box-shadow: 0 5px 25px rgba(255, 138, 31, 0.4);
+  transition: var(--transicion-rapida);
 }
 
-.spin-button:hover:not(:disabled) {
-  filter: brightness(1.15);
+.spin-button:hover {
+  box-shadow: var(--box-shadow-hover);
+  transform: translateY(-2px);
 }
 
 .spin-button:disabled {
-  opacity: 0.45;
+  opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
 }
-
 .reset-button {
   display: block;
   margin: 15px auto 0;

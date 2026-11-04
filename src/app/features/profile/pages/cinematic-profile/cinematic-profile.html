@@ -22,30 +22,18 @@
       </div>
 
       <div class="member-badge">
-        <span>✦</span>
+        <i class="fas fa-star"></i>
         Cinéfilo
       </div>
     </section>
 
     <!-- NAVEGACIÓN -->
     <nav class="profile-tabs">
-      <button
-        type="button"
-        [class.active]="activeSection() === 'profile'"
-        (click)="selectSection('profile')"
-      >
-        <span>👤</span>
-        Mi perfil
-      </button>
-
-      <button
-        type="button"
-        [class.active]="activeSection() === 'preferences'"
-        (click)="selectSection('preferences')"
-      >
-        <span>❤️</span>
-        Mis preferencias
-      </button>
+      <app-filter-tabs
+        [tabs]="profileTabs"
+        [selected]="activeSection()"
+        (selectionChange)="selectSection($event)"
+      />
     </nav>
 
     <!-- ================================= -->
@@ -64,7 +52,9 @@
 
         <div class="information-grid">
           <article class="information-card">
-            <span class="card-icon">👤</span>
+            <span class="card-icon">
+              <i class="fas fa-user"></i>
+            </span>
             <div>
               <small>Nombre de usuario</small>
               <strong>{{ currentUser.name }}</strong>
@@ -72,7 +62,9 @@
           </article>
 
           <article class="information-card">
-            <span class="card-icon">✉️</span>
+            <span class="card-icon">
+              <i class="fas fa-envelope"></i>
+            </span>
             <div>
               <small>Correo electrónico</small>
               <strong>{{ currentUser.email }}</strong>
@@ -80,7 +72,9 @@
           </article>
 
           <article class="information-card">
-            <span class="card-icon">🆔</span>
+            <span class="card-icon">
+              <i class="fas fa-id-card"></i>
+            </span>
             <div>
               <small>Identificador de usuario</small>
               <strong class="user-id">{{ currentUser.id }}</strong>
@@ -96,10 +90,25 @@
           </div>
 
           <div class="quick-links">
-            <a routerLink="/favorites">❤️ Favoritos</a>
-            <a routerLink="/watched">🎬 Vistas</a>
-            <a routerLink="/ratings">⭐ Calificaciones</a>
-            <a routerLink="/statistics">📊 Estadísticas</a>
+            <a routerLink="/favorites">
+              <i class="fas fa-heart"></i>
+              Favoritos
+            </a>
+
+            <a routerLink="/watched">
+              <i class="fas fa-film"></i>
+              Vistas
+            </a>
+
+            <a routerLink="/ratings">
+              <i class="fas fa-star"></i>
+              Calificaciones
+            </a>
+
+            <a routerLink="/statistics">
+              <i class="fas fa-chart-bar"></i>
+              Estadísticas
+            </a>
           </div>
         </div>
       </section>
@@ -122,7 +131,9 @@
         <!-- GÉNEROS -->
         <article class="preference-card">
           <div class="preference-heading">
-            <div class="preference-icon">🎭</div>
+            <div class="preference-icon">
+              <i class="fas fa-masks-theater"></i>
+            </div>
             <div>
               <h3>Mis géneros favoritos</h3>
               <p>Selecciona todos los géneros que te gustan.</p>
@@ -158,7 +169,9 @@
 
         <article class="preference-card">
           <div class="preference-heading">
-            <div class="preference-icon">🎭</div>
+            <div class="preference-icon">
+              <i class="fas fa-user-tie"></i>
+            </div>
             <div>
               <h3>Mis actores favoritos</h3>
               <p>Busca actores y descubre sus películas.</p>
@@ -240,7 +253,11 @@
                   }
                 </div>
               } @else if (!loadingActorMovies()) {
-                <p class="empty-message">No se encontraron películas para este actor.</p>
+                <app-empty-state
+                  icon="fa-film"
+                  title="No se encontraron películas"
+                  description="No se encontraron películas para este actor."
+                />
               }
             </div>
           }
@@ -262,7 +279,11 @@
                 </button>
               </span>
             } @empty {
-              <p class="empty-message">Todavía no has agregado actores favoritos.</p>
+              <app-empty-state
+                icon="fa-user"
+                title="Aún no tienes actores favoritos"
+                description="Explora el catálogo de personas y guarda tus actores favoritos."
+              />
             }
           </div>
         </article>
@@ -273,7 +294,9 @@
 
         <article class="preference-card">
           <div class="preference-heading">
-            <div class="preference-icon">🎬</div>
+            <div class="preference-icon">
+              <i class="fas fa-video"></i>
+            </div>
             <div>
               <h3>Mis directores favoritos</h3>
               <p>Busca directores y descubre las películas que han dirigido.</p>
@@ -355,7 +378,11 @@
                   }
                 </div>
               } @else if (!loadingDirectorMovies()) {
-                <p class="empty-message">No se encontraron películas dirigidas por esta persona.</p>
+                <app-empty-state
+                  icon="fa-clapperboard"
+                  title="No se encontraron películas"
+                  description="No se encontraron películas dirigidas por esta persona."
+                />
               }
             </div>
           }
@@ -377,7 +404,11 @@
                 </button>
               </span>
             } @empty {
-              <p class="empty-message">Todavía no has agregado directores favoritos.</p>
+              <app-empty-state
+                icon="fa-clapperboard"
+                title="Aún no tienes directores favoritos"
+                description="Explora el catálogo de directores y guarda tus favoritos."
+              />
             }
           </div>
         </article>
@@ -391,19 +422,23 @@
             <span class="saved-message"> ✓ Tus preferencias se guardaron correctamente. </span>
           }
 
-          <button type="button" class="save-button" (click)="savePreferences()">
-            <span>💾</span>
-            Guardar preferencias
-          </button>
+          <app-button
+            text="Guardar preferencias"
+            icon="fa-floppy-disk"
+            (clicked)="savePreferences()"
+          />
         </div>
       </section>
     }
   } @else {
     <!-- SIN SESIÓN -->
-    <div class="empty-profile">
-      <span>👤</span>
-      <h2>No hay una sesión activa</h2>
-      <p>Inicia sesión para consultar tu perfil cinematográfico.</p>
-    </div>
+    <app-empty-state
+      icon="fa-user"
+      title="No hay una sesión activa"
+      description="Inicia sesión para consultar tu perfil cinematográfico."
+      actionText="Iniciar sesión"
+      actionIcon="fa-right-to-bracket"
+      actionRouterLink="/login"
+    />
   }
 </div>

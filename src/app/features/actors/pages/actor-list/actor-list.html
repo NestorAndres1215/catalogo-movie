@@ -51,11 +51,11 @@
   }
 
   @if (!loading() && !errorMessage() && actors().length === 0) {
-    <div class="empty-state">
-      <span>👤</span>
-      <h3>No encontramos personas</h3>
-      <p>Prueba con otro nombre o departamento profesional.</p>
-    </div>
+    <app-empty-state
+      icon="fa-user"
+      title="No encontramos personas"
+      description="Prueba con otro nombre o departamento profesional."
+    />
   }
 
   @if (!loading() && actors().length > 0) {

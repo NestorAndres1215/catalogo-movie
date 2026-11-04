@@ -8,11 +8,12 @@ import {
 } from '../../../../core/models/recommendation.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-recommendation-list',
   standalone: true,
-  imports: [RouterLink, DecimalPipe, PageHeaderComponent, PageLoadingComponent],
+  imports: [RouterLink, DecimalPipe, PageHeaderComponent, PageLoadingComponent, EmptyStateComponent],
   templateUrl: './recommendation-list.html',
   styleUrl: './recommendation-list.css'
 })

@@ -4,11 +4,12 @@ import { DecimalPipe } from '@angular/common';
 import { MovieService } from '../../../../core/service/movie.service';
 import { Movie } from '../../../../core/models/movie.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-timeline-list',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent],
+  imports: [DecimalPipe, PageHeaderComponent, EmptyStateComponent],
   templateUrl: './timeline-list.html',
   styleUrl: './timeline-list.css',
 })

@@ -9,11 +9,16 @@ import { VideoService } from '../../../../core/service/video.service';
 
 import { MediaVideo } from '../../../../core/models/video.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import {
+  FilterTab,
+  FilterTabsComponent,
+  FilterType,
+} from '../../../../shared/components/filter-tabs/filter-tabs';
 
 @Component({
   selector: 'app-video-list',
   standalone: true,
-  imports: [DatePipe, PageHeaderComponent],
+  imports: [DatePipe, PageHeaderComponent, FilterTabsComponent],
   templateUrl: './video-list.html',
   styleUrl: './video-list.css',
 })
@@ -101,8 +106,19 @@ export class VideoListComponent {
       },
     });
   }
+  readonly mediaTabs: FilterTab[] = [
+    { label: 'Películas', value: 'movie' },
+    { label: 'Series', value: 'tv' },
+  ];
+  changeMediaType(type: FilterType): void {
+    if (type !== 'movie' && type !== 'tv') {
+      return;
+    }
 
-  changeMediaType(type: 'movie' | 'tv'): void {
+    if (this.mediaType() === type) {
+      return;
+    }
+
     this.mediaType.set(type);
     this.selectedVideo.set(null);
     this.selectedFilter.set('all');
@@ -114,7 +130,6 @@ export class VideoListComponent {
       this.loadPopularSeries();
     }
   }
-
   filterVideos(filter: string): void {
     this.selectedFilter.set(filter);
   }

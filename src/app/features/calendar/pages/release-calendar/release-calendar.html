@@ -148,16 +148,11 @@
         }
       </div>
     } @else {
-      <div class="empty-state">
-        <span class="empty-icon">🎬</span>
-
-        <h3>No hay estrenos registrados</h3>
-
-        <p>
-          No encontramos películas con estreno registrado para este día en Perú. Selecciona otra
-          fecha del calendario.
-        </p>
-      </div>
+      <app-empty-state
+        icon="fa-calendar-xmark"
+        title="No hay estrenos registrados"
+        description="No encontramos películas con estreno registrado para este día en Perú. Selecciona otra fecha del calendario."
+      />
     }
   </section>
 </main>

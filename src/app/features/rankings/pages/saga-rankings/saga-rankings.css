@@ -1,11 +1,8 @@
-
 .rankings-container {
- padding: 35px 40px;
+  padding: 35px 40px;
   max-width: 1600px;
   margin: auto;
 }
-
-
 
 .reload-button,
 .search-box button {
@@ -92,7 +89,9 @@
   border: 1px solid #292929;
   border-radius: 10px;
   cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
 }
 
 .collection-card:hover {
@@ -240,6 +239,7 @@
   font-size: 13px;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
 .movie-popularity {
@@ -301,8 +301,7 @@
   font-size: 13px;
 }
 
-.loading-message,
-.empty-message,
+
 .error-message {
   padding: 25px;
   color: #999999;
@@ -311,15 +310,6 @@
 
 .error-message {
   color: #ff5252;
-}
-
-.ranking-footer {
-  margin-top: 35px;
-  padding-top: 20px;
-  border-top: 1px solid #292929;
-  color: #777777;
-  font-size: 12px;
-  text-align: center;
 }
 
 @media (max-width: 650px) {

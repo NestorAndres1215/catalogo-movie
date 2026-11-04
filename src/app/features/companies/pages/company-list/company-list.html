@@ -78,14 +78,14 @@
   }
 
   <!-- CARGANDO -->
-@if (loading()) {
-  <app-page-loading
-    title="Buscando productoras"
-    description="Estamos preparando los resultados."
-    detail="Consultando productoras en TMDB..."
-    icon="fa-building"
-  />
-}
+  @if (loading()) {
+    <app-page-loading
+      title="Buscando productoras"
+      description="Estamos preparando los resultados."
+      detail="Consultando productoras en TMDB..."
+      icon="fa-building"
+    />
+  }
 
   <!-- ERROR -->
   @if (errorMessage()) {
@@ -107,11 +107,11 @@
 
   <!-- SIN RESULTADOS -->
   @if (!loading() && !errorMessage() && searchQuery() && companies().length === 0) {
-    <div class="message">
-      <h2>No se encontraron productoras</h2>
-
-      <p>Intenta buscar con otro nombre.</p>
-    </div>
+    <app-empty-state
+      icon="fa-building"
+      title="No se encontraron productoras"
+      description="Intenta buscar con otro nombre."
+    />
   }
 
   <!-- GRID DE PRODUCTORAS -->

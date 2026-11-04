@@ -5,11 +5,13 @@ import { Router } from '@angular/router';
 
 import { WatchlistService } from '../../../../core/service/watchlist.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { StatItem, StatsComponent } from '../../../../shared/components/stats/stats';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-watched-movies-list',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent],
+  imports: [DecimalPipe, PageHeaderComponent, StatsComponent, EmptyStateComponent],
   templateUrl: './watched-movies-list.html',
   styleUrl: './watched-movies-list.css',
 })
@@ -24,7 +26,25 @@ export class WatchedMoviesListComponent {
       item => item.mediaType === 'movie' && item.status === 'watched'
     )
   );
-
+readonly stats = computed<StatItem[]>(() => [
+  {
+    icon: 'fa-film',
+    value: this.totalWatched(),
+    label: 'Películas vistas'
+  },
+  {
+    icon: 'fa-star',
+    value: this.ratedMovies(),
+    label: 'Películas calificadas'
+  },
+  {
+    icon: 'fa-trophy',
+    value: this.averageRating() > 0
+      ? this.averageRating().toFixed(1)
+      : '—',
+    label: 'Mi puntuación promedio'
+  }
+]);
   readonly totalWatched = computed(
     () => this.watchedMovies().length
   );

@@ -9,31 +9,8 @@
     <button class="clear-button" type="button" (click)="clearWatchlist()">🗑 Vaciar lista</button>
   }
   <!-- ESTADÍSTICAS -->
-  <div class="stats-container">
-    <div class="stat-card">
-      <span class="stat-icon">📋</span>
-      <div>
-        <strong>{{ watchlist().length }}</strong>
-        <span>En mi lista</span>
-      </div>
-    </div>
 
-    <div class="stat-card">
-      <span class="stat-icon">🎬</span>
-      <div>
-        <strong>{{ totalMovies() }}</strong>
-        <span>Películas</span>
-      </div>
-    </div>
-
-    <div class="stat-card">
-      <span class="stat-icon">📺</span>
-      <div>
-        <strong>{{ totalSeries() }}</strong>
-        <span>Series</span>
-      </div>
-    </div>
-  </div>
+  <app-stats [stats]="stats()" />
 
   <!-- FILTROS -->
   <div class="filter-container">
@@ -134,28 +111,24 @@
     </div>
   } @else {
     <!-- LISTA VACÍA -->
-    <div class="empty-state">
-      <div class="empty-icon">🎬</div>
-
-      <h2>
-        @if (watchlist().length === 0) {
-          Tu lista está vacía
-        } @else {
-          No hay resultados
-        }
-      </h2>
-
-      <p>
-        @if (watchlist().length === 0) {
-          Explora películas y series y agrega tus favoritas a tu lista para verlas más tarde.
-        } @else {
-          No tienes elementos guardados en esta categoría.
-        }
-      </p>
-
-      <button type="button" class="explore-button" (click)="exploreMovies()">
-        Explorar películas
-      </button>
-    </div>
+    @if (watchlist().length === 0) {
+      <app-empty-state
+        icon="fa-bookmark"
+        title="Tu lista está vacía"
+        description="Explora películas y series y agrega tus favoritas a tu lista para verlas más tarde."
+        actionText="Explorar películas"
+        actionIcon="fa-film"
+        (actionClicked)="exploreMovies()"
+      />
+    } @else {
+      <app-empty-state
+        icon="fa-filter"
+        title="No hay resultados"
+        description="No tienes elementos guardados en esta categoría. Prueba seleccionando otra."
+        actionText="Explorar películas"
+        actionIcon="fa-film"
+        (actionClicked)="exploreMovies()"
+      />
+    }
   }
 </section>

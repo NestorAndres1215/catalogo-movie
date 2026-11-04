@@ -1,0 +1,39 @@
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 55px 25px;
+  text-align: center;
+  background: var(--color-superficie-secundaria);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde);
+}
+
+.empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 75px;
+  height: 75px;
+  margin-bottom: 20px;
+  border-radius: var(--radio-circular);
+  background: var(--color-acento-suave);
+  color: var(--color-acento);
+  font-size: 30px;
+}
+
+.empty-state h3 {
+  margin-bottom: 10px;
+  color: var(--color-texto);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.empty-state p {
+  max-width: 450px;
+  margin-bottom: 22px;
+  color: var(--color-texto-secundario);
+  font-size: 14px;
+  line-height: 1.6;
+}

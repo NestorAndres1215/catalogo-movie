@@ -131,7 +131,11 @@
             }
           </div>
         } @else {
-          <p class="empty-message">No se encontraron películas.</p>
+          <app-empty-state
+            icon="fa-film"
+            title="No se encontraron películas"
+            description="No hay películas disponibles para mostrar en este momento."
+          />
         }
       </div>
 
@@ -164,7 +168,11 @@
             }
           </div>
         } @else {
-          <p class="empty-message">No se encontraron series.</p>
+          <app-empty-state
+            icon="fa-tv"
+            title="No se encontraron series"
+            description="No hay series disponibles para mostrar en este momento."
+          />
         }
       </div>
     </section>

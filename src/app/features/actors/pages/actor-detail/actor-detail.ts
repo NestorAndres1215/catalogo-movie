@@ -10,11 +10,12 @@ import {
   PersonCombinedCredits
 } from '../../../../core/models/person.interface';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-actor-detail',
   standalone: true,
-  imports: [RouterLink, PageLoadingComponent],
+  imports: [RouterLink, PageLoadingComponent, EmptyStateComponent],
   templateUrl: './actor-detail.html',
   styleUrl: './actor-detail.css'
 })

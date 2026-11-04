@@ -1,22 +1,23 @@
-
 import { Component, computed, inject, signal } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { WatchlistService } from '../../../../core/service/watchlist.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { ButtonComponent } from '../../../../shared/components/button/button';
+import { StatItem, StatsComponent } from '../../../../shared/components/stats/stats';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 
 type RatingFilter = 'all' | 'movie' | 'tv';
 
 @Component({
   selector: 'app-my-ratings-list',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent],
+  imports: [DecimalPipe, PageHeaderComponent, StatsComponent, EmptyStateComponent],
   templateUrl: './my-ratings-list.html',
   styleUrl: './my-ratings-list.css',
 })
 export class MyRatingsListComponent {
-
   private readonly watchlistService = inject(WatchlistService);
   private readonly router = inject(Router);
 
@@ -26,34 +27,28 @@ export class MyRatingsListComponent {
   readonly ratedItems = computed(() => {
     const filter = this.selectedFilter();
 
-    return this.watchlistService.watchlist()
-      .filter(item =>
-        item.personalRating !== null &&
-        item.personalRating !== undefined &&
-        (filter === 'all' || item.mediaType === filter)
+    return this.watchlistService
+      .watchlist()
+      .filter(
+        (item) =>
+          item.personalRating !== null &&
+          item.personalRating !== undefined &&
+          (filter === 'all' || item.mediaType === filter),
       )
-      .sort((a, b) =>
-        (b.personalRating ?? 0) - (a.personalRating ?? 0)
-      );
+      .sort((a, b) => (b.personalRating ?? 0) - (a.personalRating ?? 0));
   });
 
   // Total de contenidos calificados.
-  readonly totalRated = computed(
-    () => this.ratedItems().length
-  );
+  readonly totalRated = computed(() => this.ratedItems().length);
 
   // Total de películas calificadas.
-  readonly totalMovies = computed(() =>
-    this.ratedItems().filter(
-      item => item.mediaType === 'movie'
-    ).length
+  readonly totalMovies = computed(
+    () => this.ratedItems().filter((item) => item.mediaType === 'movie').length,
   );
 
   // Total de series calificadas.
-  readonly totalSeries = computed(() =>
-    this.ratedItems().filter(
-      item => item.mediaType === 'tv'
-    ).length
+  readonly totalSeries = computed(
+    () => this.ratedItems().filter((item) => item.mediaType === 'tv').length,
   );
 
   // Promedio de todas las puntuaciones personales.
@@ -64,10 +59,7 @@ export class MyRatingsListComponent {
       return 0;
     }
 
-    const total = items.reduce(
-      (sum, item) => sum + (item.personalRating ?? 0),
-      0
-    );
+    const total = items.reduce((sum, item) => sum + (item.personalRating ?? 0), 0);
 
     return total / items.length;
   });
@@ -108,4 +100,27 @@ export class MyRatingsListComponent {
   goToWatchlist(): void {
     this.router.navigate(['/watchlist']);
   }
+
+  readonly stats = computed<StatItem[]>(() => [
+    {
+      icon: 'fa-star',
+      value: this.totalRated(),
+      label: 'Títulos calificados',
+    },
+    {
+      icon: 'fa-film',
+      value: this.totalMovies(),
+      label: 'Películas',
+    },
+    {
+      icon: 'fa-tv',
+      value: this.totalSeries(),
+      label: 'Series',
+    },
+    {
+      icon: 'fa-trophy',
+      value: this.averageRating() > 0 ? this.averageRating().toFixed(1) : '—',
+      label: 'Promedio personal',
+    },
+  ]);
 }

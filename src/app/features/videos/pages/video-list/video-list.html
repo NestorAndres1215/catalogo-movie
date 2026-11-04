@@ -1,18 +1,16 @@
 <section class="videos-page">
-<app-page-header
-  section="CINEVERSE / VIDEOTECA"
-  title="Trailers y videos"
-  description="Descubre los avances y videos de tus películas y series favoritas."
-/>
-
+  <app-page-header
+    section="CINEVERSE / VIDEOTECA"
+    title="Trailers y videos"
+    description="Descubre los avances y videos de tus películas y series favoritas."
+  />
   <div class="media-selector">
-    <button [class.active]="mediaType() === 'movie'" (click)="changeMediaType('movie')">
-      Películas
-    </button>
-
-    <button [class.active]="mediaType() === 'tv'" (click)="changeMediaType('tv')">Series</button>
+    <app-filter-tabs
+      [tabs]="mediaTabs"
+      [selected]="mediaType()"
+      (selectionChange)="changeMediaType($event)"
+    />
   </div>
-
   <div class="filters">
     <button [class.active]="selectedFilter() === 'all'" (click)="filterVideos('all')">Todos</button>
 

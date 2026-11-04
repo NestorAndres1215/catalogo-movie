@@ -1,39 +1,33 @@
-
 <div class="rankings-container">
+  <app-page-header
+    section="CINEVERSE / RANKINGS"
+    title="Ranking de actores"
+    description="Descubre los actores más y menos populares de TMDB."
+  />
 
-<app-page-header
-  section="CINEVERSE / RANKINGS"
-  title="Ranking de actores"
-  description="Descubre los actores más y menos populares de TMDB."
-/>
-
-    <button
-      class="reload-button"
-      type="button"
-      (click)="loadRankings()"
-      [disabled]="loading()">
-      ↻ Actualizar
-    </button>
+  <button class="reload-button" type="button" (click)="loadRankings()" [disabled]="loading()">
+    ↻ Actualizar
+  </button>
   <nav class="ranking-tabs">
     <button
       type="button"
       [class.active]="activeRanking() === 'best'"
-      (click)="changeRanking('best')">
+      (click)="changeRanking('best')"
+    >
       ⭐ Más populares
     </button>
 
     <button
       type="button"
       [class.active]="activeRanking() === 'worst'"
-      (click)="changeRanking('worst')">
+      (click)="changeRanking('worst')"
+    >
       📉 Menor popularidad
     </button>
   </nav>
 
   @if (loading()) {
-    <div class="loading-message">
-      Cargando ranking de actores...
-    </div>
+    <div class="loading-message">Cargando ranking de actores...</div>
   }
 
   @if (error()) {
@@ -43,7 +37,6 @@
   }
 
   @if (!loading() && !error()) {
-
     @if (activeRanking() === 'best') {
       <section class="ranking-section">
         <div class="ranking-title">
@@ -54,7 +47,6 @@
         <div class="ranking-list">
           @for (actor of bestActors(); track actor.id; let i = $index) {
             <article class="ranking-card">
-
               <span class="ranking-position">
                 {{ i + 1 }}
               </span>
@@ -63,24 +55,26 @@
                 class="actor-poster"
                 [src]="getPoster(actor.profile_path)"
                 [alt]="actor.name"
-                loading="lazy">
+                loading="lazy"
+              />
 
               <div class="actor-information">
                 <h3>{{ actor.name }}</h3>
                 <span class="actor-category">Actor / Actriz</span>
-                <p class="actor-description">
-                  Popularidad según los datos de TMDB.
-                </p>
+                <p class="actor-description">Popularidad según los datos de TMDB.</p>
               </div>
 
               <div class="actor-rating">
                 <span>POPULARIDAD</span>
                 <strong>{{ getPopularity(actor.popularity) }}</strong>
               </div>
-
             </article>
           } @empty {
-            <p class="empty-message">No hay actores disponibles.</p>
+            <app-empty-state
+              icon="fa-user"
+              title="No hay actores disponibles"
+              description="No se encontraron actores para mostrar en este momento."
+            />
           }
         </div>
       </section>
@@ -96,7 +90,6 @@
         <div class="ranking-list">
           @for (actor of worstActors(); track actor.id; let i = $index) {
             <article class="ranking-card">
-
               <span class="ranking-position">
                 {{ i + 1 }}
               </span>
@@ -105,7 +98,8 @@
                 class="actor-poster"
                 [src]="getPoster(actor.profile_path)"
                 [alt]="actor.name"
-                loading="lazy">
+                loading="lazy"
+              />
 
               <div class="actor-information">
                 <h3>{{ actor.name }}</h3>
@@ -119,19 +113,19 @@
                 <span>POPULARIDAD</span>
                 <strong>{{ getPopularity(actor.popularity) }}</strong>
               </div>
-
             </article>
           } @empty {
-            <p class="empty-message">No hay actores disponibles.</p>
+            <app-empty-state
+              icon="fa-users"
+              title="No hay actores disponibles"
+              description="No se encontraron actores para mostrar en este momento."
+            />
           }
         </div>
       </section>
     }
   }
+  <app-footer />
 
-  <footer class="ranking-footer">
-    Datos proporcionados por TMDB.
-    El ranking se calcula según la popularidad, no según la calidad actoral.
-  </footer>
 
 </div>

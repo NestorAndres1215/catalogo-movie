@@ -1,68 +1,43 @@
 <section class="comparison-container">
-
-<app-page-header
-  section="CINEVERSE · COMPARADORES"
-  title="Comparador de streaming"
-  description="Descubre dónde puedes ver tus películas y series favoritas. Compara las plataformas disponibles en Perú."
-/>
+  <app-page-header
+    section="CINEVERSE · COMPARADORES"
+    title="Comparador de streaming"
+    description="Descubre dónde puedes ver tus películas y series favoritas. Compara las plataformas disponibles en Perú."
+  />
 
   <section class="search-panel">
-
     <h2>Busca una película o serie</h2>
 
     <div class="media-selector">
-      <button
-        type="button"
-        [class.active]="mediaType() === 'movie'"
-        (click)="setMediaType('movie')"
-      >
-        Películas
-      </button>
-
-      <button
-        type="button"
-        [class.active]="mediaType() === 'tv'"
-        (click)="setMediaType('tv')"
-      >
-        Series
-      </button>
+      <app-filter-tabs
+        [tabs]="mediaTabs"
+        [selected]="mediaType()"
+        (selectionChange)="setMediaType($event)"
+      />
     </div>
-<div class="search-form">
-  <input
-    type="search"
-    placeholder="Ejemplo: Interstellar, Breaking Bad..."
-    [value]="searchQuery()"
-    (input)="onSearchInput($event)"
-    (keydown.enter)="searchMedia()"
-  />
+    <div class="search-form">
+      <input
+        type="search"
+        placeholder="Ejemplo: Interstellar, Breaking Bad..."
+        [value]="searchQuery()"
+        (input)="onSearchInput($event)"
+        (keydown.enter)="searchMedia()"
+      />
 
-  <button
-    type="button"
-    (click)="searchMedia()"
-    [disabled]="loadingSearch()"
-  >
-    {{ loadingSearch() ? 'Buscando...' : 'Buscar' }}
-  </button>
+      <button type="button" (click)="searchMedia()" [disabled]="loadingSearch()">
+        {{ loadingSearch() ? 'Buscando...' : 'Buscar' }}
+      </button>
 
-  <button
-    type="button"
-    class="clear-button"
-    (click)="clearSearch()"
-  >
-    Limpiar
-  </button>
-</div>
-
+      <button type="button" class="clear-button" (click)="clearSearch()">Limpiar</button>
+    </div>
   </section>
 
   @if (loadingSearch()) {
-    <div class="status-message">
-      Buscando títulos...
-    </div>
+    <div class="status-message">Buscando títulos...</div>
   }
 
-@if (searchResults().length > 0 && !selectedMedia()) {
-  <section class="results-section">
+  @if (searchResults().length > 0 && !selectedMedia()) {
+    <section class="results-section">
       <h2>Resultados de búsqueda</h2>
 
       <div class="results-grid">
@@ -87,11 +62,8 @@
             <div class="result-info">
               <h3>{{ getTitle(media) }}</h3>
               <span>{{ getReleaseDate(media) }}</span>
-              <span class="rating">
-                ★ {{ media.vote_average | number:'1.1-1' }}
-              </span>
+              <span class="rating"> ★ {{ media.vote_average | number: '1.1-1' }} </span>
             </div>
-
           </article>
         }
       </div>
@@ -105,16 +77,11 @@
   }
 
   @if (selectedMedia(); as media) {
-
     <section class="comparison-section">
-
       <div class="selected-title">
         <div class="selected-poster">
           @if (media.poster_path) {
-            <img
-              [src]="getImageUrl(media.poster_path)"
-              [alt]="getTitle(media)"
-            />
+            <img [src]="getImageUrl(media.poster_path)" [alt]="getTitle(media)" />
           }
         </div>
 
@@ -122,20 +89,15 @@
           <span class="eyebrow">TÍTULO SELECCIONADO</span>
           <h2>{{ getTitle(media) }}</h2>
           <p>{{ getReleaseDate(media) }}</p>
-          <span class="rating">
-            ★ {{ media.vote_average | number:'1.1-1' }}
-          </span>
+          <span class="rating"> ★ {{ media.vote_average | number: '1.1-1' }} </span>
         </div>
       </div>
 
       @if (loadingProviders()) {
-        <div class="status-message">
-          Consultando plataformas disponibles en Perú...
-        </div>
+        <div class="status-message">Consultando plataformas disponibles en Perú...</div>
       }
 
       @if (!loadingProviders() && selectedRegion(); as region) {
-
         <div class="comparison-heading">
           <div>
             <h2>Disponibilidad en Perú</h2>
@@ -153,10 +115,7 @@
             <div class="providers-grid">
               @for (provider of getProviders('flatrate'); track provider.provider_id) {
                 <article class="provider-card">
-                  <img
-                    [src]="getProviderLogo(provider.logo_path)"
-                    [alt]="provider.provider_name"
-                  />
+                  <img [src]="getProviderLogo(provider.logo_path)" [alt]="provider.provider_name" />
                   <span>{{ provider.provider_name }}</span>
                 </article>
               }
@@ -170,10 +129,7 @@
             <div class="providers-grid">
               @for (provider of getProviders('free'); track provider.provider_id) {
                 <article class="provider-card">
-                  <img
-                    [src]="getProviderLogo(provider.logo_path)"
-                    [alt]="provider.provider_name"
-                  />
+                  <img [src]="getProviderLogo(provider.logo_path)" [alt]="provider.provider_name" />
                   <span>{{ provider.provider_name }}</span>
                 </article>
               }
@@ -187,10 +143,7 @@
             <div class="providers-grid">
               @for (provider of getProviders('ads'); track provider.provider_id) {
                 <article class="provider-card">
-                  <img
-                    [src]="getProviderLogo(provider.logo_path)"
-                    [alt]="provider.provider_name"
-                  />
+                  <img [src]="getProviderLogo(provider.logo_path)" [alt]="provider.provider_name" />
                   <span>{{ provider.provider_name }}</span>
                 </article>
               }
@@ -204,10 +157,7 @@
             <div class="providers-grid">
               @for (provider of getProviders('rent'); track provider.provider_id) {
                 <article class="provider-card">
-                  <img
-                    [src]="getProviderLogo(provider.logo_path)"
-                    [alt]="provider.provider_name"
-                  />
+                  <img [src]="getProviderLogo(provider.logo_path)" [alt]="provider.provider_name" />
                   <span>{{ provider.provider_name }}</span>
                 </article>
               }
@@ -221,10 +171,7 @@
             <div class="providers-grid">
               @for (provider of getProviders('buy'); track provider.provider_id) {
                 <article class="provider-card">
-                  <img
-                    [src]="getProviderLogo(provider.logo_path)"
-                    [alt]="provider.provider_name"
-                  />
+                  <img [src]="getProviderLogo(provider.logo_path)" [alt]="provider.provider_name" />
                   <span>{{ provider.provider_name }}</span>
                 </article>
               }
@@ -233,30 +180,23 @@
         }
 
         @if (region.link) {
-          <a
-            class="tmdb-link"
+          <app-button
+            text="Ver opciones en TMDB"
+            icon="fa-external-link-alt"
             [href]="region.link"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Ver opciones en TMDB
-          </a>
+            variant="secondary"
+          />
         }
-
       }
-
     </section>
   }
 
   @if (!selectedMedia() && !searchResults().length && !loadingSearch()) {
-    <div class="empty-state">
-      <h2>Comienza tu comparación</h2>
-      <p>Busca una película o serie y selecciona un resultado.</p>
-    </div>
+    <app-empty-state
+      icon="fa-scale-balanced"
+      title="Comienza tu comparación"
+      description="Busca una película o serie y selecciona un resultado."
+    />
   }
-
-  <footer class="attribution">
-    Información de disponibilidad proporcionada por JustWatch a través de TMDB.
-  </footer>
-
+<app-footer />
 </section>

@@ -296,7 +296,6 @@
   line-clamp: 2;
 }
 
-.empty-state,
 .error-message {
   padding: 60px 20px;
   text-align: center;

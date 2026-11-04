@@ -1,0 +1,18 @@
+<section class="empty-state">
+  <div class="empty-icon">
+    <i [class]="'fas ' + icon()"></i>
+  </div>
+
+  <h3>{{ title() }}</h3>
+
+  <p>{{ description() }}</p>
+
+  @if (actionText()) {
+    <app-button
+      [text]="actionText()"
+      [icon]="actionIcon()"
+      variant="secondary"
+      (clicked)="actionClicked.emit()"
+    />
+  }
+</section>

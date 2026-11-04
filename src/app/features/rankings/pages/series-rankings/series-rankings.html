@@ -71,7 +71,11 @@
               </div>
             </article>
           } @empty {
-            <p class="empty-message">No hay series disponibles.</p>
+            <app-empty-state
+              icon="fa-tv"
+              title="No hay series disponibles"
+              description="No encontramos series para mostrar en este momento."
+            />
           }
         </div>
       }
@@ -129,7 +133,11 @@
               </div>
             </article>
           } @empty {
-            <p class="empty-message">No hay series disponibles.</p>
+            <app-empty-state
+              icon="fa-tv"
+              title="No hay series disponibles"
+              description="No encontramos series para mostrar en este momento."
+            />
           }
         </div>
       }
@@ -162,7 +170,12 @@
       </div>
 
       @if (loadingGenre()) {
-        <div class="loading-message">Cargando series del género seleccionado...</div>
+        <app-page-loading
+          title="Cargando series..."
+          description="Estamos buscando series del género seleccionado."
+          detail="Consultando el catálogo de TMDB..."
+          icon="fa-tv"
+        />
       }
 
       @if (errorGenre()) {
@@ -204,17 +217,16 @@
               </div>
             </article>
           } @empty {
-            <p class="empty-message">No hay series disponibles para este género.</p>
+            <app-empty-state
+              icon="fa-tv"
+              title="No hay series disponibles"
+              description="No hay series disponibles para este género."
+            />
           }
         </div>
       }
     </section>
   }
 
-  <!-- FOOTER -->
-  <footer class="ranking-footer">
-    <p>Clasificación basada en las puntuaciones de TMDB.</p>
-
-    <p>Mejores y peores series: mínimo 500 votos. Ranking por género: mínimo 100 votos.</p>
-  </footer>
+  <app-footer />
 </div>

@@ -1,32 +1,29 @@
-
 <section class="statistics-page">
-
-<app-page-header
-  section="MI BIBLIOTECA"
-  title="Mis estadísticas"
-  description="Descubre tus gustos cinematográficos y tus hábitos como espectador."
-/>
+  <app-page-header
+    section="MI BIBLIOTECA"
+    title="Mis estadísticas"
+    description="Descubre tus gustos cinematográficos y tus hábitos como espectador."
+  />
 
   @if (loading()) {
-<app-page-loading
-  title="Analizando tus películas vistas"
-  description="Estamos procesando tu historial cinematográfico."
-  detail="Preparando tus estadísticas y resultados..."
-  icon="fa-chart-pie"
-/>
+    <app-page-loading
+      title="Analizando tus películas vistas"
+      description="Estamos procesando tu historial cinematográfico."
+      detail="Preparando tus estadísticas y resultados..."
+      icon="fa-chart-pie"
+    />
   } @else if (error()) {
-    <div class="empty-state">
-      <h2>No se pudieron cargar las estadísticas</h2>
-      <p>{{ error() }}</p>
-      <button type="button" (click)="loadStatistics()">
-        Intentar nuevamente
-      </button>
-    </div>
+    <app-empty-state
+      icon="fa-chart-line"
+      title="No se pudieron cargar las estadísticas"
+      [description]="error() ?? 'Ocurrió un error al cargar las estadísticas.'"
+      actionText="Intentar nuevamente"
+      actionIcon="fa-rotate-right"
+      (actionClicked)="loadStatistics()"
+    />
   } @else if (totalMovies() > 0) {
-
     <!-- RESUMEN -->
     <div class="stats-summary">
-
       <article class="summary-card">
         <span>🎬</span>
         <strong>{{ totalMovies() }}</strong>
@@ -36,9 +33,7 @@
       <article class="summary-card">
         <span>⭐</span>
         <strong>
-          {{ averageRating() > 0
-            ? (averageRating() | number:'1.1-1')
-            : '—' }}
+          {{ averageRating() > 0 ? (averageRating() | number: '1.1-1') : '—' }}
         </strong>
         <p>Promedio personal</p>
       </article>
@@ -54,7 +49,6 @@
         <strong>{{ topFiveActors().length }}</strong>
         <p>Actores destacados</p>
       </article>
-
     </div>
 
     <!-- GÉNEROS -->
@@ -77,16 +71,17 @@
               </div>
 
               <div class="progress-track">
-                <div
-                  class="progress-value"
-                  [style.width.%]="getGenrePercentage(genre.count)">
-                </div>
+                <div class="progress-value" [style.width.%]="getGenrePercentage(genre.count)"></div>
               </div>
             </article>
           }
         </div>
       } @else {
-        <p class="no-data">No hay información de géneros disponible.</p>
+        <app-empty-state
+          icon="fa-tags"
+          title="No hay información de géneros disponible"
+          description="No se encontraron géneros para mostrar en este momento."
+        />
       }
     </section>
 
@@ -105,19 +100,14 @@
           <article class="top-movie-card">
             <span class="ranking">#{{ i + 1 }}</span>
 
-            <img
-              [src]="getImageUrl(movie.posterPath)"
-              [alt]="movie.title"
-              loading="lazy">
+            <img [src]="getImageUrl(movie.posterPath)" [alt]="movie.title" loading="lazy" />
 
             <div class="top-movie-info">
               <h3>{{ movie.title }}</h3>
               <span>Tu puntuación</span>
             </div>
 
-            <strong class="movie-rating">
-              ⭐ {{ movie.personalRating }}/10
-            </strong>
+            <strong class="movie-rating"> ⭐ {{ movie.personalRating }}/10 </strong>
           </article>
         }
       </div>
@@ -137,13 +127,13 @@
         <div class="actors-grid">
           @for (actor of topFiveActors(); track actor.id; let i = $index) {
             <article class="actor-card">
-
               <span class="actor-ranking">#{{ i + 1 }}</span>
 
               <img
                 [src]="getImageUrl(actor.profilePath, 'w185')"
                 [alt]="actor.name"
-                loading="lazy">
+                loading="lazy"
+              />
 
               <div class="actor-info">
                 <h3>{{ actor.name }}</h3>
@@ -155,7 +145,6 @@
                   }
                 </div>
               </div>
-
             </article>
           }
         </div>
@@ -163,18 +152,11 @@
         <p class="no-data">No hay información de actores disponible.</p>
       }
     </section>
-
   } @else {
-
-    <div class="empty-state">
-      <div class="empty-icon">📊</div>
-      <h2>Aún no tienes estadísticas</h2>
-      <p>
-        Marca películas como vistas para comenzar a descubrir
-        tus géneros y actores favoritos.
-      </p>
-    </div>
-
+    <app-empty-state
+      icon="fa-chart-pie"
+      title="Aún no tienes estadísticas"
+      description="Marca películas como vistas para comenzar a descubrir tus géneros y actores favoritos."
+    />
   }
-
 </section>

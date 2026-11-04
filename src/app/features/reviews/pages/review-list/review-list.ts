@@ -16,6 +16,7 @@ import {
   FilterTab,
   FilterType,
 } from '../../../../shared/components/filter-tabs/filter-tabs';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 
 type ReviewMediaType = 'movie' | 'tv';
 
@@ -27,7 +28,7 @@ interface ReviewItem extends MediaReview {
 @Component({
   selector: 'app-review-list',
   standalone: true,
-  imports: [DatePipe, DecimalPipe, PageHeaderComponent, PageLoadingComponent, FilterTabsComponent],
+  imports: [DatePipe, DecimalPipe, PageHeaderComponent, PageLoadingComponent, FilterTabsComponent, EmptyStateComponent],
   templateUrl: './review-list.html',
   styleUrl: './review-list.css',
 })
@@ -154,7 +155,11 @@ export class ReviewListComponent {
   }
 
   changeMediaType(type: FilterType): void {
-    if (type === 'all' || this.mediaType() === type) {
+    if (type !== 'movie' && type !== 'tv') {
+      return;
+    }
+
+    if (this.mediaType() === type) {
       return;
     }
 
@@ -168,7 +173,6 @@ export class ReviewListComponent {
     }
   }
 
-  
   getAuthorName(review: ReviewItem): string {
     return review.author_details.name || review.author_details.username || review.author;
   }

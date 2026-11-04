@@ -7,49 +7,7 @@
   />
 
   <!-- ESTADÍSTICAS -->
-  <div class="stats-container">
-    <div class="stat-card">
-      <span class="stat-icon">
-        <i class="fas fa-star"></i>
-      </span>
-      <div>
-        <strong>{{ totalRated() }}</strong>
-        <span>Títulos calificados</span>
-      </div>
-    </div>
-
-    <div class="stat-card">
-      <span class="stat-icon">
-        <i class="fas fa-film"></i>
-      </span>
-      <div>
-        <strong>{{ totalMovies() }}</strong>
-        <span>Películas</span>
-      </div>
-    </div>
-
-    <div class="stat-card">
-      <span class="stat-icon">
-        <i class="fas fa-tv"></i>
-      </span>
-      <div>
-        <strong>{{ totalSeries() }}</strong>
-        <span>Series</span>
-      </div>
-    </div>
-
-    <div class="stat-card">
-      <span class="stat-icon">
-        <i class="fas fa-trophy"></i>
-      </span>
-      <div>
-        <strong>
-          {{ averageRating() > 0 ? (averageRating() | number: '1.1-1') : '—' }}
-        </strong>
-        <span>Promedio personal</span>
-      </div>
-    </div>
-  </div>
+  <app-stats [stats]="stats()" />
 
   <!-- FILTROS -->
   <div class="list-header">
@@ -144,28 +102,19 @@
     </div>
   } @else {
     <!-- ESTADO VACÍO -->
-    <div class="empty-state">
-      <div class="empty-icon">
-        <i class="fas fa-star"></i>
-      </div>
-      <h2>
-        @if (selectedFilter() === 'all') {
-          Todavía no tienes calificaciones
-        } @else if (selectedFilter() === 'movie') {
-          No tienes películas calificadas
-        } @else {
-          No tienes series calificadas
-        }
-      </h2>
-
-      <p>
-        Asigna una puntuación personal a tus películas o series desde tu lista para ver y aparecerán
-        aquí.
-      </p>
-
-      <button type="button" class="explore-button" (click)="goToWatchlist()">
-        Ir a mi lista para ver
-      </button>
-    </div>
+    <app-empty-state
+      icon="fa-star"
+      [title]="
+        selectedFilter() === 'all'
+          ? 'Todavía no tienes calificaciones'
+          : selectedFilter() === 'movie'
+            ? 'No tienes películas calificadas'
+            : 'No tienes series calificadas'
+      "
+      description="Asigna una puntuación personal a tus películas o series desde tu lista para ver y aparecerán aquí."
+      actionText="Ir a mi lista para ver"
+      actionIcon="fa-bookmark"
+      (actionClicked)="goToWatchlist()"
+    />
   }
 </section>

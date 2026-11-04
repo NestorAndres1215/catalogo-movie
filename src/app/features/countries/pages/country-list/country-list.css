@@ -81,18 +81,18 @@
   min-width: 0;
   min-height: 105px;
   padding: 18px;
-  border: 1px solid #292929;
-  border-radius: 11px;
-  background: #181818;
-  color: white;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
+  background: var(--color-superficie-secundaria);
+  color: var(--color-texto);
   text-decoration: none;
-  transition: 0.2s;
+  transition: var(--transicion-rapida);
 }
 
 .country-card:hover {
   transform: translateY(-4px);
-  border-color: #e5a00d;
-  background: #202020;
+  border-color: var(--color-acento);
+  background: var(--color-superficie-elevada);
 }
 
 .country-flag {
@@ -102,8 +102,9 @@
   flex-shrink: 0;
   width: 55px;
   height: 55px;
-  border-radius: 10px;
-  background: #292929;
+  border-radius: var(--radio-borde-pequeno);
+  background: var(--color-acento-suave);
+  color: var(--color-acento);
   font-size: 32px;
 }
 
@@ -124,19 +125,19 @@
 
 .country-info span {
   overflow: hidden;
-  color: #999;
+  color: var(--color-texto-secundario);
   font-size: 12px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .country-info small {
-  color: #777;
+  color: var(--color-texto-atenuado);
   font-size: 11px;
 }
 
 .country-arrow {
-  color: #e5a00d;
+  color: var(--color-acento);
   font-size: 20px;
 }
 

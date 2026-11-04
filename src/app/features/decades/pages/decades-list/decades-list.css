@@ -26,24 +26,24 @@
 
 .decade-button {
   padding: 12px 20px;
-  border: 1px solid #333;
+  border: 1px solid var(--color-borde);
   border-radius: 10px;
-  background: #171717;
-  color: #ccc;
+  background: var(--color-superficie-secundaria);
+  color: var(--color-texto-secundario);
   cursor: pointer;
   font-weight: 600;
   transition: 0.2s;
 }
 
 .decade-button:hover {
-  border-color: #8b5cf6;
-  color: #fff;
+  border-color: var(--color-acento);
+  color: var(--color-texto);
 }
 
 .decade-button.active {
-  background: #7c3aed;
-  border-color: #7c3aed;
-  color: #fff;
+  background: var(--color-acento);
+  border-color: var(--color-acento);
+  color: var(--color-texto-sobre-acento);
 }
 
 .current-label {
@@ -139,6 +139,7 @@
 .movie-info p {
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   margin-top: 10px;
@@ -176,12 +177,6 @@
   font-size: 13px;
 }
 
-
-.empty-state {
-  padding: 50px 20px;
-  text-align: center;
-  color: #aaa;
-}
 
 .error-message {
   padding: 25px;

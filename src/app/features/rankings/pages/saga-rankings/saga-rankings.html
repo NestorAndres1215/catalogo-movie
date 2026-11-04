@@ -1,40 +1,36 @@
-
 <div class="rankings-container">
-
-<app-page-header
-  section="CINEVERSE / RANKINGS"
-  title="Ranking de sagas"
-  description="Descubre las franquicias cinematográficas más populares."
-/>
-    <button
-      class="reload-button"
-      type="button"
-      (click)="loadRankings()"
-      [disabled]="loadingRankings()">
-      ↻ Actualizar
-    </button>
+  <app-page-header
+    section="CINEVERSE / RANKINGS"
+    title="Ranking de sagas"
+    description="Descubre las franquicias cinematográficas más populares."
+  />
+  <button
+    class="reload-button"
+    type="button"
+    (click)="loadRankings()"
+    [disabled]="loadingRankings()"
+  >
+    ↻ Actualizar
+  </button>
   @if (!selectedCollection()) {
-
     <nav class="ranking-tabs">
       <button
         type="button"
         [class.active]="activeRanking() === 'best'"
-        (click)="changeRanking('best')">
+        (click)="changeRanking('best')"
+      >
         ⭐ Más populares
       </button>
 
       <button
         type="button"
         [class.active]="activeRanking() === 'worst'"
-        (click)="changeRanking('worst')">
+        (click)="changeRanking('worst')"
+      >
         📉 Menos populares
       </button>
 
-      <button
-        type="button"
-        (click)="clearSearch()">
-        🔎 Buscar sagas
-      </button>
+      <button type="button" (click)="clearSearch()">🔎 Buscar sagas</button>
     </nav>
 
     <section class="search-section">
@@ -46,31 +42,29 @@
           placeholder="Ejemplo: Harry Potter, Star Wars..."
           [ngModel]="searchQuery()"
           (ngModelChange)="searchQuery.set($event)"
-          (keyup.enter)="searchSagas()">
+          (keyup.enter)="searchSagas()"
+        />
 
-        <button
-          type="button"
-          (click)="searchSagas()"
-          [disabled]="loadingSearch()">
-          Buscar
-        </button>
+        <button type="button" (click)="searchSagas()" [disabled]="loadingSearch()">Buscar</button>
       </div>
 
       @if (loadingSearch()) {
-        <p class="loading-message">Buscando sagas...</p>
+        <app-page-loading
+          title="Buscando sagas..."
+          description="Explorando las colecciones del universo cinematográfico."
+          detail="Consultando TMDB..."
+          icon="fa-film"
+        />
       }
-
       @if (searchResults().length > 0) {
         <div class="collections-grid">
           @for (collection of searchResults(); track collection.id) {
-            <article
-              class="collection-card"
-              (click)="openCollection(collection)">
-
+            <article class="collection-card" (click)="openCollection(collection)">
               <img
                 [src]="getPoster(collection.poster_path)"
                 [alt]="collection.name"
-                loading="lazy">
+                loading="lazy"
+              />
 
               <div class="collection-information">
                 <h3>{{ collection.name }}</h3>
@@ -80,9 +74,11 @@
           }
         </div>
       } @else if (searchQuery().trim() && !loadingSearch()) {
-        <p class="empty-message">
-          No se encontraron sagas con ese nombre.
-        </p>
+        <app-empty-state
+          icon="fa-magnifying-glass"
+          title="No se encontraron sagas"
+          description="No se encontraron sagas con ese nombre. Prueba con otra búsqueda."
+        />
       }
     </section>
 
@@ -104,9 +100,7 @@
       }
 
       @if (loadingRankings()) {
-        <p class="loading-message">
-          Calculando popularidad de las sagas...
-        </p>
+        <p class="loading-message">Calculando popularidad de las sagas...</p>
       }
 
       @if (error()) {
@@ -114,24 +108,19 @@
       }
 
       @if (!loadingRankings() && !error()) {
-
         <div class="collections-grid">
           @for (
-            collection of (activeRanking() === 'best'
-              ? bestCollections()
-              : worstCollections());
+            collection of activeRanking() === 'best' ? bestCollections() : worstCollections();
             track collection.id;
             let i = $index
           ) {
-            <article
-              class="collection-card"
-              (click)="openCollection(collection)">
-
+            <article class="collection-card" (click)="openCollection(collection)">
               <div class="collection-poster">
                 <img
                   [src]="getPoster(collection.poster_path)"
                   [alt]="collection.name"
-                  loading="lazy">
+                  loading="lazy"
+                />
 
                 <span class="ranking-position">
                   {{ i + 1 }}
@@ -141,9 +130,7 @@
               <div class="collection-information">
                 <h3>{{ collection.name }}</h3>
 
-                <span>
-                  {{ collection.movieCount }} películas
-                </span>
+                <span> {{ collection.movieCount }} películas </span>
 
                 <div class="collection-popularity">
                   <small>POPULARIDAD TOTAL</small>
@@ -152,15 +139,15 @@
                   </strong>
                 </div>
 
-                <button type="button">
-                  Ver películas →
-                </button>
+                <button type="button">Ver películas →</button>
               </div>
             </article>
           } @empty {
-            <p class="empty-message">
-              No hay colecciones disponibles.
-            </p>
+            <app-empty-state
+              icon="fa-layer-group"
+              title="No hay colecciones disponibles"
+              description="No encontramos colecciones cinematográficas para mostrar en este momento."
+            />
           }
         </div>
       }
@@ -169,18 +156,18 @@
 
   @if (selectedCollection(); as collection) {
     <section class="collection-detail">
-
-      <button
-        class="back-button"
-        type="button"
-        (click)="closeCollection()">
+      <button class="back-button" type="button" (click)="closeCollection()">
         ← Volver a las sagas
       </button>
 
       <div
         class="collection-banner"
-        [style.background-image]="'linear-gradient(to right, #111 10%, transparent), url(' + getBackdrop(collection.backdrop_path) + ')'">
-
+        [style.background-image]="
+          'linear-gradient(to right, #111 10%, transparent), url(' +
+          getBackdrop(collection.backdrop_path) +
+          ')'
+        "
+      >
         <div class="collection-banner-content">
           <span class="section-label">CINEVERSE / SAGA</span>
           <h2>{{ collection.name }}</h2>
@@ -203,7 +190,6 @@
       <div class="ranking-list">
         @for (movie of selectedMovies(); track movie.id; let i = $index) {
           <article class="movie-card">
-
             <span class="ranking-position">
               {{ i + 1 }}
             </span>
@@ -212,7 +198,8 @@
               class="movie-poster"
               [src]="getPoster(movie.poster_path)"
               [alt]="movie.title"
-              loading="lazy">
+              loading="lazy"
+            />
 
             <div class="movie-information">
               <h3>{{ movie.title }}</h3>
@@ -228,23 +215,19 @@
               <small>POPULARIDAD</small>
               <strong>{{ getPopularity(movie.popularity) }}</strong>
             </div>
-
           </article>
         } @empty {
           @if (!loadingDetails()) {
-            <p class="empty-message">
-              Esta saga no tiene películas disponibles.
-            </p>
+            <app-empty-state
+              icon="fa-film"
+              title="No hay películas disponibles"
+              description="Esta saga no tiene películas disponibles."
+            />
           }
         }
       </div>
-
     </section>
   }
 
-  <footer class="ranking-footer">
-    Datos proporcionados por TMDB. Los rankings se calculan según la
-    popularidad de las películas de cada colección.
-  </footer>
-
+  <app-footer />
 </div>

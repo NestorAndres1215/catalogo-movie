@@ -6,13 +6,15 @@ import { forkJoin } from 'rxjs';
 import { CatalogService } from '../../../../core/service/catalog.service';
 import { TmdbPerson } from '../../../../core/models/catalog.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import { Footer } from '../../../../shared/components/footer/footer';
 
 type RankingType = 'best' | 'worst';
 
 @Component({
   selector: 'app-actor-rankings',
   standalone: true,
-  imports: [CommonModule, PageHeaderComponent],
+  imports: [CommonModule, PageHeaderComponent, EmptyStateComponent, Footer],
   templateUrl: './actor-rankings.html',
   styleUrl: './actor-rankings.css'
 })

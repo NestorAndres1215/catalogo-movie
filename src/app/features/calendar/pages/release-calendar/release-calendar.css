@@ -304,6 +304,7 @@
   line-height: 1.6;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
 }
 
 .movie-footer {
@@ -318,8 +319,6 @@
 
 /* ESTADOS */
 
-
-.empty-state,
 .error-state {
   display: flex;
   min-height: 230px;
@@ -328,20 +327,6 @@
   justify-content: center;
   color: #aaa8b7;
   text-align: center;
-}
-
-.empty-icon {
-  font-size: 40px;
-}
-
-.empty-state h3 {
-  color: white;
-}
-
-.empty-state p {
-  max-width: 450px;
-  font-size: 13px;
-  line-height: 1.6;
 }
 
 .error-state button {

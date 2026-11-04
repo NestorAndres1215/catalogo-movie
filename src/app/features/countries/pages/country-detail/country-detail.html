@@ -65,23 +65,11 @@
       <!-- SELECTOR DE TIPO -->
 
       <div class="type-selector">
-        <button
-          type="button"
-          [class.active]="selectedType() === 'movie'"
-          [disabled]="loading()"
-          (click)="changeType('movie')"
-        >
-          🎬 Películas
-        </button>
-
-        <button
-          type="button"
-          [class.active]="selectedType() === 'tv'"
-          [disabled]="loading()"
-          (click)="changeType('tv')"
-        >
-          📺 Series
-        </button>
+        <app-filter-tabs
+          [tabs]="mediaTabs"
+          [selected]="selectedType()"
+          (selectionChange)="changeType($event)"
+        />
       </div>
 
       <!-- RESULTADOS Y FILTROS -->
@@ -113,13 +101,13 @@
               (change)="onSortChange($event)"
               [disabled]="loading() || media().length === 0"
             >
-              <option value="rating-desc">⭐ Mejor valoración</option>
+              <option value="rating-desc">Mejor valoración</option>
 
-              <option value="rating-asc">⭐ Peor valoración</option>
+              <option value="rating-asc">Peor valoración</option>
 
-              <option value="date-desc">🆕 Más recientes</option>
+              <option value="date-desc">Más recientes</option>
 
-              <option value="date-asc">📅 Más antiguas</option>
+              <option value="date-asc">Más antiguas</option>
             </select>
           </div>
         </div>

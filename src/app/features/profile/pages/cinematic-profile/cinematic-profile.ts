@@ -15,11 +15,14 @@ import type {
 import { PersonService } from '../../../../core/service/person.service';
 import { MovieService } from '../../../../core/service/movie.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { ButtonComponent } from '../../../../shared/components/button/button';
+import { FilterTab, FilterTabsComponent, FilterType } from '../../../../shared/components/filter-tabs/filter-tabs';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-cinematic-profile',
   standalone: true,
-  imports: [RouterLink, PageHeaderComponent],
+  imports: [RouterLink, PageHeaderComponent, ButtonComponent, FilterTabsComponent, EmptyStateComponent],
   templateUrl: './cinematic-profile.html',
   styleUrl: './cinematic-profile.css',
 })
@@ -31,7 +34,10 @@ export class CinematicProfile {
   private readonly router = inject(Router);
 
   private readonly subscriptions = new Subscription();
-
+readonly profileTabs: FilterTab[] = [
+  { label: 'Mi perfil', value: 'profile' },
+  { label: 'Mis preferencias', value: 'preferences' }
+];
   readonly user = this.authService.currentUser;
 
   readonly availableGenres: string[] = [
@@ -93,11 +99,17 @@ export class CinematicProfile {
   // NAVEGACIÓN DEL PERFIL
   // --------------------------------------------------
 
-  selectSection(section: 'profile' | 'preferences'): void {
-    this.activeSection.set(section);
-    this.savedMessage.set(false);
+selectSection(section: FilterType): void {
+  if (
+    section !== 'profile' &&
+    section !== 'preferences'
+  ) {
+    return;
   }
 
+  this.activeSection.set(section);
+  this.savedMessage.set(false);
+}
   // --------------------------------------------------
   // GÉNEROS FAVORITOS
   // --------------------------------------------------

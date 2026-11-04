@@ -159,12 +159,13 @@
 
     }
 
-    @if (!loading() && !errorMessage() && movies().length === 0) {
-      <div class="empty-state">
-        <h2>No encontramos estrenos</h2>
-        <p>No hay películas disponibles para este año.</p>
-      </div>
-    }
+@if (!loading() && !errorMessage() && movies().length === 0) {
+  <app-empty-state
+    icon="fa-calendar-xmark"
+    title="No encontramos estrenos"
+    description="No hay películas disponibles para este año."
+  />
+}
 
   </section>
 

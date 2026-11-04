@@ -1,23 +1,18 @@
-
 <main class="roulette-page">
-
-<app-page-header
-  section="CINEVERSE ORIGINAL"
-  title="Ruleta de películas"
-  description="Agrega tus películas favoritas, gira la ruleta y deja que el azar decida qué vas a ver."
-/>
+  <app-page-header
+    section="CINEVERSE ORIGINAL"
+    title="Ruleta de películas"
+    description="Agrega tus películas favoritas, gira la ruleta y deja que el azar decida qué vas a ver."
+  />
 
   <!-- BUSCADOR -->
   <section class="section-card">
-
     <div class="section-title">
       <div>
         <span class="step-number">01</span>
         <h2>Busca tus películas</h2>
       </div>
-      <span class="counter">
-        {{ selectedMovies().length }} seleccionadas
-      </span>
+      <span class="counter"> {{ selectedMovies().length }} seleccionadas </span>
     </div>
 
     <div class="search-box">
@@ -29,11 +24,7 @@
         (keydown.enter)="searchMovies()"
       />
 
-      <button
-        type="button"
-        (click)="searchMovies()"
-        [disabled]="searching()"
-      >
+      <button type="button" (click)="searchMovies()" [disabled]="searching()">
         @if (searching()) {
           Buscando...
         } @else {
@@ -59,14 +50,9 @@
 
     @if (searchResults().length > 0) {
       <div class="search-results">
-
         @for (movie of searchResults(); track movie.id) {
           <article class="search-result">
-
-            <img
-              [src]="getImageUrl(movie.poster_path)"
-              [alt]="getTitle(movie)"
-            />
+            <img [src]="getImageUrl(movie.poster_path)" [alt]="getTitle(movie)" />
 
             <div class="result-info">
               <h3>{{ getTitle(movie) }}</h3>
@@ -76,10 +62,8 @@
               </p>
             </div>
 
-            @if (selectedMovies().some(item => item.id === movie.id)) {
-              <button class="added-button" type="button" disabled>
-                <span>✓</span> Agregada
-              </button>
+            @if (selectedMovies().some((item) => item.id === movie.id)) {
+              <button class="added-button" type="button" disabled><span>✓</span> Agregada</button>
             } @else {
               <button
                 class="add-button"
@@ -87,48 +71,37 @@
                 (click)="addMovie(movie)"
                 [disabled]="winners().length > 0"
               >
-                + Agregar
+                <i class="fas fa-plus"></i>
+                Agregar
               </button>
             }
-
           </article>
         }
-
       </div>
     }
-
   </section>
 
   <!-- LISTA SELECCIONADA -->
   <section class="section-card">
-
     <div class="section-title">
       <div>
         <span class="step-number">02</span>
         <h2>Tu lista para la ruleta</h2>
       </div>
-      <span class="counter">
-        {{ selectedMovies().length }} películas
-      </span>
+      <span class="counter"> {{ selectedMovies().length }} películas </span>
     </div>
 
     @if (selectedMovies().length === 0) {
-      <div class="empty-state">
-        <span class="empty-icon">🎬</span>
-        <h3>Aún no tienes películas</h3>
-        <p>Busca y agrega las películas que quieres incluir en la ruleta.</p>
-      </div>
+      <app-empty-state
+        icon="fa-film"
+        title="Aún no tienes películas"
+        description="Busca y agrega las películas que quieres incluir en la ruleta."
+      />
     } @else {
-
       <div class="selected-grid">
-
         @for (movie of selectedMovies(); track movie.id) {
           <article class="selected-movie">
-
-            <img
-              [src]="getImageUrl(movie.poster_path)"
-              [alt]="getTitle(movie)"
-            />
+            <img [src]="getImageUrl(movie.poster_path)" [alt]="getTitle(movie)" />
 
             <div class="selected-info">
               <h3>{{ getTitle(movie) }}</h3>
@@ -145,19 +118,14 @@
                 ×
               </button>
             }
-
           </article>
         }
-
       </div>
-
     }
-
   </section>
 
   <!-- CONFIGURACIÓN -->
   <section class="section-card">
-
     <div class="section-title">
       <div>
         <span class="step-number">03</span>
@@ -166,12 +134,9 @@
     </div>
 
     <div class="configuration">
-
       <div class="configuration-info">
         <h3>¿Cuántas películas quieres que salgan ganadoras?</h3>
-        <p>
-          Cada giro seleccionará una película diferente.
-        </p>
+        <p>Cada giro seleccionará una película diferente.</p>
       </div>
 
       <select
@@ -180,24 +145,19 @@
         [disabled]="winners().length > 0 || selectedMovies().length === 0"
       >
         @for (count of getWinnerOptions(); track count) {
-          <option [value]="count">
-            {{ count }} {{ count === 1 ? 'ganadora' : 'ganadoras' }}
-          </option>
+          <option [value]="count">{{ count }} {{ count === 1 ? 'ganadora' : 'ganadoras' }}</option>
         }
       </select>
-
     </div>
 
     <p class="configuration-note">
-      Necesitas seleccionar al menos una película. No se repetirán las
-      películas que ya hayan salido.
+      Necesitas seleccionar al menos una película. No se repetirán las películas que ya hayan
+      salido.
     </p>
-
   </section>
 
   <!-- RULETA -->
   <section class="roulette-section">
-
     <div class="section-title roulette-title">
       <div>
         <span class="step-number">04</span>
@@ -206,22 +166,16 @@
     </div>
 
     <div class="wheel-container">
-
       <div class="wheel-pointer">▼</div>
 
-      <div
-        class="roulette-wheel"
-        [class.spinning]="spinning()"
-      >
+      <div class="roulette-wheel" [class.spinning]="spinning()">
         <div class="wheel-center">
           <span>🎬</span>
         </div>
       </div>
-
     </div>
 
     <div class="roulette-actions">
-
       @if (winners().length === 0) {
         <p>¿Preparado para descubrir qué película verás?</p>
       } @else {
@@ -231,20 +185,19 @@
         </p>
       }
 
-      <button
-        type="button"
-        class="spin-button"
-        (click)="spinRoulette()"
-        [disabled]="!canSpin()"
-      >
+      <button type="button" class="spin-button" (click)="spinRoulette()" [disabled]="!canSpin()">
         @if (spinning()) {
+          <i class="fas fa-spinner fa-spin"></i>
           Girando...
         } @else if (completed()) {
+          <i class="fas fa-flag-checkered"></i>
           Sorteo finalizado
         } @else if (getPendingWinner()) {
+          <i class="fas fa-circle-exclamation"></i>
           Decide la ganadora primero
         } @else {
-          <span>🎯</span> Girar ruleta
+          <i class="fas fa-bullseye"></i>
+          Girar ruleta
         }
       </button>
 
@@ -258,7 +211,6 @@
           Volver a empezar con las mismas películas
         </button>
       }
-
     </div>
 
     @if (message()) {
@@ -266,39 +218,28 @@
         {{ message() }}
       </div>
     }
-
   </section>
 
   <!-- GANADORA ACTUAL -->
   @if (currentWinner(); as winner) {
-
     <section class="winner-section">
-
       <div class="winner-heading">
-        <span>🎉</span>
+        <i class="fas fa-trophy"></i>
         <h2>¡Tenemos una ganadora!</h2>
         <p>Decide si quieres guardar esta película en Mi lista.</p>
       </div>
 
       <article class="winner-card">
-
-        <img
-          [src]="getImageUrl(winner.poster_path)"
-          [alt]="getTitle(winner)"
-        />
+        <img [src]="getImageUrl(winner.poster_path)" [alt]="getTitle(winner)" />
 
         <div class="winner-info">
-          <span class="winner-label">
-            GANADORA N.º {{ winners().length }}
-          </span>
+          <span class="winner-label"> GANADORA N.º {{ winners().length }} </span>
 
           <h3>{{ getTitle(winner) }}</h3>
 
           <div class="winner-meta">
             <span>{{ getYear(winner) }}</span>
-            <span>
-              ★ {{ winner.vote_average | number:'1.1-1' }}
-            </span>
+            <span> ★ {{ winner.vote_average | number: '1.1-1' }} </span>
           </div>
 
           <p>
@@ -307,39 +248,25 @@
 
           @if (getPendingWinner(); as pending) {
             <div class="decision-buttons">
-
-              <button
-                type="button"
-                class="accept-button"
-                (click)="acceptWinner(pending)"
-              >
-                ✓ Aceptar y guardar
+              <button type="button" class="accept-button" (click)="acceptWinner(pending)">
+                <i class="fas fa-check"></i>
+                Aceptar y guardar
               </button>
 
-              <button
-                type="button"
-                class="reject-button"
-                (click)="rejectWinner(pending)"
-              >
-                ✕ Rechazar
+              <button type="button" class="reject-button" (click)="rejectWinner(pending)">
+                <i class="fas fa-xmark"></i>
+                Rechazar
               </button>
-
             </div>
           }
-
         </div>
-
       </article>
-
     </section>
-
   }
 
   <!-- HISTORIAL DE GANADORAS -->
   @if (winners().length > 0) {
-
     <section class="section-card history-section">
-
       <div class="section-title">
         <div>
           <span class="step-number">05</span>
@@ -365,19 +292,13 @@
       </div>
 
       <div class="history-list">
-
         @for (winner of winners(); track winner.movie.id) {
-
           <article class="history-item">
-
             <span class="history-position">
               {{ winner.position }}
             </span>
 
-            <img
-              [src]="getImageUrl(winner.movie.poster_path)"
-              [alt]="getTitle(winner.movie)"
-            />
+            <img [src]="getImageUrl(winner.movie.poster_path)" [alt]="getTitle(winner.movie)" />
 
             <div class="history-info">
               <h3>{{ getTitle(winner.movie) }}</h3>
@@ -391,33 +312,22 @@
             } @else {
               <span class="status pending">Pendiente</span>
             }
-
           </article>
-
         }
-
       </div>
 
       @if (completed()) {
         <div class="completed-message">
           <h3>¡Sorteo terminado!</h3>
           <p>
-            Has aceptado {{ getAcceptedCount() }} películas.
-            Las encontrarás en tu módulo Mi lista.
+            Has aceptado {{ getAcceptedCount() }} películas. Las encontrarás en tu módulo Mi lista.
           </p>
 
-          <button
-            type="button"
-            class="new-roulette-button"
-            (click)="newRoulette()"
-          >
+          <button type="button" class="new-roulette-button" (click)="newRoulette()">
             Crear nueva ruleta
           </button>
         </div>
       }
-
     </section>
-
   }
-
 </main>

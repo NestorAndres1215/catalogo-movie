@@ -27,10 +27,11 @@
   }
 
   @if (!loading() && filteredReviews.length === 0 && !errorMessage()) {
-    <div class="empty-state">
-      <h2>No hay reseñas disponibles</h2>
-      <p>Todavía no encontramos opiniones para este contenido.</p>
-    </div>
+    <app-empty-state
+      icon="fa-comments"
+      title="No hay reseñas disponibles"
+      description="Todavía no encontramos opiniones para este contenido."
+    />
   }
 
   @if (!loading() && filteredReviews.length > 0) {

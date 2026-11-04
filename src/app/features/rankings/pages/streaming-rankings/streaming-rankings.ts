@@ -7,19 +7,14 @@ import { catchError, map, mergeMap, switchMap, toArray } from 'rxjs/operators';
 
 import { StreamingService } from '../../../../core/service/streaming.service';
 
-import {
-  StreamingProvider,
-  StreamingRanking,
-  StreamingMovie,
-  StreamingSeries,
-  StreamingDiscoverResponse,
-} from '../../../../core/models/streaming.interface';
+import { StreamingProvider, StreamingRanking } from '../../../../core/models/streaming.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-streaming-rankings',
   standalone: true,
-  imports: [CommonModule, PageHeaderComponent],
+  imports: [CommonModule, PageHeaderComponent, EmptyStateComponent],
   templateUrl: './streaming-rankings.html',
   styleUrl: './streaming-rankings.css',
 })

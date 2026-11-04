@@ -7,11 +7,24 @@ import { UpcomingMedia } from '../../../../core/models/upcoming.interface';
 import { FavoriteButtonComponent } from '../../../../shared/components/favorite-button/favorite-button';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
+import {
+  FilterTab,
+  FilterTabsComponent,
+  FilterType,
+} from '../../../../shared/components/filter-tabs/filter-tabs';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-upcoming-list',
   standalone: true,
-  imports: [DecimalPipe, FavoriteButtonComponent, PageHeaderComponent, PageLoadingComponent],
+  imports: [
+    DecimalPipe,
+    FavoriteButtonComponent,
+    PageHeaderComponent,
+    PageLoadingComponent,
+    FilterTabsComponent,
+    EmptyStateComponent
+],
   templateUrl: './upcoming-list.html',
   styleUrl: './upcoming-list.css',
 })
@@ -30,7 +43,10 @@ export class UpcomingListComponent {
   readonly currentPage = signal(1);
   readonly totalPages = signal(1);
   readonly totalResults = signal(0);
-
+  readonly mediaTabs: FilterTab[] = [
+    { label: 'Películas', value: 'movie' },
+    { label: 'Series', value: 'tv' },
+  ];
   private requestVersion = 0;
 
   constructor() {
@@ -73,14 +89,20 @@ export class UpcomingListComponent {
     });
   }
 
-  changeMediaType(type: 'movie' | 'tv'): void {
-    if (this.mediaType() === type) return;
-
-    this.mediaType.set(type);
-    this.currentPage.set(1);
-
-    this.loadUpcoming();
+changeMediaType(type: FilterType): void {
+  if (type !== 'movie' && type !== 'tv') {
+    return;
   }
+
+  if (this.mediaType() === type) {
+    return;
+  }
+
+  this.mediaType.set(type);
+  this.currentPage.set(1);
+
+  this.loadUpcoming();
+}
 
   changePage(page: number): void {
     if (page < 1 || page > this.totalPages() || page === this.currentPage()) {

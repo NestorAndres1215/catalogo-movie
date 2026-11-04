@@ -194,6 +194,7 @@
   line-height: 1.5;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
 .serie-votes {
@@ -237,15 +238,6 @@
   color: #f87171;
 }
 
-/* ESTADOS */
-
-.loading-message,
-.empty-message {
-  padding: 40px 20px;
-  color: #999;
-  text-align: center;
-}
-
 .error-message {
   padding: 20px;
   border: 1px solid #7f1d1d;
@@ -265,20 +257,6 @@
   cursor: pointer;
 }
 
-/* FOOTER */
-
-.ranking-footer {
-  margin-top: 30px;
-  padding: 18px;
-  border-top: 1px solid #292929;
-  color: #777;
-  font-size: 12px;
-  text-align: center;
-}
-
-.ranking-footer p {
-  margin: 5px;
-}
 
 /* RESPONSIVE */
 

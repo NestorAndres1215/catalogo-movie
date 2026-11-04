@@ -1,23 +1,17 @@
 <section class="streaming-page">
-<app-page-header
-  section="CINEVERSE ORIGINAL"
-  title="Streaming y plataformas"
-  description="Explora películas y series disponibles en tus plataformas favoritas."
-/>
+  <app-page-header
+    section="CINEVERSE ORIGINAL"
+    title="Streaming y plataformas"
+    description="Explora películas y series disponibles en tus plataformas favoritas."
+  />
 
   <!-- Selector de contenido -->
   <div class="media-selector">
-    <button
-      type="button"
-      [class.active]="mediaType() === 'movie'"
-      (click)="changeMediaType('movie')"
-    >
-      Películas
-    </button>
-
-    <button type="button" [class.active]="mediaType() === 'tv'" (click)="changeMediaType('tv')">
-      Series
-    </button>
+    <app-filter-tabs
+      [tabs]="mediaTabs"
+      [selected]="mediaType()"
+      (selectionChange)="changeMediaType($event)"
+    />
   </div>
 
   <!-- Plataformas -->
@@ -88,7 +82,12 @@
     </div>
 
     @if (loadingContents()) {
-      <div class="loading-message">Cargando catálogo...</div>
+      <app-page-loading
+        title="Cargando catálogo..."
+        description="Estamos buscando el contenido disponible en las plataformas."
+        detail="Conectando con TMDB..."
+        icon="fa-tv"
+      />
     }
 
     @if (errorMessage()) {
@@ -103,7 +102,11 @@
       contents().length === 0 &&
       selectedProvider() !== null
     ) {
-      <div class="empty-message">No se encontró contenido para esta plataforma.</div>
+      <app-empty-state
+        icon="fa-tv"
+        title="No se encontró contenido"
+        description="No se encontró contenido para esta plataforma."
+      />
     }
 
     @if (!loadingContents() && contents().length > 0) {

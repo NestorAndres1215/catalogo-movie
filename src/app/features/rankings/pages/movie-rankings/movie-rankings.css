@@ -1,11 +1,8 @@
-
-
 .rankings-container {
- padding: 35px 40px;
+  padding: 35px 40px;
   max-width: 1600px;
   margin: auto;
 }
-
 
 .rankings-header p,
 .section-heading p {
@@ -87,7 +84,9 @@
   background: #262626;
   border: 1px solid #404040;
   border-radius: 12px;
-  transition: transform 0.2s, border-color 0.2s;
+  transition:
+    transform 0.2s,
+    border-color 0.2s;
 }
 
 .movie-card:hover {
@@ -177,13 +176,6 @@
   color: #737373;
   border-top: 1px solid #404040;
   font-size: 11px;
-}
-
-.loading-state,
-.empty-state {
-  padding: 45px 15px;
-  color: #a3a3a3;
-  text-align: center;
 }
 
 .error-state {

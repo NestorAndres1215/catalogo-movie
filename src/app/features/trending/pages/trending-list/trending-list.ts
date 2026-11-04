@@ -7,6 +7,12 @@ import { TrendingMedia } from '../../../../core/models/trending.interface';
 import { FavoriteButtonComponent } from '../../../../shared/components/favorite-button/favorite-button';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
+import {
+  FilterTab,
+  FilterTabsComponent,
+  FilterType,
+} from '../../../../shared/components/filter-tabs/filter-tabs';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-trending-list',
@@ -16,13 +22,14 @@ import { PageLoadingComponent } from '../../../../shared/components/page-loading
     DecimalPipe,
     FavoriteButtonComponent,
     PageHeaderComponent,
-    PageLoadingComponent
+    PageLoadingComponent,
+    FilterTabsComponent,
+    EmptyStateComponent
 ],
   templateUrl: './trending-list.html',
-  styleUrl: './trending-list.css'
+  styleUrl: './trending-list.css',
 })
 export class TrendingListComponent implements OnInit {
-
   private readonly trendingService = inject(TrendingService);
 
   readonly mediaType = signal<'all' | 'movie' | 'tv'>('all');
@@ -42,65 +49,76 @@ export class TrendingListComponent implements OnInit {
   ngOnInit(): void {
     this.loadTrending();
   }
-
+  readonly mediaTabs: FilterTab[] = [
+    { label: 'Todo', value: 'all' },
+    { label: 'Películas', value: 'movie' },
+    { label: 'Series', value: 'tv' },
+  ];
   loadTrending(): void {
     const version = ++this.requestVersion;
 
     this.loading.set(true);
     this.errorMessage.set('');
 
-    this.trendingService.getTrending(
-      this.mediaType(),
-      this.timeWindow(),
-      this.currentPage()
-    ).subscribe({
-      next: (response) => {
-        if (version !== this.requestVersion) return;
+    this.trendingService
+      .getTrending(this.mediaType(), this.timeWindow(), this.currentPage())
+      .subscribe({
+        next: (response) => {
+          if (version !== this.requestVersion) return;
 
-        this.trending.set(response.results);
-        this.totalPages.set(Math.min(response.total_pages, 500));
-        this.totalResults.set(response.total_results);
-        this.loading.set(false);
-      },
-      error: (error) => {
-        if (version !== this.requestVersion) return;
+          this.trending.set(response.results);
+          this.totalPages.set(Math.min(response.total_pages, 500));
+          this.totalResults.set(response.total_results);
+          this.loading.set(false);
+        },
+        error: (error) => {
+          if (version !== this.requestVersion) return;
 
-        console.error('Error al cargar tendencias:', error);
+          console.error('Error al cargar tendencias:', error);
 
-        this.trending.set([]);
-        this.totalPages.set(1);
-        this.totalResults.set(0);
-        this.errorMessage.set(
-          'No se pudieron cargar las tendencias. Inténtalo nuevamente.'
-        );
+          this.trending.set([]);
+          this.totalPages.set(1);
+          this.totalResults.set(0);
+          this.errorMessage.set('No se pudieron cargar las tendencias. Inténtalo nuevamente.');
 
-        this.loading.set(false);
-      }
-    });
+          this.loading.set(false);
+        },
+      });
   }
 
-  changeMediaType(type: 'all' | 'movie' | 'tv'): void {
-    if (this.mediaType() === type) return;
+  changeMediaType(type: FilterType): void {
+    if (type !== 'all' && type !== 'movie' && type !== 'tv') {
+      return;
+    }
+
+    if (this.mediaType() === type) {
+      return;
+    }
 
     this.mediaType.set(type);
     this.currentPage.set(1);
     this.loadTrending();
   }
-
-  changeTimeWindow(window: 'day' | 'week'): void {
-    if (this.timeWindow() === window) return;
-
-    this.timeWindow.set(window);
-    this.currentPage.set(1);
-    this.loadTrending();
+  readonly timeTabs: FilterTab[] = [
+    { label: 'Hoy', value: 'day' },
+    { label: 'Esta semana', value: 'week' },
+  ];
+changeTimeWindow(type: FilterType): void {
+  if (type !== 'day' && type !== 'week') {
+    return;
   }
 
+  if (this.timeWindow() === type) {
+    return;
+  }
+
+  this.timeWindow.set(type);
+  this.currentPage.set(1);
+  this.loadTrending();
+}
+
   changePage(page: number): void {
-    if (
-      page < 1 ||
-      page > this.totalPages() ||
-      this.loading()
-    ) {
+    if (page < 1 || page > this.totalPages() || this.loading()) {
       return;
     }
 
@@ -109,7 +127,7 @@ export class TrendingListComponent implements OnInit {
 
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   }
 
@@ -136,14 +154,10 @@ export class TrendingListComponent implements OnInit {
   getMediaRoute(item: TrendingMedia): string[] {
     const type = this.getMediaType(item);
 
-    return type === 'movie'
-      ? ['/movies', String(item.id)]
-      : ['/series', String(item.id)];
+    return type === 'movie' ? ['/movies', String(item.id)] : ['/series', String(item.id)];
   }
 
   getMediaLabel(item: TrendingMedia): string {
-    return this.getMediaType(item) === 'movie'
-      ? 'Película'
-      : 'Serie';
+    return this.getMediaType(item) === 'movie' ? 'Película' : 'Serie';
   }
 }

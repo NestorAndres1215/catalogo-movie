@@ -7,39 +7,7 @@
   />
 
   <!-- ESTADÍSTICAS -->
-  <div class="stats-container">
-    <div class="stat-card">
-      <span class="stat-icon">
-        <i class="fas fa-film"></i>
-      </span>
-      <div>
-        <strong>{{ totalWatched() }}</strong>
-        <span>Películas vistas</span>
-      </div>
-    </div>
-
-    <div class="stat-card">
-      <span class="stat-icon">
-        <i class="fas fa-star"></i>
-      </span>
-      <div>
-        <strong>{{ ratedMovies() }}</strong>
-        <span>Películas calificadas</span>
-      </div>
-    </div>
-
-    <div class="stat-card">
-      <span class="stat-icon">
-        <i class="fas fa-trophy"></i>
-      </span>
-      <div>
-        <strong>
-          {{ averageRating() > 0 ? (averageRating() | number: '1.1-1') : '—' }}
-        </strong>
-        <span>Mi puntuación promedio</span>
-      </div>
-    </div>
-  </div>
+  <app-stats [stats]="stats()" />
 
   <!-- RESULTADOS -->
   <div class="list-header">
@@ -90,21 +58,13 @@
     </div>
   } @else {
     <!-- ESTADO VACÍO -->
-    <div class="empty-state">
-      <div class="empty-icon">
-        <i class="fas fa-film"></i>
-      </div>
-
-      <h2>Todavía no tienes películas vistas</h2>
-
-      <p>
-        Cuando cambies el estado de una película a "Visto" en tu lista para ver, aparecerá
-        automáticamente aquí.
-      </p>
-
-      <button type="button" class="explore-button" (click)="goToWatchlist()">
-        Ir a mi lista para ver
-      </button>
-    </div>
+    <app-empty-state
+      icon="fa-film"
+      title="Todavía no tienes películas vistas"
+      description="Cuando cambies el estado de una película a 'Visto' en tu lista para ver, aparecerá automáticamente aquí."
+      actionText="Ir a mi lista para ver"
+      actionIcon="fa-bookmark"
+      (actionClicked)="goToWatchlist()"
+    />
   }
 </section>

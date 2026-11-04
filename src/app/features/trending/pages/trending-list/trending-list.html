@@ -19,25 +19,11 @@
       <span class="filter-label">Contenido</span>
 
       <div class="filter-tabs">
-        <button
-          type="button"
-          [class.active]="mediaType() === 'all'"
-          (click)="changeMediaType('all')"
-        >
-          Todo
-        </button>
-
-        <button
-          type="button"
-          [class.active]="mediaType() === 'movie'"
-          (click)="changeMediaType('movie')"
-        >
-          Películas
-        </button>
-
-        <button type="button" [class.active]="mediaType() === 'tv'" (click)="changeMediaType('tv')">
-          Series
-        </button>
+        <app-filter-tabs
+          [tabs]="mediaTabs"
+          [selected]="mediaType()"
+          (selectionChange)="changeMediaType($event)"
+        />
       </div>
     </div>
 
@@ -45,21 +31,11 @@
       <span class="filter-label">Periodo</span>
 
       <div class="filter-tabs">
-        <button
-          type="button"
-          [class.active]="timeWindow() === 'day'"
-          (click)="changeTimeWindow('day')"
-        >
-          Hoy
-        </button>
-
-        <button
-          type="button"
-          [class.active]="timeWindow() === 'week'"
-          (click)="changeTimeWindow('week')"
-        >
-          Esta semana
-        </button>
+        <app-filter-tabs
+          [tabs]="timeTabs"
+          [selected]="timeWindow()"
+          (selectionChange)="changeTimeWindow($event)"
+        />
       </div>
     </div>
   </div>
@@ -183,10 +159,11 @@
         </nav>
       }
     } @else {
-      <div class="empty-state">
-        <h2>No hay tendencias disponibles</h2>
-        <p>No encontramos producciones para los filtros seleccionados.</p>
-      </div>
-    }
+  <app-empty-state
+    icon="fa-fire"
+    title="No hay tendencias disponibles"
+    description="No encontramos producciones para los filtros seleccionados."
+  />
+}
   }
 </section>

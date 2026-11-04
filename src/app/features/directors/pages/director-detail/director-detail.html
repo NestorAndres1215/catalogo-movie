@@ -16,19 +16,12 @@
 
 @if (!loading() && director(); as person) {
   <section class="director-detail">
-
-    <a routerLink="/directors" class="back-link">
-      ← Volver a directores
-    </a>
+    <a routerLink="/directors" class="back-link"> ← Volver a directores </a>
 
     <div class="profile-section">
-
       <div class="profile-image">
         @if (person.profile_path) {
-          <img
-            [src]="getProfile(person.profile_path)"
-            [alt]="person.name"
-          />
+          <img [src]="getProfile(person.profile_path)" [alt]="person.name" />
         } @else {
           <div class="no-image">Sin fotografía</div>
         }
@@ -65,7 +58,7 @@
 
           <div>
             <span>Popularidad</span>
-            <strong>{{ person.popularity  }}</strong>
+            <strong>{{ person.popularity }}</strong>
           </div>
         </div>
 
@@ -80,7 +73,6 @@
           </a>
         }
       </div>
-
     </div>
 
     <section class="biography-section">
@@ -114,21 +106,19 @@
       </div>
 
       @if (credits().length === 0) {
-        <div class="empty-credits">
-          No hay créditos de dirección disponibles.
-        </div>
+        <app-empty-state
+          icon="fa-clapperboard"
+          title="No hay créditos disponibles"
+          description="No hay créditos de dirección disponibles para esta persona."
+        />
       }
 
       <div class="credits-grid">
         @for (credit of credits(); track credit.media_type + '-' + credit.id) {
           <article class="credit-card">
-
             <div class="credit-image">
               @if (credit.poster_path) {
-                <img
-                  [src]="getPoster(credit.poster_path)"
-                  [alt]="getTitle(credit)"
-                />
+                <img [src]="getPoster(credit.poster_path)" [alt]="getTitle(credit)" />
               } @else {
                 <div class="no-image">Sin póster</div>
               }
@@ -142,19 +132,15 @@
                 <span>{{ getMediaType(credit.media_type) }}</span>
               </div>
 
-              <div class="rating">
-                ★ {{ credit.vote_average  }}
-              </div>
+              <div class="rating">★ {{ credit.vote_average }}</div>
 
               <p>
                 {{ credit.overview || 'Sin descripción disponible.' }}
               </p>
             </div>
-
           </article>
         }
       </div>
     </section>
-
   </section>
 }

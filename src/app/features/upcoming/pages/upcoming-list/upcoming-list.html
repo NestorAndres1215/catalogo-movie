@@ -6,19 +6,11 @@
   />
 
   <div class="filters">
-    <div class="tabs">
-      <button
-        type="button"
-        [class.active]="mediaType() === 'movie'"
-        (click)="changeMediaType('movie')"
-      >
-        Películas
-      </button>
-
-      <button type="button" [class.active]="mediaType() === 'tv'" (click)="changeMediaType('tv')">
-        Series
-      </button>
-    </div>
+    <app-filter-tabs
+      [tabs]="mediaTabs"
+      [selected]="mediaType()"
+      (selectionChange)="changeMediaType($event)"
+    />
 
     <span class="results-count"> {{ totalResults() | number }} resultados </span>
   </div>
@@ -28,14 +20,14 @@
       Las series mostradas tienen episodios programados para emitirse próximamente.
     </p>
   }
-@if (loading()) {
-  <app-page-loading
-    title="Buscando próximos estrenos"
-    description="Descubre las películas que llegarán próximamente."
-    detail="Consultando fechas de lanzamiento en TMDB..."
-    icon="fa-calendar-days"
-  />
-}
+  @if (loading()) {
+    <app-page-loading
+      title="Buscando próximos estrenos"
+      description="Descubre las películas que llegarán próximamente."
+      detail="Consultando fechas de lanzamiento en TMDB..."
+      icon="fa-calendar-days"
+    />
+  }
 
   @if (errorMessage()) {
     <div class="error-message">
@@ -117,10 +109,11 @@
         </button>
       </div>
     } @else {
-      <div class="empty-state">
-        <h2>No hay estrenos disponibles</h2>
-        <p>Intenta consultar nuevamente más adelante.</p>
-      </div>
+<app-empty-state
+  icon="fa-calendar-xmark"
+  title="No hay estrenos disponibles"
+  description="Intenta consultar nuevamente más adelante."
+/>
     }
   }
 </section>

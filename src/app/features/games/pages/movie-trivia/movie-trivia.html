@@ -15,11 +15,13 @@
         [class.active]="category() === 'movie'"
         (click)="changeCategory('movie')"
       >
-        🎬 Películas
+        <i class="fas fa-film"></i>
+        Películas
       </button>
 
       <button type="button" [class.active]="category() === 'tv'" (click)="changeCategory('tv')">
-        📺 Series
+        <i class="fas fa-tv"></i>
+        Series
       </button>
 
       <button
@@ -27,7 +29,8 @@
         [class.active]="category() === 'person'"
         (click)="changeCategory('person')"
       >
-        ⭐ Actores
+        <i class="fas fa-user"></i>
+        Actores
       </button>
 
       <button
@@ -35,7 +38,8 @@
         [class.active]="category() === 'company'"
         (click)="changeCategory('company')"
       >
-        🏢 Productoras
+        <i class="fas fa-building"></i>
+        Productoras
       </button>
     </div>
   </section>
@@ -43,7 +47,9 @@
   <!-- Inicio -->
   @if (questionNumber() === 0 && !gameFinished() && !loading()) {
     <section class="start-section">
-      <div class="start-icon">🎯</div>
+      <div class="start-icon">
+        <i class="fas fa-bullseye"></i>
+      </div>
 
       <h2>¿Estás preparado?</h2>
 
@@ -53,24 +59,35 @@
       </p>
 
       <div class="game-rules">
-        <div>⏱️ 60 segundos</div>
-        <div>❓ 10 preguntas</div>
-        <div>⭐ 1 punto por acierto</div>
+        <div>
+          <i class="fas fa-stopwatch"></i>
+          60 segundos
+        </div>
+
+        <div>
+          <i class="fas fa-circle-question"></i>
+          10 preguntas
+        </div>
+
+        <div>
+          <i class="fas fa-star"></i>
+          1 punto por acierto
+        </div>
       </div>
 
-      <button type="button" class="primary-button" (click)="startGame()">Comenzar trivia</button>
+      <app-button text="Comenzar trivia" icon="fa-play" (clicked)="startGame()" />
     </section>
   }
 
   <!-- Cargando -->
-@if (loading() && !gameFinished()) {
-  <app-page-loading
-    title="Preparando la siguiente pregunta"
-    description="Pon a prueba tus conocimientos cinematográficos."
-    detail="Generando tu desafío de cine..."
-    icon="fa-brain"
-  />
-}
+  @if (loading() && !gameFinished()) {
+    <app-page-loading
+      title="Preparando la siguiente pregunta"
+      description="Pon a prueba tus conocimientos cinematográficos."
+      detail="Generando tu desafío de cine..."
+      icon="fa-brain"
+    />
+  }
 
   <!-- Pregunta -->
   @if (!gameFinished() && currentQuestion(); as question) {
@@ -79,9 +96,15 @@
       <div class="question-top">
         <span> Pregunta {{ questionNumber() }} de {{ totalQuestions }} </span>
 
-        <span> ⭐ {{ score() }} puntos </span>
+        <span>
+          <i class="fas fa-star"></i>
+          {{ score() }} puntos
+        </span>
 
-        <span class="timer" [class.time-warning]="timeLeft() <= 10"> ⏱️ {{ formatTime() }} </span>
+        <span class="timer" [class.time-warning]="timeLeft() <= 10">
+          <i class="fas fa-stopwatch"></i>
+          {{ formatTime() }}
+        </span>
       </div>
 
       <!-- Progreso -->
@@ -153,14 +176,17 @@
       @if (answered()) {
         <div class="feedback-panel" [class.correct]="isCorrect()" [class.incorrect]="!isCorrect()">
           @if (isCorrect()) {
-            <span class="feedback-icon">🎉</span>
+            <span class="feedback-icon">
+              <i class="fas fa-circle-check"></i>
+            </span>
 
             <h3>¡Respuesta correcta!</h3>
 
             <p>¡Muy bien! Has ganado un punto.</p>
           } @else {
-            <span class="feedback-icon">❌</span>
-
+            <span class="feedback-icon">
+              <i class="fas fa-xmark"></i>
+            </span>
             <h3>Respuesta incorrecta</h3>
 
             <p>La respuesta correcta era:</p>
@@ -168,10 +194,13 @@
             <strong>{{ correctAnswer() }}</strong>
           }
         </div>
-
-        <button type="button" class="primary-button next-button" (click)="nextQuestion()">
-          {{ questionNumber() === totalQuestions ? 'Ver resultados' : 'Siguiente pregunta →' }}
-        </button>
+        <div class="d-flex flex-column align-items-center gap-3 mt-4 mb-2">
+          <app-button
+            [text]="questionNumber() === totalQuestions ? 'Ver resultados' : 'Siguiente pregunta'"
+            [icon]="questionNumber() === totalQuestions ? 'fa-flag-checkered' : 'fa-arrow-right'"
+            (clicked)="nextQuestion()"
+          />
+        </div>
       }
     </section>
   }
@@ -180,10 +209,9 @@
   @if (errorMessage() && !gameFinished()) {
     <section class="error-section">
       <p>{{ errorMessage() }}</p>
-
-      <button type="button" class="primary-button" (click)="loadQuestion()">
-        Intentar nuevamente
-      </button>
+      <div class="d-flex flex-column align-items-center gap-3 mt-4 mb-2">
+        <app-button text="Intentar nuevamente" icon="fa-rotate-right" (clicked)="loadQuestion()" />
+      </div>
     </section>
   }
 
@@ -192,11 +220,11 @@
     <section class="final-section">
       <div class="final-icon">
         @if (score() >= 8) {
-          🏆
+          <i class="fas fa-trophy"></i>
         } @else if (score() >= 5) {
-          🎉
+          <i class="fas fa-champagne-glasses"></i>
         } @else {
-          🎬
+          <i class="fas fa-film"></i>
         }
       </div>
 
@@ -205,7 +233,10 @@
       <p class="final-category">Categoría: {{ getCategoryName() }}</p>
 
       @if (timeLeft() === 0) {
-        <p class="time-expired-message">⏰ ¡Se acabó el tiempo!</p>
+        <p class="time-expired-message">
+          <i class="fas fa-clock"></i>
+          ¡Se acabó el tiempo!
+        </p>
       } @else {
         <p class="time-completed-message">¡Terminaste antes de que acabara el tiempo!</p>
       }
@@ -224,11 +255,16 @@
 
       <p class="final-time">Tiempo restante: {{ formatTime() }}</p>
 
-      <button type="button" class="primary-button" (click)="playAgain()">🔄 Volver a jugar</button>
+      <div class="d-flex flex-column align-items-center gap-3">
+        <app-button text="Volver a jugar" icon="fa-rotate-right" (clicked)="playAgain()" />
 
-      <button type="button" class="secondary-button" (click)="resetGame()">
-        Cambiar categoría
-      </button>
+        <app-button
+          text="Cambiar categoría"
+          icon="fa-list"
+          variant="secondary"
+          (clicked)="resetGame()"
+        />
+      </div>
     </section>
   }
 </main>

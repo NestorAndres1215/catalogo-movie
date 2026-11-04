@@ -16,6 +16,7 @@ export class ButtonComponent {
   readonly type = input<'button' | 'submit' | 'reset'>('button');
   readonly disabled = input(false);
   readonly variant = input<'primary' | 'secondary'>('primary');
-
+readonly href = input<string | null>(null);
+readonly target = input('_blank');
   readonly clicked = output<void>();
 }

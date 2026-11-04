@@ -5,20 +5,25 @@ import { CatalogService } from '../../../../core/service/catalog.service';
 import {
   CatalogMedia,
   CatalogResponse,
-  TmdbLanguage
+  TmdbLanguage,
 } from '../../../../core/models/catalog.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
+import {
+  FilterTab,
+  FilterTabsComponent,
+  FilterType,
+} from '../../../../shared/components/filter-tabs/filter-tabs';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-language-list',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent, PageLoadingComponent],
+  imports: [DecimalPipe, PageHeaderComponent, PageLoadingComponent, FilterTabsComponent, EmptyStateComponent],
   templateUrl: './language-list.html',
-  styleUrl: './language-list.css'
+  styleUrl: './language-list.css',
 })
 export class LanguageListComponent implements OnInit {
-
   private readonly catalogService = inject(CatalogService);
 
   readonly languages = signal<TmdbLanguage[]>([]);
@@ -35,7 +40,10 @@ export class LanguageListComponent implements OnInit {
   readonly errorMessage = signal('');
 
   private requestVersion = 0;
-
+  readonly mediaTabs: FilterTab[] = [
+    { label: 'Películas', value: 'movie' },
+    { label: 'Series', value: 'tv' },
+  ];
   ngOnInit(): void {
     this.loadLanguages();
   }
@@ -60,7 +68,7 @@ export class LanguageListComponent implements OnInit {
       error: () => {
         this.loadingLanguages.set(false);
         this.errorMessage.set('No se pudieron cargar los idiomas.');
-      }
+      },
     });
   }
 
@@ -70,30 +78,28 @@ export class LanguageListComponent implements OnInit {
     this.loadingContent.set(true);
     this.errorMessage.set('');
 
-    this.catalogService.getContentByLanguage(
-      this.mediaType(),
-      this.selectedLanguage(),
-      this.page()
-    ).subscribe({
-      next: (response: CatalogResponse) => {
-        if (currentVersion !== this.requestVersion) {
-          return;
-        }
+    this.catalogService
+      .getContentByLanguage(this.mediaType(), this.selectedLanguage(), this.page())
+      .subscribe({
+        next: (response: CatalogResponse) => {
+          if (currentVersion !== this.requestVersion) {
+            return;
+          }
 
-        this.movies.set(response.results);
-        this.totalPages.set(Math.min(response.total_pages, 500));
-        this.loadingContent.set(false);
-      },
-      error: () => {
-        if (currentVersion !== this.requestVersion) {
-          return;
-        }
+          this.movies.set(response.results);
+          this.totalPages.set(Math.min(response.total_pages, 500));
+          this.loadingContent.set(false);
+        },
+        error: () => {
+          if (currentVersion !== this.requestVersion) {
+            return;
+          }
 
-        this.movies.set([]);
-        this.loadingContent.set(false);
-        this.errorMessage.set('No se pudo cargar el contenido. Inténtalo nuevamente.');
-      }
-    });
+          this.movies.set([]);
+          this.loadingContent.set(false);
+          this.errorMessage.set('No se pudo cargar el contenido. Inténtalo nuevamente.');
+        },
+      });
   }
 
   changeLanguage(event: Event): void {
@@ -108,7 +114,11 @@ export class LanguageListComponent implements OnInit {
     this.loadContent();
   }
 
-  changeMediaType(type: 'movie' | 'tv'): void {
+  changeMediaType(type: FilterType): void {
+    if (type !== 'movie' && type !== 'tv') {
+      return;
+    }
+
     if (this.mediaType() === type) {
       return;
     }
@@ -123,12 +133,12 @@ export class LanguageListComponent implements OnInit {
       return;
     }
 
-    this.page.update(current => current - 1);
+    this.page.update((current) => current - 1);
     this.loadContent();
 
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   }
 
@@ -137,12 +147,12 @@ export class LanguageListComponent implements OnInit {
       return;
     }
 
-    this.page.update(current => current + 1);
+    this.page.update((current) => current + 1);
     this.loadContent();
 
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   }
 
@@ -165,9 +175,7 @@ export class LanguageListComponent implements OnInit {
   }
 
   getSelectedLanguageName(): string {
-    const language = this.languages().find(
-      item => item.iso_639_1 === this.selectedLanguage()
-    );
+    const language = this.languages().find((item) => item.iso_639_1 === this.selectedLanguage());
 
     if (!language) {
       return this.selectedLanguage();

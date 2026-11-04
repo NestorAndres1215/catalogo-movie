@@ -8,6 +8,7 @@ import { WatchlistService } from '../../../../core/service/watchlist.service';
 import { TmdbService } from '../../../../core/service/tmdb.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 
 interface TmdbGenre {
   id: number;
@@ -53,7 +54,7 @@ interface ActorStatistic {
 @Component({
   selector: 'app-statistics',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent, PageLoadingComponent],
+  imports: [DecimalPipe, PageHeaderComponent, PageLoadingComponent, EmptyStateComponent],
   templateUrl: './statistics.html',
   styleUrl: './statistics.css',
 })

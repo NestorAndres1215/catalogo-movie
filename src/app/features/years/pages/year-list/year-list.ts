@@ -6,11 +6,12 @@ import { YearService } from '../../../../core/service/year.service';
 import { YearMedia } from '../../../../core/models/year.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-year-list',
   standalone: true,
-  imports: [RouterLink, DecimalPipe, PageHeaderComponent, PageLoadingComponent],
+  imports: [RouterLink, DecimalPipe, PageHeaderComponent, PageLoadingComponent, EmptyStateComponent],
   templateUrl: './year-list.html',
   styleUrl: './year-list.css'
 })

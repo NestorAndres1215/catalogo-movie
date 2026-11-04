@@ -1,25 +1,24 @@
 <main class="languages-page">
-
-<app-page-header
-  section="EXPLORA CINEVERSE"
-  title="Películas por idioma"
-  description="Descubre películas y series de diferentes partes del mundo según su idioma original."
-/>
+  <app-page-header
+    section="EXPLORA CINEVERSE"
+    title="Películas por idioma"
+    description="Descubre películas y series de diferentes partes del mundo según su idioma original."
+  />
 
   <!-- Selector de idioma -->
   <section class="filters-section">
-
     <div class="filter-group">
       <label for="language-select">Selecciona un idioma</label>
 
       @if (loadingLanguages()) {
-        <p class="loading-text">Cargando idiomas...</p>
+        <app-page-loading
+          title="Cargando idiomas..."
+          description="Explorando los idiomas disponibles en el cine."
+          detail="Consultando TMDB..."
+          icon="fa-language"
+        />
       } @else {
-        <select
-          id="language-select"
-          [value]="selectedLanguage()"
-          (change)="changeLanguage($event)"
-        >
+        <select id="language-select" [value]="selectedLanguage()" (change)="changeLanguage($event)">
           @for (language of languages(); track language.iso_639_1) {
             <option [value]="language.iso_639_1">
               {{ language.name || language.english_name }}
@@ -31,23 +30,12 @@
     </div>
 
     <div class="media-selector">
-      <button
-        type="button"
-        [class.active]="mediaType() === 'movie'"
-        (click)="changeMediaType('movie')"
-      >
-        Películas
-      </button>
-
-      <button
-        type="button"
-        [class.active]="mediaType() === 'tv'"
-        (click)="changeMediaType('tv')"
-      >
-        Series
-      </button>
+      <app-filter-tabs
+        [tabs]="mediaTabs"
+        [selected]="mediaType()"
+        (selectionChange)="changeMediaType($event)"
+      />
     </div>
-
   </section>
 
   <!-- Información del idioma -->
@@ -74,38 +62,29 @@
   }
 
   <!-- Cargando contenido -->
-@if (loadingContent()) {
-  <app-page-loading
-    title="Buscando contenido"
-    description="Explorando películas y series para ti."
-    detail="Consultando el catálogo de TMDB..."
-    icon="fa-magnifying-glass"
-  />
-}
+  @if (loadingContent()) {
+    <app-page-loading
+      title="Buscando contenido"
+      description="Explorando películas y series para ti."
+      detail="Consultando el catálogo de TMDB..."
+      icon="fa-magnifying-glass"
+    />
+  }
   <!-- Resultados -->
   @if (!loadingContent() && movies().length > 0) {
-
     <section class="movies-grid">
-
       @for (media of movies(); track media.id) {
-
         <article class="movie-card">
-
           <div class="poster-container">
-            <img
-              [src]="getImageUrl(media.poster_path)"
-              [alt]="getTitle(media)"
-              loading="lazy"
-            />
+            <img [src]="getImageUrl(media.poster_path)" [alt]="getTitle(media)" loading="lazy" />
 
             <span class="rating">
               <span>★</span>
-              {{ media.vote_average | number:'1.1-1' }}
+              {{ media.vote_average | number: '1.1-1' }}
             </span>
           </div>
 
           <div class="movie-info">
-
             <h3>{{ getTitle(media) }}</h3>
 
             <span class="release-year">
@@ -121,33 +100,20 @@
                 {{ media.original_language?.toUpperCase() || selectedLanguage().toUpperCase() }}
               </span>
 
-              <span>
-                {{ media.vote_count }} votos
-              </span>
+              <span> {{ media.vote_count }} votos </span>
             </div>
-
           </div>
-
         </article>
-
       }
-
     </section>
 
     <!-- Paginación -->
     <section class="pagination">
-
-      <button
-        type="button"
-        (click)="previousPage()"
-        [disabled]="page() <= 1 || loadingContent()"
-      >
+      <button type="button" (click)="previousPage()" [disabled]="page() <= 1 || loadingContent()">
         Anterior
       </button>
 
-      <span>
-        Página {{ page() }} de {{ totalPages() }}
-      </span>
+      <span> Página {{ page() }} de {{ totalPages() }} </span>
 
       <button
         type="button"
@@ -156,21 +122,15 @@
       >
         Siguiente
       </button>
-
     </section>
-
   }
 
   <!-- Sin resultados -->
   @if (!loadingContent() && !errorMessage() && movies().length === 0) {
-    <div class="empty-state">
-      <h3>No encontramos contenido</h3>
-
-      <p>
-        No hay resultados para este idioma.
-        Prueba seleccionando otro idioma.
-      </p>
-    </div>
+    <app-empty-state
+      icon="fa-language"
+      title="No encontramos contenido"
+      description="No hay resultados para este idioma. Prueba seleccionando otro idioma."
+    />
   }
-
 </main>
