@@ -5,29 +5,31 @@
     description="Descubre los actores más y menos populares de TMDB."
   />
 
-  <button class="reload-button" type="button" (click)="loadRankings()" [disabled]="loading()">
-    ↻ Actualizar
-  </button>
-  <nav class="ranking-tabs">
-    <button
-      type="button"
-      [class.active]="activeRanking() === 'best'"
-      (click)="changeRanking('best')"
-    >
-      ⭐ Más populares
-    </button>
+  <div class="ranking-toolbar">
+    <app-button
+      text="Actualizar"
+      icon="fa-rotate-right"
+      [disabled]="loading()"
+      variant="secondary"
+      (clicked)="loadRankings()"
+    />
 
-    <button
-      type="button"
-      [class.active]="activeRanking() === 'worst'"
-      (click)="changeRanking('worst')"
-    >
-      📉 Menor popularidad
-    </button>
-  </nav>
+    <nav class="ranking-tabs">
+      <app-filter-tabs
+        [tabs]="rankingTabs"
+        [selected]="activeRanking()"
+        (selectionChange)="changeRanking($event)"
+      />
+    </nav>
+  </div>
 
   @if (loading()) {
-    <div class="loading-message">Cargando ranking de actores...</div>
+    <app-page-loading
+      title="Cargando ranking de actores..."
+      description="Estamos preparando el ranking de los actores más destacados."
+      detail="Consultando el catálogo de TMDB..."
+      icon="fa-users"
+    />
   }
 
   @if (error()) {
@@ -126,6 +128,4 @@
     }
   }
   <app-footer />
-
-
 </div>

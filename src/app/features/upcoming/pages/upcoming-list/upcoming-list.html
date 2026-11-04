@@ -72,12 +72,12 @@
               </h3>
 
               <div class="release-date">
-                <span>📅</span>
+                <i class="fas fa-calendar-days"></i>
                 {{ getFormattedDate(item) }}
               </div>
 
               <div class="rating">
-                <span>★</span>
+                <i class="fas fa-star"></i>
                 {{ item.vote_average | number: '1.1-1' }}
               </div>
 
@@ -109,11 +109,11 @@
         </button>
       </div>
     } @else {
-<app-empty-state
-  icon="fa-calendar-xmark"
-  title="No hay estrenos disponibles"
-  description="Intenta consultar nuevamente más adelante."
-/>
+      <app-empty-state
+        icon="fa-calendar-xmark"
+        title="No hay estrenos disponibles"
+        description="Intenta consultar nuevamente más adelante."
+      />
     }
   }
 </section>

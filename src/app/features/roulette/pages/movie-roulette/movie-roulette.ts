@@ -11,6 +11,7 @@ import {
 import { WatchlistService } from '../../../../core/service/watchlist.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import { ButtonComponent } from '../../../../shared/components/button/button';
 
 interface RouletteWinner {
   movie: CatalogMedia;
@@ -21,7 +22,7 @@ interface RouletteWinner {
 @Component({
   selector: 'app-movie-roulette',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent, EmptyStateComponent],
+  imports: [DecimalPipe, PageHeaderComponent, EmptyStateComponent, ButtonComponent],
   templateUrl: './movie-roulette.html',
   styleUrl: './movie-roulette.css',
 })

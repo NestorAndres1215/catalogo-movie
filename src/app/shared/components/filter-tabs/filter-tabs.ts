@@ -7,7 +7,9 @@ export type FilterType =
   | 'profile'
   | 'preferences'
   | 'day'
-  | 'week';
+  | 'week'
+  | 'best'
+  | 'worst';
 
 export interface FilterTab {
   label: string;

@@ -27,15 +27,15 @@ Durante el desarrollo de CINEVERSE estoy implementando diferentes funcionalidade
 
 Para desarrollar este proyecto estoy utilizando las siguientes tecnologías:
 
-| Tecnología | Uso |
-|---|---|
-| Angular | Desarrollo de la aplicación frontend |
-| TypeScript | Lógica y tipado de la aplicación |
-| HTML5 | Estructura de las vistas |
-| CSS3 | Diseño y estilos |
-| RxJS | Manejo de operaciones asíncronas |
-| TMDB API | Obtención de información cinematográfica |
-| pnpm | Administración de dependencias |
+| Tecnología | Uso                                      |
+| ---------- | ---------------------------------------- |
+| Angular    | Desarrollo de la aplicación frontend     |
+| TypeScript | Lógica y tipado de la aplicación         |
+| HTML5      | Estructura de las vistas                 |
+| CSS3       | Diseño y estilos                         |
+| RxJS       | Manejo de operaciones asíncronas         |
+| TMDB API   | Obtención de información cinematográfica |
+| pnpm       | Administración de dependencias           |
 
 ## 📂 Organización del proyecto
 
@@ -112,7 +112,7 @@ export const environment = {
   production: false,
   tmdbApiKey: 'MI_API_KEY',
   tmdbBaseUrl: 'https://api.themoviedb.org/3',
-  tmdbImageUrl: 'https://image.tmdb.org/t/p'
+  tmdbImageUrl: 'https://image.tmdb.org/t/p',
 };
 ```
 
@@ -156,11 +156,11 @@ Tengo previsto utilizar Vercel para publicar CINEVERSE y permitir que otras pers
 
 La configuración de compilación será:
 
-| Configuración | Valor |
-|---|---|
-| Framework Preset | Angular |
-| Install Command | `pnpm install` |
-| Build Command | `pnpm build` |
+| Configuración    | Valor                        |
+| ---------------- | ---------------------------- |
+| Framework Preset | Angular                      |
+| Install Command  | `pnpm install`               |
+| Build Command    | `pnpm build`                 |
 | Output Directory | `dist/peliculas-app/browser` |
 
 ## 🔗 Recursos

@@ -3,22 +3,31 @@ import { DecimalPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 import { RecommendationService } from '../../../../core/service/recommendation.service';
-import {
-  RecommendationMedia
-} from '../../../../core/models/recommendation.interface';
+import { RecommendationMedia } from '../../../../core/models/recommendation.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import {
+  FilterTab,
+  FilterTabsComponent,
+  FilterType,
+} from '../../../../shared/components/filter-tabs/filter-tabs';
 
 @Component({
   selector: 'app-recommendation-list',
   standalone: true,
-  imports: [RouterLink, DecimalPipe, PageHeaderComponent, PageLoadingComponent, EmptyStateComponent],
+  imports: [
+    RouterLink,
+    DecimalPipe,
+    PageHeaderComponent,
+    PageLoadingComponent,
+    EmptyStateComponent,
+    FilterTabsComponent,
+  ],
   templateUrl: './recommendation-list.html',
-  styleUrl: './recommendation-list.css'
+  styleUrl: './recommendation-list.css',
 })
 export class RecommendationListComponent implements OnInit {
-
   private readonly recommendationService = inject(RecommendationService);
 
   readonly mediaType = signal<'movie' | 'tv'>('movie');
@@ -42,13 +51,19 @@ export class RecommendationListComponent implements OnInit {
     this.loadPopularMedia();
   }
 
+  readonly mediaTabs: FilterTab[] = [
+    { label: 'Películas', value: 'movie' },
+    { label: 'Series', value: 'tv' },
+  ];
+
   loadPopularMedia(): void {
     this.loadingSources.set(true);
     this.errorMessage.set('');
 
-    const request = this.mediaType() === 'movie'
-      ? this.recommendationService.getPopularMovies()
-      : this.recommendationService.getPopularSeries();
+    const request =
+      this.mediaType() === 'movie'
+        ? this.recommendationService.getPopularMovies()
+        : this.recommendationService.getPopularSeries();
 
     request.subscribe({
       next: (response) => {
@@ -68,10 +83,8 @@ export class RecommendationListComponent implements OnInit {
         console.error('Error al cargar producciones populares:', error);
         this.loadingSources.set(false);
         this.recommendations.set([]);
-        this.errorMessage.set(
-          'No se pudieron cargar las producciones. Inténtalo nuevamente.'
-        );
-      }
+        this.errorMessage.set('No se pudieron cargar las producciones. Inténtalo nuevamente.');
+      },
     });
   }
 
@@ -85,15 +98,10 @@ export class RecommendationListComponent implements OnInit {
     this.loading.set(true);
     this.errorMessage.set('');
 
-    const request = this.mediaType() === 'movie'
-      ? this.recommendationService.getMovieRecommendations(
-          id,
-          this.currentPage()
-        )
-      : this.recommendationService.getSeriesRecommendations(
-          id,
-          this.currentPage()
-        );
+    const request =
+      this.mediaType() === 'movie'
+        ? this.recommendationService.getMovieRecommendations(id, this.currentPage())
+        : this.recommendationService.getSeriesRecommendations(id, this.currentPage());
 
     request.subscribe({
       next: (response) => {
@@ -111,15 +119,14 @@ export class RecommendationListComponent implements OnInit {
         this.recommendations.set([]);
         this.totalPages.set(1);
         this.totalResults.set(0);
-        this.errorMessage.set(
-          'No se pudieron cargar las recomendaciones. Inténtalo nuevamente.'
-        );
+        this.errorMessage.set('No se pudieron cargar las recomendaciones. Inténtalo nuevamente.');
         this.loading.set(false);
-      }
+      },
     });
   }
 
-  changeMediaType(type: 'movie' | 'tv'): void {
+  changeMediaType(type: FilterType): void {
+    if (type !== 'movie' && type !== 'tv') return;
     if (this.mediaType() === type) return;
 
     this.requestVersion++;
@@ -143,11 +150,7 @@ export class RecommendationListComponent implements OnInit {
   }
 
   changePage(page: number): void {
-    if (
-      page < 1 ||
-      page > this.totalPages() ||
-      this.loading()
-    ) {
+    if (page < 1 || page > this.totalPages() || this.loading()) {
       return;
     }
 
@@ -156,7 +159,7 @@ export class RecommendationListComponent implements OnInit {
 
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   }
 
@@ -179,9 +182,7 @@ export class RecommendationListComponent implements OnInit {
   }
 
   getSelectedTitle(): string {
-    const selected = this.popularMedia().find(
-      item => item.id === this.selectedId()
-    );
+    const selected = this.popularMedia().find((item) => item.id === this.selectedId());
 
     return selected ? this.getMediaTitle(selected) : '';
   }

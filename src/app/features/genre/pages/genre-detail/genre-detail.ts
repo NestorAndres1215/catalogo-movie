@@ -19,6 +19,8 @@ import {
   GenreService
 } from '../../../../core/service/genre.service';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 type GenreType = 'movie' | 'tv';
 
@@ -27,7 +29,9 @@ type GenreType = 'movie' | 'tv';
   standalone: true,
   imports: [
     RouterLink,
-    PageLoadingComponent
+    PageLoadingComponent,
+    EmptyStateComponent,
+    PageHeaderComponent
 ],
   templateUrl: './genre-detail.html',
   styleUrl: './genre-detail.css'

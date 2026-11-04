@@ -7,13 +7,24 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
 import { ButtonComponent } from '../../../../shared/components/button/button';
 import { StatItem, StatsComponent } from '../../../../shared/components/stats/stats';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import {
+  FilterTab,
+  FilterTabsComponent,
+  FilterType,
+} from '../../../../shared/components/filter-tabs/filter-tabs';
 
 type RatingFilter = 'all' | 'movie' | 'tv';
 
 @Component({
   selector: 'app-my-ratings-list',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent, StatsComponent, EmptyStateComponent],
+  imports: [
+    DecimalPipe,
+    PageHeaderComponent,
+    StatsComponent,
+    EmptyStateComponent,
+    FilterTabsComponent,
+  ],
   templateUrl: './my-ratings-list.html',
   styleUrl: './my-ratings-list.css',
 })
@@ -21,8 +32,12 @@ export class MyRatingsListComponent {
   private readonly watchlistService = inject(WatchlistService);
   private readonly router = inject(Router);
 
-  readonly selectedFilter = signal<RatingFilter>('all');
-
+  readonly selectedFilter = signal<FilterType>('all');
+  readonly filterTabs: FilterTab[] = [
+    { label: 'Todos', value: 'all' },
+    { label: 'Películas', value: 'movie' },
+    { label: 'Series', value: 'tv' },
+  ];
   // Contenidos que tienen una puntuación personal.
   readonly ratedItems = computed(() => {
     const filter = this.selectedFilter();
@@ -64,7 +79,7 @@ export class MyRatingsListComponent {
     return total / items.length;
   });
 
-  selectFilter(filter: RatingFilter): void {
+  selectFilter(filter: FilterType): void {
     this.selectedFilter.set(filter);
   }
 

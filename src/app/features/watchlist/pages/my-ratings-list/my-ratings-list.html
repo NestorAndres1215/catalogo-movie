@@ -16,27 +16,13 @@
       <p>{{ totalRated() }} títulos registrados</p>
     </div>
 
-    <div class="filter-container">
-      <button
-        type="button"
-        [class.active]="selectedFilter() === 'all'"
-        (click)="selectFilter('all')"
-      >
-        Todos
-      </button>
-
-      <button
-        type="button"
-        [class.active]="selectedFilter() === 'movie'"
-        (click)="selectFilter('movie')"
-      >
-        Películas
-      </button>
-
-      <button type="button" [class.active]="selectedFilter() === 'tv'" (click)="selectFilter('tv')">
-        Series
-      </button>
-    </div>
+  <div class="filter-container">
+  <app-filter-tabs
+    [tabs]="filterTabs"
+    [selected]="selectedFilter()"
+    (selectionChange)="selectFilter($event)"
+  />
+</div>
   </div>
 
   <!-- LISTADO -->

@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { forkJoin } from 'rxjs';
@@ -8,20 +7,23 @@ import { TmdbPerson } from '../../../../core/models/catalog.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { Footer } from '../../../../shared/components/footer/footer';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
+import { FilterTab, FilterTabsComponent, FilterType } from '../../../../shared/components/filter-tabs/filter-tabs';
+import { ButtonComponent } from '../../../../shared/components/button/button';
 
 type RankingType = 'best' | 'worst';
 
 @Component({
   selector: 'app-actor-rankings',
   standalone: true,
-  imports: [CommonModule, PageHeaderComponent, EmptyStateComponent, Footer],
+  imports: [CommonModule, PageHeaderComponent, EmptyStateComponent, Footer, PageLoadingComponent, FilterTabsComponent, ButtonComponent],
   templateUrl: './actor-rankings.html',
-  styleUrl: './actor-rankings.css'
+  styleUrl: './actor-rankings.css',
 })
 export class ActorRankingsComponent implements OnInit {
   private readonly catalogService = inject(CatalogService);
 
-  readonly activeRanking = signal<RankingType>('best');
+  readonly activeRanking = signal<FilterType>('best');
 
   readonly bestActors = signal<TmdbPerson[]>([]);
   readonly worstActors = signal<TmdbPerson[]>([]);
@@ -32,36 +34,33 @@ export class ActorRankingsComponent implements OnInit {
   ngOnInit(): void {
     this.loadRankings();
   }
+  readonly rankingTabs: FilterTab[] = [
+    { label: 'Más populares', value: 'best' },
+    { label: 'Menor popularidad', value: 'worst' },
+  ];
 
   loadRankings(): void {
     this.loading.set(true);
     this.error.set('');
 
     // Consultamos las primeras 10 páginas de actores populares.
-    const requests = Array.from(
-      { length: 10 },
-      (_, index) => this.catalogService.getPopularPeople(index + 1)
+    const requests = Array.from({ length: 10 }, (_, index) =>
+      this.catalogService.getPopularPeople(index + 1),
     );
 
     forkJoin(requests).subscribe({
-      next: responses => {
-        const actors = responses.flatMap(response => response.results);
+      next: (responses) => {
+        const actors = responses.flatMap((response) => response.results);
 
         // Eliminamos posibles duplicados por ID.
-        const uniqueActors = Array.from(
-          new Map(actors.map(actor => [actor.id, actor])).values()
-        );
+        const uniqueActors = Array.from(new Map(actors.map((actor) => [actor.id, actor])).values());
 
-        const sortedActors = [...uniqueActors].sort(
-          (a, b) => b.popularity - a.popularity
-        );
+        const sortedActors = [...uniqueActors].sort((a, b) => b.popularity - a.popularity);
 
         this.bestActors.set(sortedActors.slice(0, 10));
 
         this.worstActors.set(
-          [...uniqueActors]
-            .sort((a, b) => a.popularity - b.popularity)
-            .slice(0, 10)
+          [...uniqueActors].sort((a, b) => a.popularity - b.popularity).slice(0, 10),
         );
 
         this.loading.set(false);
@@ -69,11 +68,11 @@ export class ActorRankingsComponent implements OnInit {
       error: () => {
         this.error.set('No se pudieron cargar los rankings de actores.');
         this.loading.set(false);
-      }
+      },
     });
   }
 
-  changeRanking(type: RankingType): void {
+  changeRanking(type: FilterType): void {
     this.activeRanking.set(type);
   }
 

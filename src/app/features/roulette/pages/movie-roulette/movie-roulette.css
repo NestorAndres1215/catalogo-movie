@@ -34,8 +34,8 @@
   width: 32px;
   height: 32px;
   place-items: center;
-  color: #d7c2ff;
-  background: #392752;
+  color: var(--color-acento);
+  background: var(--color-acento-suave);
   border-radius: 9px;
   font-weight: 800;
 }
@@ -104,11 +104,10 @@
   align-items: center;
   gap: 15px;
   padding: 12px;
-  background: #22212b;
-  border: 1px solid #353341;
-  border-radius: 11px;
+  background: var(--color-superficie-secundaria);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
 }
-
 .search-result img {
   width: 65px;
   height: 95px;
@@ -132,7 +131,7 @@
 .result-info span,
 .selected-info span,
 .history-info span {
-  color: #a78bfa;
+  color: var(--color-acento);
   font-size: 12px;
 }
 
@@ -140,14 +139,13 @@
   display: -webkit-box;
   overflow: hidden;
   margin: 7px 0 0;
-  color: #aaa8b7;
+  color: var(--color-texto-secundario);
   font-size: 12px;
   line-height: 1.5;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   line-clamp: 2;
 }
-
 .added-button {
   padding: 10px 13px;
   color: var(--color-exito);
@@ -175,9 +173,9 @@
   align-items: center;
   gap: 12px;
   padding: 10px;
-  background: #24232d;
-  border: 1px solid #363441;
-  border-radius: 10px;
+  background: var(--color-superficie-elevada);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
 }
 
 .selected-movie img {
@@ -235,10 +233,10 @@
 .configuration select {
   min-width: 150px;
   padding: 12px;
-  color: white;
-  background: #111117;
-  border: 1px solid #4a405b;
-  border-radius: 9px;
+  color: var(--color-texto);
+  background: var(--color-fondo);
+  border: 1px solid var(--color-borde-hover);
+  border-radius: var(--radio-borde-pequeno);
 }
 
 .configuration-note {
@@ -367,20 +365,25 @@
   display: block;
   margin: 15px auto 0;
   padding: 10px;
-  color: #c4b5fd;
+  color: var(--color-acento);
   background: transparent;
   border: none;
   cursor: pointer;
+  transition: color var(--transicion-rapida);
+}
+
+.reset-button:hover {
+  color: var(--color-acento-hover);
 }
 
 .roulette-message {
   max-width: 600px;
   margin: 20px auto 0;
   padding: 13px;
-  color: #d8c6ff;
-  background: #352449;
-  border: 1px solid #60427f;
-  border-radius: 9px;
+  color: var(--color-acento);
+  background: var(--color-acento-suave);
+  border: 1px solid var(--color-borde-hover);
+  border-radius: var(--radio-borde-pequeno);
 }
 
 /* Ganadora */
@@ -388,18 +391,21 @@
 .winner-section {
   padding: 25px;
   margin-bottom: 25px;
-  background: #1d1927;
-  border: 1px solid #7352a5;
-  border-radius: 15px;
+  background: var(--color-acento-suave);
+  border: 1px solid var(--color-acento);
+  border-radius: var(--radio-borde);
 }
-
 .winner-heading {
   margin-bottom: 22px;
   text-align: center;
 }
 
 .winner-heading > span {
+
   font-size: 35px;
+}
+.winner-card i{
+   color: var(--color-acento);
 }
 
 .winner-heading h2 {
@@ -408,7 +414,7 @@
 }
 
 .winner-heading p {
-  color: #aaa8b7;
+  color: var(--color-texto-secundario);
   font-size: 13px;
 }
 
@@ -418,8 +424,9 @@
   max-width: 750px;
   margin: auto;
   padding: 18px;
-  background: #26212f;
-  border-radius: 12px;
+  background: var(--color-superficie-elevada);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
 }
 
 .winner-card > img {
@@ -434,7 +441,7 @@
 }
 
 .winner-label {
-  color: #c4a5ff;
+  color: var(--color-acento);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 1.5px;
@@ -448,12 +455,12 @@
 .winner-meta {
   display: flex;
   gap: 20px;
-  color: #d1c2ed;
+  color: var(--color-texto-secundario);
   font-size: 13px;
 }
 
 .winner-info p {
-  color: #aaa8b7;
+  color: var(--color-texto-secundario);
   font-size: 13px;
   line-height: 1.7;
 }
@@ -507,8 +514,9 @@
   align-items: center;
   gap: 5px;
   padding: 15px;
-  background: #25232e;
-  border-radius: 9px;
+  background: var(--color-superficie-elevada);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
 }
 
 .history-summary strong {
@@ -541,9 +549,10 @@
   height: 30px;
   flex-shrink: 0;
   place-items: center;
-  color: #d8c6ff;
-  background: #49345f;
-  border-radius: 50%;
+  color: var(--color-acento);
+  background: var(--color-acento-suave);
+  border: 1px solid var(--color-borde-hover);
+  border-radius: var(--radio-circular);
   font-weight: 800;
 }
 

@@ -1,45 +1,30 @@
 <section class="recommendations-page">
-<app-page-header
-  section="DESCUBRE ALGO NUEVO"
-  title="Recomendaciones"
-  description="Encuentra películas y series similares a tus producciones favoritas."
-/>
+  <app-page-header
+    section="DESCUBRE ALGO NUEVO"
+    title="Recomendaciones"
+    description="Encuentra películas y series similares a tus producciones favoritas."
+  />
 
   <div class="recommendation-banner">
     <div class="banner-content">
       <span>EXPLORA NUEVAS HISTORIAS</span>
       <h2>¿Qué te gustaría ver hoy?</h2>
-      <p>
-        Selecciona una película o serie y descubre producciones relacionadas.
-      </p>
+      <p>Selecciona una película o serie y descubre producciones relacionadas.</p>
     </div>
     <div class="banner-decoration">CINE</div>
   </div>
 
   <div class="media-tabs">
-    <button
-      type="button"
-      [class.active]="mediaType() === 'movie'"
-      (click)="changeMediaType('movie')"
-    >
-      Películas
-    </button>
-
-    <button
-      type="button"
-      [class.active]="mediaType() === 'tv'"
-      (click)="changeMediaType('tv')"
-    >
-      Series
-    </button>
+    <app-filter-tabs
+      [tabs]="mediaTabs"
+      [selected]="mediaType()"
+      (selectionChange)="changeMediaType($event)"
+    />
   </div>
-
   <div class="source-selector">
     <div class="selector-information">
       <label for="source">Recomendar a partir de</label>
-      <span>
-        Selecciona una producción popular como referencia.
-      </span>
+      <span> Selecciona una producción popular como referencia. </span>
     </div>
 
     <select
@@ -78,20 +63,18 @@
     </div>
 
     @if (!loading() && !errorMessage()) {
-      <span class="results-count">
-        {{ totalResults() }} resultados
-      </span>
+      <span class="results-count"> {{ totalResults() }} resultados </span>
     }
   </div>
 
-@if (loadingSources() || loading()) {
-  <app-page-loading
-    title="Buscando recomendaciones"
-    description="Encontrando películas que podrían gustarte."
-    detail="Analizando tus preferencias cinematográficas..."
-    icon="fa-lightbulb"
-  />
-}
+  @if (loadingSources() || loading()) {
+    <app-page-loading
+      title="Buscando recomendaciones"
+      description="Encontrando películas que podrían gustarte."
+      detail="Analizando tus preferencias cinematográficas..."
+      icon="fa-lightbulb"
+    />
+  }
 
   @if (errorMessage()) {
     <div class="error-message">
@@ -99,33 +82,19 @@
 
       <button
         type="button"
-        (click)="popularMedia().length === 0
-          ? loadPopularMedia()
-          : loadRecommendations()"
+        (click)="popularMedia().length === 0 ? loadPopularMedia() : loadRecommendations()"
       >
         Reintentar
       </button>
     </div>
   }
 
-  @if (
-    !loadingSources() &&
-    !loading() &&
-    !errorMessage() &&
-    selectedId() !== null
-  ) {
-
+  @if (!loadingSources() && !loading() && !errorMessage() && selectedId() !== null) {
     @if (recommendations().length > 0) {
-
       <div class="recommendations-grid">
         @for (item of recommendations(); track item.id) {
-
-          <a
-            class="recommendation-card"
-            [routerLink]="getMediaRoute(item)"
-          >
+          <a class="recommendation-card" [routerLink]="getMediaRoute(item)">
             <div class="poster-container">
-
               @if (item.poster_path) {
                 <img
                   [src]="getImageUrl(item.poster_path)"
@@ -138,9 +107,7 @@
                 </div>
               }
 
-              <span class="rating">
-                ★ {{ item.vote_average | number:'1.1-1' }}
-              </span>
+              <span class="rating"> ★ {{ item.vote_average | number: '1.1-1' }} </span>
 
               <div class="card-overlay">
                 <span>Ver detalles</span>
@@ -159,13 +126,11 @@
               </p>
             </div>
           </a>
-
         }
       </div>
 
       @if (totalPages() > 1) {
         <nav class="pagination">
-
           <button
             type="button"
             [disabled]="currentPage() === 1"
@@ -174,9 +139,7 @@
             Anterior
           </button>
 
-          <span>
-            Página {{ currentPage() }} de {{ totalPages() }}
-          </span>
+          <span> Página {{ currentPage() }} de {{ totalPages() }} </span>
 
           <button
             type="button"
@@ -185,18 +148,14 @@
           >
             Siguiente
           </button>
-
         </nav>
       }
-
     } @else {
-<app-empty-state
-  icon="fa-lightbulb"
-  title="No encontramos recomendaciones"
-  description="Esta producción no tiene recomendaciones disponibles. Prueba seleccionando otra."
-/>
+      <app-empty-state
+        icon="fa-lightbulb"
+        title="No encontramos recomendaciones"
+        description="Esta producción no tiene recomendaciones disponibles. Prueba seleccionando otra."
+      />
     }
-
   }
-
 </section>

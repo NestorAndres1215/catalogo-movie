@@ -323,9 +323,7 @@
             Has aceptado {{ getAcceptedCount() }} películas. Las encontrarás en tu módulo Mi lista.
           </p>
 
-          <button type="button" class="new-roulette-button" (click)="newRoulette()">
-            Crear nueva ruleta
-          </button>
+          <app-button text="Crear nueva ruleta" icon="fa-rotate" (clicked)="newRoulette()" />
         </div>
       }
     </section>

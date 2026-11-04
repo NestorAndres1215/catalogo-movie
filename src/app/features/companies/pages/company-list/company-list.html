@@ -43,15 +43,13 @@
           <p>Explora una selección aleatoria de compañías cinematográficas.</p>
         </div>
 
-        <button
-          type="button"
-          class="random-button"
-          (click)="loadRandomCompanies()"
+        <app-button
+          text="Mostrar otras"
+          icon="fa-rotate-right"
           [disabled]="loading()"
-        >
-          <span>⟳</span>
-          Mostrar otras
-        </button>
+          variant="secondary"
+          (clicked)="loadRandomCompanies()"
+        />
       </div>
 
       <div class="quick-search-list">
@@ -142,7 +140,7 @@
             </h2>
 
             <span class="country">
-              <span>🌎</span>
+              <i class="fas fa-globe"></i>
               {{ company.origin_country || 'País no disponible' }}
             </span>
           </div>
