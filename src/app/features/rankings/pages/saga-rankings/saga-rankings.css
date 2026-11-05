@@ -24,9 +24,12 @@
 .ranking-tabs {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
   gap: 12px;
   margin-bottom: 30px;
-  border-bottom: 1px solid #292929;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-borde);
 }
 
 .ranking-tabs button {
@@ -124,9 +127,9 @@
   justify-content: center;
   min-width: 30px;
   min-height: 30px;
-  color: #ffffff;
-  background: #e50914;
-  border-radius: 6px;
+  color: var(--color-texto);
+  background: var(--color-acento);
+  border-radius: var(--radio-borde-pequeno);
   font-size: 16px;
   font-weight: 800;
 }
@@ -175,9 +178,14 @@
   padding: 0;
   background: transparent;
   border: none;
-  color: #e50914;
+  color: var(--color-acento);
   font-weight: 600;
   cursor: pointer;
+  transition: var(--transicion-rapida);
+}
+
+.collection-information button:hover {
+  color: var(--color-acento-hover);
 }
 
 .ranking-section {

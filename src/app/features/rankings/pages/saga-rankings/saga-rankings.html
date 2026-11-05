@@ -4,34 +4,22 @@
     title="Ranking de sagas"
     description="Descubre las franquicias cinematográficas más populares."
   />
-  <button
-    class="reload-button"
-    type="button"
-    (click)="loadRankings()"
-    [disabled]="loadingRankings()"
-  >
-    ↻ Actualizar
-  </button>
+
   @if (!selectedCollection()) {
-    <nav class="ranking-tabs">
-      <button
-        type="button"
-        [class.active]="activeRanking() === 'best'"
-        (click)="changeRanking('best')"
-      >
-        ⭐ Más populares
-      </button>
-
-      <button
-        type="button"
-        [class.active]="activeRanking() === 'worst'"
-        (click)="changeRanking('worst')"
-      >
-        📉 Menos populares
-      </button>
-
-      <button type="button" (click)="clearSearch()">🔎 Buscar sagas</button>
-    </nav>
+    <div class="ranking-tabs">
+      <app-filter-tabs
+        [tabs]="rankingTabs"
+        [selected]="activeRanking()"
+        (selectionChange)="changeRanking($event)"
+      />
+      <app-button
+        text="Actualizar"
+        icon="fa-rotate"
+        variant="secondary"
+        [disabled]="loadingRankings()"
+        (clicked)="loadRankings()"
+      />
+    </div>
 
     <section class="search-section">
       <h2>Buscar una saga</h2>

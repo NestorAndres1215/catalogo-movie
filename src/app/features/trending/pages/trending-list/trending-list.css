@@ -72,7 +72,7 @@
 }
 
 .filter-label {
-  color: #999;
+  color: var(--color-texto-atenuado);
   font-size: 12px;
   font-weight: 600;
 }

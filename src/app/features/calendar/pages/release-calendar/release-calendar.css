@@ -1,10 +1,17 @@
 .calendar-page {
-  padding: 35px 40px;
+  width: 100%;
   max-width: 1600px;
   margin: auto;
+  padding: 35px 40px;
 }
 
-/* CALENDARIO */
+.section-label {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: var(--color-texto-atenuado);
+  font-size: 15px;
+  font-weight: 600;
+}
 
 .calendar-card {
   padding: 25px;
@@ -24,7 +31,11 @@
 
 .calendar-header h2 {
   margin: 8px 0 0;
-  font-size: 25px;
+  color: var(--color-texto);
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  line-height: 1.3;
   text-transform: capitalize;
 }
 
@@ -41,27 +52,40 @@
   border: 1px solid var(--color-borde-hover);
   border-radius: var(--radio-borde-pequeno);
   cursor: pointer;
+  transition: var(--transicion-rapida);
 }
 
 .today-button {
   padding: 10px 15px;
   font-size: 13px;
+  font-weight: 600;
 }
 
 .navigation-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 38px;
   height: 38px;
   font-size: 25px;
   line-height: 1;
 }
+
 .navigation-button i {
   font-size: 14px;
 }
+
 .today-button:hover,
 .navigation-button:hover {
+  color: var(--color-acento);
   background: var(--color-acento-suave);
   border-color: var(--color-acento);
-  color: var(--color-acento);
+}
+
+.today-button:focus-visible,
+.navigation-button:focus-visible {
+  outline: 2px solid var(--color-acento);
+  outline-offset: 3px;
 }
 
 .weekdays,
@@ -103,7 +127,8 @@
   cursor: pointer;
   transition:
     background var(--transicion-rapida),
-    border-color var(--transicion-rapida);
+    border-color var(--transicion-rapida),
+    box-shadow var(--transicion-rapida);
 }
 
 .calendar-day:hover:not(:disabled) {
@@ -113,6 +138,11 @@
 
 .calendar-day:disabled {
   cursor: wait;
+}
+
+.calendar-day:focus-visible {
+  outline: 2px solid var(--color-acento);
+  outline-offset: 2px;
 }
 
 .day-number {
@@ -129,9 +159,10 @@
 }
 
 .calendar-day.selected {
-  background: var(--color-acento-suave);
-  border: 2px solid var(--color-acento);
   color: var(--color-acento);
+  background: var(--color-acento-suave);
+  border-color: var(--color-acento);
+  box-shadow: inset 0 0 0 1px var(--color-acento);
 }
 
 .release-indicator {
@@ -154,8 +185,8 @@
 
 .today-label {
   position: absolute;
-  right: 7px;
   top: 7px;
+  right: 7px;
   color: var(--color-acento-hover);
   font-size: 9px;
   font-weight: 800;
@@ -180,7 +211,7 @@
 .legend-selected {
   width: 10px;
   height: 10px;
-  border-radius: 50%;
+  border-radius: var(--radio-circular);
 }
 
 .legend-dot {
@@ -208,7 +239,9 @@
 
 .releases-header h2 {
   margin: 8px 0 0;
+  color: var(--color-texto);
   font-size: 21px;
+  font-weight: 800;
   text-transform: capitalize;
 }
 
@@ -217,7 +250,7 @@
   color: var(--color-acento);
   background: var(--color-acento-suave);
   border: 1px solid var(--color-borde-hover);
-  border-radius: 20px;
+  border-radius: var(--radio-borde-grande);
   font-size: 12px;
   font-weight: 800;
 }
@@ -237,6 +270,7 @@
     transform var(--transicion-rapida),
     border-color var(--transicion-rapida);
 }
+
 .movie-card:hover {
   transform: translateY(-5px);
   border-color: var(--color-acento);
@@ -244,10 +278,11 @@
 
 .poster-container {
   position: relative;
-  aspect-ratio: 2 / 3;
   overflow: hidden;
+  aspect-ratio: 2 / 3;
   background: var(--color-superficie-elevada);
 }
+
 .poster-container img {
   display: block;
   width: 100%;
@@ -267,12 +302,14 @@
   font-size: 12px;
   font-weight: 800;
 }
+
 .movie-info {
   padding: 14px;
 }
 
 .movie-info h3 {
   margin: 0 0 8px;
+  color: var(--color-texto);
   font-size: 15px;
   line-height: 1.4;
 }
@@ -306,28 +343,46 @@
   font-size: 10px;
 }
 
-/* ESTADOS */
-
 .error-state {
   display: flex;
   min-height: 230px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #aaa8b7;
+  color: var(--color-texto-secundario);
   text-align: center;
 }
 
 .error-state button {
   padding: 10px 15px;
-  color: white;
-  background: #7045cf;
+  color: var(--color-texto-sobre-acento);
+  background: var(--color-acento);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radio-borde-pequeno);
+  font-weight: 600;
   cursor: pointer;
+  transition: var(--transicion-rapida);
 }
 
-/* RESPONSIVE */
+.error-state button:hover {
+  background: var(--color-acento-hover);
+}
+
+.error-state button:focus-visible {
+  outline: 2px solid var(--color-acento-hover);
+  outline-offset: 3px;
+}
+
+@media (max-width: 1024px) {
+  .calendar-page {
+    padding: 30px 25px;
+  }
+
+  .movies-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 18px;
+  }
+}
 
 @media (max-width: 700px) {
   .calendar-page {
@@ -347,9 +402,28 @@
     padding: 15px;
   }
 
+  .calendar-header {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .calendar-header h2 {
+    font-size: 19px;
+  }
+
+  .calendar-controls {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
   .calendar-day {
     min-height: 70px;
     padding: 7px;
+    gap: 6px;
+  }
+
+  .day-number {
+    font-size: 12px;
   }
 
   .release-indicator {
@@ -357,10 +431,7 @@
     font-size: 10px;
   }
 
-  .indicator-label {
-    display: none;
-  }
-
+  .indicator-label,
   .today-label {
     display: none;
   }
@@ -370,7 +441,12 @@
   }
 
   .weekdays div {
+    padding: 10px 2px;
     font-size: 10px;
+  }
+
+  .calendar-legend {
+    gap: 12px;
   }
 
   .movies-grid {
@@ -386,11 +462,50 @@
     font-size: 13px;
   }
 
-  .calendar-header h2 {
-    font-size: 19px;
+  .movie-info p {
+    min-height: 55px;
+    font-size: 11px;
+  }
+
+  .releases-header {
+    flex-wrap: wrap;
   }
 
   .releases-header h2 {
     font-size: 16px;
+  }
+}
+
+@media (max-width: 380px) {
+  .calendar-page {
+    padding: 10px;
+  }
+
+  .calendar-card,
+  .releases-section {
+    padding: 10px;
+  }
+
+  .calendar-day {
+    min-height: 60px;
+    padding: 5px;
+  }
+
+  .day-number {
+    font-size: 11px;
+  }
+
+  .calendar-header h2 {
+    font-size: 17px;
+  }
+
+  .today-button {
+    padding: 8px 11px;
+    font-size: 12px;
+  }
+
+  .navigation-button {
+    width: 34px;
+    height: 34px;
   }
 }

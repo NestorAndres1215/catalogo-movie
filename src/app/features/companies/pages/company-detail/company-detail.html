@@ -147,7 +147,10 @@
                   {{ formatDate(movie.release_date) }}
                 </span>
 
-                <strong> ★ {{ movie.vote_average.toFixed(1) }} </strong>
+                <strong class="rating">
+                  <i class="fas fa-star"></i>
+                  {{ movie.vote_average.toFixed(1) }}
+                </strong>
               </div>
             </a>
           }

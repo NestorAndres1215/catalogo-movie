@@ -48,10 +48,9 @@
   color: var(--color-texto-sobre-acento);
   font-size: 38px;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--color-acento-hover), var(--color-acento));
-  border: 4px solid var(--color-borde-hover);
+  color: var(--color-acento);
+  background: var(--color-acento-suave);
   border-radius: var(--radio-circular);
-  box-shadow: 0 8px 30px rgba(255, 138, 31, 0.3);
 }
 
 .user-information {
@@ -288,23 +287,23 @@
 }
 
 .genre-chip:hover {
-  border-color: #a78bfa;
-  color: white;
+  border-color: var(--color-acento-hover);
+  color: var(--color-texto);
 }
 
 .genre-chip.selected {
-  color: #ffffff;
-  background: #7c3aed55;
-  border-color: #a78bfa;
+  color: var(--color-texto);
+  background: var(--color-acento-suave);
+  border-color: var(--color-acento);
 }
 
 .genre-chip.selected span {
-  color: #c4b5fd;
+  color: var(--color-acento-hover);
 }
 
 .selection-count {
   margin: 18px 0 0;
-  color: #928ba2;
+  color: var(--color-texto-atenuado);
   font-size: 12px;
 }
 

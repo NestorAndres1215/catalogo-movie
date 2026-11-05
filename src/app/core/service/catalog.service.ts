@@ -20,10 +20,6 @@ import {
 export class CatalogService {
   private readonly tmdb = inject(TmdbService);
 
-  // ==========================================
-  // STREAMING
-  // ==========================================
-
   getStreamingProviders(
     type: 'movie' | 'tv',
     region: string = 'PE',
@@ -48,10 +44,6 @@ export class CatalogService {
     });
   }
 
-  // ==========================================
-  // COLECCIONES Y SAGAS
-  // ==========================================
-
   searchCollections(query: string, page: number = 1): Observable<CollectionResponse> {
     return this.tmdb.get<CollectionResponse>('/search/collection', {
       query,
@@ -63,10 +55,6 @@ export class CatalogService {
     return this.tmdb.get<CollectionDetails>(`/collection/${id}`);
   }
 
-  // ==========================================
-  // BÚSQUEDA DE PELÍCULAS Y SERIES
-  // ==========================================
-
   searchMedia(type: 'movie' | 'tv', query: string, page: number = 1): Observable<CatalogResponse> {
     return this.tmdb.get<CatalogResponse>(`/search/${type}`, {
       query,
@@ -74,10 +62,6 @@ export class CatalogService {
       include_adult: false,
     });
   }
-
-  // ==========================================
-  // TRAILERS Y VIDEOS
-  // ==========================================
 
   getVideos(type: 'movie' | 'tv', id: number): Observable<VideoResponse> {
     return this.tmdb.get<VideoResponse>(`/${type}/${id}/videos`);
@@ -99,17 +83,10 @@ export class CatalogService {
       include_video: false,
     });
   }
-  // ==========================================
-  // CRÍTICAS Y RESEÑAS
-  // ==========================================
 
   getReviews(type: 'movie' | 'tv', id: number, page: number = 1): Observable<ReviewResponse> {
     return this.tmdb.get<ReviewResponse>(`/${type}/${id}/reviews`, { page });
   }
-
-  // ==========================================
-  // IDIOMAS
-  // ==========================================
 
   getLanguages(): Observable<TmdbLanguage[]> {
     return this.tmdb.get<TmdbLanguage[]>('/configuration/languages');
@@ -127,10 +104,6 @@ export class CatalogService {
     });
   }
 
-  // ==========================================
-  // IMÁGENES
-  // ==========================================
-
   getImageUrl(path: string | null, size: string = 'w500'): string {
     return this.tmdb.getImageUrl(path, size);
   }
@@ -146,7 +119,6 @@ export class CatalogService {
     return this.tmdb.get<WatchProviderAvailabilityResponse>(`/${type}/${id}/watch/providers`);
   }
 
-  // Buscar actores por nombre.
   searchPeople(query: string, page: number = 1): Observable<PersonSearchResponse> {
     return this.tmdb.get<PersonSearchResponse>('/search/person', {
       query,
@@ -155,14 +127,14 @@ export class CatalogService {
     });
   }
 
-  // Obtener actores populares de TMDB.
+
   getPopularPeople(page: number = 1): Observable<PersonSearchResponse> {
     return this.tmdb.get<PersonSearchResponse>('/person/popular', {
       page,
     });
   }
 
-  // Obtener películas o series para el reto aleatorio.
+
   getRandomCandidates(type: 'movie' | 'tv', page: number): Observable<CatalogResponse> {
     return this.tmdb.get<CatalogResponse>(`/discover/${type}`, {
       page,
@@ -172,15 +144,14 @@ export class CatalogService {
     });
   }
 
-  // Buscar productoras por nombre.
+
   searchCompanies(query: string, page: number = 1): Observable<CompanySearchResponse> {
     return this.tmdb.get<CompanySearchResponse>('/search/company', {
       query,
       page,
     });
   }
-
-  // Obtener información de una productora.
+  
   getCompanyDetails(id: number): Observable<ProductionCompany> {
     return this.tmdb.get<ProductionCompany>(`/company/${id}`);
   }

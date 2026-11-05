@@ -36,21 +36,15 @@
 }
 
 .decade-button:hover {
+    color: var(--color-acento);
+  background: var(--color-acento-suave);
   border-color: var(--color-acento);
-  color: var(--color-texto);
 }
 
 .decade-button.active {
-  background: var(--color-acento);
+    color: var(--color-acento);
+  background: var(--color-acento-suave);
   border-color: var(--color-acento);
-  color: var(--color-texto-sobre-acento);
-}
-
-.current-label {
-  display: block;
-  margin-top: 4px;
-  font-size: 10px;
-  color: #ddd;
 }
 
 .section-heading {

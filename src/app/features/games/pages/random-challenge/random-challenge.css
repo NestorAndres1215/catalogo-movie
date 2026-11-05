@@ -24,7 +24,10 @@
 .search-section h2,
 .selected-section h2,
 .battle-section h2 {
-  margin-top: 0;
+  margin: 0 0 20px;
+  color: var(--color-texto-secundario);
+  font-size: 15px;
+  font-weight: 700;
 }
 
 .mode-buttons {
@@ -34,12 +37,17 @@
 }
 
 .mode-buttons button {
-  padding: 15px 10px;
-  border: 1px solid var(--color-borde-hover);
-  border-radius: var(--radio-borde-pequeno);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 14px 10px;
+  color: var(--color-texto-secundario);
   background: var(--color-superficie-elevada);
-  color: var(--color-texto);
-  font-size: 15px;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
+  font-size: 14px;
   font-weight: 700;
   cursor: pointer;
   transition: var(--transicion-rapida);
@@ -47,9 +55,10 @@
 
 .mode-buttons button:hover,
 .mode-buttons button.active {
-  background: var(--color-acento);
+ color: var(--color-acento);
+  background: var(--color-acento-suave);
   border-color: var(--color-acento);
-  color: var(--color-texto-sobre-acento);
+  transform: translateY(-2px);
 }
 
 .search-form {

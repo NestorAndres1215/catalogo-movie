@@ -1,10 +1,9 @@
 <main class="game-container">
-
-<app-page-header
-  section="CINEVERSE GAMES"
-  title="Reto Random"
-  description="Elige tu favorito y descubre si puedes vencer al azar."
-/>
+  <app-page-header
+    section="CINEVERSE GAMES"
+    title="Reto Random"
+    description="Elige tu favorito y descubre si puedes vencer al azar."
+  />
   <!-- Selección de modalidad -->
   <section class="mode-section">
     <h2>Selecciona tu desafío</h2>
@@ -13,22 +12,24 @@
       <button
         type="button"
         [class.active]="gameType() === 'movie'"
-        (click)="changeGameType('movie')">
-        🎬 Películas
+        (click)="changeGameType('movie')"
+      >
+        <i class="fas fa-film"></i>
+        Películas
       </button>
 
-      <button
-        type="button"
-        [class.active]="gameType() === 'tv'"
-        (click)="changeGameType('tv')">
-        📺 Series
+      <button type="button" [class.active]="gameType() === 'tv'" (click)="changeGameType('tv')">
+        <i class="fas fa-tv"></i>
+        Series
       </button>
 
       <button
         type="button"
         [class.active]="gameType() === 'person'"
-        (click)="changeGameType('person')">
-        ⭐ Actores
+        (click)="changeGameType('person')"
+      >
+        <i class="fas fa-user-star"></i>
+        Actores
       </button>
     </div>
   </section>
@@ -43,12 +44,10 @@
         [ngModel]="searchQuery()"
         (ngModelChange)="searchQuery.set($event)"
         [placeholder]="getSearchPlaceholder()"
-        (keyup.enter)="search()">
+        (keyup.enter)="search()"
+      />
 
-      <button
-        type="button"
-        (click)="search()"
-        [disabled]="loadingSearch()">
+      <button type="button" (click)="search()" [disabled]="loadingSearch()">
         {{ loadingSearch() ? 'Buscando...' : 'Buscar' }}
       </button>
     </div>
@@ -68,14 +67,8 @@
 
         <div class="results-grid">
           @for (item of searchResults(); track item.id) {
-            <button
-              type="button"
-              class="result-card"
-              (click)="selectItem(item)">
-
-              <img
-                [src]="getImageUrl(item.imagePath)"
-                [alt]="item.title">
+            <button type="button" class="result-card" (click)="selectItem(item)">
+              <img [src]="getImageUrl(item.imagePath)" [alt]="item.title" />
 
               <span class="result-title">{{ item.title }}</span>
 
@@ -96,9 +89,7 @@
       <h2>Tu elección</h2>
 
       <div class="selected-card">
-        <img
-          [src]="getImageUrl(selected.imagePath)"
-          [alt]="selected.title">
+        <img [src]="getImageUrl(selected.imagePath)" [alt]="selected.title" />
 
         <div class="selected-info">
           <h3>{{ selected.title }}</h3>
@@ -120,15 +111,12 @@
             type="button"
             class="challenge-button"
             (click)="startChallenge()"
-            [disabled]="loadingChallenge()">
-
+            [disabled]="loadingChallenge()"
+          >
             {{ loadingChallenge() ? 'Buscando rival...' : '🎲 ¡Retarme!' }}
           </button>
 
-          <button
-            type="button"
-            class="change-button"
-            (click)="changeSelection()">
+          <button type="button" class="change-button" (click)="changeSelection()">
             Cambiar elección
           </button>
         </div>
@@ -139,19 +127,18 @@
   <!-- Comparación -->
   @if (gameStarted() && selectedItem() && randomItem()) {
     <section class="battle-section">
-
       <h2>⚔️ ¡Comienza el enfrentamiento!</h2>
       <p>¿Quién tiene la mayor {{ getComparisonLabel().toLowerCase() }}?</p>
 
       <div class="battle-grid">
-
         <!-- Elección del usuario -->
         <article class="battle-card user-card">
           <span class="player-label">TU ELECCIÓN</span>
 
           <img
             [src]="getImageUrl(selectedItem()?.imagePath ?? null)"
-            [alt]="selectedItem()?.title">
+            [alt]="selectedItem()?.title"
+          />
 
           <h3>{{ selectedItem()?.title }}</h3>
 
@@ -170,9 +157,7 @@
         <article class="battle-card random-card">
           <span class="player-label">RIVAL ALEATORIO</span>
 
-          <img
-            [src]="getImageUrl(randomItem()?.imagePath ?? null)"
-            [alt]="randomItem()?.title">
+          <img [src]="getImageUrl(randomItem()?.imagePath ?? null)" [alt]="randomItem()?.title" />
 
           <h3>{{ randomItem()?.title }}</h3>
 
@@ -184,7 +169,6 @@
             {{ formatScore(randomItem()?.score ?? 0) }}
           </strong>
         </article>
-
       </div>
 
       <!-- Resultado -->
@@ -193,8 +177,8 @@
           class="result-panel"
           [class.winner]="result === 'user'"
           [class.loser]="result === 'system'"
-          [class.draw]="result === 'tie'">
-
+          [class.draw]="result === 'tie'"
+        >
           @if (result === 'user') {
             <span class="result-icon">🏆</span>
             <h2>¡VICTORIA!</h2>
@@ -219,20 +203,15 @@
           type="button"
           class="challenge-button"
           (click)="playAgain()"
-          [disabled]="loadingChallenge()">
-
+          [disabled]="loadingChallenge()"
+        >
           {{ loadingChallenge() ? 'Buscando rival...' : '🔄 Volver a retarme' }}
         </button>
 
-        <button
-          type="button"
-          class="change-button"
-          (click)="changeSelection()">
+        <button type="button" class="change-button" (click)="changeSelection()">
           Elegir otro contenido
         </button>
       </div>
-
     </section>
   }
-
 </main>
