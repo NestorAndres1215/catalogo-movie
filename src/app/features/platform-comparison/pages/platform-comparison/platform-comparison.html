@@ -5,35 +5,23 @@
     description="Descubre dónde puedes ver tus películas y series favoritas. Compara las plataformas disponibles en Perú."
   />
 
-  <section class="search-panel">
-    <h2>Busca una película o serie</h2>
+<section class="search-panel">
 
-    <div class="media-selector">
-      <app-filter-tabs
-        [tabs]="mediaTabs"
-        [selected]="mediaType()"
-        (selectionChange)="setMediaType($event)"
-      />
-    </div>
-    <div class="search-form">
-      <input
-        type="search"
-        placeholder="Ejemplo: Interstellar, Breaking Bad..."
-        [value]="searchQuery()"
-        (input)="onSearchInput($event)"
-        (keydown.enter)="searchMedia()"
-      />
+  <div class="search-controls">
+    <app-filter-tabs
+      [tabs]="mediaTabs"
+      [selected]="mediaType()"
+      (selectionChange)="setMediaType($event)"
+    />
 
-      <app-button
-        [text]="loadingSearch() ? 'Buscando...' : 'Buscar'"
-        [icon]="loadingSearch() ? 'fa-spinner fa-spin' : 'fa-magnifying-glass'"
-        [disabled]="loadingSearch()"
-        (clicked)="searchMedia()"
-      />
-
-      <app-button text="Limpiar" icon="fa-xmark" variant="secondary" (clicked)="clearSearch()" />
-    </div>
-  </section>
+    <app-search
+      class="search-form"
+      [value]="searchQuery()"
+      placeholder="Ejemplo: Interstellar, Breaking Bad..."
+      (valueChange)="onSearchInput($event)"
+    />
+  </div>
+</section>
 
   @if (loadingSearch()) {
     <div class="status-message">Buscando títulos...</div>

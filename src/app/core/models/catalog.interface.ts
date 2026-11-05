@@ -8,10 +8,6 @@ export interface FavoriteWatchlistItem {
   releaseDate: string;
 }
 
-// ==========================================
-// RESPUESTA GENERAL DE PELÍCULAS Y SERIES
-// ==========================================
-
 export interface CatalogMedia {
   id: number;
   title?: string;
@@ -33,10 +29,6 @@ export interface CatalogResponse {
   total_results: number;
 }
 
-// ==========================================
-// STREAMING
-// ==========================================
-
 export interface StreamingProvider {
   provider_id: number;
   provider_name: string;
@@ -47,10 +39,6 @@ export interface StreamingProvider {
 export interface StreamingProviderResponse {
   results: StreamingProvider[];
 }
-
-// ==========================================
-// COLECCIONES Y SAGAS
-// ==========================================
 
 export interface MovieCollection {
   id: number;
@@ -71,10 +59,6 @@ export interface CollectionResponse {
   total_results: number;
 }
 
-// ==========================================
-// TRAILERS Y VIDEOS
-// ==========================================
-
 export interface MediaVideo {
   id: string;
   key: string;
@@ -89,10 +73,6 @@ export interface VideoResponse {
   id: number;
   results: MediaVideo[];
 }
-
-// ==========================================
-// CRÍTICAS Y RESEÑAS
-// ==========================================
 
 export interface MediaReview {
   id: string;
@@ -118,19 +98,11 @@ export interface ReviewResponse {
   total_results: number;
 }
 
-// ==========================================
-// IDIOMAS
-// ==========================================
-
 export interface TmdbLanguage {
   iso_639_1: string;
   english_name: string;
   name: string;
 }
-
-// ==========================================
-// FAVORITOS Y WATCHLIST
-// ==========================================
 
 export interface FavoriteWatchlistItem {
   id: number;
@@ -205,8 +177,6 @@ export interface FavoriteWatchlistItem {
   posterPath: string | null;
   voteAverage: number;
   releaseDate: string;
-
-  // Datos personales del usuario
   status?: WatchlistStatus;
   personalRating?: number | null;
 }

@@ -4,16 +4,22 @@
     title="Top 10 Streaming"
     description="Descubre las plataformas con mayor popularidad en sus películas y series disponibles en Perú."
   />
-  <button class="refresh-button" (click)="loadRankings()" [disabled]="loading()">
-    ↻ Actualizar
-  </button>
-  <div class="region-info">
-    <span>🇵🇪 Perú</span>
-    <span>Películas y series</span>
-    <span>Suscripción</span>
-    <span>Promedio de popularidad</span>
-  </div>
+  <div class="ranking-toolbar">
+    <div class="region-info">
+      <span>🇵🇪 Perú</span>
+      <span>Películas y series</span>
+      <span>Suscripción</span>
+      <span>Promedio de popularidad</span>
+    </div>
 
+    <app-button
+      text="Actualizar"
+      icon="fa-rotate"
+      variant="secondary"
+      [disabled]="loading()"
+      (clicked)="loadRankings()"
+    />
+  </div>
   @if (error()) {
     <div class="error-message">
       {{ error() }}
@@ -82,7 +88,7 @@
           </div>
         </div>
 
-        <button class="close-button" (click)="closeDetails()">Cerrar</button>
+        <app-button text="Cerrar" icon="fa-xmark" variant="secondary" (clicked)="closeDetails()" />
       </div>
 
       <div class="catalog-summary">
@@ -178,11 +184,5 @@
     </section>
   }
 
-  <footer class="data-disclaimer">
-    <p>Datos proporcionados por TMDB y disponibilidad de streaming proporcionada por JustWatch.</p>
-    <p>
-      El ranking utiliza una muestra de hasta 100 películas y 100 series por plataforma. Los
-      promedios pueden variar según los resultados disponibles en TMDB.
-    </p>
-  </footer>
+  <app-footer />
 </div>

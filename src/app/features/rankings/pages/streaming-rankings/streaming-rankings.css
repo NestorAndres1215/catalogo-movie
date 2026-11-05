@@ -29,12 +29,6 @@
   cursor: not-allowed;
 }
 
-.region-info {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 35px;
-}
 
 .region-info span {
   background: var(--color-acento-suave);
@@ -172,10 +166,6 @@
   font-size: 13px;
 }
 
-.close-button {
-  background: #303030;
-}
-
 .catalog-summary {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -184,10 +174,10 @@
 }
 
 .catalog-summary div {
-  background: #191919;
-  border: 1px solid #303030;
   padding: 20px;
-  border-radius: 12px;
+  background: var(--color-superficie-secundaria);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
 }
 
 .catalog-summary strong,
@@ -196,14 +186,20 @@
 }
 
 .catalog-summary strong {
+  color: var(--color-acento-hover);
   font-size: 25px;
-  color: #c4b5fd;
 }
 
 .catalog-summary span {
-  font-size: 12px;
-  color: #999;
   margin-top: 5px;
+  color: var(--color-texto-atenuado);
+  font-size: 12px;
+}
+
+@media (max-width: 576px) {
+  .catalog-summary {
+    grid-template-columns: 1fr;
+  }
 }
 
 .media-section {
@@ -257,9 +253,10 @@
   position: absolute;
   top: 10px;
   left: 10px;
-  background: #7c3aed;
   padding: 6px 9px;
-  border-radius: 7px;
+  background: var(--color-acento);
+  color: var(--color-texto-sobre-acento);
+  border-radius: var(--radio-borde-pequeno);
   font-size: 12px;
   font-weight: 800;
 }
@@ -278,13 +275,13 @@
   display: flex;
   justify-content: space-between;
   gap: 5px;
+  color: var(--color-texto-secundario);
   font-size: 11px;
-  color: #aaa;
 }
 
 .popularity {
   margin-top: 10px;
-  color: #c4b5fd;
+  color: var(--color-acento-hover);
   font-size: 11px;
 }
 
@@ -295,14 +292,7 @@
   border-radius: 10px;
 }
 
-.data-disclaimer {
-  border-top: 1px solid #333;
-  margin-top: 45px;
-  padding-top: 20px;
-  color: #777;
-  font-size: 11px;
-  line-height: 1.6;
-}
+
 
 @media (max-width: 650px) {
   .streaming-page {
@@ -338,5 +328,38 @@
 
   .media-poster {
     height: 210px;
+  }
+}
+
+.ranking-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.region-info {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 12px;
+  white-space: nowrap;
+}
+
+.refresh-button {
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+@media (max-width: 768px) {
+  .ranking-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .refresh-button {
+    align-self: flex-end;
   }
 }

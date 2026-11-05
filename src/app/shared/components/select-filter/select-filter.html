@@ -1,24 +1,52 @@
-<div class="filter-group">
-  <label [for]="id()">
+<div class="filter-group d-flex flex-column gap-2">
+  <label [attr.for]="id()" class="d-flex align-items-center gap-2">
     {{ label() }}
   </label>
 
-  <div class="select-container">
-    <select
+  <div class="select-container position-relative w-100" [class.open]="isOpen()">
+    <button
+      type="button"
+      class="select-trigger"
       [id]="id()"
-      [value]="selectedValue()"
+      [class.is-placeholder]="!hasValue()"
       [disabled]="disabled()"
-      (change)="selectionChange.emit($any($event.target).value)"
+      aria-haspopup="listbox"
+      [attr.aria-expanded]="isOpen()"
+      (click)="toggle()"
+      (keydown)="onKeydown($event)"
     >
-      <option value="">{{ placeholder() }}</option>
+      <span>{{ selectedLabel() }}</span>
+      <i class="fas fa-chevron-down select-icon"></i>
+    </button>
 
-      @for (option of options(); track option.value) {
-        <option [value]="option.value">
-          {{ option.label }}
-        </option>
-      }
-    </select>
+    @if (isOpen()) {
+      <ul class="select-menu" role="listbox">
+        <li
+          role="option"
+          class="select-option"
+          [class.selected]="!hasValue()"
+          (click)="select('')"
+        >
+          <span>{{ placeholder() }}</span>
+        </li>
 
-    <i class="fas fa-chevron-down select-icon"></i>
+        @for (option of options(); track option.value; let i = $index) {
+          <li
+            role="option"
+            class="select-option"
+            [class.selected]="isSelected(option)"
+            [class.active]="i === activeIndex()"
+            [attr.aria-selected]="isSelected(option)"
+            (click)="select(option.value)"
+            (mouseenter)="activeIndex.set(i)"
+          >
+            <span>{{ option.label }}</span>
+            @if (isSelected(option)) {
+              <i class="fas fa-check"></i>
+            }
+          </li>
+        }
+      </ul>
+    }
   </div>
 </div>

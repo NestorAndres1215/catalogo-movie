@@ -4,15 +4,23 @@
     title=" Top 10 de series"
     description="Descubre las series mejor y peor valoradas por la comunidad."
   />
-  <button class="reload-button" (click)="reloadRanking()">↻ Actualizar</button>
-  <!-- PESTAÑAS -->
-<div class="ranking-tabs">
-  <app-filter-tabs
-    [tabs]="rankingTabs"
-    [selected]="activeRanking()"
-    (selectionChange)="changeRanking($event)"
-  />
-</div>
+  <div class="ranking-toolbar">
+    <!-- PESTAÑAS -->
+    <div class="ranking-tabs">
+      <app-filter-tabs
+        [tabs]="rankingTabs"
+        [selected]="activeRanking()"
+        (selectionChange)="changeRanking($event)"
+      />
+    </div>
+
+    <app-button
+      text="Actualizar"
+      icon="fa-rotate"
+      variant="secondary"
+      (clicked)="reloadRanking()"
+    />
+  </div>
 
   <!-- MEJORES SERIES -->
   @if (activeRanking() === 'best') {

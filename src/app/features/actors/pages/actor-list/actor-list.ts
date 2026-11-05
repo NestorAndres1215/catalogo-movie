@@ -8,12 +8,20 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
-
+import { SearchComponent } from '../../../../shared/components/search/search';
 
 @Component({
   selector: 'app-actor-list',
   standalone: true,
-  imports: [RouterLink, ActorFiltersComponent, PageHeaderComponent, PageLoadingComponent, EmptyStateComponent, PaginationComponent],
+  imports: [
+    RouterLink,
+    ActorFiltersComponent,
+    PageHeaderComponent,
+    PageLoadingComponent,
+    EmptyStateComponent,
+    PaginationComponent,
+    SearchComponent,
+  ],
   templateUrl: './actor-list.html',
   styleUrl: './actor-list.css',
 })
@@ -95,14 +103,11 @@ export class ActorListComponent implements OnInit {
     this.loadActors();
   }
 
-  onSearch(event: Event): void {
-    const input = event.target as HTMLInputElement;
-
-    this.searchQuery.set(input.value.trim());
+  onSearch(query: string): void {
+    this.searchQuery.set(query.trim());
     this.currentPage.set(1);
     this.loadActors();
   }
-
   clearSearch(): void {
     this.searchQuery.set('');
     this.currentPage.set(1);

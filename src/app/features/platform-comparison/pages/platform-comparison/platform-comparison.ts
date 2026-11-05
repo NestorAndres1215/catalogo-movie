@@ -15,11 +15,20 @@ import {
 import { ButtonComponent } from '../../../../shared/components/button/button';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { Footer } from '../../../../shared/components/footer/footer';
+import { SearchComponent } from '../../../../shared/components/search/search';
 
 @Component({
   selector: 'app-platform-comparison',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent, FilterTabsComponent, ButtonComponent, EmptyStateComponent, Footer],
+  imports: [
+    DecimalPipe,
+    PageHeaderComponent,
+    FilterTabsComponent,
+    ButtonComponent,
+    EmptyStateComponent,
+    Footer,
+    SearchComponent,
+  ],
   templateUrl: './platform-comparison.html',
   styleUrl: './platform-comparison.css',
 })
@@ -59,12 +68,9 @@ export class PlatformComparisonComponent {
     this.selectedRegion.set(null);
   }
 
-  onSearchInput(event: Event): void {
-    const target = event.target;
-
-    if (target instanceof HTMLInputElement) {
-      this.searchQuery.set(target.value);
-    }
+  onSearchInput(query: string): void {
+    this.searchQuery.set(query);
+    this.searchMedia();
   }
 
   searchMedia(): void {

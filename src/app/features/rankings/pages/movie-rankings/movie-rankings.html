@@ -6,26 +6,22 @@
   />
 
   <!-- Selector de rankings -->
+<div class="ranking-toolbar">
   <section class="ranking-tabs">
-    <button
-      type="button"
-      [class.active]="activeRanking() === 'best'"
-      (click)="changeRanking('best')"
-    >
-      <i class="fas fa-trophy"></i>
-      Mejor valoradas
-    </button>
-
-    <button
-      type="button"
-      [class.active]="activeRanking() === 'worst'"
-      (click)="changeRanking('worst')"
-    >
-      <i class="fas fa-skull"></i>
-      Peor valoradas
-    </button>
+    <app-filter-tabs
+      [tabs]="rankingTabs"
+      [selected]="activeRanking()"
+      (selectionChange)="changeRanking($event)"
+    />
   </section>
 
+  <app-button
+    text="Actualizar"
+    icon="fa-rotate"
+    variant="secondary"
+    (clicked)="reloadRanking()"
+  />
+</div>
   <!-- MEJORES PELÍCULAS -->
   @if (activeRanking() === 'best') {
     <section class="ranking-section">
@@ -36,7 +32,7 @@
           <p>Ordenadas por puntuación promedio.</p>
         </div>
 
-        <button type="button" class="refresh-button" (click)="reloadRanking()">↻ Actualizar</button>
+       
       </div>
 
       @if (loadingBest()) {
@@ -105,8 +101,6 @@
           <h2>💀 Las 10 peores películas</h2>
           <p>Ordenadas de menor a mayor puntuación.</p>
         </div>
-
-        <button type="button" class="refresh-button" (click)="reloadRanking()">↻ Actualizar</button>
       </div>
 
       @if (loadingWorst()) {

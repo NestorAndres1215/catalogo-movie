@@ -12,15 +12,15 @@
   <div class="filter-group">
     <label for="year">Año</label>
 
-<input
-  id="year"
-  type="number"
-  min="1900"
-  [max]="2100"
-  placeholder="Ej. 2024"
-  [value]="filters.year ?? ''"
-  (change)="onYearChange($event)"
-/>
+    <input
+      id="year"
+      type="number"
+      min="1900"
+      [max]="2100"
+      placeholder="Ej. 2024"
+      [value]="filters.year ?? ''"
+      (change)="onYearChange($event)"
+    />
   </div>
 
   <div class="filter-group">

@@ -14,6 +14,8 @@ import {
   SelectFilterComponent,
 } from '../../../../shared/components/select-filter/select-filter';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
+import { SearchComponent } from '../../../../shared/components/search/search';
+import { ButtonComponent } from '../../../../shared/components/button/button';
 
 @Component({
   selector: 'app-director-list',
@@ -25,7 +27,9 @@ import { PaginationComponent } from '../../../../shared/components/pagination/pa
     PageLoadingComponent,
     EmptyStateComponent,
     SelectFilterComponent,
-    PaginationComponent
+    PaginationComponent,
+    SearchComponent,
+    ButtonComponent
 ],
   templateUrl: './director-list.html',
   styleUrl: './director-list.css',
@@ -205,13 +209,10 @@ export class DirectorListComponent implements OnInit {
     });
   }
 
-  onSearch(event: Event): void {
-    const input = event.target as HTMLInputElement;
-
-    this.searchQuery.set(input.value.trim());
-
-    this.resetDirectors();
-  }
+onSearch(query: string): void {
+  this.searchQuery.set(query.trim());
+  this.resetDirectors();
+}
 
   clearSearch(): void {
     this.searchQuery.set('');

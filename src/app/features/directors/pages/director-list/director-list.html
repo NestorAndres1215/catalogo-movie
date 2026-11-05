@@ -4,25 +4,18 @@
     title="Directores"
     description="Descubre a los cineastas detrás de tus películas favoritas."
   />
-  <!-- BÚSQUEDA Y FILTROS -->
 
-  <div class="filters">
-    <div class="search-box">
-      <span>⌕</span>
-
-      <input
-        type="text"
-        placeholder="Buscar director..."
-        [value]="searchQuery()"
-        (keyup.enter)="onSearch($event)"
-      />
-
-      @if (searchQuery()) {
-        <button type="button" (click)="clearSearch()">✕</button>
-      }
-    </div>
+  <!-- BÚSQUEDA Y ORDEN -->
+  <div class="director-toolbar">
+    <app-search
+      class="director-search"
+      placeholder="Buscar director..."
+      [value]="searchQuery()"
+      (valueChange)="onSearch($event)"
+    />
 
     <app-select-filter
+      class="director-sort"
       id="sort"
       label="Ordenar por"
       placeholder="Seleccionar orden"
@@ -33,27 +26,29 @@
   </div>
 
   <!-- CARGANDO -->
-
   @if (loading()) {
     <app-page-loading
-      title="Buscando películas"
-      description="Descubriendo películas para ti."
+      title="Buscando directores"
+      description="Descubriendo cineastas para ti."
       detail="Consultando el catálogo de TMDB..."
-      icon="fa-film"
+      icon="fa-clapperboard"
     />
   }
+
   <!-- ERROR -->
-
   @if (errorMessage()) {
-    <div class="message error">
+    <div class="message message--error" role="alert">
       <p>{{ errorMessage() }}</p>
-
-      <button type="button" (click)="loadDirectors()">Reintentar</button>
+      <app-button
+        variant="secondary"
+        text="Reintentar"
+        icon="fa-rotate-right"
+        (clicked)="loadDirectors()"
+      />
     </div>
   }
 
   <!-- SIN RESULTADOS -->
-
   @if (!loading() && !errorMessage() && directors().length === 0) {
     <app-empty-state
       icon="fa-clapperboard"
@@ -63,36 +58,30 @@
   }
 
   <!-- LISTADO -->
-
   @if (directors().length > 0) {
     <div class="directors-grid">
       @for (director of directors(); track director.id) {
         <a class="director-card" [routerLink]="['/directors', director.id]">
-          <div class="director-image">
+          <div class="director-card__image">
             @if (director.profile_path) {
-              <img [src]="getProfile(director.profile_path)" [alt]="director.name" />
+              <img
+                [src]="getProfile(director.profile_path)"
+                [alt]="director.name"
+                loading="lazy"
+              />
             } @else {
-              <div class="no-image">Sin fotografía</div>
+              <div class="director-card__placeholder">Sin fotografía</div>
             }
           </div>
 
-          <div class="director-info">
-            <h2>
-              {{ director.name }}
-            </h2>
+          <div class="director-card__info">
+            <h2 class="director-card__name">{{ director.name }}</h2>
+            <span class="director-card__role">Director</span>
+            <p class="director-card__known-for">{{ getKnownFor(director) }}</p>
 
-            <span class="department"> Director </span>
-
-            <p class="known-for">
-              {{ getKnownFor(director) }}
-            </p>
-
-            <div class="popularity">
+            <div class="director-card__popularity">
               <span>Popularidad</span>
-
-              <strong>
-                {{ director.popularity | number: '1.0-0' }}
-              </strong>
+              <strong>{{ director.popularity | number: '1.0-0' }}</strong>
             </div>
           </div>
         </a>

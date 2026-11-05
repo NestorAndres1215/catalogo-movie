@@ -77,7 +77,7 @@
             <img [src]="getImageUrl(media.poster_path)" [alt]="getTitle(media)" loading="lazy" />
 
             <span class="rating">
-              <span>★</span>
+              <i class="fas fa-star"></i>
               {{ media.vote_average | number: '1.1-1' }}
             </span>
           </div>
@@ -105,13 +105,13 @@
       }
     </section>
 
-  <!-- Paginación -->
-<app-pagination
-  [currentPage]="page()"
-  [totalPages]="totalPages()"
-  [loading]="loadingContent()"
-  (pageChange)="changePage($event)"
-/>
+    <!-- Paginación -->
+    <app-pagination
+      [currentPage]="page()"
+      [totalPages]="totalPages()"
+      [loading]="loadingContent()"
+      (pageChange)="changePage($event)"
+    />
   }
 
   <!-- Sin resultados -->

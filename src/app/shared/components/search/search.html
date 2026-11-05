@@ -1,0 +1,30 @@
+@if (label()) {
+  <label class="search__label" [for]="inputId">{{ label() }}</label>
+}
+
+<div class="search__field">
+  <i class="fas fa-search search__icon" aria-hidden="true"></i>
+
+  <input
+    #field
+    class="search__input"
+    type="search"
+    autocomplete="off"
+    [id]="inputId"
+    [placeholder]="placeholder()"
+    [value]="value()"
+    [attr.aria-label]="label() ? null : ariaLabel()"
+    (input)="onValueChange(field.value)"
+  />
+
+  @if (value()) {
+    <button
+      class="search__clear"
+      type="button"
+      aria-label="Limpiar búsqueda"
+      (click)="clearSearch(); field.focus()"
+    >
+      <i class="fas fa-xmark" aria-hidden="true"></i>
+    </button>
+  }
+</div>

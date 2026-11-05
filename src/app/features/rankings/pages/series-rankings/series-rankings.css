@@ -24,13 +24,7 @@
 
 /* PESTAÑAS */
 
-.ranking-tabs {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 30px;
-  border-bottom: 1px solid #292929;
-  overflow-x: auto;
-}
+
 
 /* SECCIÓN */
 
@@ -316,8 +310,28 @@
     margin-left: auto;
   }
 
-  .ranking-tabs button {
-    padding: 12px 10px;
-    font-size: 12px;
+}
+
+.ranking-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+@media (max-width: 768px) {
+  .ranking-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ranking-tabs {
+    width: 100%;
+  }
+
+  .ranking-toolbar app-button {
+    align-self: flex-end;
   }
 }

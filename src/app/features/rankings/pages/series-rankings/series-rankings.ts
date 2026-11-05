@@ -13,8 +13,7 @@ import {
   FilterTabsComponent,
   FilterType,
 } from '../../../../shared/components/filter-tabs/filter-tabs';
-
-type RankingType = 'best' | 'worst' | 'genre';
+import { ButtonComponent } from '../../../../shared/components/button/button';
 
 @Component({
   selector: 'app-series-rankings',
@@ -26,6 +25,7 @@ type RankingType = 'best' | 'worst' | 'genre';
     Footer,
     PageLoadingComponent,
     FilterTabsComponent,
+    ButtonComponent,
   ],
   templateUrl: './series-rankings.html',
   styleUrl: './series-rankings.css',

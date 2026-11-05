@@ -27,22 +27,15 @@
       <span> Selecciona una producción popular como referencia. </span>
     </div>
 
-    <select
+    <app-select-filter
       id="source"
-      [value]="selectedId() ?? ''"
-      (change)="onSourceChange($event)"
+      label="Seleccionar producción"
+      placeholder="Selecciona una producción"
+      [options]="sourceOptions()"
+      [selectedValue]="selectedId() ?? ''"
       [disabled]="loadingSources() || popularMedia().length === 0"
-    >
-      @if (loadingSources()) {
-        <option value="">Cargando producciones...</option>
-      } @else {
-        @for (item of popularMedia(); track item.id) {
-          <option [value]="item.id">
-            {{ getMediaTitle(item) }}
-          </option>
-        }
-      }
-    </select>
+      (selectionChange)="onSourceChange($event)"
+    />
   </div>
 
   @if (selectedId() !== null) {

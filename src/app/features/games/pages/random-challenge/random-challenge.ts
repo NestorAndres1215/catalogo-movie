@@ -1,11 +1,10 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CatalogService } from '../../../../core/service/catalog.service';
-import {
-  CatalogMedia,
-  TmdbPerson
-} from '../../../../core/models/catalog.interface';
+import { CatalogMedia, TmdbPerson } from '../../../../core/models/catalog.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { ButtonComponent } from '../../../../shared/components/button/button';
+import { SearchComponent } from '../../../../shared/components/search/search';
 
 type GameType = 'movie' | 'tv' | 'person';
 
@@ -24,12 +23,11 @@ type GameResult = 'user' | 'system' | 'tie';
 @Component({
   selector: 'app-random-challenge',
   standalone: true,
-  imports: [FormsModule, PageHeaderComponent],
+  imports: [FormsModule, PageHeaderComponent, ButtonComponent, SearchComponent],
   templateUrl: './random-challenge.html',
-  styleUrl: './random-challenge.css'
+  styleUrl: './random-challenge.css',
 })
 export class RandomChallengeComponent {
-
   private readonly catalogService = inject(CatalogService);
 
   readonly gameType = signal<GameType>('movie');
@@ -81,10 +79,8 @@ export class RandomChallengeComponent {
 
     if (type === 'person') {
       this.catalogService.searchPeople(query, 1).subscribe({
-        next: response => {
-          const results = response.results.map(person =>
-            this.mapPerson(person)
-          );
+        next: (response) => {
+          const results = response.results.map((person) => this.mapPerson(person));
 
           this.searchResults.set(results);
           this.loadingSearch.set(false);
@@ -96,17 +92,15 @@ export class RandomChallengeComponent {
         error: () => {
           this.loadingSearch.set(false);
           this.errorMessage.set('No se pudo realizar la búsqueda.');
-        }
+        },
       });
 
       return;
     }
 
     this.catalogService.searchMedia(type, query, 1).subscribe({
-      next: response => {
-        const results = response.results.map(media =>
-          this.mapMedia(media, type)
-        );
+      next: (response) => {
+        const results = response.results.map((media) => this.mapMedia(media, type));
 
         this.searchResults.set(results);
         this.loadingSearch.set(false);
@@ -118,7 +112,7 @@ export class RandomChallengeComponent {
       error: () => {
         this.loadingSearch.set(false);
         this.errorMessage.set('No se pudo realizar la búsqueda.');
-      }
+      },
     });
   }
 
@@ -154,16 +148,14 @@ export class RandomChallengeComponent {
       const randomPage = Math.floor(Math.random() * 20) + 1;
 
       this.catalogService.getPopularPeople(randomPage).subscribe({
-        next: response => {
+        next: (response) => {
           const candidates = response.results.filter(
-            person => person.id !== selected.id && person.profile_path
+            (person) => person.id !== selected.id && person.profile_path,
           );
 
           if (candidates.length === 0) {
             this.loadingChallenge.set(false);
-            this.errorMessage.set(
-              'No se encontró otro actor. Inténtalo nuevamente.'
-            );
+            this.errorMessage.set('No se encontró otro actor. Inténtalo nuevamente.');
             return;
           }
 
@@ -174,7 +166,7 @@ export class RandomChallengeComponent {
         error: () => {
           this.loadingChallenge.set(false);
           this.errorMessage.set('No se pudo obtener un actor aleatorio.');
-        }
+        },
       });
 
       return;
@@ -184,16 +176,14 @@ export class RandomChallengeComponent {
     const randomPage = Math.floor(Math.random() * 20) + 1;
 
     this.catalogService.getRandomCandidates(type, randomPage).subscribe({
-      next: response => {
+      next: (response) => {
         const candidates = response.results.filter(
-          media => media.id !== selected.id && media.poster_path
+          (media) => media.id !== selected.id && media.poster_path,
         );
 
         if (candidates.length === 0) {
           this.loadingChallenge.set(false);
-          this.errorMessage.set(
-            'No se encontró otro contenido. Inténtalo nuevamente.'
-          );
+          this.errorMessage.set('No se encontró otro contenido. Inténtalo nuevamente.');
           return;
         }
 
@@ -204,7 +194,7 @@ export class RandomChallengeComponent {
       error: () => {
         this.loadingChallenge.set(false);
         this.errorMessage.set('No se pudo obtener un contenido aleatorio.');
-      }
+      },
     });
   }
 
@@ -242,7 +232,7 @@ export class RandomChallengeComponent {
       imagePath: media.poster_path,
       score: media.vote_average,
       scoreLabel: 'Valoración TMDB',
-      type
+      type,
     };
   }
 
@@ -255,13 +245,13 @@ export class RandomChallengeComponent {
       imagePath: person.profile_path,
       score: person.popularity,
       scoreLabel: 'Popularidad TMDB',
-      type: 'person'
+      type: 'person',
     };
   }
 
   private getKnownFor(person: TmdbPerson): string {
     const titles = person.known_for
-      ?.map(item => item.title ?? item.name)
+      ?.map((item) => item.title ?? item.name)
       .filter((title): title is string => Boolean(title))
       .slice(0, 3);
 
@@ -312,11 +302,14 @@ export class RandomChallengeComponent {
         return 'Buscar un actor o actriz...';
     }
   }
+  
+  onSearch(query: string): void {
+    this.searchQuery.set(query.trim());
+    this.search();
+  }
 
   getComparisonLabel(): string {
-    return this.gameType() === 'person'
-      ? 'Popularidad'
-      : 'Valoración';
+    return this.gameType() === 'person' ? 'Popularidad' : 'Valoración';
   }
 
   resetGame(): void {

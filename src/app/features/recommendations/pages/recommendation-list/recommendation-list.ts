@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -13,6 +13,7 @@ import {
   FilterType,
 } from '../../../../shared/components/filter-tabs/filter-tabs';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
+import { FilterOption, SelectFilterComponent } from '../../../../shared/components/select-filter/select-filter';
 
 @Component({
   selector: 'app-recommendation-list',
@@ -24,7 +25,8 @@ import { PaginationComponent } from '../../../../shared/components/pagination/pa
     PageLoadingComponent,
     EmptyStateComponent,
     FilterTabsComponent,
-    PaginationComponent
+    PaginationComponent,
+    SelectFilterComponent
 ],
   templateUrl: './recommendation-list.html',
   styleUrl: './recommendation-list.css',
@@ -57,7 +59,12 @@ export class RecommendationListComponent implements OnInit {
     { label: 'Películas', value: 'movie' },
     { label: 'Series', value: 'tv' },
   ];
-
+readonly sourceOptions = computed<FilterOption[]>(() =>
+  this.popularMedia().map(item => ({
+    label: this.getMediaTitle(item),
+    value: item.id
+  }))
+);
   loadPopularMedia(): void {
     this.loadingSources.set(true);
     this.errorMessage.set('');
@@ -141,16 +148,15 @@ export class RecommendationListComponent implements OnInit {
     this.loadPopularMedia();
   }
 
-  onSourceChange(event: Event): void {
-    const id = Number((event.target as HTMLSelectElement).value);
+onSourceChange(value: string): void {
+  const id = Number(value);
 
-    if (!Number.isFinite(id) || id <= 0) return;
+  if (!Number.isFinite(id) || id <= 0) return;
 
-    this.selectedId.set(id);
-    this.currentPage.set(1);
-    this.loadRecommendations();
-  }
-
+  this.selectedId.set(id);
+  this.currentPage.set(1);
+  this.loadRecommendations();
+}
   changePage(page: number): void {
     if (page < 1 || page > this.totalPages() || this.loading()) {
       return;

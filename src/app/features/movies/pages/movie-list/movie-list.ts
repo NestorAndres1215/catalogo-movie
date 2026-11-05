@@ -10,6 +10,7 @@ import { MovieService } from '../../../../core/service/movie.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
+import { SearchComponent } from '../../../../shared/components/search/search';
 
 interface MoviesRequest {
   query: string;
@@ -28,7 +29,7 @@ interface MoviesResult {
 @Component({
   selector: 'app-movie-list',
   standalone: true,
-  imports: [RouterLink, MovieFiltersComponent, PageHeaderComponent, EmptyStateComponent, PaginationComponent],
+  imports: [RouterLink, MovieFiltersComponent, PageHeaderComponent, EmptyStateComponent, PaginationComponent, SearchComponent],
   templateUrl: './movie-list.html',
   styleUrl: './movie-list.css'
 })
@@ -130,11 +131,10 @@ export class MovieListComponent {
     this.currentPage.set(1);
   }
 
-  onSearch(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    this.searchQuery.set(input.value.trim());
-    this.currentPage.set(1);
-  }
+onSearch(query: string): void {
+  this.searchQuery.set(query.trim());
+  this.currentPage.set(1);
+}
 
   clearSearch(): void {
     this.searchQuery.set('');

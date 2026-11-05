@@ -4,25 +4,16 @@
     title="Actores y Actrices"
     description="Conoce a los artistas que dan vida a tus películas y series favoritas."
   />
-
-  <div class="search-container">
-    <span class="search-icon">⌕</span>
-
-    <input
-      type="search"
-      placeholder="Buscar actores, actrices y artistas..."
+  <div class="actor-toolbar">
+    <app-search
+      class="actor-search"
       [value]="searchQuery()"
-      (change)="onSearch($event)"
-      (keyup.enter)="onSearch($event)"
+      placeholder="Buscar actores, actrices y artistas..."
+      (valueChange)="onSearch($event)"
     />
 
-    @if (searchQuery()) {
-      <button class="clear-search" type="button" (click)="clearSearch()">Limpiar</button>
-    }
+    <app-actor-filters [filters]="filters()" (filtersChange)="onFiltersChange($event)" />
   </div>
-
-  <app-actor-filters [filters]="filters()" (filtersChange)="onFiltersChange($event)" />
-
   <div class="section-heading">
     <div>
       <h2>

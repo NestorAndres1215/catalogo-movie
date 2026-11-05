@@ -36,25 +36,14 @@
 
   <section class="search-section">
     <h2>{{ getGameTitle() }}</h2>
-    <p>Busca y selecciona tu elección para comenzar.</p>
 
-    <div class="search-form">
-      <input
-        type="text"
-        [ngModel]="searchQuery()"
-        (ngModelChange)="searchQuery.set($event)"
-        [placeholder]="getSearchPlaceholder()"
-        (keyup.enter)="search()"
-      />
-
-      <button type="button" (click)="search()" [disabled]="loadingSearch()">
-        {{ loadingSearch() ? 'Buscando...' : 'Buscar' }}
-      </button>
-    </div>
-
-    @if (loadingSearch()) {
-      <p class="loading-message">Buscando resultados...</p>
-    }
+    <app-search
+      class="search-form"
+      label="Busca y selecciona tu elección para comenzar."
+      [value]="searchQuery()"
+      [placeholder]="getSearchPlaceholder()"
+      (valueChange)="onSearch($event)"
+    />
 
     @if (errorMessage()) {
       <p class="error-message">{{ errorMessage() }}</p>
@@ -107,18 +96,19 @@
 
       @if (!gameStarted()) {
         <div class="challenge-actions">
-          <button
-            type="button"
-            class="challenge-button"
-            (click)="startChallenge()"
+          <app-button
+            [text]="loadingChallenge() ? 'Buscando rival...' : '¡Retarme!'"
+            [icon]="loadingChallenge() ? 'fa-spinner fa-spin' : 'fa-dice'"
             [disabled]="loadingChallenge()"
-          >
-            {{ loadingChallenge() ? 'Buscando rival...' : '🎲 ¡Retarme!' }}
-          </button>
+            (clicked)="startChallenge()"
+          />
 
-          <button type="button" class="change-button" (click)="changeSelection()">
-            Cambiar elección
-          </button>
+          <app-button
+            text="Cambiar elección"
+            icon="fa-shuffle"
+            variant="secondary"
+            (clicked)="changeSelection()"
+          />
         </div>
       }
     </section>
@@ -127,7 +117,10 @@
   <!-- Comparación -->
   @if (gameStarted() && selectedItem() && randomItem()) {
     <section class="battle-section">
-      <h2>⚔️ ¡Comienza el enfrentamiento!</h2>
+      <h2>
+        <i class="fas fa-khanda"></i>
+        ¡Comienza el enfrentamiento!
+      </h2>
       <p>¿Quién tiene la mayor {{ getComparisonLabel().toLowerCase() }}?</p>
 
       <div class="battle-grid">
@@ -180,15 +173,18 @@
           [class.draw]="result === 'tie'"
         >
           @if (result === 'user') {
-            <span class="result-icon">🏆</span>
+            <span class="result-icon victory-icon">
+              <i class="fas fa-trophy"></i>
+            </span>
             <h2>¡VICTORIA!</h2>
           }
 
           @if (result === 'system') {
-            <span class="result-icon">😢</span>
+            <span class="result-icon defeat-icon">
+              <i class="fas fa-face-sad-tear"></i>
+            </span>
             <h2>¡DERROTA!</h2>
           }
-
           @if (result === 'tie') {
             <span class="result-icon">🤝</span>
             <h2>¡EMPATE!</h2>
@@ -199,18 +195,19 @@
       }
 
       <div class="battle-actions">
-        <button
-          type="button"
-          class="challenge-button"
-          (click)="playAgain()"
+        <app-button
+          [text]="loadingChallenge() ? 'Buscando rival...' : 'Volver a retarme'"
+          [icon]="loadingChallenge() ? 'fa-spinner fa-spin' : 'fa-rotate'"
           [disabled]="loadingChallenge()"
-        >
-          {{ loadingChallenge() ? 'Buscando rival...' : '🔄 Volver a retarme' }}
-        </button>
+          (clicked)="playAgain()"
+        />
 
-        <button type="button" class="change-button" (click)="changeSelection()">
-          Elegir otro contenido
-        </button>
+        <app-button
+          text="Elegir otro contenido"
+          icon="fa-film"
+          variant="secondary"
+          (clicked)="changeSelection()"
+        />
       </div>
     </section>
   }

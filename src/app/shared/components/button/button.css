@@ -1,9 +1,24 @@
+/*
+ * El componente no define ancho propio.
+ * - Por defecto el host se ajusta al contenido (inline-block).
+ * - El botón ocupa el 100% del host, así que el ancho lo decide la página
+ *   que lo usa, por ejemplo:
+ *     app-button { width: 220px; }
+ *     app-button { display: block; }   -> ancho completo del contenedor
+ */
+:host {
+  display: inline-block;
+  max-width: 100%;
+}
+
 .app-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  width: 100%;
   padding: 13px 20px;
+  box-sizing: border-box;
   color: var(--color-texto-sobre-acento);
   background: var(--color-acento);
   border: 1px solid var(--color-acento);
@@ -11,6 +26,7 @@
   font-size: 13px;
   font-weight: 700;
   text-decoration: none;
+  white-space: nowrap;
   cursor: pointer;
   transition: all 0.25s ease;
 }

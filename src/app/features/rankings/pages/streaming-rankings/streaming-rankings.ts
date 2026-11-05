@@ -10,11 +10,13 @@ import { StreamingService } from '../../../../core/service/streaming.service';
 import { StreamingProvider, StreamingRanking } from '../../../../core/models/streaming.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import { Footer } from '../../../../shared/components/footer/footer';
+import { ButtonComponent } from '../../../../shared/components/button/button';
 
 @Component({
   selector: 'app-streaming-rankings',
   standalone: true,
-  imports: [CommonModule, PageHeaderComponent, EmptyStateComponent],
+  imports: [CommonModule, PageHeaderComponent, EmptyStateComponent, Footer, ButtonComponent],
   templateUrl: './streaming-rankings.html',
   styleUrl: './streaming-rankings.css',
 })

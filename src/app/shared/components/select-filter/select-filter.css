@@ -1,62 +1,47 @@
-.filter-group {
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
-  min-width: 180px;
-}
+.filter-group { min-width: 180px; }
 
 .filter-group label {
-  display: flex;
-  align-items: center;
-  gap: 7px;
   color: var(--color-texto-secundario);
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.4px;
-  transition: color var(--transicion-rapida);
 }
 
-.select-container {
-  position: relative;
-  width: 100%;
-}
-
-.select-container select {
-  appearance: none;
+.select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
   min-height: 46px;
   padding: 12px 42px 12px 15px;
   color: var(--color-texto);
-  background: var(--color-superficie-secundaria);
+  background-color: var(--color-superficie-secundaria);
   border: 1px solid var(--color-borde);
   border-radius: var(--radio-borde-pequeno);
-  outline: none;
-  font-family: inherit;
+  font: inherit;
   font-size: 13px;
   font-weight: 500;
+  text-align: left;
   cursor: pointer;
-
-  transition:
-    border-color var(--transicion-rapida),
-    background var(--transicion-rapida),
-    box-shadow var(--transicion-rapida);
+  transition: var(--transicion-rapida);
 }
 
-.select-container select:hover:not(:disabled) {
-  background: var(--color-superficie-elevada);
+.select-trigger.is-placeholder { color: var(--color-texto-atenuado); }
+
+.select-trigger:hover:not(:disabled) {
+  background-color: var(--color-superficie-elevada);
   border-color: var(--color-borde-hover);
 }
 
-.select-container select:focus {
+.select-trigger:focus-visible,
+.select-container.open .select-trigger {
+  outline: none;
+  background-color: var(--color-superficie-elevada);
   border-color: var(--color-acento);
-  background: var(--color-superficie-elevada);
   box-shadow: 0 0 0 3px var(--color-acento-suave);
 }
 
-.select-container select:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
+.select-trigger:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .select-icon {
   position: absolute;
@@ -66,25 +51,86 @@
   font-size: 11px;
   pointer-events: none;
   transform: translateY(-50%);
-  transition:
-    color var(--transicion-rapida),
-    transform var(--transicion-rapida);
+  transition: var(--transicion-rapida);
 }
 
-.select-container:focus-within .select-icon {
+.select-container.open .select-icon {
   color: var(--color-acento);
   transform: translateY(-50%) rotate(180deg);
 }
 
-.select-container select option {
-  padding: 10px;
-  color: var(--color-texto);
-  background: var(--color-superficie-secundaria);
+.select-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  max-height: 260px;
+  overflow-y: auto;
+  background-color: var(--color-superficie-secundaria);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+  animation: menu-in 0.12s ease-out;
 }
 
-/* Responsive */
+@keyframes menu-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.select-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: var(--color-texto);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.1s;
+}
+
+.select-option:hover,
+.select-option.active { background-color: var(--color-superficie-elevada); }
+
+.select-option.selected { color: var(--color-acento); font-weight: 600; }
+
 @media (max-width: 576px) {
-  .filter-group {
-    min-width: 100%;
-  }
+  .filter-group { min-width: 100%; }
+}
+
+.select-menu {
+  /* Firefox y navegadores modernos */
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-borde-hover) transparent;
+}
+
+/* Chrome, Edge, Safari */
+.select-menu::-webkit-scrollbar {
+  width: 8px;
+}
+
+.select-menu::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 6px 0; /* que no pegue con las esquinas redondeadas */
+}
+
+.select-menu::-webkit-scrollbar-thumb {
+  background-color: var(--color-borde-hover);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box; /* la hace más delgada y flotante */
+}
+
+.select-menu::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-acento);
+}
+
+/* Quita las flechitas arriba y abajo */
+.select-menu::-webkit-scrollbar-button {
+  display: none;
 }

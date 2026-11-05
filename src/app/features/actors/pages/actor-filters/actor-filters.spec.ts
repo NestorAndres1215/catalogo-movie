@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActorFilters } from './actor-filters';
+import { ActorFiltersComponent } from './actor-filters';
 
 describe('ActorFilters', () => {
-  let component: ActorFilters;
-  let fixture: ComponentFixture<ActorFilters>;
+  let component: ActorFiltersComponent;
+  let fixture: ComponentFixture<ActorFiltersComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ActorFilters],
+      imports: [ActorFiltersComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ActorFilters);
+    fixture = TestBed.createComponent(ActorFiltersComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

@@ -12,34 +12,36 @@
 .ranking-tabs {
   display: flex;
   gap: 12px;
-  margin-bottom: 30px;
+}
+.ranking-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 15px;
+  margin-bottom: 25px;
 }
 
-.ranking-tabs button {
-  padding: 13px 20px;
-  color: #d4d4d4;
-  background: #262626;
-  border: 1px solid #404040;
-  border-radius: 10px;
-  font-weight: 800;
-  cursor: pointer;
-  transition: 0.2s;
-}
+@media (max-width: 768px) {
+  .ranking-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
 
-.ranking-tabs button:hover,
-.ranking-tabs button.active {
-  color: #171717;
-  background: #eab308;
-  border-color: #eab308;
-}
+  .ranking-tabs {
+    width: 100%;
+  }
 
+  .ranking-toolbar app-button {
+    align-self: flex-end;
+  }
+}
 .ranking-section {
   padding: 25px;
-  background: #171717;
-  border: 1px solid #303030;
-  border-radius: 16px;
+  background: var(--color-superficie-secundaria);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde);
 }
-
 .section-heading {
   display: flex;
   justify-content: space-between;
@@ -58,20 +60,6 @@
   font-size: 14px;
 }
 
-.refresh-button {
-  padding: 10px 15px;
-  color: #eab308;
-  background: #262626;
-  border: 1px solid #525252;
-  border-radius: 9px;
-  font-weight: 800;
-  cursor: pointer;
-}
-
-.refresh-button:hover {
-  background: #404040;
-}
-
 .movies-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -81,17 +69,16 @@
 .movie-card {
   min-width: 0;
   overflow: hidden;
-  background: #262626;
-  border: 1px solid #404040;
-  border-radius: 12px;
-  transition:
-    transform 0.2s,
-    border-color 0.2s;
+  background: var(--color-superficie-elevada);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
+  transition: transform var(--transicion-rapida),
+              border-color var(--transicion-rapida);
 }
 
 .movie-card:hover {
   transform: translateY(-5px);
-  border-color: #eab308;
+  border-color: var(--color-valoracion);
 }
 
 .poster-container {

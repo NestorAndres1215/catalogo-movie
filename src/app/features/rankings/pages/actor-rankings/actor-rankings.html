@@ -6,14 +6,6 @@
   />
 
   <div class="ranking-toolbar">
-    <app-button
-      text="Actualizar"
-      icon="fa-rotate-right"
-      [disabled]="loading()"
-      variant="secondary"
-      (clicked)="loadRankings()"
-    />
-
     <nav class="ranking-tabs">
       <app-filter-tabs
         [tabs]="rankingTabs"
@@ -21,6 +13,13 @@
         (selectionChange)="changeRanking($event)"
       />
     </nav>
+    <app-button
+      text="Actualizar"
+      icon="fa-rotate-right"
+      [disabled]="loading()"
+      variant="secondary"
+      (clicked)="loadRankings()"
+    />
   </div>
 
   @if (loading()) {

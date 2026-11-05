@@ -11,7 +11,6 @@ import { PageLoadingComponent } from '../../../../shared/components/page-loading
 import { FilterTab, FilterTabsComponent, FilterType } from '../../../../shared/components/filter-tabs/filter-tabs';
 import { ButtonComponent } from '../../../../shared/components/button/button';
 
-type RankingType = 'best' | 'worst';
 
 @Component({
   selector: 'app-actor-rankings',

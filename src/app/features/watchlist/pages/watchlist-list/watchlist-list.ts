@@ -12,11 +12,24 @@ import {
 } from '../../../../shared/components/filter-tabs/filter-tabs';
 import { StatItem, StatsComponent } from '../../../../shared/components/stats/stats';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import {
+  FilterOption,
+  SelectFilterComponent,
+} from '../../../../shared/components/select-filter/select-filter';
+import { ButtonComponent } from '../../../../shared/components/button/button';
 
 @Component({
   selector: 'app-watchlist-list',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent, FilterTabsComponent, StatsComponent, EmptyStateComponent],
+  imports: [
+    DecimalPipe,
+    PageHeaderComponent,
+    FilterTabsComponent,
+    StatsComponent,
+    EmptyStateComponent,
+    SelectFilterComponent,
+    ButtonComponent
+],
   templateUrl: './watchlist-list.html',
   styleUrl: './watchlist-list.css',
 })
@@ -49,6 +62,20 @@ export class WatchlistListComponent {
       label: 'Series',
     },
   ]);
+// PUNTUACIONES DISPONIBLES
+readonly ratings = Array.from({ length: 10 }, (_, index) => index + 1);
+
+// OPCIONES DE PUNTUACIÓN
+readonly ratingOptions: FilterOption[] = this.ratings.map(rating => ({
+  label: `${rating} / 10`,
+  value: rating
+}));
+
+// OPCIONES DE ESTADO
+readonly statusOptions: FilterOption[] = [
+  { label: 'Pendiente', value: 'pending' },
+  { label: 'Visto', value: 'watched' }
+];
   // CAMBIAR FILTRO
   selectFilter(filter: FilterType): void {
     this.selectedFilter.set(filter);
@@ -58,7 +85,7 @@ export class WatchlistListComponent {
   readonly watchlist = this.watchlistService.watchlist;
 
   // PUNTUACIONES DISPONIBLES
-  readonly ratings = Array.from({ length: 10 }, (_, index) => index + 1);
+
 
   // ELEMENTOS FILTRADOS
   readonly filteredItems = computed(() => {

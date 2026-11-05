@@ -4,23 +4,13 @@
     title="Películas"
     description="Descubre historias, géneros y grandes producciones cinematográficas."
   />
-
-  <div class="search-container">
-    <span class="search-icon">⌕</span>
-
-    <input
-      type="search"
-      placeholder="Buscar una película..."
+  <div class="my-3">
+    <app-search
       [value]="searchQuery()"
-      (keyup.enter)="onSearch($event)"
-      (search)="onSearch($event)"
+      placeholder="Buscar una película..."
+      (valueChange)="onSearch($event)"
     />
-
-    @if (searchQuery()) {
-      <button class="clear-search" type="button" (click)="clearSearch()">Limpiar</button>
-    }
   </div>
-
   <app-movie-filters [genres]="genres()" (filtersChange)="onFiltersChange($event)" />
 
   <div class="section-heading">
@@ -80,13 +70,13 @@
         </a>
       }
     </div>
-@if (totalPages() > 1) {
-  <app-pagination
-    [currentPage]="currentPage()"
-    [totalPages]="totalPages()"
-    [loading]="loading()"
-    (pageChange)="changePage($event)"
-  />
-}
+    @if (totalPages() > 1) {
+      <app-pagination
+        [currentPage]="currentPage()"
+        [totalPages]="totalPages()"
+        [loading]="loading()"
+        (pageChange)="changePage($event)"
+      />
+    }
   }
 </section>

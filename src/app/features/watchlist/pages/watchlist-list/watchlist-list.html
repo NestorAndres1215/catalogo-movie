@@ -36,7 +36,10 @@
               {{ item.mediaType === 'movie' ? 'PELÍCULA' : 'SERIE' }}
             </span>
 
-            <span class="rating"> ⭐ {{ item.voteAverage | number: '1.1-1' }} </span>
+            <span class="rating">
+              <i class="fas fa-star"></i>
+              {{ item.voteAverage | number: '1.1-1' }}
+            </span>
 
             <button
               class="remove-button"
@@ -60,38 +63,23 @@
             <!-- ESTADO Y PUNTUACIÓN PERSONAL -->
             <div class="personal-controls">
               <div class="control-group">
-                <label [for]="'status-' + item.mediaType + '-' + item.id">
-                  Estado de visualización
-                </label>
-
-                <select
-                  class="status-select"
+                <app-select-filter
                   [id]="'status-' + item.mediaType + '-' + item.id"
-                  #statusSelect
-                  [value]="item.status ?? 'pending'"
-                  (change)="updateStatus(item.id, item.mediaType, statusSelect.value)"
-                >
-                  <option value="pending">⏳ Pendiente</option>
-                  <option value="watched">✅ Visto</option>
-                </select>
+                  label="Estado de visualización"
+                  [options]="statusOptions"
+                  [selectedValue]="item.status ?? 'pending'"
+                  (selectionChange)="updateStatus(item.id, item.mediaType, $event)"
+                />
               </div>
-
               <div class="control-group">
-                <label [for]="'rating-' + item.mediaType + '-' + item.id"> Mi puntuación </label>
-
-                <select
-                  class="rating-select"
+                <app-select-filter
                   [id]="'rating-' + item.mediaType + '-' + item.id"
-                  #ratingSelect
-                  [value]="item.personalRating ?? ''"
-                  (change)="updatePersonalRating(item.id, item.mediaType, ratingSelect.value)"
-                >
-                  <option value="">Sin calificar</option>
-
-                  @for (rating of ratings; track rating) {
-                    <option [value]="rating">⭐ {{ rating }} / 10</option>
-                  }
-                </select>
+                  label="Mi puntuación"
+                  placeholder="Sin calificar"
+                  [options]="ratingOptions"
+                  [selectedValue]="item.personalRating ?? ''"
+                  (selectionChange)="updatePersonalRating(item.id, item.mediaType, $event)"
+                />
               </div>
             </div>
 
@@ -101,10 +89,12 @@
             </p>
 
             <!-- DETALLES -->
-            <button class="details-button" type="button" (click)="openDetails(item)">
-              Ver detalles
-              <span>→</span>
-            </button>
+<app-button
+  text="Ver detalles"
+  endIcon="fa-arrow-right"
+  variant="secondary"
+  (clicked)="openDetails(item)"
+/>
           </div>
         </article>
       }

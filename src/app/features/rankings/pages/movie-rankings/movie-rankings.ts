@@ -3,21 +3,23 @@ import { MovieService } from '../../../../core/service/movie.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import { FilterTab, FilterTabsComponent, FilterType } from '../../../../shared/components/filter-tabs/filter-tabs';
+import { ButtonComponent } from '../../../../shared/components/button/button';
 
-type RankingType = 'best' | 'worst';
+
 
 @Component({
   selector: 'app-movie-rankings',
   standalone: true,
   templateUrl: './movie-rankings.html',
   styleUrl: './movie-rankings.css',
-  imports: [PageHeaderComponent, PageLoadingComponent, EmptyStateComponent]
+  imports: [PageHeaderComponent, PageLoadingComponent, EmptyStateComponent, FilterTabsComponent, ButtonComponent]
 })
 export class MovieRankingsComponent implements OnInit {
 
   private readonly movieService = inject(MovieService);
 
-  readonly activeRanking = signal<RankingType>('best');
+  readonly activeRanking = signal<FilterType>('best');
 
   readonly bestMovies = signal<any[]>([]);
   readonly worstMovies = signal<any[]>([]);
@@ -78,9 +80,12 @@ export class MovieRankingsComponent implements OnInit {
       }
     });
   }
-
+readonly rankingTabs: FilterTab[] = [
+  { label: 'Mejor valoradas', value: 'best' },
+  { label: 'Peor valoradas', value: 'worst' }
+];
   // Cambiar ranking.
-  changeRanking(type: RankingType): void {
+  changeRanking(type: FilterType): void {
     this.activeRanking.set(type);
   }
 

@@ -35,7 +35,13 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
 }
+.victory-icon {
+  color: var(--color-valoracion);
+}
 
+.defeat-icon {
+  color: var(--color-danger);
+}
 .mode-buttons button {
   display: flex;
   align-items: center;
@@ -55,7 +61,7 @@
 
 .mode-buttons button:hover,
 .mode-buttons button.active {
- color: var(--color-acento);
+  color: var(--color-acento);
   background: var(--color-acento-suave);
   border-color: var(--color-acento);
   transform: translateY(-2px);
@@ -163,11 +169,11 @@
 
 .selected-card {
   display: flex;
-  gap: 22px;
   align-items: center;
+  gap: 22px;
   padding: 18px;
-  background: #262626;
-  border-radius: 14px;
+  background: var(--color-superficie-elevada);
+  border-radius: var(--radio-borde);
 }
 
 .selected-card img {
@@ -189,12 +195,12 @@
 }
 
 .selected-info p {
-  color: #a3a3a3;
+  color: var(--color-texto-secundario);
   line-height: 1.6;
 }
 
 .score {
-  color: #eab308;
+  color: var(--color-acento);
   font-size: 28px;
 }
 
@@ -236,16 +242,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-  background: #262626;
-  border: 1px solid #404040;
-  border-radius: 16px;
   min-width: 0;
+  padding: 20px;
+  background: var(--color-superficie-elevada);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde);
 }
-
 .player-label {
   margin-bottom: 15px;
-  color: #eab308;
+  color: var(--color-acento);
   font-size: 12px;
   font-weight: 900;
   letter-spacing: 1px;
@@ -255,10 +260,9 @@
   width: min(100%, 210px);
   aspect-ratio: 2 / 3;
   object-fit: cover;
-  border-radius: 10px;
-  background: #404040;
+  border-radius: var(--radio-borde-pequeno);
+  background: var(--color-superficie-elevada);
 }
-
 .battle-card h3 {
   min-height: 48px;
   margin: 15px 0 10px;
@@ -267,16 +271,15 @@
 
 .battle-score {
   margin-top: 8px;
-  color: #eab308;
+  color: var(--color-acento);
   font-size: 32px;
 }
 
 .versus {
-  color: #f87171;
+  color: var(--color-danger);
   font-size: 25px;
   font-weight: 900;
 }
-
 .result-panel {
   margin-top: 30px;
   padding: 25px;
