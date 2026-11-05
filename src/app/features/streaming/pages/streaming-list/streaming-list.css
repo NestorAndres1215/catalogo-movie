@@ -33,7 +33,7 @@
 }
 
 .provider-count {
-  color:var(--color-texto-secundario);
+  color: var(--color-texto-secundario);
   font-size: 13px;
 }
 
@@ -164,7 +164,6 @@
   line-clamp: 3;
 }
 
-
 .error-message {
   padding: 25px;
   border-radius: 10px;
@@ -243,9 +242,9 @@
 }
 
 .carousel-arrow:hover {
-  background: var(--color-acento);
+  color: var(--color-acento);
+  background: var(--color-acento-suave);
   border-color: var(--color-acento);
-  color: var(--color-texto-sobre-acento);
 }
 .providers-carousel {
   display: flex;

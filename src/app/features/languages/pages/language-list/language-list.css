@@ -206,40 +206,6 @@
   font-size: 10px;
 }
 
-/* Paginación */
-
-.pagination {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 25px;
-  margin: 40px 0 20px;
-}
-
-.pagination span {
-  color: #c5c2d0;
-  font-size: 14px;
-}
-
-.pagination button {
-  padding: 11px 20px;
-  color: white;
-  background: #7045cf;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.pagination button:hover:not(:disabled) {
-  background: #865de2;
-}
-
-.pagination button:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
 /* Estados */
 
 .error-message {
@@ -293,13 +259,5 @@
 
   .movie-info h3 {
     font-size: 13px;
-  }
-
-  .pagination {
-    gap: 10px;
-  }
-
-  .pagination button {
-    padding: 10px 12px;
   }
 }

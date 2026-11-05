@@ -7,12 +7,13 @@ import { PersonService } from '../../../../core/service/person.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 
 
 @Component({
   selector: 'app-actor-list',
   standalone: true,
-  imports: [RouterLink, ActorFiltersComponent, PageHeaderComponent, PageLoadingComponent, EmptyStateComponent],
+  imports: [RouterLink, ActorFiltersComponent, PageHeaderComponent, PageLoadingComponent, EmptyStateComponent, PaginationComponent],
   templateUrl: './actor-list.html',
   styleUrl: './actor-list.css',
 })

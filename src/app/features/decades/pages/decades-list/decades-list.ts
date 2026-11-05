@@ -5,16 +5,16 @@ import { MovieService } from '../../../../core/service/movie.service';
 import { Movie } from '../../../../core/models/movie.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
+import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 
 @Component({
   selector: 'app-decades-list',
   standalone: true,
-  imports: [DatePipe, DecimalPipe, PageHeaderComponent, PageLoadingComponent],
+  imports: [DatePipe, DecimalPipe, PageHeaderComponent, PageLoadingComponent, PaginationComponent],
   templateUrl: './decades-list.html',
-  styleUrl: './decades-list.css'
+  styleUrl: './decades-list.css',
 })
 export class DecadesListComponent implements OnInit {
-
   private readonly movieService = inject(MovieService);
 
   private requestVersion = 0;
@@ -23,18 +23,15 @@ export class DecadesListComponent implements OnInit {
 
   readonly currentDecade = Math.floor(this.currentYear / 10) * 10;
 
-  readonly decades = Array.from(
-    { length: (this.currentDecade - 1970) / 10 + 1 },
-    (_, index) => {
-      const startYear = 1970 + index * 10;
+  readonly decades = Array.from({ length: (this.currentDecade - 1970) / 10 + 1 }, (_, index) => {
+    const startYear = 1970 + index * 10;
 
-      return {
-        startYear,
-        endYear: startYear + 9,
-        label: `${startYear}s`
-      };
-    }
-  );
+    return {
+      startYear,
+      endYear: startYear + 9,
+      label: `${startYear}s`,
+    };
+  });
 
   readonly selectedDecade = signal<number>(this.currentDecade);
 
@@ -55,10 +52,17 @@ export class DecadesListComponent implements OnInit {
     this.loadMovies();
   }
 
+  changePage(page: number): void {
+    if (page < 1 || page > this.totalPages()) return;
+
+    if (page < this.page()) {
+      this.previousPage();
+    } else if (page > this.page()) {
+      this.nextPage();
+    }
+  }
   loadMovies(): void {
-    const selected = this.decades.find(
-      decade => decade.startYear === this.selectedDecade()
-    );
+    const selected = this.decades.find((decade) => decade.startYear === this.selectedDecade());
 
     if (!selected) {
       return;
@@ -69,44 +73,40 @@ export class DecadesListComponent implements OnInit {
     this.loading.set(true);
     this.errorMessage.set('');
 
-    this.movieService.getMoviesByDecade(
-      selected.startYear,
-      selected.endYear,
-      this.page()
-    ).subscribe({
-      next: response => {
-        if (version !== this.requestVersion) {
-          return;
-        }
+    this.movieService
+      .getMoviesByDecade(selected.startYear, selected.endYear, this.page())
+      .subscribe({
+        next: (response) => {
+          if (version !== this.requestVersion) {
+            return;
+          }
 
-        this.movies.set(response.results);
-        this.totalPages.set(Math.min(response.total_pages, 500));
-        this.loading.set(false);
-      },
-      error: () => {
-        if (version !== this.requestVersion) {
-          return;
-        }
+          this.movies.set(response.results);
+          this.totalPages.set(Math.min(response.total_pages, 500));
+          this.loading.set(false);
+        },
+        error: () => {
+          if (version !== this.requestVersion) {
+            return;
+          }
 
-        this.movies.set([]);
-        this.errorMessage.set(
-          'No se pudieron cargar las películas. Inténtalo nuevamente.'
-        );
-        this.loading.set(false);
-      }
-    });
+          this.movies.set([]);
+          this.errorMessage.set('No se pudieron cargar las películas. Inténtalo nuevamente.');
+          this.loading.set(false);
+        },
+      });
   }
 
   previousPage(): void {
     if (this.page() > 1) {
-      this.page.update(value => value - 1);
+      this.page.update((value) => value - 1);
       this.loadMovies();
     }
   }
 
   nextPage(): void {
     if (this.page() < this.totalPages()) {
-      this.page.update(value => value + 1);
+      this.page.update((value) => value + 1);
       this.loadMovies();
     }
   }

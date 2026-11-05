@@ -13,6 +13,7 @@ import {
   FilterType,
 } from '../../../../shared/components/filter-tabs/filter-tabs';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 
 @Component({
   selector: 'app-upcoming-list',
@@ -23,7 +24,8 @@ import { EmptyStateComponent } from '../../../../shared/components/empty-state/e
     PageHeaderComponent,
     PageLoadingComponent,
     FilterTabsComponent,
-    EmptyStateComponent
+    EmptyStateComponent,
+    PaginationComponent
 ],
   templateUrl: './upcoming-list.html',
   styleUrl: './upcoming-list.css',

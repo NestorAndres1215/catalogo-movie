@@ -10,6 +10,7 @@ import { SeriesFiltersComponent } from '../series-filters/series-filters';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 
 @Component({
   selector: 'app-series-list',
@@ -19,7 +20,8 @@ import { EmptyStateComponent } from '../../../../shared/components/empty-state/e
     SeriesFiltersComponent,
     PageHeaderComponent,
     PageLoadingComponent,
-    EmptyStateComponent
+    EmptyStateComponent,
+    PaginationComponent
 ],
   templateUrl: './series-list.html',
   styleUrl: './series-list.css'

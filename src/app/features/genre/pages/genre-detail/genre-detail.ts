@@ -21,6 +21,7 @@ import {
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 
 type GenreType = 'movie' | 'tv';
 
@@ -31,7 +32,8 @@ type GenreType = 'movie' | 'tv';
     RouterLink,
     PageLoadingComponent,
     EmptyStateComponent,
-    PageHeaderComponent
+    PageHeaderComponent,
+    PaginationComponent
 ],
   templateUrl: './genre-detail.html',
   styleUrl: './genre-detail.css'

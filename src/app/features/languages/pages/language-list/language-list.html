@@ -105,22 +105,13 @@
       }
     </section>
 
-    <!-- Paginación -->
-    <section class="pagination">
-      <button type="button" (click)="previousPage()" [disabled]="page() <= 1 || loadingContent()">
-        Anterior
-      </button>
-
-      <span> Página {{ page() }} de {{ totalPages() }} </span>
-
-      <button
-        type="button"
-        (click)="nextPage()"
-        [disabled]="page() >= totalPages() || loadingContent()"
-      >
-        Siguiente
-      </button>
-    </section>
+  <!-- Paginación -->
+<app-pagination
+  [currentPage]="page()"
+  [totalPages]="totalPages()"
+  [loading]="loadingContent()"
+  (pageChange)="changePage($event)"
+/>
   }
 
   <!-- Sin resultados -->

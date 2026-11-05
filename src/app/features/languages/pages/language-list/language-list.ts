@@ -19,6 +19,7 @@ import {
   FilterOption,
   SelectFilterComponent,
 } from '../../../../shared/components/select-filter/select-filter';
+import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 
 @Component({
   selector: 'app-language-list',
@@ -30,7 +31,8 @@ import {
     FilterTabsComponent,
     EmptyStateComponent,
     SelectFilterComponent,
-  ],
+    PaginationComponent
+],
   templateUrl: './language-list.html',
   styleUrl: './language-list.css',
 })
@@ -160,7 +162,15 @@ export class LanguageListComponent implements OnInit {
       behavior: 'smooth',
     });
   }
+changePage(page: number): void {
+  if (page < 1 || page > this.totalPages()) return;
 
+  if (page < this.page()) {
+    this.previousPage();
+  } else if (page > this.page()) {
+    this.nextPage();
+  }
+}
   getImageUrl(path: string | null): string {
     if (!path) {
       return 'https://placehold.co/500x750/171717/ffffff?text=Sin+poster';

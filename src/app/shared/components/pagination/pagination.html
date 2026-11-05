@@ -1,0 +1,17 @@
+<nav class="pagination" aria-label="Paginación">
+  <button type="button" [disabled]="currentPage() <= 1 || loading()" (click)="previousPage()">
+    <i class="fas fa-chevron-left"></i>
+    Anterior
+  </button>
+
+  <span> Página {{ currentPage() }} de {{ totalPages() }} </span>
+
+  <button
+    type="button"
+    [disabled]="currentPage() >= totalPages() || loading()"
+    (click)="nextPage()"
+  >
+    Siguiente
+    <i class="fas fa-chevron-right"></i>
+  </button>
+</nav>

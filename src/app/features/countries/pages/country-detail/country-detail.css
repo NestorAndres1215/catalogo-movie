@@ -416,43 +416,6 @@
 }
 
 /* =========================================
-   PAGINACIÓN
-========================================= */
-
-.pagination {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 25px;
-  margin: 45px 0;
-}
-
-.pagination span {
-  color: #ccc;
-  font-size: 13px;
-}
-
-.pagination button {
-  padding: 11px 18px;
-  border: 1px solid #383844;
-  border-radius: 8px;
-  background: #1b1b24;
-  color: white;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-.pagination button:hover:not(:disabled) {
-  border-color: #e5a00d;
-  color: #e5a00d;
-}
-
-.pagination button:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-/* =========================================
    RESPONSIVE
 ========================================= */
 
@@ -556,19 +519,6 @@
     right: 7px;
     padding: 6px 8px;
     font-size: 10px;
-  }
-
-  .pagination {
-    gap: 10px;
-  }
-
-  .pagination button {
-    padding: 9px 11px;
-    font-size: 11px;
-  }
-
-  .pagination span {
-    font-size: 11px;
   }
 }
 

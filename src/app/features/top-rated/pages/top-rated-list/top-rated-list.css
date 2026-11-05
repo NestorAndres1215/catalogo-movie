@@ -122,30 +122,6 @@
   color: var(--color-texto-sobre-acento);
 }
 
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  margin: 35px 0 15px;
-  color: var(--color-texto-secundario);
-}
-
-.pagination button {
-  padding: 9px 18px;
-  border: none;
-  border-radius: 7px;
-  background: var(--color-acento);
-  color: var(--color-texto-sobre-acento);
-  cursor: pointer;
-}
-
-.pagination button:disabled {
-  background: var(--color-superficie-elevada);
-  color: var(--color-texto-atenuado);
-  cursor: not-allowed;
-}
-
 .error-message {
   padding: 60px 20px;
   text-align: center;
@@ -184,12 +160,4 @@
     gap: 14px;
   }
 
-  .pagination {
-    gap: 10px;
-    font-size: 12px;
-  }
-
-  .pagination button {
-    padding: 8px 12px;
-  }
 }

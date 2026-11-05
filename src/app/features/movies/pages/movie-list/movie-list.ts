@@ -9,6 +9,7 @@ import { MovieFiltersComponent } from '../movie-filters/movie-filters';
 import { MovieService } from '../../../../core/service/movie.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 
 interface MoviesRequest {
   query: string;
@@ -27,7 +28,7 @@ interface MoviesResult {
 @Component({
   selector: 'app-movie-list',
   standalone: true,
-  imports: [RouterLink, MovieFiltersComponent, PageHeaderComponent, EmptyStateComponent],
+  imports: [RouterLink, MovieFiltersComponent, PageHeaderComponent, EmptyStateComponent, PaginationComponent],
   templateUrl: './movie-list.html',
   styleUrl: './movie-list.css'
 })

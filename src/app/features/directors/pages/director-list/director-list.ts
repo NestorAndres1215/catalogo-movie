@@ -13,6 +13,7 @@ import {
   FilterOption,
   SelectFilterComponent,
 } from '../../../../shared/components/select-filter/select-filter';
+import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 
 @Component({
   selector: 'app-director-list',
@@ -24,7 +25,8 @@ import {
     PageLoadingComponent,
     EmptyStateComponent,
     SelectFilterComponent,
-  ],
+    PaginationComponent
+],
   templateUrl: './director-list.html',
   styleUrl: './director-list.css',
 })

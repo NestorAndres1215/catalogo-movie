@@ -100,25 +100,11 @@
     </div>
 
     <!-- PAGINACIÓN -->
-
-    <nav class="pagination">
-      <button
-        type="button"
-        [disabled]="currentPage() === 1 || loading()"
-        (click)="changePage(currentPage() - 1)"
-      >
-        Anterior
-      </button>
-
-      <span> Página {{ currentPage() }} de {{ totalPages() }} </span>
-
-      <button
-        type="button"
-        [disabled]="currentPage() === totalPages() || loading()"
-        (click)="changePage(currentPage() + 1)"
-      >
-        Siguiente
-      </button>
-    </nav>
+    <app-pagination
+      [currentPage]="currentPage()"
+      [totalPages]="totalPages()"
+      [loading]="loading()"
+      (pageChange)="changePage($event)"
+    />
   }
 </section>

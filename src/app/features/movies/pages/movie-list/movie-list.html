@@ -80,19 +80,13 @@
         </a>
       }
     </div>
-
-    @if (totalPages() > 1) {
-      <div class="pagination">
-        <button type="button" [disabled]="!canGoPrev()" (click)="changePage(currentPage() - 1)">
-          ← Anterior
-        </button>
-
-        <span>{{ currentPage() }} / {{ totalPages() }}</span>
-
-        <button type="button" [disabled]="!canGoNext()" (click)="changePage(currentPage() + 1)">
-          Siguiente →
-        </button>
-      </div>
-    }
+@if (totalPages() > 1) {
+  <app-pagination
+    [currentPage]="currentPage()"
+    [totalPages]="totalPages()"
+    [loading]="loading()"
+    (pageChange)="changePage($event)"
+  />
+}
   }
 </section>

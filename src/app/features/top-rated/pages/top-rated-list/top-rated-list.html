@@ -86,25 +86,12 @@
         }
       </div>
 
-      <div class="pagination">
-        <button
-          type="button"
-          [disabled]="currentPage() === 1"
-          (click)="changePage(currentPage() - 1)"
-        >
-          Anterior
-        </button>
-
-        <span> Página {{ currentPage() }} de {{ totalPages() }} </span>
-
-        <button
-          type="button"
-          [disabled]="currentPage() === totalPages()"
-          (click)="changePage(currentPage() + 1)"
-        >
-          Siguiente
-        </button>
-      </div>
+<app-pagination
+  [currentPage]="currentPage()"
+  [totalPages]="totalPages()"
+  [loading]="loading()"
+  (pageChange)="changePage($event)"
+/>
     } @else {
       <app-empty-state
         icon="fa-magnifying-glass"

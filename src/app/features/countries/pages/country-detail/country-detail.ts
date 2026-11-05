@@ -7,6 +7,7 @@ import { Country, CountryMedia } from '../../../../core/models/country.interface
 import { CountryService } from '../../../../core/service/country.service';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { FilterTab, FilterTabsComponent, FilterType } from '../../../../shared/components/filter-tabs/filter-tabs';
+import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 
 type CountryMediaType = 'movie' | 'tv';
 
@@ -15,7 +16,7 @@ type CountrySortOption = 'rating-desc' | 'rating-asc' | 'date-desc' | 'date-asc'
 @Component({
   selector: 'app-country-detail',
   standalone: true,
-  imports: [RouterLink, PageLoadingComponent, FilterTabsComponent],
+  imports: [RouterLink, PageLoadingComponent, FilterTabsComponent, PaginationComponent],
   templateUrl: './country-detail.html',
   styleUrl: './country-detail.css',
 })

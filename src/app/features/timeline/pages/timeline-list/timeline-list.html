@@ -96,15 +96,11 @@
         }
       </div>
 
-      <div class="pagination">
-        <button type="button" (click)="previousPage()" [disabled]="page() === 1">Anterior</button>
-
-        <span> Página {{ page() }} de {{ totalPages() }} </span>
-
-        <button type="button" (click)="nextPage()" [disabled]="page() >= totalPages()">
-          Siguiente
-        </button>
-      </div>
+      <app-pagination
+        [currentPage]="page()"
+        [totalPages]="totalPages()"
+        (pageChange)="changePage($event)"
+      />
     }
 
     @if (!loading() && !errorMessage() && movies().length === 0) {

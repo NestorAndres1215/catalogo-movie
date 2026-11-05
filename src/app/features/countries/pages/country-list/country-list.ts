@@ -6,11 +6,12 @@ import { Country } from '../../../../core/models/country.interface';
 import { CountryService } from '../../../../core/service/country.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
+import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 
 @Component({
   selector: 'app-country-list',
   standalone: true,
-  imports: [RouterLink, PageHeaderComponent, PageLoadingComponent],
+  imports: [RouterLink, PageHeaderComponent, PageLoadingComponent, PaginationComponent],
   templateUrl: './country-list.html',
   styleUrl: './country-list.css',
 })

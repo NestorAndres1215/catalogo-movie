@@ -1,13 +1,11 @@
 <section class="decades-container">
-
-<app-page-header
-  section="EXPLORA EL CINE"
-  title="Películas por décadas"
-  description="Descubre las películas más populares de cada época y revive la historia del cine."
-/>
+  <app-page-header
+    section="EXPLORA EL CINE"
+    title="Películas por décadas"
+    description="Descubre las películas más populares de cada época y revive la historia del cine."
+  />
 
   <section class="decades-selector">
-
     <h2>Selecciona una década</h2>
 
     <div class="decades-list">
@@ -19,120 +17,75 @@
           (click)="selectDecade(decade.startYear)"
         >
           {{ decade.label }}
-
-
         </button>
       }
     </div>
-
   </section>
 
   <section class="movies-section">
-
     <div class="section-heading">
       <div>
         <h2>Década de {{ selectedDecade() }}–{{ selectedDecade() + 9 }}</h2>
         <p>Películas ordenadas por popularidad</p>
       </div>
 
-      <span class="movie-count">
-        {{ movies().length }} películas
-      </span>
+      <span class="movie-count"> {{ movies().length }} películas </span>
     </div>
 
-@if (loading()) {
-  <app-page-loading
-    title="Cargando películas"
-    description="Descubriendo películas para ti."
-    detail="Consultando el catálogo cinematográfico de TMDB..."
-    icon="fa-film"
-  />
-}
+    @if (loading()) {
+      <app-page-loading
+        title="Cargando películas"
+        description="Descubriendo películas para ti."
+        detail="Consultando el catálogo cinematográfico de TMDB..."
+        icon="fa-film"
+      />
+    }
 
     @if (errorMessage()) {
       <div class="error-message">
         {{ errorMessage() }}
-        <button type="button" (click)="loadMovies()">
-          Reintentar
-        </button>
+        <button type="button" (click)="loadMovies()">Reintentar</button>
       </div>
     }
 
     @if (!loading() && !errorMessage() && movies().length > 0) {
-
       <div class="movies-grid">
-
         @for (movie of movies(); track movie.id) {
-
           <article class="movie-card">
-
             <div class="poster-container">
               @if (movie.poster_path) {
-                <img
-                  [src]="getImageUrl(movie.poster_path)"
-                  [alt]="movie.title"
-                  loading="lazy"
-                />
+                <img [src]="getImageUrl(movie.poster_path)" [alt]="movie.title" loading="lazy" />
               } @else {
-                <div class="no-poster">
-                  Sin imagen disponible
-                </div>
+                <div class="no-poster">Sin imagen disponible</div>
               }
 
-              <span class="rating">
-                ★ {{ movie.vote_average | number:'1.1-1' }}
-              </span>
+              <span class="rating"> ★ {{ movie.vote_average | number: '1.1-1' }} </span>
             </div>
 
             <div class="movie-info">
               <h3>{{ movie.title }}</h3>
 
               <span class="release-date">
-                {{ movie.release_date | date:'yyyy' }}
+                {{ movie.release_date | date: 'yyyy' }}
               </span>
 
               <p>
                 {{ movie.overview || 'Sin descripción disponible.' }}
               </p>
             </div>
-
           </article>
-
         }
-
       </div>
 
-      <div class="pagination">
-
-        <button
-          type="button"
-          (click)="previousPage()"
-          [disabled]="page() === 1"
-        >
-          Anterior
-        </button>
-
-        <span>
-          Página {{ page() }} de {{ totalPages() }}
-        </span>
-
-        <button
-          type="button"
-          (click)="nextPage()"
-          [disabled]="page() >= totalPages()"
-        >
-          Siguiente
-        </button>
-
-      </div>
+      <app-pagination
+        [currentPage]="page()"
+        [totalPages]="totalPages()"
+        (pageChange)="changePage($event)"
+      />
     }
 
     @if (!loading() && !errorMessage() && movies().length === 0) {
-      <div class="empty-state">
-        No se encontraron películas para esta década.
-      </div>
+      <div class="empty-state">No se encontraron películas para esta década.</div>
     }
-
   </section>
-
 </section>

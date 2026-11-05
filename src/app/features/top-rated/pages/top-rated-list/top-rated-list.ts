@@ -15,6 +15,7 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { FilterTab, FilterTabsComponent, FilterType } from '../../../../shared/components/filter-tabs/filter-tabs';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 
 @Component({
   selector: 'app-top-rated-list',
@@ -25,7 +26,8 @@ import { EmptyStateComponent } from '../../../../shared/components/empty-state/e
     PageHeaderComponent,
     PageLoadingComponent,
     FilterTabsComponent,
-    EmptyStateComponent
+    EmptyStateComponent,
+    PaginationComponent
 ],
   templateUrl: './top-rated-list.html',
   styleUrl: './top-rated-list.css'

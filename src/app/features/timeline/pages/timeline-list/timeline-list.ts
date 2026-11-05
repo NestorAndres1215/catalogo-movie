@@ -6,11 +6,12 @@ import { Movie } from '../../../../core/models/movie.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { Footer } from '../../../../shared/components/footer/footer';
+import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 
 @Component({
   selector: 'app-timeline-list',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent, EmptyStateComponent, Footer],
+  imports: [DecimalPipe, PageHeaderComponent, EmptyStateComponent, Footer, PaginationComponent],
   templateUrl: './timeline-list.html',
   styleUrl: './timeline-list.css',
 })
@@ -38,7 +39,17 @@ export class TimelineListComponent implements OnInit {
   ngOnInit(): void {
     this.loadMovies();
   }
+changePage(page: number): void {
+  if (page < 1 || page > this.totalPages()) {
+    return;
+  }
 
+  if (page < this.page()) {
+    this.previousPage();
+  } else if (page > this.page()) {
+    this.nextPage();
+  }
+}
   selectYear(year: number): void {
     this.selectedYear.set(year);
     this.page.set(1);

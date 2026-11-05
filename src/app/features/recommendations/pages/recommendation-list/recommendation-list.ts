@@ -12,6 +12,7 @@ import {
   FilterTabsComponent,
   FilterType,
 } from '../../../../shared/components/filter-tabs/filter-tabs';
+import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 
 @Component({
   selector: 'app-recommendation-list',
@@ -23,7 +24,8 @@ import {
     PageLoadingComponent,
     EmptyStateComponent,
     FilterTabsComponent,
-  ],
+    PaginationComponent
+],
   templateUrl: './recommendation-list.html',
   styleUrl: './recommendation-list.css',
 })

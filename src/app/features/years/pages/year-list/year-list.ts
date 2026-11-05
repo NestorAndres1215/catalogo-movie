@@ -16,6 +16,7 @@ import {
   FilterOption,
   SelectFilterComponent,
 } from '../../../../shared/components/select-filter/select-filter';
+import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 
 @Component({
   selector: 'app-year-list',
@@ -28,7 +29,8 @@ import {
     EmptyStateComponent,
     FilterTabsComponent,
     SelectFilterComponent,
-  ],
+    PaginationComponent
+],
   templateUrl: './year-list.html',
   styleUrl: './year-list.css',
 })

@@ -21,11 +21,12 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { ButtonComponent } from '../../../../shared/components/button/button';
+import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 
 @Component({
   selector: 'app-company-list',
   standalone: true,
-  imports: [RouterLink, PageHeaderComponent, PageLoadingComponent, EmptyStateComponent, ButtonComponent],
+  imports: [RouterLink, PageHeaderComponent, PageLoadingComponent, EmptyStateComponent, ButtonComponent, PaginationComponent],
   templateUrl: './company-list.html',
   styleUrl: './company-list.css'
 })
