@@ -7,16 +7,32 @@ import { YearMedia } from '../../../../core/models/year.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import {
+  FilterTab,
+  FilterTabsComponent,
+  FilterType,
+} from '../../../../shared/components/filter-tabs/filter-tabs';
+import {
+  FilterOption,
+  SelectFilterComponent,
+} from '../../../../shared/components/select-filter/select-filter';
 
 @Component({
   selector: 'app-year-list',
   standalone: true,
-  imports: [RouterLink, DecimalPipe, PageHeaderComponent, PageLoadingComponent, EmptyStateComponent],
+  imports: [
+    RouterLink,
+    DecimalPipe,
+    PageHeaderComponent,
+    PageLoadingComponent,
+    EmptyStateComponent,
+    FilterTabsComponent,
+    SelectFilterComponent,
+  ],
   templateUrl: './year-list.html',
-  styleUrl: './year-list.css'
+  styleUrl: './year-list.css',
 })
 export class YearListComponent implements OnInit {
-
   private readonly yearService = inject(YearService);
 
   readonly currentYear = new Date().getFullYear();
@@ -34,7 +50,7 @@ export class YearListComponent implements OnInit {
 
   readonly years = Array.from(
     { length: this.currentYear - 1949 },
-    (_, index) => this.currentYear - index
+    (_, index) => this.currentYear - index,
   );
 
   ngOnInit(): void {
@@ -45,9 +61,10 @@ export class YearListComponent implements OnInit {
     this.loading.set(true);
     this.errorMessage.set('');
 
-    const request = this.mediaType() === 'movie'
-      ? this.yearService.getMoviesByYear(this.year(), this.currentPage())
-      : this.yearService.getSeriesByYear(this.year(), this.currentPage());
+    const request =
+      this.mediaType() === 'movie'
+        ? this.yearService.getMoviesByYear(this.year(), this.currentPage())
+        : this.yearService.getSeriesByYear(this.year(), this.currentPage());
 
     request.subscribe({
       next: (response) => {
@@ -58,24 +75,30 @@ export class YearListComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error al cargar contenido por año:', error);
-        this.errorMessage.set(
-          'No se pudo cargar el contenido. Inténtalo nuevamente.'
-        );
+        this.errorMessage.set('No se pudo cargar el contenido. Inténtalo nuevamente.');
         this.media.set([]);
         this.loading.set(false);
-      }
+      },
     });
   }
-
-  onYearChange(event: Event): void {
-    const selectedYear = Number((event.target as HTMLSelectElement).value);
-
-    this.year.set(selectedYear);
+  readonly yearOptions: FilterOption[] = this.years.map((year) => ({
+    label: String(year),
+    value: year,
+  }));
+  onYearChange(value: string): void {
+    this.year.set(Number(value));
     this.currentPage.set(1);
     this.loadMedia();
   }
 
-  changeMediaType(type: 'movie' | 'tv'): void {
+  readonly mediaTabs: FilterTab[] = [
+    { label: 'Películas', value: 'movie' },
+    { label: 'Series', value: 'tv' },
+  ];
+
+  changeMediaType(type: FilterType): void {
+    if (type !== 'movie' && type !== 'tv') return;
+
     if (this.mediaType() === type) return;
 
     this.mediaType.set(type);
@@ -91,7 +114,7 @@ export class YearListComponent implements OnInit {
 
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   }
 

@@ -24,11 +24,14 @@
         (keydown.enter)="searchMedia()"
       />
 
-      <button type="button" (click)="searchMedia()" [disabled]="loadingSearch()">
-        {{ loadingSearch() ? 'Buscando...' : 'Buscar' }}
-      </button>
+      <app-button
+        [text]="loadingSearch() ? 'Buscando...' : 'Buscar'"
+        [icon]="loadingSearch() ? 'fa-spinner fa-spin' : 'fa-magnifying-glass'"
+        [disabled]="loadingSearch()"
+        (clicked)="searchMedia()"
+      />
 
-      <button type="button" class="clear-button" (click)="clearSearch()">Limpiar</button>
+      <app-button text="Limpiar" icon="fa-xmark" variant="secondary" (clicked)="clearSearch()" />
     </div>
   </section>
 
@@ -198,5 +201,5 @@
       description="Busca una película o serie y selecciona un resultado."
     />
   }
-<app-footer />
+  <app-footer />
 </section>

@@ -9,26 +9,10 @@
   flex-direction: column;
   gap: 8px;
   min-width: 150px;
+  margin-top: 15px;
+  margin-bottom: 25px;
 }
 
-.year-selector label {
-  color: #aaa;
-  font-size: 13px;
-}
-
-.year-selector select {
-  padding: 12px 16px;
-  color: white;
-  background: #20202b;
-  border: 1px solid #393948;
-  border-radius: 8px;
-  font-size: 15px;
-  cursor: pointer;
-}
-
-.year-selector option {
-  background: #20202b;
-}
 
 .year-highlight {
   position: relative;
@@ -39,9 +23,13 @@
   padding: 32px;
   margin-bottom: 32px;
   overflow: hidden;
-  background: linear-gradient(110deg, #31205c, #171727 75%);
-  border: 1px solid #493477;
-  border-radius: 16px;
+  background: linear-gradient(
+    110deg,
+    var(--color-acento-suave),
+    var(--color-superficie-secundaria) 75%
+  );
+  border: 1px solid var(--color-borde-hover);
+  border-radius: var(--radio-borde-grande);
 }
 
 .year-highlight > div {
@@ -50,7 +38,7 @@
 }
 
 .year-highlight span {
-  color: #c4b5fd;
+  color: var(--color-acento-hover);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 2px;
@@ -58,19 +46,21 @@
 
 .year-highlight h2 {
   margin: 8px 0;
+  color: var(--color-texto);
   font-size: 52px;
   font-weight: 900;
 }
 
 .year-highlight p {
   margin: 0;
-  color: #c4c4d0;
+  color: var(--color-texto-secundario);
+  line-height: 1.6;
 }
 
 .year-decoration {
   position: absolute;
   right: 25px;
-  color: rgb(255 255 255 / 5%);
+  color: rgba(255, 255, 255, 0.05);
   font-size: 150px !important;
   font-weight: 900;
   letter-spacing: -10px !important;
@@ -89,25 +79,11 @@
   display: flex;
   gap: 8px;
   padding: 5px;
-  background: #1c1c27;
-  border-radius: 10px;
+  background: var(--color-superficie-elevada);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
 }
 
-.media-tabs button {
-  padding: 10px 22px;
-  color: #aaa;
-  background: transparent;
-  border: none;
-  border-radius: 7px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.2s;
-}
-
-.media-tabs button.active {
-  color: white;
-  background: #7c3aed;
-}
 
 .results-count {
   color: #999;
@@ -164,9 +140,9 @@
   top: 10px;
   left: 10px;
   padding: 6px 9px;
-  color: #facc15;
-  background: rgb(0 0 0 / 75%);
-  border-radius: 6px;
+  color: var(--color-valoracion);
+  background: rgba(0, 0, 0, 0.75);
+  border-radius: var(--radio-borde-pequeno);
   font-size: 12px;
   font-weight: 700;
 }
@@ -184,13 +160,13 @@
 
 .card-overlay span {
   padding: 10px 16px;
-  color: white;
-  background: #7c3aed;
-  border-radius: 7px;
+  color: var(--color-texto-sobre-acento);
+  background: var(--color-acento);
+  border-radius: var(--radio-borde-pequeno);
   font-size: 13px;
   font-weight: 600;
-}
 
+}
 .media-card:hover .card-overlay {
   opacity: 1;
 }
@@ -205,7 +181,7 @@
 }
 
 .release-date {
-  color: #a78bfa;
+  color: var(--color-acento-hover);
   font-size: 12px;
 }
 
@@ -213,7 +189,7 @@
   display: -webkit-box;
   margin: 8px 0 0;
   overflow: hidden;
-  color: #999;
+  color: var(--color-texto-secundario);
   font-size: 12px;
   line-height: 1.5;
   -webkit-box-orient: vertical;

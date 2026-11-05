@@ -3,30 +3,42 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 
 import { SeriesService } from '../../../../core/service/series.service';
 
-import {
-  TvSeries,
-  SeriesGenre
-} from '../../../../core/models/series.interface';
+import { TvSeries, SeriesGenre } from '../../../../core/models/series.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { Footer } from '../../../../shared/components/footer/footer';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
+import {
+  FilterTab,
+  FilterTabsComponent,
+  FilterType,
+} from '../../../../shared/components/filter-tabs/filter-tabs';
 
 type RankingType = 'best' | 'worst' | 'genre';
 
 @Component({
   selector: 'app-series-rankings',
   standalone: true,
-  imports: [CommonModule, PageHeaderComponent, EmptyStateComponent, Footer, PageLoadingComponent],
+  imports: [
+    CommonModule,
+    PageHeaderComponent,
+    EmptyStateComponent,
+    Footer,
+    PageLoadingComponent,
+    FilterTabsComponent,
+  ],
   templateUrl: './series-rankings.html',
-  styleUrl: './series-rankings.css'
+  styleUrl: './series-rankings.css',
 })
 export class SeriesRankingsComponent implements OnInit {
-
   private readonly seriesService = inject(SeriesService);
 
-  readonly activeRanking = signal<RankingType>('best');
-
+  readonly activeRanking = signal<FilterType>('best');
+  readonly rankingTabs: FilterTab[] = [
+    { label: 'Mejor valoradas', value: 'best' },
+    { label: 'Peor valoradas', value: 'worst' },
+    { label: 'Por género', value: 'genre' },
+  ];
   // Rankings.
   readonly bestSeries = signal<TvSeries[]>([]);
   readonly worstSeries = signal<TvSeries[]>([]);
@@ -57,22 +69,24 @@ export class SeriesRankingsComponent implements OnInit {
     this.loadingBest.set(true);
     this.errorBest.set('');
 
-    this.seriesService.discoverSeries(1, {
-      sortBy: 'vote_average.desc',
-      genreId: null,
-      year: null,
-      'vote_count.gte': 500,
-      include_adult: false
-    }).subscribe({
-      next: response => {
-        this.bestSeries.set(response.results.slice(0, 10));
-        this.loadingBest.set(false);
-      },
-      error: () => {
-        this.errorBest.set('No se pudieron cargar las mejores series.');
-        this.loadingBest.set(false);
-      }
-    });
+    this.seriesService
+      .discoverSeries(1, {
+        sortBy: 'vote_average.desc',
+        genreId: null,
+        year: null,
+        'vote_count.gte': 500,
+        include_adult: false,
+      })
+      .subscribe({
+        next: (response) => {
+          this.bestSeries.set(response.results.slice(0, 10));
+          this.loadingBest.set(false);
+        },
+        error: () => {
+          this.errorBest.set('No se pudieron cargar las mejores series.');
+          this.loadingBest.set(false);
+        },
+      });
   }
 
   // Series peor valoradas.
@@ -80,28 +94,30 @@ export class SeriesRankingsComponent implements OnInit {
     this.loadingWorst.set(true);
     this.errorWorst.set('');
 
-    this.seriesService.discoverSeries(1, {
-      sortBy: 'vote_average.asc',
-      genreId: null,
-      year: null,
-      'vote_count.gte': 500,
-      include_adult: false
-    }).subscribe({
-      next: response => {
-        this.worstSeries.set(response.results.slice(0, 10));
-        this.loadingWorst.set(false);
-      },
-      error: () => {
-        this.errorWorst.set('No se pudieron cargar las peores series.');
-        this.loadingWorst.set(false);
-      }
-    });
+    this.seriesService
+      .discoverSeries(1, {
+        sortBy: 'vote_average.asc',
+        genreId: null,
+        year: null,
+        'vote_count.gte': 500,
+        include_adult: false,
+      })
+      .subscribe({
+        next: (response) => {
+          this.worstSeries.set(response.results.slice(0, 10));
+          this.loadingWorst.set(false);
+        },
+        error: () => {
+          this.errorWorst.set('No se pudieron cargar las peores series.');
+          this.loadingWorst.set(false);
+        },
+      });
   }
 
   // Cargar géneros desde TMDB.
   loadGenres(): void {
     this.seriesService.getSeriesGenres().subscribe({
-      next: response => {
+      next: (response) => {
         this.genres.set(response.genres);
 
         // Seleccionar animación como género inicial.
@@ -109,7 +125,7 @@ export class SeriesRankingsComponent implements OnInit {
       },
       error: () => {
         this.errorGenre.set('No se pudieron cargar los géneros.');
-      }
+      },
     });
   }
 
@@ -118,22 +134,24 @@ export class SeriesRankingsComponent implements OnInit {
     this.loadingGenre.set(true);
     this.errorGenre.set('');
 
-    this.seriesService.discoverSeries(1, {
-      sortBy: 'vote_average.desc',
-      genreId: this.selectedGenre(),
-      year: null,
-      'vote_count.gte': 100,
-      include_adult: false
-    }).subscribe({
-      next: response => {
-        this.genreSeries.set(response.results.slice(0, 10));
-        this.loadingGenre.set(false);
-      },
-      error: () => {
-        this.errorGenre.set('No se pudieron cargar las series por género.');
-        this.loadingGenre.set(false);
-      }
-    });
+    this.seriesService
+      .discoverSeries(1, {
+        sortBy: 'vote_average.desc',
+        genreId: this.selectedGenre(),
+        year: null,
+        'vote_count.gte': 100,
+        include_adult: false,
+      })
+      .subscribe({
+        next: (response) => {
+          this.genreSeries.set(response.results.slice(0, 10));
+          this.loadingGenre.set(false);
+        },
+        error: () => {
+          this.errorGenre.set('No se pudieron cargar las series por género.');
+          this.loadingGenre.set(false);
+        },
+      });
   }
 
   // Cambiar género.
@@ -143,7 +161,7 @@ export class SeriesRankingsComponent implements OnInit {
   }
 
   // Cambiar ranking.
-  changeRanking(type: RankingType): void {
+  changeRanking(type: FilterType): void {
     this.activeRanking.set(type);
   }
 

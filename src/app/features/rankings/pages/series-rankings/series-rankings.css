@@ -1,12 +1,8 @@
-
-
 .rankings-container {
- padding: 35px 40px;
+  padding: 35px 40px;
   max-width: 1600px;
   margin: auto;
 }
-
-
 
 /* BOTÓN ACTUALIZAR */
 
@@ -34,28 +30,6 @@
   margin-bottom: 30px;
   border-bottom: 1px solid #292929;
   overflow-x: auto;
-}
-
-.ranking-tabs button {
-  flex-shrink: 0;
-  padding: 14px 20px;
-  border: none;
-  border-bottom: 3px solid transparent;
-  background: transparent;
-  color: #999;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.ranking-tabs button:hover {
-  color: #fff;
-}
-
-.ranking-tabs button.active {
-  color: #c084fc;
-  border-bottom-color: #a855f7;
 }
 
 /* SECCIÓN */
@@ -256,7 +230,6 @@
   color: #fff;
   cursor: pointer;
 }
-
 
 /* RESPONSIVE */
 

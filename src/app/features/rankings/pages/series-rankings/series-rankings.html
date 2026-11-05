@@ -6,19 +6,13 @@
   />
   <button class="reload-button" (click)="reloadRanking()">↻ Actualizar</button>
   <!-- PESTAÑAS -->
-  <div class="ranking-tabs">
-    <button [class.active]="activeRanking() === 'best'" (click)="changeRanking('best')">
-      🏆 Mejor valoradas
-    </button>
-
-    <button [class.active]="activeRanking() === 'worst'" (click)="changeRanking('worst')">
-      📉 Peor valoradas
-    </button>
-
-    <button [class.active]="activeRanking() === 'genre'" (click)="changeRanking('genre')">
-      🎨 Por género
-    </button>
-  </div>
+<div class="ranking-tabs">
+  <app-filter-tabs
+    [tabs]="rankingTabs"
+    [selected]="activeRanking()"
+    (selectionChange)="changeRanking($event)"
+  />
+</div>
 
   <!-- MEJORES SERIES -->
   @if (activeRanking() === 'best') {

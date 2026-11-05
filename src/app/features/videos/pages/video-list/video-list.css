@@ -11,29 +11,37 @@
 }
 
 .filters button {
-  border: 1px solid var(--color-borde-hover);
-  background: var(--color-superficie-secundaria);
+ display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 14px 10px;
   color: var(--color-texto-secundario);
-  padding: 10px 20px;
+  background: var(--color-superficie-elevada);
+  border: 1px solid var(--color-borde);
   border-radius: var(--radio-borde-pequeno);
-  cursor: pointer;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
+  cursor: pointer;
   transition: var(--transicion-rapida);
 }
 
 .filters button:hover {
-  background: var(--color-superficie-elevada);
-  color: var(--color-texto);
+  color: var(--color-acento);
+  background: var(--color-acento-suave);
+  border-color: var(--color-acento);
+  transform: translateY(-2px);
 }
 
 .media-selector button.active,
 .filters button.active {
-  background: var(--color-acento);
+  color: var(--color-acento);
+  background: var(--color-acento-suave);
   border-color: var(--color-acento);
-  color: var(--color-texto-sobre-acento);
+  transform: translateY(-2px);
 }
-/* FILTROS */
+
 
 .filters {
   display: flex;
@@ -43,7 +51,7 @@
 }
 
 .filters button {
-  padding: 8px 16px;
+  padding: 10px 35px;
   font-size: 13px;
 }
 

@@ -6,14 +6,14 @@
     description="Explora películas y series según tus géneros favoritos."
   />
 
-<div class="type-selector">
-   <span class="filter-label">Contenido</span>
-  <app-filter-tabs
-    [tabs]="mediaTabs"
-    [selected]="selectedType()"
-    (selectionChange)="changeType($event)"
-  />
-</div>
+  <div class="type-selector">
+    <span class="filter-label">Contenido</span>
+    <app-filter-tabs
+      [tabs]="mediaTabs"
+      [selected]="selectedType()"
+      (selectionChange)="changeType($event)"
+    />
+  </div>
 
   <!-- INFORMACIÓN -->
 

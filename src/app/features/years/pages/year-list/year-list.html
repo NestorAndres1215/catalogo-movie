@@ -5,13 +5,14 @@
     description="Descubre las producciones más populares de cada año."
   />
   <div class="year-selector">
-    <label for="year">Seleccionar año</label>
-
-    <select id="year" [value]="year()" (change)="onYearChange($event)">
-      @for (item of years; track item) {
-        <option [value]="item">{{ item }}</option>
-      }
-    </select>
+    <app-select-filter
+      id="year"
+      label="Seleccionar año"
+      placeholder="Todos los años"
+      [options]="yearOptions"
+      [selectedValue]="year()"
+      (selectionChange)="onYearChange($event)"
+    />
   </div>
   <div class="year-highlight">
     <div>
@@ -31,17 +32,11 @@
 
   <div class="content-toolbar">
     <div class="media-tabs">
-      <button
-        type="button"
-        [class.active]="mediaType() === 'movie'"
-        (click)="changeMediaType('movie')"
-      >
-        Películas
-      </button>
-
-      <button type="button" [class.active]="mediaType() === 'tv'" (click)="changeMediaType('tv')">
-        Series
-      </button>
+      <app-filter-tabs
+        [tabs]="mediaTabs"
+        [selected]="mediaType()"
+        (selectionChange)="changeMediaType($event)"
+      />
     </div>
 
     @if (!loading() && !errorMessage()) {
@@ -49,14 +44,14 @@
     }
   </div>
 
-@if (loading()) {
-  <app-page-loading
-    title="Cargando producciones de {{ year() }}"
-    description="Explorando las películas y series de este año."
-    detail="Consultando producciones en TMDB..."
-    icon="fa-calendar-days"
-  />
-}
+  @if (loading()) {
+    <app-page-loading
+      title="Cargando producciones de {{ year() }}"
+      description="Explorando las películas y series de este año."
+      detail="Consultando producciones en TMDB..."
+      icon="fa-calendar-days"
+    />
+  }
 
   @if (errorMessage()) {
     <div class="error-message">
@@ -128,11 +123,13 @@
         </nav>
       }
     } @else {
-<app-empty-state
-  icon="fa-calendar-xmark"
-  title="No encontramos producciones"
-  [description]="'No hay resultados disponibles para el año ' + year() + '. Prueba seleccionando otro año.'"
-/>
+      <app-empty-state
+        icon="fa-calendar-xmark"
+        title="No encontramos producciones"
+        [description]="
+          'No hay resultados disponibles para el año ' + year() + '. Prueba seleccionando otro año.'
+        "
+      />
     }
   }
 </section>
