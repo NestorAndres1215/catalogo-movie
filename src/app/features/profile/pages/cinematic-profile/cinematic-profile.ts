@@ -18,11 +18,12 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
 import { ButtonComponent } from '../../../../shared/components/button/button';
 import { FilterTab, FilterTabsComponent, FilterType } from '../../../../shared/components/filter-tabs/filter-tabs';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import { SearchComponent } from '../../../../shared/components/search/search';
 
 @Component({
   selector: 'app-cinematic-profile',
   standalone: true,
-  imports: [RouterLink, PageHeaderComponent, ButtonComponent, FilterTabsComponent, EmptyStateComponent],
+  imports: [RouterLink, PageHeaderComponent, ButtonComponent, FilterTabsComponent, EmptyStateComponent, SearchComponent],
   templateUrl: './cinematic-profile.html',
   styleUrl: './cinematic-profile.css',
 })

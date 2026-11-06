@@ -5,6 +5,10 @@ import { CatalogMedia, TmdbPerson } from '../../../../core/models/catalog.interf
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { ButtonComponent } from '../../../../shared/components/button/button';
 import { SearchComponent } from '../../../../shared/components/search/search';
+import {
+  CategoryOption,
+  CategorySelectorComponent,
+} from '../../../../shared/components/category-selector/category-selector';
 
 type GameType = 'movie' | 'tv' | 'person';
 
@@ -23,7 +27,13 @@ type GameResult = 'user' | 'system' | 'tie';
 @Component({
   selector: 'app-random-challenge',
   standalone: true,
-  imports: [FormsModule, PageHeaderComponent, ButtonComponent, SearchComponent],
+  imports: [
+    FormsModule,
+    PageHeaderComponent,
+    ButtonComponent,
+    SearchComponent,
+    CategorySelectorComponent,
+  ],
   templateUrl: './random-challenge.html',
   styleUrl: './random-challenge.css',
 })
@@ -53,9 +63,10 @@ export class RandomChallengeComponent {
   readonly resultMessage = signal('');
 
   // Cambiar la modalidad del juego.
-  changeGameType(type: GameType): void {
-    this.gameType.set(type);
-    this.resetGame();
+  changeGameType(value: string): void {
+    if (value === 'movie' || value === 'tv' || value === 'person') {
+      this.gameType.set(value);
+    }
   }
 
   // Buscar películas, series o actores.
@@ -302,7 +313,11 @@ export class RandomChallengeComponent {
         return 'Buscar un actor o actriz...';
     }
   }
-  
+  readonly gameModes: CategoryOption[] = [
+    { value: 'movie', label: 'Películas', icon: 'fas fa-film' },
+    { value: 'tv', label: 'Series', icon: 'fas fa-tv' },
+    { value: 'person', label: 'Actores', icon: 'fas fa-user-star' },
+  ];
   onSearch(query: string): void {
     this.searchQuery.set(query.trim());
     this.search();

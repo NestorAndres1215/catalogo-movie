@@ -4,43 +4,6 @@
   margin: auto;
 }
 
-.search-container {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 0 16px;
-  margin-bottom: 24px;
-  background: #191d28;
-  border: 1px solid #292e3b;
-  border-radius: 10px;
-}
-
-.search-icon {
-  color: #e5b94b;
-  font-size: 25px;
-}
-
-.search-container input {
-  flex: 1;
-  min-width: 0;
-  padding: 16px 0;
-  color: #fff;
-  background: transparent;
-  border: none;
-  outline: none;
-}
-
-.search-container input::placeholder {
-  color: #778092;
-}
-
-.clear-search {
-  color: #e5b94b;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-}
-
 .section-heading {
   display: flex;
   justify-content: space-between;
@@ -172,5 +135,4 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 20px 12px;
   }
-  
 }

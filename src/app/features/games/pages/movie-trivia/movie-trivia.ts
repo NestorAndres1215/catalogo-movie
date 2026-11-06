@@ -28,6 +28,8 @@ import {
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { ButtonComponent } from '../../../../shared/components/button/button';
+import { SearchComponent } from '../../../../shared/components/search/search';
+import { CategoryOption, CategorySelectorComponent } from '../../../../shared/components/category-selector/category-selector';
 
 type TriviaCategory = 'movie' | 'tv' | 'person' | 'company';
 
@@ -43,7 +45,7 @@ interface TriviaItem {
   standalone: true,
   templateUrl: './movie-trivia.html',
   styleUrl: './movie-trivia.css',
-  imports: [PageHeaderComponent, PageLoadingComponent, ButtonComponent]
+  imports: [PageHeaderComponent, PageLoadingComponent, ButtonComponent, SearchComponent, CategorySelectorComponent]
 })
 export class MovieTriviaComponent implements OnDestroy {
 
@@ -119,12 +121,26 @@ export class MovieTriviaComponent implements OnDestroy {
     this.stopTimer();
   }
 
-  // Cambiar categoría.
-  changeCategory(category: TriviaCategory): void {
+
+readonly categories: CategoryOption<TriviaCategory>[] = [
+  { value: 'movie', label: 'Películas', icon: 'fas fa-film' },
+  { value: 'tv', label: 'Series', icon: 'fas fa-tv' },
+  { value: 'person', label: 'Actores', icon: 'fas fa-user' },
+  { value: 'company', label: 'Productoras', icon: 'fas fa-building' },
+];
+
+// Cambiar categoría.
+changeCategory(category: string): void {
+  if (
+    category === 'movie' ||
+    category === 'tv' ||
+    category === 'person' ||
+    category === 'company'
+  ) {
     this.category.set(category);
     this.resetGame();
   }
-
+}
   // Iniciar partida.
   startGame(): void {
     this.stopTimer();

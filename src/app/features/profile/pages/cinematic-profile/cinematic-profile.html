@@ -180,13 +180,10 @@
 
           <!-- BUSCADOR -->
           <div class="add-form">
-            <input
-              #actorField
-              type="text"
-              placeholder="Buscar actor..."
+            <app-search
               [value]="actorInput()"
-              (input)="actorInput.set(actorField.value); searchActors()"
-              maxlength="80"
+              placeholder="Buscar actor..."
+              (valueChange)="actorInput.set($event); searchActors()"
             />
           </div>
 
@@ -305,13 +302,10 @@
 
           <!-- BUSCADOR -->
           <div class="add-form">
-            <input
-              #directorField
-              type="text"
-              placeholder="Buscar director..."
+            <app-search
               [value]="directorInput()"
-              (input)="directorInput.set(directorField.value); searchDirectors()"
-              maxlength="80"
+              placeholder="Buscar director..."
+              (valueChange)="directorInput.set($event); searchDirectors()"
             />
           </div>
 
@@ -413,9 +407,6 @@
           </div>
         </article>
 
-        <!-- ================================= -->
-        <!-- GUARDAR PREFERENCIAS -->
-        <!-- ================================= -->
 
         <div class="save-section">
           @if (savedMessage()) {

@@ -1,0 +1,67 @@
+.category-section {
+  margin-bottom: 24px;
+  padding: 28px;
+  background: var(--color-superficie-secundaria);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-grande);
+  box-shadow: var(--box-shadow);
+}
+
+.category-section h2 {
+  margin: 0 0 20px;
+  color: var(--color-texto-secundario);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.category-grid button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 14px 10px;
+  color: var(--color-texto-secundario);
+  background: var(--color-superficie-elevada);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transicion-rapida);
+}
+
+.category-grid button:hover,
+.category-grid button.active {
+  color: var(--color-acento);
+  background: var(--color-acento-suave);
+  border-color: var(--color-acento);
+  transform: translateY(-2px);
+}
+
+.category-grid button i {
+  font-size: 17px;
+}
+.category-grid:not(:has(button:nth-child(4))) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.category-grid:not(:has(button:nth-child(3))) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.category-grid:not(:has(button:nth-child(2))) {
+  grid-template-columns: 1fr;
+}
+
+@media (max-width: 600px) {
+  .category-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

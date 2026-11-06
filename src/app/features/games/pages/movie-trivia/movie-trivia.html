@@ -5,44 +5,11 @@
     description="¿Cuánto sabes del mundo del cine?"
   />
 
-  <!-- Categorías -->
-  <section class="category-section">
-    <h2>Selecciona una categoría</h2>
-
-    <div class="category-grid">
-      <button
-        type="button"
-        [class.active]="category() === 'movie'"
-        (click)="changeCategory('movie')"
-      >
-        <i class="fas fa-film"></i>
-        Películas
-      </button>
-
-      <button type="button" [class.active]="category() === 'tv'" (click)="changeCategory('tv')">
-        <i class="fas fa-tv"></i>
-        Series
-      </button>
-
-      <button
-        type="button"
-        [class.active]="category() === 'person'"
-        (click)="changeCategory('person')"
-      >
-        <i class="fas fa-user"></i>
-        Actores
-      </button>
-
-      <button
-        type="button"
-        [class.active]="category() === 'company'"
-        (click)="changeCategory('company')"
-      >
-        <i class="fas fa-building"></i>
-        Productoras
-      </button>
-    </div>
-  </section>
+  <app-category-selector
+    [categories]="categories"
+    [selected]="category()"
+    (selectionChange)="changeCategory($event)"
+  />
 
   <!-- Inicio -->
   @if (questionNumber() === 0 && !gameFinished() && !loading()) {
@@ -130,13 +97,10 @@
         <h3>Escribe tu respuesta</h3>
 
         <div class="autocomplete-container">
-          <input
-            type="text"
+          <app-search
             [value]="searchText()"
-            (input)="onSearchInput($any($event.target).value)"
-            [disabled]="answered() || loading() || gameFinished()"
             placeholder="Escribe el nombre aquí..."
-            autocomplete="off"
+            (valueChange)="onSearchInput($event)"
           />
 
           @if (searching()) {

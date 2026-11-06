@@ -16,32 +16,11 @@
     </div>
 
     <div class="search-box">
-      <input
-        type="text"
-        placeholder="Escribe el nombre de una película..."
+      <app-search
         [value]="searchQuery()"
-        (input)="updateSearch($event)"
-        (keydown.enter)="searchMovies()"
+        placeholder="Escribe el nombre de una película..."
+        (valueChange)="updateSearch($event)"
       />
-
-      <button type="button" (click)="searchMovies()" [disabled]="searching()">
-        @if (searching()) {
-          Buscando...
-        } @else {
-          Buscar
-        }
-      </button>
-
-      @if (searchQuery() || searchResults().length > 0 || searchError()) {
-        <button
-          type="button"
-          class="clear-search-button"
-          (click)="clearSearch()"
-          [disabled]="searching()"
-        >
-          ✕ Limpiar búsqueda
-        </button>
-      }
     </div>
 
     @if (searchError()) {
@@ -63,17 +42,20 @@
             </div>
 
             @if (selectedMovies().some((item) => item.id === movie.id)) {
-              <button class="added-button" type="button" disabled><span>✓</span> Agregada</button>
+              <app-button
+                text="Agregada"
+                icon="fas fa-check"
+                variant="secondary"
+                [disabled]="true"
+              />
             } @else {
-              <button
-                class="add-button"
-                type="button"
-                (click)="addMovie(movie)"
+              <app-button
+                text="Agregar"
+                icon="fas fa-plus"
+                variant="primary"
                 [disabled]="winners().length > 0"
-              >
-                <i class="fas fa-plus"></i>
-                Agregar
-              </button>
+                (clicked)="addMovie(movie)"
+              />
             }
           </article>
         }
@@ -139,15 +121,20 @@
         <p>Cada giro seleccionará una película diferente.</p>
       </div>
 
-      <select
-        [value]="winnerCount()"
-        (change)="changeWinnerCount($event)"
+      <app-select-filter
+        id="winner-count"
+        label="Cantidad de ganadoras"
+        placeholder="Seleccionar cantidad"
+        [options]="
+          getWinnerOptions().map((count) => ({
+            label: count + (count === 1 ? ' ganadora' : ' ganadoras'),
+            value: count,
+          }))
+        "
+        [selectedValue]="winnerCount()"
         [disabled]="winners().length > 0 || selectedMovies().length === 0"
-      >
-        @for (count of getWinnerOptions(); track count) {
-          <option [value]="count">{{ count }} {{ count === 1 ? 'ganadora' : 'ganadoras' }}</option>
-        }
-      </select>
+        (selectionChange)="winnerCount.set(+$event)"
+      />
     </div>
 
     <p class="configuration-note">
@@ -248,15 +235,19 @@
 
           @if (getPendingWinner(); as pending) {
             <div class="decision-buttons">
-              <button type="button" class="accept-button" (click)="acceptWinner(pending)">
-                <i class="fas fa-check"></i>
-                Aceptar y guardar
-              </button>
+              <app-button
+                text="Aceptar y guardar"
+                icon="fas fa-check"
+                variant="primary"
+                (clicked)="acceptWinner(pending)"
+              />
 
-              <button type="button" class="reject-button" (click)="rejectWinner(pending)">
-                <i class="fas fa-xmark"></i>
-                Rechazar
-              </button>
+              <app-button
+                text="Rechazar"
+                icon="fas fa-xmark"
+                variant="secondary"
+                (clicked)="rejectWinner(pending)"
+              />
             </div>
           }
         </div>

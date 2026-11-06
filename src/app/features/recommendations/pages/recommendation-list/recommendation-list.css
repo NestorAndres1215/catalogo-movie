@@ -1,11 +1,8 @@
-
 .recommendations-page {
- padding: 35px 40px;
+  padding: 35px 40px;
   max-width: 1600px;
   margin: auto;
 }
-
-
 
 .recommendation-banner {
   position: relative;
@@ -15,9 +12,13 @@
   padding: 32px;
   margin-bottom: 28px;
   overflow: hidden;
-  background: linear-gradient(110deg, #352064, #191827 75%);
-  border: 1px solid #493477;
-  border-radius: 16px;
+  background: linear-gradient(
+    110deg,
+    var(--color-acento-suave),
+    var(--color-superficie-secundaria) 75%
+  );
+  
+  border-radius: var(--radio-borde);
 }
 
 .banner-content {
@@ -27,7 +28,7 @@
 }
 
 .banner-content > span {
-  color: #c4b5fd;
+  color: var(--color-acento);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 2px;
@@ -40,14 +41,14 @@
 
 .banner-content p {
   margin: 0;
-  color: #c4c4d0;
+  color: var(--color-texto-secundario);
   line-height: 1.6;
 }
 
 .banner-decoration {
   position: absolute;
   right: 30px;
-  color: rgb(255 255 255 / 5%);
+  color: rgba(244, 244, 246, 0.05);
   font-size: 110px;
   font-weight: 900;
   letter-spacing: -8px;
@@ -60,26 +61,25 @@
   width: fit-content;
   padding: 5px;
   margin-bottom: 22px;
-  background: #1c1c27;
-  border-radius: 10px;
+  background: var(--color-superficie-secundaria);
+  border-radius: var(--radio-borde-pequeno);
 }
 
 .media-tabs button {
   padding: 10px 22px;
-  color: #aaa;
+  color: var(--color-texto-secundario);
   background: transparent;
   border: none;
   border-radius: 7px;
   cursor: pointer;
   font-weight: 600;
-  transition: 0.2s;
+  transition: var(--transicion-rapida);
 }
 
 .media-tabs button.active {
-  color: white;
-  background: #7c3aed;
+  color: var(--color-texto);
+  background: var(--color-acento);
 }
-
 .source-selector {
   display: flex;
   align-items: center;
@@ -87,11 +87,10 @@
   gap: 20px;
   padding: 20px;
   margin-bottom: 22px;
-  background: #1c1c27;
-  border: 1px solid #333342;
-  border-radius: 12px;
+  background: var(--color-superficie-secundaria);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
 }
-
 .selector-information {
   display: flex;
   flex-direction: column;
@@ -106,27 +105,6 @@
 .selector-information span {
   color: #999;
   font-size: 12px;
-}
-
-.source-selector select {
-  width: min(100%, 300px);
-  padding: 12px 14px;
-  color: white;
-  background: #292938;
-  border: 1px solid #414153;
-  border-radius: 8px;
-  outline: none;
-  cursor: pointer;
-}
-
-.source-selector select:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.source-selector option {
-  color: white;
-  background: #292938;
 }
 
 .selected-source {
@@ -312,7 +290,6 @@
   cursor: pointer;
 }
 
-
 @media (max-width: 650px) {
   .recommendations-page {
     padding: 20px 14px;
@@ -354,6 +331,4 @@
     align-items: flex-start;
     flex-direction: column;
   }
-
-
 }

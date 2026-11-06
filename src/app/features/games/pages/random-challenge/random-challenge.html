@@ -5,34 +5,12 @@
     description="Elige tu favorito y descubre si puedes vencer al azar."
   />
   <!-- Selección de modalidad -->
-  <section class="mode-section">
-    <h2>Selecciona tu desafío</h2>
-
-    <div class="mode-buttons">
-      <button
-        type="button"
-        [class.active]="gameType() === 'movie'"
-        (click)="changeGameType('movie')"
-      >
-        <i class="fas fa-film"></i>
-        Películas
-      </button>
-
-      <button type="button" [class.active]="gameType() === 'tv'" (click)="changeGameType('tv')">
-        <i class="fas fa-tv"></i>
-        Series
-      </button>
-
-      <button
-        type="button"
-        [class.active]="gameType() === 'person'"
-        (click)="changeGameType('person')"
-      >
-        <i class="fas fa-user-star"></i>
-        Actores
-      </button>
-    </div>
-  </section>
+<app-category-selector
+  title="Selecciona tu desafío"
+  [categories]="gameModes"
+  [selected]="gameType()"
+  (selectionChange)="changeGameType($event)"
+/>
 
   <section class="search-section">
     <h2>{{ getGameTitle() }}</h2>

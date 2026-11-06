@@ -7,20 +7,23 @@ import { CountryService } from '../../../../core/service/country.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
+import { SearchComponent } from '../../../../shared/components/search/search';
 
 @Component({
   selector: 'app-country-list',
   standalone: true,
-  imports: [RouterLink, PageHeaderComponent, PageLoadingComponent, PaginationComponent],
+  imports: [
+    RouterLink,
+    PageHeaderComponent,
+    PageLoadingComponent,
+    PaginationComponent,
+    SearchComponent,
+  ],
   templateUrl: './country-list.html',
   styleUrl: './country-list.css',
 })
 export class CountryListComponent implements OnInit {
   private readonly countryService = inject(CountryService);
-
-  // =========================================
-  // ESTADOS
-  // =========================================
 
   countries = signal<Country[]>([]);
 
@@ -33,10 +36,6 @@ export class CountryListComponent implements OnInit {
   currentPage = signal<number>(1);
 
   readonly pageSize = 20;
-
-  // =========================================
-  // FILTRAR PAÍSES
-  // =========================================
 
   filteredCountries = computed(() => {
     const query = this.searchQuery().trim().toLocaleLowerCase();
@@ -55,10 +54,6 @@ export class CountryListComponent implements OnInit {
     );
   });
 
-  // =========================================
-  // PAGINACIÓN
-  // =========================================
-
   totalPages = computed(() => {
     return Math.max(1, Math.ceil(this.filteredCountries().length / this.pageSize));
   });
@@ -69,17 +64,9 @@ export class CountryListComponent implements OnInit {
     return this.filteredCountries().slice(start, start + this.pageSize);
   });
 
-  // =========================================
-  // INICIALIZACIÓN
-  // =========================================
-
   ngOnInit(): void {
     this.loadCountries();
   }
-
-  // =========================================
-  // CARGAR PAÍSES
-  // =========================================
 
   loadCountries(): void {
     this.loading.set(true);
@@ -107,16 +94,10 @@ export class CountryListComponent implements OnInit {
     });
   }
 
-  // =========================================
-  // BUSCAR
-  // =========================================
-
-  onSearch(event: Event): void {
-    const input = event.target as HTMLInputElement;
-
-    this.searchQuery.set(input.value);
-
+  onSearch(value: string): void {
+    this.searchQuery.set(value.trim());
     this.currentPage.set(1);
+    this.loadCountries();
   }
 
   clearSearch(): void {
@@ -124,10 +105,6 @@ export class CountryListComponent implements OnInit {
 
     this.currentPage.set(1);
   }
-
-  // =========================================
-  // CAMBIAR PÁGINA
-  // =========================================
 
   changePage(page: number): void {
     if (page < 1 || page > this.totalPages()) {
@@ -141,10 +118,6 @@ export class CountryListComponent implements OnInit {
       behavior: 'smooth',
     });
   }
-
-  // =========================================
-  // BANDERAS
-  // =========================================
 
   getFlag(countryCode: string): string {
     if (!/^[A-Z]{2}$/i.test(countryCode)) {

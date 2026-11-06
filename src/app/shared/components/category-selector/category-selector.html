@@ -1,0 +1,17 @@
+<section class="category-section">
+  <h2>{{ title() }}</h2>
+
+  <div class="category-grid">
+    @for (item of categories(); track item.value) {
+      <button
+        type="button"
+        [class.active]="selected() === item.value"
+        [attr.aria-pressed]="selected() === item.value"
+        (click)="selectCategory(item.value)"
+      >
+        <i [class]="item.icon"></i>
+        {{ item.label }}
+      </button>
+    }
+  </div>
+</section>

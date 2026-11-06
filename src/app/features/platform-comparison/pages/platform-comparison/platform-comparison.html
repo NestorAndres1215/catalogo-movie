@@ -5,23 +5,22 @@
     description="Descubre dónde puedes ver tus películas y series favoritas. Compara las plataformas disponibles en Perú."
   />
 
-<section class="search-panel">
+  <section class="search-panel">
+    <div class="search-controls">
+      <app-filter-tabs
+        [tabs]="mediaTabs"
+        [selected]="mediaType()"
+        (selectionChange)="setMediaType($event)"
+      />
 
-  <div class="search-controls">
-    <app-filter-tabs
-      [tabs]="mediaTabs"
-      [selected]="mediaType()"
-      (selectionChange)="setMediaType($event)"
-    />
-
-    <app-search
-      class="search-form"
-      [value]="searchQuery()"
-      placeholder="Ejemplo: Interstellar, Breaking Bad..."
-      (valueChange)="onSearchInput($event)"
-    />
-  </div>
-</section>
+      <app-search
+        class="search-form"
+        [value]="searchQuery()"
+        placeholder="Ejemplo: Interstellar, Breaking Bad..."
+        (valueChange)="onSearchInput($event)"
+      />
+    </div>
+  </section>
 
   @if (loadingSearch()) {
     <div class="status-message">Buscando títulos...</div>

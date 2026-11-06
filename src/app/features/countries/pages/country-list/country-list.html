@@ -7,26 +7,13 @@
     description="Descubre películas y series de diferentes países del mundo."
   />
 
-  <!-- BÚSQUEDA -->
-
-  <div class="search-section">
-    <div class="search-box">
-      <span class="search-icon">⌕</span>
-
-      <input
-        type="text"
-        placeholder="Buscar país por nombre o código..."
-        [value]="searchQuery()"
-        (input)="onSearch($event)"
-      />
-
-      @if (searchQuery()) {
-        <button type="button" (click)="clearSearch()">✕</button>
-      }
-    </div>
+  <div class="mb-4">
+    <app-search
+      [value]="searchQuery()"
+      placeholder="Buscar país por nombre o código..."
+      (valueChange)="onSearch($event)"
+    />
   </div>
-
-  <!-- INFORMACIÓN -->
 
   @if (!loading() && !errorMessage()) {
     <div class="results-header">
@@ -40,7 +27,6 @@
     </div>
   }
 
-  <!-- CARGANDO -->
   @if (loading()) {
     <app-page-loading
       title="Cargando países"
@@ -50,8 +36,6 @@
     />
   }
 
-  <!-- ERROR -->
-
   @if (errorMessage()) {
     <div class="message error">
       <p>{{ errorMessage() }}</p>
@@ -60,8 +44,6 @@
     </div>
   }
 
-  <!-- SIN RESULTADOS -->
-
   @if (!loading() && !errorMessage() && filteredCountries().length === 0) {
     <div class="message">
       <h2>No se encontraron países</h2>
@@ -69,8 +51,6 @@
       <p>Intenta buscar con otro nombre o código.</p>
     </div>
   }
-
-  <!-- GRID DE PAÍSES -->
 
   @if (!loading() && !errorMessage() && paginatedCountries().length > 0) {
     <div class="countries-grid">
@@ -98,8 +78,6 @@
         </a>
       }
     </div>
-
-    <!-- PAGINACIÓN -->
 
     <app-pagination
       [currentPage]="currentPage()"

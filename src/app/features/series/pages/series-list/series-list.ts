@@ -11,6 +11,7 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
+import { SearchComponent } from '../../../../shared/components/search/search';
 
 @Component({
   selector: 'app-series-list',
@@ -21,7 +22,8 @@ import { PaginationComponent } from '../../../../shared/components/pagination/pa
     PageHeaderComponent,
     PageLoadingComponent,
     EmptyStateComponent,
-    PaginationComponent
+    PaginationComponent,
+    SearchComponent
 ],
   templateUrl: './series-list.html',
   styleUrl: './series-list.css'
@@ -99,20 +101,13 @@ export class SeriesListComponent implements OnInit {
     this.loadSeries();
   }
 
-  onSearch(event: Event): void {
-    const input = event.target as HTMLInputElement;
+onSearch(value: string): void {
+  this.searchQuery.set(value.trim());
+  this.currentPage.set(1);
+  this.loadSeries();
+}
 
-    this.searchQuery.set(input.value.trim());
-    this.currentPage.set(1);
 
-    this.loadSeries();
-  }
-
-  clearSearch(): void {
-    this.searchQuery.set('');
-    this.currentPage.set(1);
-    this.loadSeries();
-  }
 
   changePage(page: number): void {
     if (page < 1 || page > this.totalPages()) {

@@ -1,5 +1,5 @@
 
-import { Component, inject, signal } from '@angular/core';
+import { Component, OnDestroy, inject, signal } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 
 import { CatalogService } from '../../../../core/service/catalog.service';
@@ -9,9 +9,12 @@ import {
   FavoriteWatchlistItem,
 } from '../../../../core/models/catalog.interface';
 import { WatchlistService } from '../../../../core/service/watchlist.service';
+
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { ButtonComponent } from '../../../../shared/components/button/button';
+import { SearchComponent } from '../../../../shared/components/search/search';
+import { SelectFilterComponent } from '../../../../shared/components/select-filter/select-filter';
 
 interface RouletteWinner {
   movie: CatalogMedia;
@@ -22,11 +25,18 @@ interface RouletteWinner {
 @Component({
   selector: 'app-movie-roulette',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent, EmptyStateComponent, ButtonComponent],
+  imports: [
+    DecimalPipe,
+    PageHeaderComponent,
+    EmptyStateComponent,
+    ButtonComponent,
+    SearchComponent,
+    SelectFilterComponent
+],
   templateUrl: './movie-roulette.html',
   styleUrl: './movie-roulette.css',
 })
-export class MovieRouletteComponent {
+export class MovieRouletteComponent implements OnDestroy {
 
   private readonly catalogService = inject(CatalogService);
   private readonly watchlistService = inject(WatchlistService);
@@ -36,6 +46,9 @@ export class MovieRouletteComponent {
   readonly searchResults = signal<CatalogMedia[]>([]);
   readonly searching = signal(false);
   readonly searchError = signal('');
+
+  private searchVersion = 0;
+  private searchTimeout: ReturnType<typeof setTimeout> | null = null;
 
   // Películas seleccionadas
   readonly selectedMovies = signal<CatalogMedia[]>([]);
@@ -52,21 +65,48 @@ export class MovieRouletteComponent {
   readonly message = signal('');
 
   private spinTimeout: ReturnType<typeof setTimeout> | null = null;
-  private searchVersion = 0;
 
-  searchMovies(): void {
-    const query = this.searchQuery().trim();
+  // Búsqueda automática
+  updateSearch(value: string): void {
+    this.searchQuery.set(value);
 
-    if (!query) {
-      this.searchError.set('Escribe el nombre de una película.');
+    // Invalida cualquier búsqueda anterior
+    this.searchVersion++;
+
+    if (this.searchTimeout !== null) {
+      clearTimeout(this.searchTimeout);
+      this.searchTimeout = null;
+    }
+
+    if (!value.trim()) {
       this.searchResults.set([]);
+      this.searchError.set('');
+      this.searching.set(false);
       return;
     }
 
     this.searching.set(true);
     this.searchError.set('');
 
+    this.searchTimeout = setTimeout(() => {
+      this.searchMovies();
+    }, 400);
+  }
+
+  searchMovies(): void {
+    const query = this.searchQuery().trim();
+
+    if (!query) {
+      this.searchResults.set([]);
+      this.searchError.set('');
+      this.searching.set(false);
+      return;
+    }
+
     const version = ++this.searchVersion;
+
+    this.searching.set(true);
+    this.searchError.set('');
 
     this.catalogService.searchMedia('movie', query, 1).subscribe({
       next: (response: CatalogResponse) => {
@@ -78,7 +118,9 @@ export class MovieRouletteComponent {
         this.searching.set(false);
 
         if (response.results.length === 0) {
-          this.searchError.set('No encontramos películas con ese nombre.');
+          this.searchError.set(
+            'No encontramos películas con ese nombre.'
+          );
         }
       },
       error: () => {
@@ -87,11 +129,14 @@ export class MovieRouletteComponent {
         }
 
         this.searching.set(false);
-        this.searchError.set('No se pudo realizar la búsqueda.');
+        this.searchError.set(
+          'No se pudo realizar la búsqueda.'
+        );
       },
     });
   }
 
+  // Agregar películas
   addMovie(movie: CatalogMedia): void {
     const alreadyAdded = this.selectedMovies().some(
       selected => selected.id === movie.id
@@ -107,6 +152,7 @@ export class MovieRouletteComponent {
     this.adjustWinnerCount();
   }
 
+  // Eliminar películas
   removeMovie(movieId: number): void {
     if (this.winners().length > 0 || this.spinning()) {
       return;
@@ -150,6 +196,7 @@ export class MovieRouletteComponent {
     );
   }
 
+  // Gestión de participantes
   getAvailableMovies(): CatalogMedia[] {
     const drawnIds = this.winners().map(
       winner => winner.movie.id
@@ -184,6 +231,7 @@ export class MovieRouletteComponent {
     );
   }
 
+  // Ruleta
   spinRoulette(): void {
     if (!this.canSpin()) {
       return;
@@ -199,7 +247,6 @@ export class MovieRouletteComponent {
     this.currentWinner.set(null);
     this.message.set('');
 
-    // Selección aleatoria sin repetir ganadores.
     const randomIndex = Math.floor(
       Math.random() * available.length
     );
@@ -224,44 +271,38 @@ export class MovieRouletteComponent {
         `¡La película ganadora número ${position} es ${this.getTitle(selectedMovie)}!`
       );
 
+      this.spinTimeout = null;
     }, 3000);
   }
 
-  /**
-   * Registra siempre una nueva entrada en Mi lista,
-   * aunque la película ya esté registrada.
-   */
- /**
- * Registra una nueva entrada en Mi lista,
- * aunque la película ya esté registrada.
- */
-acceptWinner(winner: RouletteWinner): void {
-  if (winner.status !== 'pending') {
-    return;
+  // Aceptar ganador y agregarlo a Mi lista
+  acceptWinner(winner: RouletteWinner): void {
+    if (winner.status !== 'pending') {
+      return;
+    }
+
+    const item: Omit<FavoriteWatchlistItem, 'userId'> = {
+      id: winner.movie.id,
+      mediaType: 'movie',
+      title: this.getTitle(winner.movie),
+      overview: winner.movie.overview || '',
+      posterPath: winner.movie.poster_path,
+      voteAverage: winner.movie.vote_average,
+      releaseDate: winner.movie.release_date || '',
+    };
+
+    this.watchlistService.add(item);
+
+    this.updateWinnerStatus(winner.movie.id, 'accepted');
+
+    this.message.set(
+      `${item.title} fue agregada a Mi lista.`
+    );
+
+    this.checkCompletion();
   }
 
-  const item: Omit<FavoriteWatchlistItem, 'userId'> = {
-    id: winner.movie.id,
-    mediaType: 'movie',
-    title: this.getTitle(winner.movie),
-    overview: winner.movie.overview || '',
-    posterPath: winner.movie.poster_path,
-    voteAverage: winner.movie.vote_average,
-    releaseDate: winner.movie.release_date || '',
-  };
-
-  // El servicio asigna automáticamente el userId.
-  this.watchlistService.add(item);
-
-  this.updateWinnerStatus(winner.movie.id, 'accepted');
-
-  this.message.set(
-    `${item.title} fue agregada a Mi lista.`,
-  );
-
-  this.checkCompletion();
-}
-
+  // Rechazar ganador
   rejectWinner(winner: RouletteWinner): void {
     if (winner.status !== 'pending') {
       return;
@@ -302,6 +343,7 @@ acceptWinner(winner: RouletteWinner): void {
     }
   }
 
+  // Reiniciar ruleta
   resetRoulette(): void {
     if (this.spinTimeout !== null) {
       clearTimeout(this.spinTimeout);
@@ -317,20 +359,23 @@ acceptWinner(winner: RouletteWinner): void {
 
   newRoulette(): void {
     this.resetRoulette();
+
     this.selectedMovies.set([]);
     this.searchResults.set([]);
     this.searchQuery.set('');
+    this.searchError.set('');
+    this.searching.set(false);
     this.winnerCount.set(1);
-  }
 
-  updateSearch(event: Event): void {
-    const target = event.target;
+    this.searchVersion++;
 
-    if (target instanceof HTMLInputElement) {
-      this.searchQuery.set(target.value);
+    if (this.searchTimeout !== null) {
+      clearTimeout(this.searchTimeout);
+      this.searchTimeout = null;
     }
   }
 
+  // Información de películas
   getTitle(movie: CatalogMedia): string {
     return movie.title || movie.name || 'Sin título';
   }
@@ -359,13 +404,16 @@ acceptWinner(winner: RouletteWinner): void {
     ).length;
   }
 
-  clearSearch(): void {
-  this.searchQuery.set('');
-  this.searchResults.set([]);
-  this.searchError.set('');
-  this.searching.set(false);
+  // Limpieza
+  ngOnDestroy(): void {
+    if (this.searchTimeout !== null) {
+      clearTimeout(this.searchTimeout);
+    }
 
-  // Invalida cualquier búsqueda anterior.
-  this.searchVersion++;
-}
+    if (this.spinTimeout !== null) {
+      clearTimeout(this.spinTimeout);
+    }
+
+    this.searchVersion++;
+  }
 }

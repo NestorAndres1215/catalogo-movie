@@ -315,26 +315,6 @@
   margin-bottom: 20px;
 }
 
-.add-form input {
-  flex: 1;
-  min-width: 0;
-  padding: 13px 15px;
-  color: white;
-  font-size: 13px;
-  background: #282235;
-  border: 1px solid #ffffff15;
-  border-radius: 9px;
-  outline: none;
-}
-
-.add-form input:focus {
-  border-color: #a78bfa;
-}
-
-.add-form input::placeholder {
-  color: #817a90;
-}
-
 .add-button {
   padding: 0 18px;
   color: white;
@@ -448,10 +428,6 @@
 
   .preference-card {
     padding: 19px;
-  }
-
-  .add-form {
-    flex-direction: column;
   }
 
   .add-button {

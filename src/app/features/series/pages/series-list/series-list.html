@@ -5,21 +5,11 @@
     description="Descubre nuevas historias, temporadas y producciones televisivas."
   />
 
-  <div class="search-container">
-    <span class="search-icon">⌕</span>
-
-    <input
-      type="search"
-      placeholder="Buscar una serie..."
-      [value]="searchQuery()"
-      (change)="onSearch($event)"
-      (keyup.enter)="onSearch($event)"
-    />
-
-    @if (searchQuery()) {
-      <button class="clear-search" type="button" (click)="clearSearch()">Limpiar</button>
-    }
-  </div>
+  <app-search
+    [value]="searchQuery()"
+    placeholder="Buscar una serie..."
+    (valueChange)="onSearch($event)"
+  />
 
   <app-series-filters [genres]="genres()" (filtersChange)="onFiltersChange($event)" />
 
