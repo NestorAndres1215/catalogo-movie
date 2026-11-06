@@ -1,8 +1,15 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+
 import { MovieService } from '../../../../core/service/movie.service';
 import { Movie } from '../../../../core/models/movie.interface';
+
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { Footer } from '../../../../shared/components/footer/footer';
@@ -11,23 +18,36 @@ import { PaginationComponent } from '../../../../shared/components/pagination/pa
 @Component({
   selector: 'app-timeline-list',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent, EmptyStateComponent, Footer, PaginationComponent],
+  imports: [
+    DecimalPipe,
+    PageHeaderComponent,
+    EmptyStateComponent,
+    Footer,
+    PaginationComponent,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatNativeDateModule
+  ],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' }
+  ],
   templateUrl: './timeline-list.html',
   styleUrl: './timeline-list.css',
 })
 export class TimelineListComponent implements OnInit {
+
   private readonly movieService = inject(MovieService);
 
   private requestVersion = 0;
 
   readonly currentYear = new Date().getFullYear();
 
-  readonly years = Array.from(
-    { length: this.currentYear - 1969 },
-    (_, index) => this.currentYear - index,
-  );
+  readonly maxDate = new Date();
 
-  readonly selectedYear = signal(this.currentYear);
+  readonly selectedDate = signal(
+    new Date(this.currentYear, 0, 1)
+  );
 
   readonly movies = signal<Movie[]>([]);
   readonly loading = signal(false);
@@ -39,48 +59,56 @@ export class TimelineListComponent implements OnInit {
   ngOnInit(): void {
     this.loadMovies();
   }
-changePage(page: number): void {
-  if (page < 1 || page > this.totalPages()) {
-    return;
-  }
 
-  if (page < this.page()) {
-    this.previousPage();
-  } else if (page > this.page()) {
-    this.nextPage();
-  }
-}
-  selectYear(year: number): void {
-    this.selectedYear.set(year);
+  onDateChange(date: Date | null): void {
+    if (!date) {
+      return;
+    }
+
+    this.selectedDate.set(date);
     this.page.set(1);
     this.loadMovies();
   }
 
+  formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  }
+
+  changePage(page: number): void {
+    if (page < 1 || page > this.totalPages()) {
+      return;
+    }
+
+    if (page < this.page()) {
+      this.previousPage();
+    } else if (page > this.page()) {
+      this.nextPage();
+    }
+  }
+
   loadMovies(): void {
-    const year = this.selectedYear();
+    const date = this.formatDate(this.selectedDate());
     const version = ++this.requestVersion;
 
     this.loading.set(true);
     this.errorMessage.set('');
 
     this.movieService
-      .discoverMovies(this.page(), {
-        genreId: null,
-        year: year,
-        sortBy: 'primary_release_date.asc',
-        'primary_release_date.gte': `${year}-01-01`,
-        'primary_release_date.lte': `${year}-12-31`,
-      })
+      .discoverMoviesByDate(this.page(), date)
       .subscribe({
-        next: (response) => {
+        next: response => {
           if (version !== this.requestVersion) {
             return;
           }
 
           this.movies.set(
             [...response.results].sort((a, b) =>
-              (a.release_date ?? '').localeCompare(b.release_date ?? ''),
-            ),
+              (a.release_date ?? '').localeCompare(b.release_date ?? '')
+            )
           );
 
           this.totalPages.set(Math.min(response.total_pages, 500));
@@ -92,22 +120,26 @@ changePage(page: number): void {
           }
 
           this.movies.set([]);
+          this.totalPages.set(1);
           this.loading.set(false);
-          this.errorMessage.set('No se pudieron cargar las películas de este año.');
-        },
+
+          this.errorMessage.set(
+            'No se pudieron cargar las películas de esta fecha.'
+          );
+        }
       });
   }
 
   previousPage(): void {
     if (this.page() > 1) {
-      this.page.update((value) => value - 1);
+      this.page.update(value => value - 1);
       this.loadMovies();
     }
   }
 
   nextPage(): void {
     if (this.page() < this.totalPages()) {
-      this.page.update((value) => value + 1);
+      this.page.update(value => value + 1);
       this.loadMovies();
     }
   }
@@ -117,11 +149,7 @@ changePage(page: number): void {
   }
 
   getDay(date: string): string {
-    if (!date) {
-      return '--';
-    }
-
-    return date.substring(8, 10);
+    return date ? date.substring(8, 10) : '--';
   }
 
   getMonth(date: string): string {
@@ -143,7 +171,7 @@ changePage(page: number): void {
       'Septiembre',
       'Octubre',
       'Noviembre',
-      'Diciembre',
+      'Diciembre'
     ];
 
     return months[month - 1] ?? 'Sin fecha';

@@ -5,38 +5,56 @@
     description="Recorre los años y descubre las películas que marcaron cada época de la historia cinematográfica."
   />
 
-  <section class="year-selector">
-    <div class="section-heading">
-      <div>
-        <h2>Explora por año</h2>
-        <p>Selecciona un año para descubrir sus estrenos.</p>
+  <!-- FILTRO DE FECHA -->
+  <section class="card year-selector mb-5">
+    <div class="card-body p-4">
+      <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+        <div>
+          <h2 class="h5 fw-bold mb-1">Explora por fecha</h2>
+          <p class="text-body-secondary mb-0">
+            Selecciona una fecha para descubrir los estrenos de ese día.
+          </p>
+        </div>
+
+        <span class="date-badge">
+          <i class="fas fa-calendar-check" aria-hidden="true"></i>
+          {{ formatDate(selectedDate()) }}
+        </span>
       </div>
 
-      <span class="year-label">{{ selectedYear() }}</span>
-    </div>
+      <div class="date-filter">
+        <label for="timeline-date" class="date-label">Selecciona una fecha</label>
 
-    <div class="years-list">
-      @for (year of years; track year) {
-        <button
-          type="button"
-          class="year-button"
-          [class.active]="selectedYear() === year"
-          (click)="selectYear(year)"
-        >
-          {{ year }}
-        </button>
-      }
+        <mat-form-field appearance="outline" class="date-field" subscriptSizing="dynamic">
+          <input
+            matInput
+            id="timeline-date"
+            placeholder="Selecciona una fecha"
+            readonly
+            [matDatepicker]="picker"
+            [value]="selectedDate()"
+            [max]="maxDate"
+            (click)="picker.open()"
+            (dateChange)="onDateChange($event.value)"
+          />
+
+          <mat-datepicker-toggle matIconSuffix [for]="picker" />
+
+          <mat-datepicker #picker panelClass="cineverse-datepicker" />
+        </mat-form-field>
+      </div>
     </div>
   </section>
 
+  <!-- LÍNEA DE TIEMPO -->
   <section class="timeline-section">
     <div class="timeline-heading">
       <div>
         <span class="eyebrow">RECORRIDO CRONOLÓGICO</span>
-        <h2>Estrenos de {{ selectedYear() }}</h2>
+        <h2>Estrenos del {{ formatDate(selectedDate()) }}</h2>
       </div>
 
-      <span class="movie-count"> {{ movies().length }} películas </span>
+      <span class="movie-count">{{ movies().length }} películas</span>
     </div>
 
     @if (loading()) {
@@ -44,7 +62,7 @@
     }
 
     @if (errorMessage()) {
-      <div class="status-message error">
+      <div class="status-message status-message--error" role="alert">
         {{ errorMessage() }}
 
         <button type="button" (click)="loadMovies()">Reintentar</button>
@@ -56,13 +74,8 @@
         @for (movie of movies(); track movie.id) {
           <article class="timeline-item">
             <div class="timeline-date">
-              <span class="day">
-                {{ getDay(movie.release_date ?? '') }}
-              </span>
-
-              <span class="month">
-                {{ getMonth(movie.release_date ?? '') }}
-              </span>
+              <span class="day">{{ getDay(movie.release_date ?? '') }}</span>
+              <span class="month">{{ getMonth(movie.release_date ?? '') }}</span>
             </div>
 
             <div class="timeline-marker"></div>
@@ -77,7 +90,7 @@
               </div>
 
               <div class="movie-details">
-                <span class="movie-year"> ESTRENO · {{ selectedYear() }} </span>
+                <span class="movie-year">ESTRENO · {{ movie.release_date?.substring(0, 4) }}</span>
 
                 <h3>{{ movie.title }}</h3>
 
@@ -86,9 +99,8 @@
                 </p>
 
                 <div class="movie-metadata">
-                  <span class="rating"> ★ {{ movie.vote_average | number: '1.1-1' }}/10 </span>
-
-                  <span class="votes"> {{ movie.vote_count | number }} votos </span>
+                  <span class="rating">★ {{ movie.vote_average | number: '1.1-1' }}/10</span>
+                  <span class="votes">{{ movie.vote_count | number }} votos</span>
                 </div>
               </div>
             </div>
@@ -107,7 +119,7 @@
       <app-empty-state
         icon="fa-calendar-xmark"
         title="No encontramos estrenos"
-        description="No hay películas disponibles para este año."
+        description="No hay películas disponibles para esta fecha."
       />
     }
   </section>

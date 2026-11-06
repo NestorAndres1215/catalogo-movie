@@ -26,6 +26,21 @@ export class MovieService {
     return this.tmdb.get<GenreResponse>('/genre/movie/list');
   }
 
+discoverMoviesByDate(
+  page: number,
+  date: string
+): Observable<MovieResponse> {
+  const parameters: Record<string, string | number | boolean> = {
+    page,
+    sort_by: 'primary_release_date.asc',
+    'primary_release_date.gte': date,
+    'primary_release_date.lte': date,
+    include_adult: false,
+  };
+
+  return this.tmdb.get<MovieResponse>('/discover/movie', parameters);
+}
+
   discoverMovies(page: number, filters: MovieFilters): Observable<MovieResponse> {
     const parameters: Record<string, string | number | boolean> = {
       page,

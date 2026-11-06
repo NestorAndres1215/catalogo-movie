@@ -1,93 +1,217 @@
+/* ---------- Página ---------- */
 .timeline-container {
-  padding: 35px 40px;
   max-width: 1600px;
-  margin: auto;
+  margin-inline: auto;
+  padding: 35px 40px;
 }
 
-.section-heading p {
-  color: #999;
-  line-height: 1.6;
-}
-
+/* ---------- Tarjeta del filtro ---------- */
 .year-selector {
-  margin-bottom: 45px;
-  padding: 22px;
-  border: 1px solid var(--color-borde);
-  border-radius: var(--radio-borde);
+  --bs-card-bg: var(--color-superficie-secundaria);
+  --bs-card-color: var(--color-texto);
+  --bs-card-border-color: var(--color-borde);
+  --bs-card-border-radius: var(--radio-borde);
+
+  overflow: visible;
   background: var(--color-superficie-secundaria);
 }
 
-.section-heading {
-  display: flex;
-  justify-content: space-between;
+.year-selector h2 {
+  color: var(--color-texto);
+}
+
+.year-selector p {
+  color: var(--color-texto-secundario) !important;
+}
+
+.date-badge {
+  display: inline-flex;
   align-items: center;
-  gap: 15px;
-  margin-bottom: 20px;
-}
-
-.section-heading h2 {
-  margin-bottom: 7px;
-  font-size: 20px;
-}
-
-.year-label {
-  color: var(--color-acento);
-  font-size: 24px;
-  font-weight: 800;
-}
-
-.years-list {
-  display: flex;
   gap: 10px;
-  overflow-x: auto;
-  padding-bottom: 10px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-acento) var(--color-superficie-elevada);
+  padding: 10px 18px;
+  color: var(--color-acento);
+  font-size: 15px;
+  font-weight: 700;
+  background: var(--color-acento-suave);
+  border: 1px solid var(--color-acento);
+  border-radius: 30px;
 }
 
-.year-button {
-  flex-shrink: 0;
-  min-width: 65px;
-  padding: 12px;
-  border: 1px solid var(--color-borde);
-  border-radius: var(--radio-borde-pequeno);
-  background: var(--color-superficie-secundaria);
+/* ---------- Campo de fecha ---------- */
+.date-filter {
+  width: 100%;
+  max-width: 340px;
+}
+
+.date-label {
+  display: block;
+  margin-bottom: 10px;
   color: var(--color-texto-secundario);
-  cursor: pointer;
-  transition: var(--transicion-rapida);
-}
-
-.year-button:hover {
-  color: var(--color-acento);
-  background: var(--color-acento-suave);
-  border-color: var(--color-acento);
-}
-
-.year-button.active {
-  color: var(--color-acento);
-  background: var(--color-acento-suave);
-  border-color: var(--color-acento);
+  font-size: 15px;
   font-weight: 700;
 }
 
+.date-field {
+  width: 100%;
+
+  --mdc-outlined-text-field-outline-color: var(--color-borde);
+  --mdc-outlined-text-field-hover-outline-color: var(--color-borde-hover);
+  --mdc-outlined-text-field-focus-outline-color: var(--color-acento);
+  --mdc-outlined-text-field-container-shape: 12px;
+  --mdc-outlined-text-field-input-text-color: var(--color-texto);
+  --mdc-outlined-text-field-caret-color: var(--color-acento);
+
+  --mat-form-field-outlined-outline-color: var(--color-borde);
+  --mat-form-field-outlined-hover-outline-color: var(--color-borde-hover);
+  --mat-form-field-outlined-focus-outline-color: var(--color-acento);
+  --mat-form-field-outlined-container-shape: 12px;
+  --mat-form-field-container-text-color: var(--color-texto);
+  --mat-form-field-container-text-size: 16px;
+  --mat-form-field-container-height: 52px;
+
+  --mat-datepicker-toggle-icon-color: var(--color-acento);
+  --mat-datepicker-toggle-active-state-icon-color: var(--color-acento);
+}
+
+.date-field input {
+  color: var(--color-texto);
+  cursor: pointer;
+}
+
+.date-field input::placeholder {
+  color: var(--color-texto-placeholder);
+  opacity: 1;
+}
+
+:host ::ng-deep .date-field .mat-mdc-text-field-wrapper {
+  background: var(--color-superficie-secundaria);
+  border-radius: 12px;
+}
+
+:host ::ng-deep .date-field .mat-datepicker-toggle,
+:host ::ng-deep .date-field .mat-datepicker-toggle button {
+  color: var(--color-acento);
+}
+
+/* ---------- Calendario desplegable ----------
+ * Se abre en un overlay fuera del componente; con ::ng-deep al inicio
+ * estas reglas se aplican igualmente, sin tocar styles.css.
+ */
+::ng-deep .cineverse-datepicker {
+  --mat-datepicker-calendar-container-background-color: var(--color-superficie-secundaria);
+  --mat-datepicker-calendar-container-text-color: var(--color-texto);
+  --mat-datepicker-calendar-container-shape: 16px;
+  --mat-datepicker-calendar-header-text-color: var(--color-texto-atenuado);
+  --mat-datepicker-calendar-header-divider-color: var(--color-borde);
+  --mat-datepicker-calendar-body-label-text-color: var(--color-texto-secundario);
+  --mat-datepicker-calendar-period-button-text-color: var(--color-texto);
+  --mat-datepicker-calendar-period-button-icon-color: var(--color-acento);
+  --mat-datepicker-calendar-navigation-button-icon-color: var(--color-texto-secundario);
+  --mat-datepicker-calendar-date-text-color: var(--color-texto);
+  --mat-datepicker-calendar-date-outline-color: transparent;
+  --mat-datepicker-calendar-date-today-outline-color: var(--color-acento);
+  --mat-datepicker-calendar-date-selected-state-background-color: var(--color-acento);
+  --mat-datepicker-calendar-date-selected-state-text-color: var(--color-texto-sobre-acento);
+  --mat-datepicker-calendar-date-hover-state-background-color: var(--color-superficie-elevada);
+  --mat-datepicker-calendar-date-focus-state-background-color: var(--color-superficie-elevada);
+  --mat-datepicker-calendar-date-disabled-state-text-color: var(--color-texto-atenuado);
+}
+
+/* Fondo y borde (reglas directas, no dependen de las variables) */
+::ng-deep .cineverse-datepicker .mat-datepicker-content {
+  color: var(--color-texto);
+  background-color: var(--color-superficie-secundaria) !important;
+  border: 1px solid var(--color-borde-hover);
+  border-radius: 16px;
+  box-shadow: var(--box-shadow);
+}
+
+::ng-deep .cineverse-datepicker .mat-calendar {
+  background-color: transparent;
+}
+
+/* Cabecera */
+::ng-deep .cineverse-datepicker .mat-calendar-period-button,
+::ng-deep .cineverse-datepicker .mat-calendar-period-button .mat-mdc-button-persistent-ripple {
+  color: var(--color-texto);
+  font-weight: 700;
+}
+
+::ng-deep .cineverse-datepicker .mat-calendar-arrow {
+  fill: var(--color-acento);
+}
+
+::ng-deep .cineverse-datepicker .mat-calendar-previous-button,
+::ng-deep .cineverse-datepicker .mat-calendar-next-button {
+  color: var(--color-texto-secundario);
+}
+
+::ng-deep .cineverse-datepicker .mat-calendar-table-header th {
+  color: var(--color-texto-atenuado);
+  font-weight: 700;
+}
+
+::ng-deep .cineverse-datepicker .mat-calendar-table-header-divider::after {
+  background: var(--color-borde);
+}
+
+/* Días */
+::ng-deep .cineverse-datepicker .mat-calendar-body-cell-content {
+  color: var(--color-texto);
+  border-radius: 10px;
+}
+
+::ng-deep .cineverse-datepicker .mat-calendar-body-label {
+  color: var(--color-texto-secundario);
+}
+
+::ng-deep .cineverse-datepicker .mat-calendar-body-cell:hover .mat-calendar-body-cell-content:not(.mat-calendar-body-selected) {
+  background-color: var(--color-superficie-elevada);
+}
+
+::ng-deep .cineverse-datepicker .mat-calendar-body-today:not(.mat-calendar-body-selected) {
+  color: var(--color-acento);
+  border-color: var(--color-acento);
+}
+
+::ng-deep .cineverse-datepicker .mat-calendar-body-selected {
+  color: var(--color-texto-sobre-acento);
+  font-weight: 700;
+  background-color: var(--color-acento);
+}
+
+::ng-deep .cineverse-datepicker .mat-calendar-body-disabled > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected) {
+  color: var(--color-texto-atenuado);
+  opacity: 0.4;
+}
+
+/* ---------- Encabezado de la línea de tiempo ---------- */
 .timeline-heading {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   gap: 15px;
   margin-bottom: 30px;
 }
 
+.eyebrow {
+  color: var(--color-acento);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
 .timeline-heading h2 {
-  margin-top: 8px;
+  margin: 8px 0 0;
   font-size: 24px;
 }
 
 .movie-count {
-  color: #aaa;
+  color: var(--color-texto-secundario);
   font-size: 13px;
 }
 
+/* ---------- Línea de tiempo ---------- */
 .timeline {
   position: relative;
   display: flex;
@@ -137,20 +261,21 @@
   width: 13px;
   height: 13px;
   margin: 24px auto 0;
+  background: var(--color-superficie-secundaria);
   border: 3px solid var(--color-acento);
   border-radius: var(--radio-circular);
-  background: var(--color-superficie-secundaria);
   box-shadow: 0 0 12px var(--color-acento-suave);
 }
 
+/* ---------- Tarjeta de película ---------- */
 .timeline-card {
   display: flex;
   gap: 20px;
   min-width: 0;
   padding: 15px;
+  background: var(--color-superficie-secundaria);
   border: 1px solid var(--color-borde);
   border-radius: var(--radio-borde-pequeno);
-  background: var(--color-superficie-secundaria);
   transition: var(--transicion-rapida);
 }
 
@@ -164,11 +289,12 @@
   width: 125px;
   height: 180px;
   overflow: hidden;
+  background: var(--color-superficie-elevada);
   border-radius: 9px;
-  background: #252525;
 }
 
 .movie-poster img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -179,7 +305,7 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  color: #888;
+  color: var(--color-texto-atenuado);
   font-size: 12px;
 }
 
@@ -202,13 +328,14 @@
 
 .overview {
   display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: var(--color-texto-secundario);
+  font-size: 13px;
+  line-height: 1.6;
   -webkit-line-clamp: 4;
   line-clamp: 4;
   -webkit-box-orient: vertical;
-  overflow: hidden;
-  color: #999;
-  font-size: 13px;
-  line-height: 1.6;
 }
 
 .movie-metadata {
@@ -228,41 +355,39 @@
   color: var(--color-texto-atenuado);
 }
 
-.status-message button {
-  padding: 10px 18px;
-  border: none;
-  border-radius: 8px;
-  background: #7c3aed;
-  color: #fff;
-  cursor: pointer;
-}
-
+/* ---------- Mensajes de estado ---------- */
 .status-message {
   padding: 35px 20px;
-  border-radius: 12px;
-  background: #171717;
-  color: #aaa;
+  color: var(--color-texto-secundario);
   text-align: center;
+  background: var(--color-superficie-secundaria);
+  border-radius: 12px;
 }
 
-.status-message.error {
-  color: #f87171;
+.status-message--error {
+  color: var(--color-danger);
 }
 
 .status-message button {
   display: block;
   margin: 15px auto 0;
+  padding: 10px 18px;
+  color: var(--color-texto-sobre-acento);
+  font-weight: 700;
+  background: var(--color-acento);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
-
-
+/* ---------- Responsive ---------- */
 @media (max-width: 650px) {
   .timeline-container {
     padding: 18px;
   }
 
-  .page-header h1 {
-    font-size: 27px;
+  .date-filter {
+    max-width: 100%;
   }
 
   .timeline::before {
@@ -311,5 +436,4 @@
     -webkit-line-clamp: 3;
     line-clamp: 3;
   }
-
 }
