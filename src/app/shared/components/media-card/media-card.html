@@ -1,7 +1,5 @@
 <a class="movie-card" [routerLink]="[route, media().id]">
-
   <div class="poster-container">
-
     @if (media().poster_path) {
       <img
         [src]="getPoster(media().poster_path)"
@@ -15,16 +13,9 @@
       </div>
     }
 
-    @if (showRanking() && ranking() !== null) {
-      <span class="ranking-badge" [class.top-three]="ranking()! <= 3">
-        <i class="fas fa-trophy"></i>
-        #{{ ranking() }}
-      </span>
-    }
-
     @if (isUpcoming()) {
       <span class="upcoming-badge">
-        <i class="fas fa-calendar-days"></i>
+        <i class="fas fa-clock"></i>
         Próximamente
       </span>
     }
@@ -33,7 +24,6 @@
       <i class="fas fa-star"></i>
       {{ media().vote_average.toFixed(1) }}
     </span>
-
   </div>
 
   <div class="media-info">
@@ -43,5 +33,4 @@
       {{ getLongDate(date) }}
     </span>
   </div>
-
 </a>

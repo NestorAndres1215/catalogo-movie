@@ -41,7 +41,11 @@
     @if (items.length > 0) {
       <section class="media-grid">
         @for (item of items; track item.id) {
-          <app-media-card [media]="item" [mediaType]="mediaType()" [isUpcoming]="true" />
+          <app-media-card
+  [media]="item"
+  [mediaType]="mediaType()"
+  [isUpcoming]="true"
+/>
         }
       </section>
 

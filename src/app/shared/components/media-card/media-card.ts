@@ -28,9 +28,6 @@ export class MediaCardComponent {
   readonly variant = input<MediaCardVariant>('catalog');
   readonly isUpcoming = input(false);
 
-  readonly showRanking = input(false);
-  readonly ranking = input<number | null>(null);
-
   private readonly months = [
     'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
     'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
