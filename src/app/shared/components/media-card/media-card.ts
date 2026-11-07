@@ -27,6 +27,7 @@ export class MediaCardComponent {
   readonly mediaType = input<MediaType>('movie');
   readonly variant = input<MediaCardVariant>('catalog');
   readonly isUpcoming = input(false);
+  readonly isWatched = input(false);
 
   private readonly months = [
     'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',

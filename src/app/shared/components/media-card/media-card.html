@@ -13,11 +13,20 @@
       </div>
     }
 
-    @if (isUpcoming()) {
-      <span class="upcoming-badge">
-        <i class="fas fa-clock"></i>
-        Próximamente
-      </span>
+    @if (isWatched()) {
+      <div class="badges">
+        <span class="watched-badge">
+          <i class="fas fa-check"></i>
+          Visto
+        </span>
+      </div>
+    } @else if (isUpcoming()) {
+      <div class="badges">
+        <span class="upcoming-badge">
+          <i class="fas fa-clock"></i>
+          Próximamente
+        </span>
+      </div>
     }
 
     <span class="rating">

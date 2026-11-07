@@ -1,4 +1,3 @@
-
 import { Component, computed, inject } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { Router } from '@angular/router';
@@ -8,69 +7,78 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
 import { StatItem, StatsComponent } from '../../../../shared/components/stats/stats';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
+import { MediaCard, MediaCardComponent } from '../../../../shared/components/media-card/media-card';
 
 @Component({
   selector: 'app-watched-movies-list',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent, StatsComponent, EmptyStateComponent, ResultsHeaderComponent],
+  imports: [
+    PageHeaderComponent,
+    StatsComponent,
+    EmptyStateComponent,
+    ResultsHeaderComponent,
+    MediaCardComponent,
+  ],
   templateUrl: './watched-movies-list.html',
   styleUrl: './watched-movies-list.css',
 })
 export class WatchedMoviesListComponent {
-
   private readonly watchlistService = inject(WatchlistService);
   private readonly router = inject(Router);
 
   // Solo películas cuyo estado sea watched.
   readonly watchedMovies = computed(() =>
-    this.watchlistService.watchlist().filter(
-      item => item.mediaType === 'movie' && item.status === 'watched'
-    )
-  );
-readonly stats = computed<StatItem[]>(() => [
-  {
-    icon: 'fa-film',
-    value: this.totalWatched(),
-    label: 'Películas vistas'
-  },
-  {
-    icon: 'fa-star',
-    value: this.ratedMovies(),
-    label: 'Películas calificadas'
-  },
-  {
-    icon: 'fa-trophy',
-    value: this.averageRating() > 0
-      ? this.averageRating().toFixed(1)
-      : '—',
-    label: 'Mi puntuación promedio'
-  }
-]);
-  readonly totalWatched = computed(
-    () => this.watchedMovies().length
+    this.watchlistService
+      .watchlist()
+      .filter((item) => item.mediaType === 'movie' && item.status === 'watched'),
   );
 
-  readonly ratedMovies = computed(() =>
-    this.watchedMovies().filter(
-      item => item.personalRating !== null &&
-              item.personalRating !== undefined
-    ).length
+  toMediaCard(item: ReturnType<typeof this.watchedMovies>[number]): MediaCard {
+    return {
+      id: item.id,
+      title: item.title,
+      poster_path: item.posterPath,
+      vote_average: item.voteAverage,
+      release_date: item.releaseDate,
+      overview: item.overview,
+    };
+  }
+  readonly stats = computed<StatItem[]>(() => [
+    {
+      icon: 'fa-film',
+      value: this.totalWatched(),
+      label: 'Películas vistas',
+    },
+    {
+      icon: 'fa-star',
+      value: this.ratedMovies(),
+      label: 'Películas calificadas',
+    },
+    {
+      icon: 'fa-trophy',
+      value: this.averageRating() > 0 ? this.averageRating().toFixed(1) : '—',
+      label: 'Mi puntuación promedio',
+    },
+  ]);
+  readonly totalWatched = computed(() => this.watchedMovies().length);
+
+  readonly ratedMovies = computed(
+    () =>
+      this.watchedMovies().filter(
+        (item) => item.personalRating !== null && item.personalRating !== undefined,
+      ).length,
   );
 
   readonly averageRating = computed(() => {
     const rated = this.watchedMovies().filter(
-      item => item.personalRating !== null &&
-              item.personalRating !== undefined
+      (item) => item.personalRating !== null && item.personalRating !== undefined,
     );
 
     if (rated.length === 0) {
       return 0;
     }
 
-    const total = rated.reduce(
-      (sum, item) => sum + (item.personalRating ?? 0),
-      0
-    );
+    const total = rated.reduce((sum, item) => sum + (item.personalRating ?? 0), 0);
 
     return total / rated.length;
   });
@@ -97,12 +105,11 @@ readonly stats = computed<StatItem[]>(() => [
 
   debugWatchedMovies(): void {
     console.table(
-      this.watchlistService.watchlist().map(item => ({
+      this.watchlistService.watchlist().map((item) => ({
         title: item.title,
         status: item.status,
-        shouldAppear:
-          item.mediaType === 'movie' && item.status === 'watched'
-      }))
+        shouldAppear: item.mediaType === 'movie' && item.status === 'watched',
+      })),
     );
   }
 

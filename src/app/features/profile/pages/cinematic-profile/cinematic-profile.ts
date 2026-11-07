@@ -25,12 +25,14 @@ import { EmptyStateComponent } from '../../../../shared/components/empty-state/e
 import { SearchComponent } from '../../../../shared/components/search/search';
 import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
 import { SavedMovie, SavedMoviesService } from '../../../../core/service/saved-movies.service';
+import { FavoriteMovieCardComponent } from '../../../../shared/components/favorite-movie-card/favorite-movie-card';
 
 @Component({
   selector: 'app-cinematic-profile',
   standalone: true,
   imports: [
     RouterLink,
+    FavoriteMovieCardComponent,
     PageHeaderComponent,
     ButtonComponent,
     FilterTabsComponent,

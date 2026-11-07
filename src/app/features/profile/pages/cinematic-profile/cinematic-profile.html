@@ -459,22 +459,12 @@
           @if (savedMovies().length > 0) {
             <div class="filmography-grid">
               @for (movie of savedMovies(); track movie.id) {
-                <article class="filmography-card">
-                  <button type="button" class="filmography-open" (click)="openSavedMovie(movie)">
-                    <img [src]="getMovieImage(movie.posterPath)" [alt]="movie.title" />
-                    <span>{{ movie.title }}</span>
-                    <small>{{ movie.releaseDate || 'Fecha no disponible' }}</small>
-                  </button>
-
-                  <button
-                    type="button"
-                    class="save-movie-button saved"
-                    [attr.aria-label]="'Eliminar ' + movie.title"
-                    (click)="removeSavedMovie(movie.id)"
-                  >
-                    × Quitar
-                  </button>
-                </article>
+                <app-favorite-movie-card
+                  [movie]="movie"
+                  [imageUrl]="getMovieImage(movie.posterPath)"
+                  (open)="openSavedMovie($event)"
+                  (remove)="removeSavedMovie($event)"
+                />
               }
             </div>
           } @else {

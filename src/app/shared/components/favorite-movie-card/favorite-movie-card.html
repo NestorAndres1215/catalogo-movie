@@ -1,0 +1,47 @@
+<article class="favorite-card">
+  <button
+    type="button"
+    class="favorite-card__open"
+    (click)="openMovie()"
+    [attr.aria-label]="'Abrir película ' + movie().title"
+  >
+    <div class="favorite-card__poster">
+      @if (imageUrl()) {
+        <img
+          [src]="imageUrl()"
+          [alt]="movie().title"
+          loading="lazy"
+        />
+      } @else {
+        <div class="favorite-card__placeholder">
+          <i class="fas fa-film"></i>
+          <span>Sin póster</span>
+        </div>
+      }
+
+      <span class="favorite-card__badge">
+        <i class="fas fa-heart"></i>
+        Guardada
+      </span>
+    </div>
+
+    <div class="favorite-card__info">
+      <h3>{{ movie().title }}</h3>
+
+      <span>
+        <i class="fas fa-calendar-alt"></i>
+        {{ movie().releaseDate || 'Fecha no disponible' }}
+      </span>
+    </div>
+  </button>
+
+  <button
+    type="button"
+    class="favorite-card__remove"
+    (click)="removeMovie()"
+    [attr.aria-label]="'Quitar ' + movie().title"
+  >
+    <i class="fas fa-trash-alt"></i>
+    Quitar de guardadas
+  </button>
+</article>

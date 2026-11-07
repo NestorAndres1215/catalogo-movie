@@ -18,53 +18,16 @@
   </div>
 
   @if (filteredFavorites().length > 0) {
-    <div class="favorites-grid">
-      @for (favorite of filteredFavorites(); track favorite.mediaType + '-' + favorite.id) {
-        <article class="favorite-card">
-          <a class="poster-container" [routerLink]="getMediaRoute(favorite)">
-            @if (favorite.posterPath) {
-              <img [src]="getImageUrl(favorite.posterPath)" [alt]="favorite.title" loading="lazy" />
-            } @else {
-              <div class="no-poster">
-                <span>Sin imagen</span>
-              </div>
-            }
-
-            <span class="rating"> ★ {{ favorite.voteAverage | number: '1.1-1' }} </span>
-          </a>
-
-          <div class="favorite-card-info">
-            <div class="title-row">
-              <a [routerLink]="getMediaRoute(favorite)" class="media-title">
-                {{ favorite.title }}
-              </a>
-
-              <button
-                type="button"
-                class="remove-button"
-                aria-label="Quitar de favoritos"
-                title="Quitar de favoritos"
-                (click)="removeFavorite(favorite)"
-              >
-                ♥
-              </button>
-            </div>
-
-            <span class="media-type">
-              {{ favorite.mediaType === 'movie' ? 'Película' : 'Serie' }}
-            </span>
-
-            <span class="release-date">
-              {{ favorite.releaseDate || 'Fecha no disponible' }}
-            </span>
-
-            <p>
-              {{ favorite.overview || 'Sin descripción disponible.' }}
-            </p>
-          </div>
-        </article>
-      }
-    </div>
+<div class="favorites-grid">
+  @for (favorite of filteredFavorites(); track favorite.mediaType + '-' + favorite.id) {
+<app-favorite-movie-card
+  [movie]="toSavedMovie(favorite)"
+  [imageUrl]="getImageUrl(favorite.posterPath)"
+  (open)="openFavorite(favorite)"
+  (remove)="removeFavorite(favorite)"
+/>
+  }
+</div>
   } @else {
     @if (totalFavorites() === 0) {
       <app-empty-state
