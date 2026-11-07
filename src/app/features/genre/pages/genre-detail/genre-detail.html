@@ -1,6 +1,5 @@
 <section class="genre-detail-page">
   <!-- CARGANDO -->
-
   @if (loading()) {
     <app-page-loading
       title="Cargando contenido"
@@ -11,23 +10,21 @@
   }
 
   <!-- ERROR -->
-
-  @if (!loading() && errorMessage()) {
-    <div class="message error">
-      <h2>Error</h2>
-
-      <p>{{ errorMessage() }}</p>
-
-      <a routerLink="/genres"> Volver a géneros </a>
-    </div>
+  @else if (errorMessage()) {
+    <app-error-state
+      title="Error"
+      [description]="errorMessage()"
+      linkText="Volver a géneros"
+      linkRoute="/genres"
+    />
   }
 
   <!-- CONTENIDO -->
-
-  @if (!loading() && !errorMessage()) {
-    <a class="back-link" routerLink="/genres"> ← Volver a géneros </a>
-
-    <!-- ENCABEZADO -->
+  @else {
+    <a class="back-link" routerLink="/genres">
+      <i class="fas fa-arrow-left"></i>
+      Volver a géneros
+    </a>
 
     <app-page-header
       section="CINEVERSE / GÉNEROS"
@@ -37,21 +34,13 @@
       "
     />
 
-    <!-- INFORMACIÓN -->
-
     <div class="results-header">
-      <div>
-        <h2>
-          @if (selectedType() === 'movie') {
-            Películas
-          } @else {
-            Series
-          }
-          de {{ genre()?.name }}
-        </h2>
-
-        <p>{{ totalResults() }} resultados encontrados</p>
-      </div>
+      <app-results-header
+        [title]="
+          (selectedType() === 'movie' ? 'Películas' : 'Series') + ' de ' + (genre()?.name ?? '')
+        "
+        [description]="totalResults() + ' resultados encontrados'"
+      />
 
       <span class="content-type">
         @if (selectedType() === 'movie') {
@@ -64,8 +53,6 @@
       </span>
     </div>
 
-    <!-- SIN RESULTADOS -->
-
     @if (media().length === 0) {
       <app-empty-state
         icon="fa-film"
@@ -74,39 +61,12 @@
       />
     }
 
-    <!-- GRID -->
-
     @if (media().length > 0) {
       <div class="media-grid">
         @for (item of media(); track item.id) {
-          <a class="media-card" [routerLink]="getMediaRoute(item)">
-            <div class="media-poster">
-              @if (item.poster_path) {
-                <img [src]="getPoster(item.poster_path)" [alt]="getMediaTitle(item)" />
-              } @else {
-                <div class="no-poster">Sin imagen</div>
-              }
-
-              <span class="rating"> ★ {{ item.vote_average.toFixed(1) }} </span>
-            </div>
-
-            <div class="media-info">
-              <h3>
-                {{ getMediaTitle(item) }}
-              </h3>
-
-              <span>
-                {{ getMediaDate(item) }}
-              </span>
-
-              <p>
-                {{ item.overview || 'Sin descripción disponible.' }}
-              </p>
-            </div>
-          </a>
+          <app-media-card [media]="item" [mediaType]="selectedType()" variant="description" />
         }
       </div>
-
 
       <app-pagination
         [currentPage]="currentPage()"

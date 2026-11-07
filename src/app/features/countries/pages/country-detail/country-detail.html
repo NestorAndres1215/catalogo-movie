@@ -12,15 +12,14 @@
 
   <!-- ERROR -->
 
-  @if (errorMessage() && !country()) {
-    <div class="message error">
-      <h2>Error</h2>
-
-      <p>{{ errorMessage() }}</p>
-
-      <a routerLink="/countries"> Volver a países </a>
-    </div>
-  }
+@if (errorMessage() && !country()) {
+  <app-error-state
+    title="Error"
+    [description]="errorMessage()"
+    linkText="Volver a países"
+    linkRoute="/countries"
+  />
+}
 
   <!-- DETALLE DEL PAÍS -->
 
@@ -63,13 +62,26 @@
       </div>
 
       <!-- SELECTOR DE TIPO -->
+      <div class="media-controls">
+        <div class="type-selector">
+          <app-filter-tabs
+            [tabs]="mediaTabs"
+            [selected]="selectedType()"
+            (selectionChange)="changeType($event)"
+          />
+        </div>
 
-      <div class="type-selector">
-        <app-filter-tabs
-          [tabs]="mediaTabs"
-          [selected]="selectedType()"
-          (selectionChange)="changeType($event)"
-        />
+        <div class="sort-control">
+          <app-select-filter
+            id="country-sort"
+            label="Ordenar por"
+            placeholder="Seleccionar orden"
+            [options]="sortOptions"
+            [selectedValue]="selectedSort()"
+            [disabled]="loading() || media().length === 0"
+            (selectionChange)="onSortChange($event)"
+          />
+        </div>
       </div>
 
       <!-- RESULTADOS Y FILTROS -->
@@ -91,25 +103,6 @@
 
         <div class="results-controls">
           <span class="page-info"> Página {{ currentPage() }} de {{ totalPages() }} </span>
-
-          <div class="sort-control">
-            <label for="country-sort"> Ordenar por </label>
-
-            <select
-              id="country-sort"
-              [value]="selectedSort()"
-              (change)="onSortChange($event)"
-              [disabled]="loading() || media().length === 0"
-            >
-              <option value="rating-desc">Mejor valoración</option>
-
-              <option value="rating-asc">Peor valoración</option>
-
-              <option value="date-desc">Más recientes</option>
-
-              <option value="date-asc">Más antiguas</option>
-            </select>
-          </div>
         </div>
       </div>
 
@@ -139,62 +132,18 @@
       <!-- SIN RESULTADOS -->
 
       @if (!loading() && !errorMessage() && media().length === 0) {
-        <div class="message">
-          <div class="empty-icon">🎬</div>
-
-          <h2>No hay contenido disponible</h2>
-
-          <p>No se encontraron resultados para este país.</p>
-        </div>
+        <app-empty-state
+          icon="fa-film"
+          title="No hay contenido disponible"
+          description="No se encontraron resultados para este país."
+        />
       }
-
       <!-- GRID DE PELÍCULAS Y SERIES -->
 
       @if (!loading() && !errorMessage() && sortedMedia().length > 0) {
         <div class="media-grid">
           @for (item of sortedMedia(); track item.id) {
-            <a class="media-card" [routerLink]="getMediaRoute(item)">
-              <!-- POSTER -->
-
-              <div class="media-poster">
-                @if (item.poster_path) {
-                  <img
-                    [src]="getPoster(item.poster_path)"
-                    [alt]="getMediaTitle(item)"
-                    loading="lazy"
-                  />
-                } @else {
-                  <div class="no-poster">
-                    <span>🎬</span>
-                    <p>Sin imagen disponible</p>
-                  </div>
-                }
-
-                <span class="rating"> ★ {{ item.vote_average.toFixed(1) }} </span>
-              </div>
-
-              <!-- INFORMACIÓN -->
-
-              <div class="media-info">
-                <h3>
-                  {{ getMediaTitle(item) }}
-                </h3>
-
-                <span class="media-date">
-                  {{ getMediaDate(item) }}
-                </span>
-
-                <p>
-                  {{ item.overview || 'Sin descripción disponible.' }}
-                </p>
-
-                <div class="media-card-footer">
-                  <span> Ver detalles </span>
-
-                  <span class="arrow"> → </span>
-                </div>
-              </div>
-            </a>
+            <app-media-card [media]="item" [mediaType]="selectedType()" variant="description" />
           }
         </div>
 

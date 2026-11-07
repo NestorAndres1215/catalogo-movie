@@ -181,7 +181,7 @@
     </section>
   }
 
-  @if (!selectedMedia() && !searchResults().length && !loadingSearch()) {
+  @if (!selectedMedia() && !searchResults().length && !loadingSearch() && !errorMessage()) {
     <app-empty-state
       icon="fa-scale-balanced"
       title="Comienza tu comparación"

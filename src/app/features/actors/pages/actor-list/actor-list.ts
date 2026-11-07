@@ -9,19 +9,22 @@ import { PageLoadingComponent } from '../../../../shared/components/page-loading
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 import { SearchComponent } from '../../../../shared/components/search/search';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
+import { ActorCard } from '../../../../shared/components/actor-card/actor-card';
 
 @Component({
   selector: 'app-actor-list',
   standalone: true,
   imports: [
-    RouterLink,
+    ActorCard,
     ActorFiltersComponent,
     PageHeaderComponent,
     PageLoadingComponent,
     EmptyStateComponent,
     PaginationComponent,
     SearchComponent,
-  ],
+    ResultsHeaderComponent
+],
   templateUrl: './actor-list.html',
   styleUrl: './actor-list.css',
 })

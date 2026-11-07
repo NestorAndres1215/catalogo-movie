@@ -17,19 +17,20 @@ import {
   SelectFilterComponent,
 } from '../../../../shared/components/select-filter/select-filter';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
+import { MediaCardComponent } from '../../../../shared/components/media-card/media-card';
 
 @Component({
   selector: 'app-year-list',
   standalone: true,
   imports: [
-    RouterLink,
-    DecimalPipe,
+
     PageHeaderComponent,
     PageLoadingComponent,
     EmptyStateComponent,
     FilterTabsComponent,
     SelectFilterComponent,
-    PaginationComponent
+    PaginationComponent,
+    MediaCardComponent
 ],
   templateUrl: './year-list.html',
   styleUrl: './year-list.css',

@@ -70,40 +70,15 @@
   }
   <!-- Resultados -->
   @if (!loadingContent() && movies().length > 0) {
-    <section class="movies-grid">
-      @for (media of movies(); track media.id) {
-        <article class="movie-card">
-          <div class="poster-container">
-            <img [src]="getImageUrl(media.poster_path)" [alt]="getTitle(media)" loading="lazy" />
-
-            <span class="rating">
-              <i class="fas fa-star"></i>
-              {{ media.vote_average | number: '1.1-1' }}
-            </span>
-          </div>
-
-          <div class="movie-info">
-            <h3>{{ getTitle(media) }}</h3>
-
-            <span class="release-year">
-              {{ getReleaseDate(media) }}
-            </span>
-
-            <p>
-              {{ media.overview || 'No hay descripción disponible.' }}
-            </p>
-
-            <div class="movie-footer">
-              <span>
-                {{ media.original_language?.toUpperCase() || selectedLanguage().toUpperCase() }}
-              </span>
-
-              <span> {{ media.vote_count }} votos </span>
-            </div>
-          </div>
-        </article>
-      }
-    </section>
+ <section class="movies-grid">
+  @for (media of movies(); track media.id) {
+    <app-media-card
+      [media]="media"
+      mediaType="movie"
+      variant="description"
+    />
+  }
+</section>
 
     <!-- Paginación -->
     <app-pagination

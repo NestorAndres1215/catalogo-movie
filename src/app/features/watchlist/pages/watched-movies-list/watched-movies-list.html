@@ -6,16 +6,13 @@
     description="Aquí encontrarás todas las películas que ya has disfrutado."
   />
 
-  <!-- ESTADÍSTICAS -->
   <app-stats [stats]="stats()" />
 
-  <!-- RESULTADOS -->
-  <div class="list-header">
-    <div>
-      <h2>Mi historial</h2>
-      <p>{{ totalWatched() }} películas registradas</p>
-    </div>
-  </div>
+  <app-results-header
+    title="Mi historial"
+    description="Todas las películas que has visto y registrado en CINEVERSE."
+    [totalResults]="totalWatched()"
+  />
 
   @if (watchedMovies().length > 0) {
     <div class="media-grid">

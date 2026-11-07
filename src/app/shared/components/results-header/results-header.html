@@ -1,0 +1,12 @@
+<div class="results-header">
+  <div>
+    <h2>{{ title() }}</h2>
+    <p>{{ description() }}</p>
+  </div>
+
+  @if ((totalResults() !== null || countLabel()) && !loading() && !errorMessage()) {
+    <span class="results-count">
+      {{ countLabel() ?? totalResults() + ' resultados' }}
+    </span>
+  }
+</div>

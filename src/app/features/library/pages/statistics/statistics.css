@@ -1,6 +1,5 @@
-
 .statistics-page {
- padding: 35px 40px;
+  padding: 35px 40px;
   max-width: 1600px;
   margin: auto;
 }
@@ -14,36 +13,6 @@
   font-size: 13px;
 }
 
-/* RESUMEN */
-.stats-summary {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.summary-card {
-  padding: 22px;
-  border: 1px solid #30303a;
-  border-radius: 14px;
-  background: #18181f;
-}
-
-.summary-card span {
-  font-size: 24px;
-}
-
-.summary-card strong {
-  display: block;
-  margin-top: 12px;
-  font-size: 27px;
-}
-
-.summary-card p {
-  margin: 6px 0 0;
-  color: #a1a1aa;
-  font-size: 12px;
-}
-
 /* SECCIONES */
 .statistics-section {
   display: flex;
@@ -53,11 +22,8 @@
   border: 1px solid #30303a;
   border-radius: 16px;
   background: #18181f;
-}
-
-.section-heading h2 {
-  margin: 8px 0;
-  font-size: 21px;
+  margin-top: 2px;
+  margin-bottom: 10px;
 }
 
 /* GÉNEROS */
@@ -81,21 +47,21 @@
 }
 
 .genre-heading span {
-  color: #a1a1aa;
+  color: var(--color-texto-secundario);
 }
 
 .progress-track {
-  overflow: hidden;
   height: 9px;
+  overflow: hidden;
+  background: var(--color-superficie-elevada);
   border-radius: 20px;
-  background: #30303a;
 }
 
 .progress-value {
   height: 100%;
+  background: var(--color-acento);
   border-radius: 20px;
-  background: #8b5cf6;
-  transition: width 0.3s ease;
+  transition: width var(--transicion-normal);
 }
 
 /* TOP PELÍCULAS */
@@ -110,12 +76,13 @@
   align-items: center;
   gap: 16px;
   padding: 12px;
-  border-radius: 12px;
-  background: #22222b;
+  background: var(--color-superficie-secundaria);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
 }
 
 .ranking {
-  color: #a78bfa;
+  color: var(--color-acento);
   font-size: 18px;
   font-weight: 800;
 }
@@ -141,12 +108,12 @@
 }
 
 .top-movie-info span {
-  color: #a1a1aa;
+  color: var(--color-texto-secundario);
   font-size: 12px;
 }
 
 .movie-rating {
-  color: #facc15;
+  color: var(--color-valoracion);
   font-size: 14px;
   white-space: nowrap;
 }
@@ -164,16 +131,16 @@
   align-items: flex-start;
   gap: 14px;
   padding: 16px;
-  border: 1px solid #30303a;
-  border-radius: 12px;
-  background: #22222b;
+  background: var(--color-superficie-secundaria);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
 }
 
 .actor-ranking {
   position: absolute;
   top: 10px;
   right: 12px;
-  color: #a78bfa;
+  color: var(--color-acento);
   font-size: 12px;
   font-weight: 800;
 }
@@ -181,9 +148,9 @@
 .actor-card img {
   width: 76px;
   height: 95px;
-  border-radius: 9px;
-  background: #30303a;
   object-fit: cover;
+  background: var(--color-superficie-elevada);
+  border-radius: var(--radio-borde-pequeno);
 }
 
 .actor-info {
@@ -197,7 +164,7 @@
 }
 
 .actor-info strong {
-  color: #c4b5fd;
+  color: var(--color-acento);
   font-size: 12px;
 }
 
@@ -215,7 +182,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 
 /* RESPONSIVE */
 @media (max-width: 900px) {

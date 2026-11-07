@@ -11,11 +11,12 @@ import {
 } from '../../../../shared/components/filter-tabs/filter-tabs';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import { MediaCardComponent } from '../../../../shared/components/media-card/media-card';
 
 @Component({
   selector: 'app-streaming-list',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent, FilterTabsComponent, PageLoadingComponent, EmptyStateComponent],
+  imports: [ PageHeaderComponent, FilterTabsComponent, PageLoadingComponent, EmptyStateComponent, MediaCardComponent],
   templateUrl: './streaming-list.html',
   styleUrl: './streaming-list.css',
 })
@@ -79,7 +80,21 @@ export class StreamingListComponent {
       },
     });
   }
+isUpcoming(date: string | null | undefined): boolean {
+  if (!date) {
+    return false;
+  }
 
+  const today = new Date();
+
+  const todayString = [
+    today.getFullYear(),
+    String(today.getMonth() + 1).padStart(2, '0'),
+    String(today.getDate()).padStart(2, '0')
+  ].join('-');
+
+  return date > todayString;
+}
   selectProvider(providerId: number): void {
     this.selectedProvider.set(providerId);
     this.contents.set([]);

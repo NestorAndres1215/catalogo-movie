@@ -40,31 +40,17 @@
     </div>
   </div>
 
-  <div class="results-header">
-    <div>
-      <h2>
-        @if (timeWindow() === 'day') {
-          Tendencias de hoy
-        } @else {
-          Tendencias de esta semana
-        }
-      </h2>
-
-      <p>
-        @if (mediaType() === 'all') {
-          Películas y series populares.
-        } @else if (mediaType() === 'movie') {
-          Películas populares.
-        } @else {
-          Series populares.
-        }
-      </p>
-    </div>
-
-    @if (!loading() && !errorMessage()) {
-      <span class="results-count"> {{ totalResults() }} resultados </span>
-    }
-  </div>
+  <app-results-header
+    [title]="timeWindow() === 'day' ? 'Tendencias de hoy' : 'Tendencias de esta semana'"
+    [description]="
+      mediaType() === 'all'
+        ? 'Películas y series populares.'
+        : mediaType() === 'movie'
+          ? 'Películas populares.'
+          : 'Series populares.'
+    "
+    [totalResults]="!loading() && !errorMessage() ? totalResults() : null"
+  />
 
   @if (loading()) {
     <app-page-loading

@@ -59,35 +59,14 @@
 
   <!-- LISTADO -->
   @if (directors().length > 0) {
-    <div class="directors-grid">
-      @for (director of directors(); track director.id) {
-        <a class="director-card" [routerLink]="['/directors', director.id]">
-          <div class="director-card__image">
-            @if (director.profile_path) {
-              <img
-                [src]="getProfile(director.profile_path)"
-                [alt]="director.name"
-                loading="lazy"
-              />
-            } @else {
-              <div class="director-card__placeholder">Sin fotografía</div>
-            }
-          </div>
-
-          <div class="director-card__info">
-            <h2 class="director-card__name">{{ director.name }}</h2>
-            <span class="director-card__role">Director</span>
-            <p class="director-card__known-for">{{ getKnownFor(director) }}</p>
-
-            <div class="director-card__popularity">
-              <span>Popularidad</span>
-              <strong>{{ director.popularity | number: '1.0-0' }}</strong>
-            </div>
-          </div>
-        </a>
-      }
-    </div>
-
+<div class="directors-grid">
+  @for (director of directors(); track director.id) {
+    <app-actor-card
+      [actor]="director"
+      [profileUrl]="getProfile(director.profile_path)"
+    />
+  }
+</div>
     <!-- PAGINACIÓN -->
     <app-pagination
       [currentPage]="currentPage()"

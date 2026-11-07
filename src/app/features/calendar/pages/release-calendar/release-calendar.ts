@@ -11,6 +11,7 @@ import {
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import { MediaCardComponent } from '../../../../shared/components/media-card/media-card';
 
 interface CalendarDay {
   date: Date;
@@ -23,7 +24,7 @@ interface CalendarDay {
 @Component({
   selector: 'app-release-calendar',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent, PageLoadingComponent, EmptyStateComponent],
+  imports: [ PageHeaderComponent, PageLoadingComponent, EmptyStateComponent, MediaCardComponent],
   templateUrl: './release-calendar.html',
   styleUrl: './release-calendar.css'
 })
@@ -46,7 +47,21 @@ export class ReleaseCalendarComponent implements OnInit {
     this.generateCalendar();
     this.loadMonthMovies();
   }
+isUpcoming(releaseDate: string | null | undefined): boolean {
+  if (!releaseDate) {
+    return false;
+  }
 
+  const today = new Date();
+
+  const todayString = [
+    today.getFullYear(),
+    String(today.getMonth() + 1).padStart(2, '0'),
+    String(today.getDate()).padStart(2, '0')
+  ].join('-');
+
+  return releaseDate > todayString;
+}
   // Generar los días del calendario.
   generateCalendar(): void {
     const current = this.currentDate();

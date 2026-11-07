@@ -14,18 +14,20 @@ import {
 } from '../../../../shared/components/filter-tabs/filter-tabs';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
+import { MediaCardComponent } from '../../../../shared/components/media-card/media-card';
 
 @Component({
   selector: 'app-upcoming-list',
   standalone: true,
   imports: [
     DecimalPipe,
-    FavoriteButtonComponent,
+    
     PageHeaderComponent,
     PageLoadingComponent,
     FilterTabsComponent,
     EmptyStateComponent,
-    PaginationComponent
+    PaginationComponent,
+    MediaCardComponent
 ],
   templateUrl: './upcoming-list.html',
   styleUrl: './upcoming-list.css',

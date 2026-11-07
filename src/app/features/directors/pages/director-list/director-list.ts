@@ -16,21 +16,21 @@ import {
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 import { SearchComponent } from '../../../../shared/components/search/search';
 import { ButtonComponent } from '../../../../shared/components/button/button';
+import { ActorCard } from '../../../../shared/components/actor-card/actor-card';
 
 @Component({
   selector: 'app-director-list',
   standalone: true,
   imports: [
-    RouterLink,
-    DecimalPipe,
     PageHeaderComponent,
     PageLoadingComponent,
     EmptyStateComponent,
     SelectFilterComponent,
     PaginationComponent,
     SearchComponent,
-    ButtonComponent
-],
+    ButtonComponent,
+    ActorCard,
+  ],
   templateUrl: './director-list.html',
   styleUrl: './director-list.css',
 })
@@ -209,10 +209,10 @@ export class DirectorListComponent implements OnInit {
     });
   }
 
-onSearch(query: string): void {
-  this.searchQuery.set(query.trim());
-  this.resetDirectors();
-}
+  onSearch(query: string): void {
+    this.searchQuery.set(query.trim());
+    this.resetDirectors();
+  }
 
   clearSearch(): void {
     this.searchQuery.set('');

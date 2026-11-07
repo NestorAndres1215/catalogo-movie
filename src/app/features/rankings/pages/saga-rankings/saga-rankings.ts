@@ -18,6 +18,8 @@ import { Footer } from '../../../../shared/components/footer/footer';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { ButtonComponent } from '../../../../shared/components/button/button';
 import { FilterTab, FilterTabsComponent, FilterType } from '../../../../shared/components/filter-tabs/filter-tabs';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
+import { SearchComponent } from '../../../../shared/components/search/search';
 
 @Component({
   selector: 'app-saga-rankings',
@@ -31,7 +33,9 @@ import { FilterTab, FilterTabsComponent, FilterType } from '../../../../shared/c
     EmptyStateComponent,
     ButtonComponent,
     FilterTabsComponent,
-  ],
+    ResultsHeaderComponent,
+    SearchComponent
+],
   templateUrl: './saga-rankings.html',
   styleUrl: './saga-rankings.css',
 })

@@ -14,6 +14,7 @@ import {
 } from '../../../../shared/components/filter-tabs/filter-tabs';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
 
 @Component({
   selector: 'app-trending-list',
@@ -26,7 +27,8 @@ import { PaginationComponent } from '../../../../shared/components/pagination/pa
     PageLoadingComponent,
     FilterTabsComponent,
     EmptyStateComponent,
-    PaginationComponent
+    PaginationComponent,
+    ResultsHeaderComponent
 ],
   templateUrl: './trending-list.html',
   styleUrl: './trending-list.css',

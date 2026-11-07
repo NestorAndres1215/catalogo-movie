@@ -1,0 +1,197 @@
+/* ========================================
+   HOST (el componente se estira en el grid)
+======================================== */
+
+:host {
+  display: block;
+  height: 100%;
+  min-width: 0;
+}
+
+/* ========================================
+   TARJETA
+======================================== */
+
+.movie-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--color-texto);
+  text-decoration: none;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde);
+  transition:
+    transform var(--transicion-normal),
+    border-color var(--transicion-normal);
+}
+
+.movie-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-acento);
+}
+
+/* ========================================
+   PÓSTER (proporción fija y responsive)
+======================================== */
+
+.poster-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: var(--color-superficie-secundaria);
+}
+
+.poster-container img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transicion-normal);
+}
+
+.movie-card:hover .poster-container img {
+  transform: scale(1.05);
+}
+
+/* ========================================
+   SIN PÓSTER
+======================================== */
+
+.no-poster {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--color-texto-atenuado);
+}
+
+.no-poster i {
+  font-size: 40px;
+}
+
+.no-poster p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* ========================================
+   VALORACIÓN
+======================================== */
+
+.rating {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  color: var(--color-valoracion);
+  font-size: 13px;
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: var(--radio-borde-pequeno);
+}
+
+/* ========================================
+   INFORMACIÓN (título + fecha)
+======================================== */
+
+.media-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+}
+
+.media-info h3 {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 11px 0 5px;
+  color: var(--color-texto);
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.media-date {
+  color: var(--color-texto-atenuado);
+  font-size: 11px;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 576px) {
+  .rating {
+    top: 8px;
+    right: 8px;
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+
+  .media-info {
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .media-info h3 {
+    margin: 6px 0 2px;
+    font-size: 13px;
+  }
+
+  .media-date {
+    font-size: 11px;
+  }
+}
+
+/* ========================================
+   RANKING
+======================================== */
+
+.ranking-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 11px;
+  color: var(--color-texto);
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.ranking-badge.top-three {
+  color: var(--color-valoracion);
+  border-color: var(--color-valoracion);
+}
+
+.ranking-badge i {
+  color: var(--color-valoracion);
+}
+
+@media (max-width: 576px) {
+  .ranking-badge {
+    top: 8px;
+    left: 8px;
+    padding: 5px 8px;
+    font-size: 11px;
+  }
+}

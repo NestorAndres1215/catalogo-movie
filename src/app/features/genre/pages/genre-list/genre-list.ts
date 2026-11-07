@@ -11,13 +11,14 @@ import {
   FilterTabsComponent,
   FilterType,
 } from '../../../../shared/components/filter-tabs/filter-tabs';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
 
 type GenreType = 'movie' | 'tv';
 
 @Component({
   selector: 'app-genre-list',
   standalone: true,
-  imports: [RouterLink, PageHeaderComponent, PageLoadingComponent, FilterTabsComponent],
+  imports: [RouterLink, PageHeaderComponent, PageLoadingComponent, FilterTabsComponent, ResultsHeaderComponent],
   templateUrl: './genre-list.html',
   styleUrl: './genre-list.css',
 })

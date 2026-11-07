@@ -9,9 +9,12 @@
 
 @if (errorMessage() && !loading()) {
   <div class="detail-error">
-    <h2>No se pudo cargar la serie</h2>
-    <p>{{ errorMessage() }}</p>
-    <a routerLink="/series">Volver a series</a>
+  <app-error-state
+    title="No se pudo cargar la serie"
+    [description]="errorMessage()"
+    linkText="Volver a series"
+    linkRoute="/series"
+  />
   </div>
 }
 

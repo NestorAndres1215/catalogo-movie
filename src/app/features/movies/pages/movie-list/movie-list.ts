@@ -11,6 +11,9 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 import { SearchComponent } from '../../../../shared/components/search/search';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
+import { MediaCardComponent } from '../../../../shared/components/media-card/media-card';
 
 interface MoviesRequest {
   query: string;
@@ -29,7 +32,7 @@ interface MoviesResult {
 @Component({
   selector: 'app-movie-list',
   standalone: true,
-  imports: [RouterLink, MovieFiltersComponent, PageHeaderComponent, EmptyStateComponent, PaginationComponent, SearchComponent],
+  imports: [ MovieFiltersComponent, PageHeaderComponent, EmptyStateComponent, PaginationComponent, SearchComponent, ResultsHeaderComponent, PageLoadingComponent, MediaCardComponent],
   templateUrl: './movie-list.html',
   styleUrl: './movie-list.css'
 })

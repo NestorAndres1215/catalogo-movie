@@ -16,24 +16,11 @@
   </div>
 
   <!-- INFORMACIÓN -->
-
-  <div class="genres-heading">
-    <div>
-      <h2>
-        @if (selectedType() === 'movie') {
-          Géneros de películas
-        } @else {
-          Géneros de series
-        }
-      </h2>
-
-      <p>Selecciona un género para descubrir contenido.</p>
-    </div>
-
-    @if (!loading()) {
-      <span class="genre-count"> {{ genres().length }} géneros </span>
-    }
-  </div>
+  <app-results-header
+    [title]="selectedType() === 'movie' ? 'Géneros de películas' : 'Géneros de series'"
+    description="Selecciona un género para descubrir contenido."
+    [countLabel]="!loading() ? genres().length + ' géneros' : null"
+  />
 
   <!-- CARGANDO -->
 

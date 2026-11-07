@@ -20,18 +20,20 @@ import {
   SelectFilterComponent,
 } from '../../../../shared/components/select-filter/select-filter';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
+import { MediaCardComponent } from '../../../../shared/components/media-card/media-card';
 
 @Component({
   selector: 'app-language-list',
   standalone: true,
   imports: [
-    DecimalPipe,
+
     PageHeaderComponent,
     PageLoadingComponent,
     FilterTabsComponent,
     EmptyStateComponent,
     SelectFilterComponent,
-    PaginationComponent
+    PaginationComponent,
+    MediaCardComponent
 ],
   templateUrl: './language-list.html',
   styleUrl: './language-list.css',

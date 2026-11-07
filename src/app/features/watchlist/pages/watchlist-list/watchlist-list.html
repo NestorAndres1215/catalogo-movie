@@ -5,9 +5,7 @@
     title="Mi lista para ver"
     description="Guarda las películas y series que quieres disfrutar después."
   />
-  @if (watchlist().length > 0) {
-    <button class="clear-button" type="button" (click)="clearWatchlist()">🗑 Vaciar lista</button>
-  }
+
   <!-- ESTADÍSTICAS -->
 
   <app-stats [stats]="stats()" />
@@ -19,10 +17,20 @@
       [selected]="selectedFilter()"
       (selectionChange)="selectFilter($event)"
     />
-
-    <span class="results-count"> {{ filteredItems().length }} resultados </span>
+    @if (watchlist().length > 0) {
+      <app-button
+        text="Vaciar lista"
+        icon="fa-trash"
+        variant="secondary"
+        (clicked)="clearWatchlist()"
+      />
+    }
   </div>
-
+  <app-results-header
+    title="Mi lista de pelis y series"
+    description="Todas tus películas y series guardadas en un solo lugar."
+    [totalResults]="filteredItems().length"
+  />
   <!-- LISTADO -->
   @if (filteredItems().length > 0) {
     <div class="media-grid">
@@ -89,12 +97,12 @@
             </p>
 
             <!-- DETALLES -->
-<app-button
-  text="Ver detalles"
-  endIcon="fa-arrow-right"
-  variant="secondary"
-  (clicked)="openDetails(item)"
-/>
+            <app-button
+              text="Ver detalles"
+              endIcon="fa-arrow-right"
+              variant="secondary"
+              (clicked)="openDetails(item)"
+            />
           </div>
         </article>
       }

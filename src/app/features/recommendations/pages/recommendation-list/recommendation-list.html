@@ -49,16 +49,13 @@
     </div>
   }
 
-  <div class="results-header">
-    <div>
-      <h2>También te puede gustar</h2>
-      <p>Producciones relacionadas con tu selección.</p>
-    </div>
-
-    @if (!loading() && !errorMessage()) {
-      <span class="results-count"> {{ totalResults() }} resultados </span>
-    }
-  </div>
+  <app-results-header
+    title="También te puede gustar"
+    description="Producciones relacionadas con tu selección."
+    [totalResults]="totalResults()"
+    [loading]="loading()"
+    [errorMessage]="errorMessage()"
+  />
 
   @if (loadingSources() || loading()) {
     <app-page-loading
@@ -86,39 +83,7 @@
     @if (recommendations().length > 0) {
       <div class="recommendations-grid">
         @for (item of recommendations(); track item.id) {
-          <a class="recommendation-card" [routerLink]="getMediaRoute(item)">
-            <div class="poster-container">
-              @if (item.poster_path) {
-                <img
-                  [src]="getImageUrl(item.poster_path)"
-                  [alt]="getMediaTitle(item)"
-                  loading="lazy"
-                />
-              } @else {
-                <div class="no-poster">
-                  <span>Sin imagen</span>
-                </div>
-              }
-
-              <span class="rating"> ★ {{ item.vote_average | number: '1.1-1' }} </span>
-
-              <div class="card-overlay">
-                <span>Ver detalles</span>
-              </div>
-            </div>
-
-            <div class="media-info">
-              <h3>{{ getMediaTitle(item) }}</h3>
-
-              <span class="release-date">
-                {{ getMediaDate(item) || 'Fecha no disponible' }}
-              </span>
-
-              <p>
-                {{ item.overview || 'No hay descripción disponible.' }}
-              </p>
-            </div>
-          </a>
+          <app-media-card [media]="item" [mediaType]="mediaType()" variant="description" />
         }
       </div>
 

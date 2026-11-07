@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 
 import { SeriesService } from '../../../../core/service/series.service';
 
@@ -14,6 +14,8 @@ import {
   FilterType,
 } from '../../../../shared/components/filter-tabs/filter-tabs';
 import { ButtonComponent } from '../../../../shared/components/button/button';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
+import { SelectFilterComponent } from '../../../../shared/components/select-filter/select-filter';
 
 @Component({
   selector: 'app-series-rankings',
@@ -26,6 +28,8 @@ import { ButtonComponent } from '../../../../shared/components/button/button';
     PageLoadingComponent,
     FilterTabsComponent,
     ButtonComponent,
+    ResultsHeaderComponent,
+    SelectFilterComponent,
   ],
   templateUrl: './series-rankings.html',
   styleUrl: './series-rankings.css',
@@ -63,7 +67,12 @@ export class SeriesRankingsComponent implements OnInit {
     this.loadWorstSeries();
     this.loadGenres();
   }
-
+readonly genreOptions = computed(() =>
+  this.genres().map(genre => ({
+    label: genre.name,
+    value: genre.id
+  }))
+);
   // Series mejor valoradas.
   loadBestSeries(): void {
     this.loadingBest.set(true);

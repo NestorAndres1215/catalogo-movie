@@ -119,34 +119,16 @@
         <button type="button" (click)="loadMonthMovies()">Intentar nuevamente</button>
       </div>
     } @else if (getMoviesForSelectedDay().length > 0) {
-      <div class="movies-grid">
-        @for (movie of getMoviesForSelectedDay(); track movie.id) {
-          <article class="movie-card">
-            <div class="poster-container">
-              <img [src]="getImageUrl(movie.poster_path)" [alt]="getTitle(movie)" loading="lazy" />
-
-              <span class="rating"> ★ {{ movie.vote_average | number: '1.1-1' }} </span>
-            </div>
-
-            <div class="movie-info">
-              <h3>{{ getTitle(movie) }}</h3>
-
-              <span class="release-date">
-                {{ movie.release_date }}
-              </span>
-
-              <p>
-                {{ movie.overview || 'No hay descripción disponible.' }}
-              </p>
-
-              <div class="movie-footer">
-                <span>{{ getYear(movie) }}</span>
-                <span>{{ movie.vote_count }} votos</span>
-              </div>
-            </div>
-          </article>
-        }
-      </div>
+   <div class="movies-grid">
+  @for (movie of getMoviesForSelectedDay(); track movie.id) {
+    <app-media-card
+      [media]="movie"
+      mediaType="movie"
+      variant="description"
+      [isUpcoming]="isUpcoming(movie.release_date)"
+    />
+  }
+</div>
     } @else {
       <app-empty-state
         icon="fa-calendar-xmark"

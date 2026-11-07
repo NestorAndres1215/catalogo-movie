@@ -7,11 +7,12 @@ import { WatchlistService } from '../../../../core/service/watchlist.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { StatItem, StatsComponent } from '../../../../shared/components/stats/stats';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
 
 @Component({
   selector: 'app-watched-movies-list',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent, StatsComponent, EmptyStateComponent],
+  imports: [DecimalPipe, PageHeaderComponent, StatsComponent, EmptyStateComponent, ResultsHeaderComponent],
   templateUrl: './watched-movies-list.html',
   styleUrl: './watched-movies-list.css',
 })

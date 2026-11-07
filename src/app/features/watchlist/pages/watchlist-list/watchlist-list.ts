@@ -17,6 +17,7 @@ import {
   SelectFilterComponent,
 } from '../../../../shared/components/select-filter/select-filter';
 import { ButtonComponent } from '../../../../shared/components/button/button';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
 
 @Component({
   selector: 'app-watchlist-list',
@@ -28,7 +29,8 @@ import { ButtonComponent } from '../../../../shared/components/button/button';
     StatsComponent,
     EmptyStateComponent,
     SelectFilterComponent,
-    ButtonComponent
+    ButtonComponent,
+    ResultsHeaderComponent
 ],
   templateUrl: './watchlist-list.html',
   styleUrl: './watchlist-list.css',

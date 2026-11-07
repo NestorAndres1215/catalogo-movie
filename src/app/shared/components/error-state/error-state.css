@@ -1,0 +1,136 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.error-state {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 32px 24px;
+  text-align: center;
+  background:
+    radial-gradient(
+      circle at 50% 40%,
+      color-mix(in srgb, var(--color-danger) 10%, transparent) 0%,
+      transparent 55%
+    ),
+    var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde);
+  overflow: hidden;
+}
+
+.error-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: var(--error-max-width, 520px);
+  animation: error-aparecer 0.45s ease both;
+}
+
+.error-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  margin-bottom: 8px;
+  color: var(--color-danger);
+  font-size: 38px;
+  background: color-mix(in srgb, var(--color-danger) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-danger) 30%, transparent);
+  border-radius: var(--radio-circular);
+}
+
+.error-icon::before {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  border-radius: inherit;
+  border: 1px solid color-mix(in srgb, var(--color-danger) 20%, transparent);
+  animation: error-pulso 2.4s ease-out infinite;
+}
+
+.error-state h2 {
+  margin: 0;
+  color: var(--color-texto);
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.error-state p {
+  margin: 0;
+  max-width: 44ch;
+  color: var(--color-texto-secundario);
+  font-size: clamp(14px, 1.6vw, 16px);
+  line-height: 1.7;
+}
+
+.error-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+@keyframes error-aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes error-pulso {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .error-content,
+  .error-icon::before {
+    animation: none;
+  }
+}
+
+/* Móvil: solo contenido, NO ancho ni alto de la tarjeta */
+@media (max-width: 600px) {
+  .error-state {
+    padding: 24px 16px;
+  }
+
+  .error-icon {
+    width: 84px;
+    height: 84px;
+    font-size: 32px;
+  }
+
+  .error-state h2 {
+    font-size: 28px;
+  }
+
+  .error-state p {
+    font-size: 15px;
+  }
+}

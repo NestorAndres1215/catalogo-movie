@@ -6,11 +6,13 @@ import { Movie } from '../../../../core/models/movie.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
+import { MediaCardComponent } from '../../../../shared/components/media-card/media-card';
 
 @Component({
   selector: 'app-decades-list',
   standalone: true,
-  imports: [DatePipe, DecimalPipe, PageHeaderComponent, PageLoadingComponent, PaginationComponent],
+  imports: [PageHeaderComponent, PageLoadingComponent, PaginationComponent, ResultsHeaderComponent, MediaCardComponent],
   templateUrl: './decades-list.html',
   styleUrl: './decades-list.css',
 })

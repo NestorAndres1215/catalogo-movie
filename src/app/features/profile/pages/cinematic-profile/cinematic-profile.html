@@ -238,15 +238,26 @@
               @if (actorMovies().length > 0) {
                 <div class="filmography-grid">
                   @for (movie of actorMovies(); track movie.id) {
-                    <button type="button" class="filmography-card" (click)="openMovie(movie)">
-                      <img [src]="getMovieImage(movie.poster_path)" [alt]="getCreditTitle(movie)" />
+                    <article class="filmography-card">
+                      <button type="button" class="filmography-open" (click)="openMovie(movie)">
+                        <img
+                          [src]="getMovieImage(movie.poster_path)"
+                          [alt]="getCreditTitle(movie)"
+                        />
+                        <span>{{ getCreditTitle(movie) }}</span>
+                        <small>{{ movie.release_date || 'Fecha no disponible' }}</small>
+                      </button>
 
-                      <span>{{ getCreditTitle(movie) }}</span>
-
-                      <small>
-                        {{ movie.release_date || 'Fecha no disponible' }}
-                      </small>
-                    </button>
+                      <button
+                        type="button"
+                        class="save-movie-button"
+                        [class.saved]="isMovieSaved(movie.id)"
+                        [attr.aria-pressed]="isMovieSaved(movie.id)"
+                        (click)="toggleSavedMovie(movie)"
+                      >
+                        {{ isMovieSaved(movie.id) ? '✓ Guardada' : '+ Guardar' }}
+                      </button>
+                    </article>
                   }
                 </div>
               } @else if (!loadingActorMovies()) {
@@ -261,7 +272,10 @@
 
           <!-- ACTORES GUARDADOS -->
           <div class="tag-list">
-            <h4>Actores que guardaste</h4>
+            <app-results-header
+              title="Actores que guardaste"
+              description="Aquí encontrarás los actores que has añadido a tus favoritos."
+            />
 
             @for (actor of preferences().favoriteActors; track actor) {
               <span class="person-tag">
@@ -360,15 +374,26 @@
               @if (directorMovies().length > 0) {
                 <div class="filmography-grid">
                   @for (movie of directorMovies(); track movie.id) {
-                    <button type="button" class="filmography-card" (click)="openMovie(movie)">
-                      <img [src]="getMovieImage(movie.poster_path)" [alt]="getCreditTitle(movie)" />
+                    <article class="filmography-card">
+                      <button type="button" class="filmography-open" (click)="openMovie(movie)">
+                        <img
+                          [src]="getMovieImage(movie.poster_path)"
+                          [alt]="getCreditTitle(movie)"
+                        />
+                        <span>{{ getCreditTitle(movie) }}</span>
+                        <small>{{ movie.release_date || 'Fecha no disponible' }}</small>
+                      </button>
 
-                      <span>{{ getCreditTitle(movie) }}</span>
-
-                      <small>
-                        {{ movie.release_date || 'Fecha no disponible' }}
-                      </small>
-                    </button>
+                      <button
+                        type="button"
+                        class="save-movie-button"
+                        [class.saved]="isMovieSaved(movie.id)"
+                        [attr.aria-pressed]="isMovieSaved(movie.id)"
+                        (click)="toggleSavedMovie(movie)"
+                      >
+                        {{ isMovieSaved(movie.id) ? '✓ Guardada' : '+ Guardar' }}
+                      </button>
+                    </article>
                   }
                 </div>
               } @else if (!loadingDirectorMovies()) {
@@ -383,7 +408,10 @@
 
           <!-- DIRECTORES GUARDADOS -->
           <div class="tag-list">
-            <h4>Directores que guardaste</h4>
+            <app-results-header
+              title="Directores que guardaste"
+              description="Aquí encontrarás los directores que has añadido a tus favoritos."
+            />
 
             @for (director of preferences().favoriteDirectors; track director) {
               <span class="person-tag">
@@ -407,10 +435,61 @@
           </div>
         </article>
 
+        <!-- ================================= -->
+        <!-- PELÍCULAS GUARDADAS -->
+        <!-- ================================= -->
 
+        <article class="preference-card">
+          <div class="preference-heading">
+            <div class="preference-icon">
+              <i class="fas fa-bookmark"></i>
+            </div>
+            <div>
+              <h3>Mis películas guardadas</h3>
+              <p>Se guardan en este navegador y puedes eliminarlas cuando quieras.</p>
+            </div>
+
+            @if (savedMovies().length > 0) {
+              <button type="button" class="clear-button" (click)="clearSavedMovies()">
+                <i class="fas fa-trash"></i> Eliminar todas
+              </button>
+            }
+          </div>
+
+          @if (savedMovies().length > 0) {
+            <div class="filmography-grid">
+              @for (movie of savedMovies(); track movie.id) {
+                <article class="filmography-card">
+                  <button type="button" class="filmography-open" (click)="openSavedMovie(movie)">
+                    <img [src]="getMovieImage(movie.posterPath)" [alt]="movie.title" />
+                    <span>{{ movie.title }}</span>
+                    <small>{{ movie.releaseDate || 'Fecha no disponible' }}</small>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="save-movie-button saved"
+                    [attr.aria-label]="'Eliminar ' + movie.title"
+                    (click)="removeSavedMovie(movie.id)"
+                  >
+                    × Quitar
+                  </button>
+                </article>
+              }
+            </div>
+          } @else {
+            <app-empty-state
+              icon="fa-bookmark"
+              title="Aún no guardaste películas"
+              description="Busca un actor o director y pulsa «Guardar» en sus películas."
+            />
+          }
+        </article>
+
+        <!-- GUARDAR PREFERENCIAS -->
         <div class="save-section">
           @if (savedMessage()) {
-            <span class="saved-message"> ✓ Tus preferencias se guardaron correctamente. </span>
+            <span class="saved-message">✓ Tus preferencias se guardaron correctamente.</span>
           }
 
           <app-button

@@ -10,6 +10,16 @@
   font-size: 14px;
 }
 
+/* ETIQUETAS DE SECCIÓN */
+
+.section-eyebrow {
+  display: inline-block;
+  color: var(--color-acento-hover);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
 /* BANNER */
 
 .profile-banner {
@@ -45,7 +55,6 @@
   flex-shrink: 0;
   width: 95px;
   height: 95px;
-  color: var(--color-texto-sobre-acento);
   font-size: 38px;
   font-weight: 800;
   color: var(--color-acento);
@@ -106,7 +115,7 @@
   border-bottom: 1px solid var(--color-borde);
 }
 
-/* CONTENT */
+/* CONTENIDO */
 
 .content-section {
   display: flex;
@@ -127,7 +136,7 @@
   margin: 0;
 }
 
-/* INFORMATION */
+/* INFORMACIÓN */
 
 .information-grid {
   display: grid;
@@ -181,7 +190,8 @@
   font-size: 12px !important;
 }
 
-/* QUICK ACCESS */
+/* ACCESO RÁPIDO */
+
 .quick-access {
   padding: 25px;
   background: var(--color-superficie-secundaria);
@@ -225,7 +235,7 @@
   border-color: var(--color-acento);
 }
 
-/* PREFERENCES */
+/* PREFERENCIAS */
 
 .preference-card {
   padding: 25px;
@@ -263,7 +273,7 @@
   font-size: 12px;
 }
 
-/* GENRES */
+/* GÉNEROS */
 
 .genre-list {
   display: flex;
@@ -307,7 +317,7 @@
   font-size: 12px;
 }
 
-/* ACTORS AND DIRECTORS */
+/* BUSCADOR */
 
 .add-form {
   display: flex;
@@ -315,28 +325,312 @@
   margin-bottom: 20px;
 }
 
-.add-button {
-  padding: 0 18px;
-  color: white;
-  font-size: 12px;
-  font-weight: 750;
-  background: linear-gradient(135deg, #9333ea, #6d28d9);
-  border: 0;
-  border-radius: 9px;
-  cursor: pointer;
-  transition: 0.2s;
+/* MENSAJES DE CARGA */
+
+.loading-message {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 0;
+  padding: 14px 16px;
+  color: var(--color-texto-secundario);
+  font-size: 13px;
+  background: var(--color-superficie-elevada);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
 }
 
-.add-button:hover,
-.save-button:hover {
-  filter: brightness(1.15);
-  transform: translateY(-1px);
+.loading-message::before {
+  content: '';
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  border: 2px solid var(--color-borde-hover);
+  border-top-color: var(--color-acento);
+  border-radius: var(--radio-circular);
+  animation: perfil-cargando 0.8s linear infinite;
 }
+
+@keyframes perfil-cargando {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* RESULTADOS DE BÚSQUEDA */
+
+.person-results {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.person-result {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 12px;
+  color: var(--color-texto);
+  text-align: left;
+  background: var(--color-superficie-elevada);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde);
+  cursor: pointer;
+  transition: var(--transicion-rapida);
+}
+
+.person-result:hover {
+  background: var(--color-superficie-hover);
+  border-color: var(--color-acento);
+  transform: translateY(-2px);
+}
+
+.person-result img {
+  width: 52px;
+  height: 62px;
+  flex-shrink: 0;
+  object-fit: cover;
+  background: var(--color-superficie-secundaria);
+  border-radius: var(--radio-borde-pequeno);
+}
+
+.person-result-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.person-result-info strong {
+  overflow: hidden;
+  color: var(--color-texto);
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.person-result-info small {
+  color: var(--color-texto-atenuado);
+  font-size: 11px;
+}
+
+.select-icon {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  color: var(--color-acento);
+  font-size: 20px;
+  font-weight: 700;
+  background: var(--color-acento-suave);
+  border-radius: var(--radio-circular);
+}
+
+/* PERSONA SELECCIONADA */
+
+.selected-person {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  margin: 20px 0;
+  padding: 20px;
+  background:
+    linear-gradient(135deg, var(--color-acento-suave), transparent 75%),
+    var(--color-superficie-elevada);
+  border: 1px solid var(--color-borde-hover);
+  border-radius: var(--radio-borde);
+}
+
+.selected-person-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.selected-person-header img {
+  width: 76px;
+  height: 88px;
+  flex-shrink: 0;
+  object-fit: cover;
+  background: var(--color-superficie-secundaria);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
+}
+
+.selected-person-header h4 {
+  margin: 7px 0;
+  color: var(--color-texto);
+  font-size: 17px;
+}
+
+.selected-person-header p {
+  margin: 0;
+  color: var(--color-texto-secundario);
+  font-size: 12px;
+}
+
+.add-button {
+  min-height: 42px;
+  padding: 0 18px;
+  color: var(--color-texto-sobre-acento);
+  font-size: 12px;
+  font-weight: 750;
+  background: var(--color-acento);
+  border: 0;
+  border-radius: var(--radio-borde-pequeno);
+  cursor: pointer;
+  transition: var(--transicion-rapida);
+}
+
+.add-button:hover {
+  background: var(--color-acento-hover);
+  transform: translateY(-2px);
+}
+
+/* FILMOGRAFÍA */
+
+.filmography-section {
+  margin: 22px 0;
+}
+
+.filmography-section > h4 {
+  margin: 0 0 16px;
+  color: var(--color-texto);
+  font-size: 16px;
+}
+
+.filmography-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.filmography-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  padding: 10px;
+  color: var(--color-texto);
+  background: var(--color-superficie-elevada);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde);
+  transition: var(--transicion-rapida);
+}
+
+.filmography-card:hover {
+  border-color: var(--color-acento);
+  transform: translateY(-3px);
+}
+
+.filmography-open {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 0;
+  color: inherit;
+  text-align: left;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.filmography-open img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  background: var(--color-superficie-secundaria);
+  border-radius: var(--radio-borde-pequeno);
+}
+
+.filmography-open span {
+  display: -webkit-box;
+  overflow: hidden;
+  color: var(--color-texto);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.filmography-open small {
+  color: var(--color-texto-atenuado);
+  font-size: 11px;
+}
+
+/* BOTÓN GUARDAR / QUITAR PELÍCULA */
+
+.save-movie-button {
+  margin-top: auto;
+  padding: 8px 10px;
+  color: var(--color-acento);
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--color-acento-suave);
+  border: 1px solid var(--color-borde-hover);
+  border-radius: var(--radio-borde-pequeno);
+  cursor: pointer;
+  transition: var(--transicion-rapida);
+}
+
+.save-movie-button:hover {
+  color: var(--color-texto-sobre-acento);
+  background: var(--color-acento);
+}
+
+.save-movie-button.saved {
+  color: var(--color-texto);
+}
+
+.save-movie-button.saved:hover {
+  color: white;
+  background: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+.clear-button {
+  margin-left: auto;
+  flex-shrink: 0;
+  padding: 9px 14px;
+  color: var(--color-texto-secundario);
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--color-superficie-elevada);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
+  cursor: pointer;
+  transition: var(--transicion-rapida);
+}
+
+.clear-button:hover {
+  color: white;
+  background: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+/* PERSONAS GUARDADAS */
 
 .tag-list {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 10px;
+  margin-top: 24px;
+}
+
+.tag-list app-results-header,
+.tag-list app-empty-state {
+  flex: 0 0 100%;
+  width: 100%;
 }
 
 .person-tag {
@@ -344,32 +638,33 @@
   align-items: center;
   gap: 12px;
   padding: 9px 12px 9px 15px;
-  color: #e3d9fa;
+  color: var(--color-texto);
   font-size: 12px;
-  background: #8b5cf622;
-  border: 1px solid #8b5cf644;
+  background: var(--color-acento-suave);
+  border: 1px solid var(--color-borde-hover);
   border-radius: 30px;
 }
 
 .person-tag button {
   display: grid;
   place-items: center;
-  width: 20px;
-  height: 20px;
-  color: #d8c6ff;
-  font-size: 17px;
-  background: #ffffff15;
+  width: 21px;
+  height: 21px;
+  color: var(--color-texto-secundario);
+  font-size: 16px;
+  background: var(--color-superficie-elevada);
   border: 0;
-  border-radius: 50%;
+  border-radius: var(--radio-circular);
   cursor: pointer;
+  transition: var(--transicion-rapida);
 }
 
 .person-tag button:hover {
   color: white;
-  background: #ef4444;
+  background: var(--color-danger);
 }
 
-/* SAVE */
+/* GUARDAR PREFERENCIAS */
 
 .save-section {
   display: flex;
@@ -380,11 +675,22 @@
 }
 
 .saved-message {
-  color: #86efac;
+  color: var(--color-exito);
   font-size: 13px;
+  font-weight: 600;
 }
 
 /* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .person-results {
+    grid-template-columns: 1fr;
+  }
+
+  .filmography-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
 
 @media (max-width: 700px) {
   .profile-page {
@@ -415,19 +721,12 @@
     grid-template-columns: 1fr;
   }
 
-  .profile-tabs {
-    gap: 0;
-  }
-
-  .profile-tabs button {
-    flex: 1;
-    justify-content: center;
-    padding: 12px 7px;
-    font-size: 12px;
-  }
-
   .preference-card {
     padding: 19px;
+  }
+
+  .preference-heading {
+    flex-wrap: wrap;
   }
 
   .add-button {
@@ -439,11 +738,40 @@
     flex-direction: column;
   }
 
-  .save-button {
-    justify-content: center;
-  }
-
   .saved-message {
     text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .selected-person {
+    padding: 15px;
+  }
+
+  .selected-person-header img {
+    width: 62px;
+    height: 76px;
+  }
+
+  .filmography-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .filmography-card {
+    padding: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-message::before {
+    animation: none;
+  }
+
+  .person-result,
+  .filmography-card,
+  .add-button,
+  .save-movie-button,
+  .clear-button {
+    transition: none;
   }
 }

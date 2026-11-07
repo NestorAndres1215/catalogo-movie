@@ -6,8 +6,19 @@ import { Country, CountryMedia } from '../../../../core/models/country.interface
 
 import { CountryService } from '../../../../core/service/country.service';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
-import { FilterTab, FilterTabsComponent, FilterType } from '../../../../shared/components/filter-tabs/filter-tabs';
+import {
+  FilterTab,
+  FilterTabsComponent,
+  FilterType,
+} from '../../../../shared/components/filter-tabs/filter-tabs';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
+import { MediaCardComponent } from '../../../../shared/components/media-card/media-card';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import {
+  FilterOption,
+  SelectFilterComponent,
+} from '../../../../shared/components/select-filter/select-filter';
+import { ErrorStateComponent } from '../../../../shared/components/error-state/error-state';
 
 type CountryMediaType = 'movie' | 'tv';
 
@@ -16,7 +27,16 @@ type CountrySortOption = 'rating-desc' | 'rating-asc' | 'date-desc' | 'date-asc'
 @Component({
   selector: 'app-country-detail',
   standalone: true,
-  imports: [RouterLink, PageLoadingComponent, FilterTabsComponent, PaginationComponent],
+  imports: [
+    RouterLink,
+    PageLoadingComponent,
+    FilterTabsComponent,
+    PaginationComponent,
+    MediaCardComponent,
+    EmptyStateComponent,
+    SelectFilterComponent,
+    ErrorStateComponent
+],
   templateUrl: './country-detail.html',
   styleUrl: './country-detail.css',
 })
@@ -50,10 +70,10 @@ export class CountryDetailComponent implements OnInit {
   private countryCode = '';
 
   private requestVersion = 0;
-readonly mediaTabs: FilterTab[] = [
-  { label: 'Películas', value: 'movie' },
-  { label: 'Series', value: 'tv' }
-];
+  readonly mediaTabs: FilterTab[] = [
+    { label: 'Películas', value: 'movie' },
+    { label: 'Series', value: 'tv' },
+  ];
   // =========================================
   // ORDENAMIENTO DE PELÍCULAS Y SERIES
   // =========================================
@@ -227,29 +247,32 @@ readonly mediaTabs: FilterTab[] = [
   // CAMBIAR ENTRE PELÍCULAS Y SERIES
   // =========================================
 
-changeType(type: FilterType): void {
-  if (type !== 'movie' && type !== 'tv') {
-    return;
-  }
+  changeType(type: FilterType): void {
+    if (type !== 'movie' && type !== 'tv') {
+      return;
+    }
 
-  if (this.selectedType() === type || this.loading()) {
-    return;
-  }
+    if (this.selectedType() === type || this.loading()) {
+      return;
+    }
 
-  this.selectedType.set(type);
-  this.currentPage.set(1);
-  this.loadMedia();
-}
+    this.selectedType.set(type);
+    this.currentPage.set(1);
+    this.loadMedia();
+  }
 
   // =========================================
   // CAMBIAR ORDENAMIENTO
   // =========================================
 
-  onSortChange(event: Event): void {
-    const select = event.target as HTMLSelectElement;
+  readonly sortOptions: FilterOption[] = [
+    { label: 'Mejor valoración', value: 'rating-desc' },
+    { label: 'Peor valoración', value: 'rating-asc' },
+    { label: 'Más recientes', value: 'date-desc' },
+    { label: 'Más antiguas', value: 'date-asc' },
+  ];
 
-    const value = select.value;
-
+  onSortChange(value: string): void {
     if (
       value === 'rating-desc' ||
       value === 'rating-asc' ||

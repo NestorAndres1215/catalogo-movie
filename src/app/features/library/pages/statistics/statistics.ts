@@ -1,4 +1,3 @@
-
 import { Component, computed, inject, signal } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { forkJoin, of } from 'rxjs';
@@ -9,6 +8,8 @@ import { TmdbService } from '../../../../core/service/tmdb.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import { StatItem, StatsComponent } from '../../../../shared/components/stats/stats';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
 
 interface TmdbGenre {
   id: number;
@@ -54,12 +55,11 @@ interface ActorStatistic {
 @Component({
   selector: 'app-statistics',
   standalone: true,
-  imports: [DecimalPipe, PageHeaderComponent, PageLoadingComponent, EmptyStateComponent],
+  imports: [PageHeaderComponent, PageLoadingComponent, EmptyStateComponent, StatsComponent, ResultsHeaderComponent],
   templateUrl: './statistics.html',
   styleUrl: './statistics.css',
 })
 export class StatisticsComponent {
-
   private readonly watchlistService = inject(WatchlistService);
   private readonly tmdb = inject(TmdbService);
 
@@ -68,9 +68,7 @@ export class StatisticsComponent {
 
   readonly watchedMovies = signal<WatchedMovieStatistics[]>([]);
 
-  readonly totalMovies = computed(
-    () => this.watchedMovies().length
-  );
+  readonly totalMovies = computed(() => this.watchedMovies().length);
 
   readonly averageRating = computed(() => {
     const movies = this.watchedMovies();
@@ -79,18 +77,13 @@ export class StatisticsComponent {
       return 0;
     }
 
-    const total = movies.reduce(
-      (sum, movie) => sum + movie.personalRating,
-      0
-    );
+    const total = movies.reduce((sum, movie) => sum + movie.personalRating, 0);
 
     return total / movies.length;
   });
 
   readonly topFiveMovies = computed(() =>
-    [...this.watchedMovies()]
-      .sort((a, b) => b.personalRating - a.personalRating)
-      .slice(0, 5)
+    [...this.watchedMovies()].sort((a, b) => b.personalRating - a.personalRating).slice(0, 5),
   );
 
   readonly genreStatistics = computed<GenreStatistic[]>(() => {
@@ -106,17 +99,36 @@ export class StatisticsComponent {
           genres.set(genre.id, {
             id: genre.id,
             name: genre.name,
-            count: 1
+            count: 1,
           });
         }
       }
     }
 
-    return [...genres.values()].sort(
-      (a, b) => b.count - a.count
-    );
+    return [...genres.values()].sort((a, b) => b.count - a.count);
   });
-
+  readonly stats = computed<StatItem[]>(() => [
+    {
+      icon: 'fa-film',
+      value: this.totalMovies(),
+      label: 'Películas vistas',
+    },
+    {
+      icon: 'fa-star',
+      value: this.averageRating() > 0 ? this.averageRating().toFixed(1) : '—',
+      label: 'Promedio personal',
+    },
+    {
+      icon: 'fa-masks-theater',
+      value: this.genreStatistics().length,
+      label: 'Géneros diferentes',
+    },
+    {
+      icon: 'fa-users',
+      value: this.topFiveActors().length,
+      label: 'Actores destacados',
+    },
+  ]);
   readonly topFiveActors = computed<ActorStatistic[]>(() => {
     const actors = new Map<number, ActorStatistic>();
 
@@ -136,15 +148,13 @@ export class StatisticsComponent {
             name: actor.name,
             profilePath: actor.profile_path,
             count: 1,
-            movies: [movie.title]
+            movies: [movie.title],
           });
         }
       }
     }
 
-    return [...actors.values()]
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 5);
+    return [...actors.values()].sort((a, b) => b.count - a.count).slice(0, 5);
   });
 
   constructor() {
@@ -155,9 +165,9 @@ export class StatisticsComponent {
     this.loading.set(true);
     this.error.set(null);
 
-    const movies = this.watchlistService.watchlist().filter(
-      item => item.mediaType === 'movie' && item.status === 'watched'
-    );
+    const movies = this.watchlistService
+      .watchlist()
+      .filter((item) => item.mediaType === 'movie' && item.status === 'watched');
 
     if (movies.length === 0) {
       this.watchedMovies.set([]);
@@ -165,36 +175,31 @@ export class StatisticsComponent {
       return;
     }
 
-    const requests = movies.map(movie =>
-      this.tmdb.get<TmdbMovieDetails>(
-        `/movie/${movie.id}`,
-        { append_to_response: 'credits' }
-      ).pipe(
-        map(details => ({
+    const requests = movies.map((movie) =>
+      this.tmdb.get<TmdbMovieDetails>(`/movie/${movie.id}`, { append_to_response: 'credits' }).pipe(
+        map((details) => ({
           id: movie.id,
           title: movie.title,
           posterPath: movie.posterPath,
           personalRating: movie.personalRating ?? 0,
           genres: details.genres ?? [],
-          actors: details.credits?.cast ?? []
+          actors: details.credits?.cast ?? [],
         })),
-        catchError(() => of(null))
-      )
+        catchError(() => of(null)),
+      ),
     );
 
     forkJoin(requests).subscribe({
-      next: results => {
+      next: (results) => {
         this.watchedMovies.set(
-          results.filter(
-            (movie): movie is WatchedMovieStatistics => movie !== null
-          )
+          results.filter((movie): movie is WatchedMovieStatistics => movie !== null),
         );
         this.loading.set(false);
       },
       error: () => {
         this.error.set('No se pudieron cargar las estadísticas.');
         this.loading.set(false);
-      }
+      },
     });
   }
 

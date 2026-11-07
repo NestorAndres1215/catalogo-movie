@@ -12,11 +12,14 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { Footer } from '../../../../shared/components/footer/footer';
 import { ButtonComponent } from '../../../../shared/components/button/button';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
+import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
+import { StatItem, StatsComponent } from '../../../../shared/components/stats/stats';
 
 @Component({
   selector: 'app-streaming-rankings',
   standalone: true,
-  imports: [CommonModule, PageHeaderComponent, EmptyStateComponent, Footer, ButtonComponent],
+  imports: [CommonModule, PageHeaderComponent, EmptyStateComponent, Footer, ButtonComponent, ResultsHeaderComponent, PageLoadingComponent, StatsComponent],
   templateUrl: './streaming-rankings.html',
   styleUrl: './streaming-rankings.css',
 })
@@ -90,7 +93,25 @@ export class StreamingRankingsComponent implements OnInit {
         },
       });
   }
-
+getProviderStats(provider: StreamingRanking): StatItem[] {
+  return [
+    {
+      icon: 'fa-film',
+      value: provider.movieCount,
+      label: 'Películas analizadas',
+    },
+    {
+      icon: 'fa-tv',
+      value: provider.seriesCount,
+      label: 'Series analizadas',
+    },
+    {
+      icon: 'fa-layer-group',
+      value: provider.totalTitles,
+      label: 'Total de títulos',
+    },
+  ];
+}
   private loadProviderRanking(provider: StreamingProvider): Observable<StreamingRanking> {
     const movieRequests = Array.from({ length: this.pagesToLoad }, (_, index) =>
       this.streamingService.discoverMoviesByProvider(provider.provider_id, index + 1).pipe(

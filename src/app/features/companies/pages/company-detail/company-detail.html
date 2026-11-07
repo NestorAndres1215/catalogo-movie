@@ -12,15 +12,13 @@
   <!-- ERROR -->
 
   @if (!loading() && errorMessage()) {
-    <div class="message error">
-      <h2>Error</h2>
-
-      <p>{{ errorMessage() }}</p>
-
-      <a routerLink="/companies"> Volver a productoras </a>
-    </div>
+    <app-error-state
+      title="Error"
+      [description]="errorMessage()"
+      linkText="Volver a productoras"
+      linkRoute="/companies"
+    />
   }
-
   <!-- DETALLE -->
 
   @if (!loading() && company(); as companyData) {
@@ -61,48 +59,18 @@
       </div>
     </header>
 
-    <!-- INFORMACIÓN -->
-
-    <section class="information-section">
-      <h2>Información de la productora</h2>
-
-      <div class="information-grid">
-        <div class="information-card">
-          <span>País de origen</span>
-
-          <strong>
-            {{ companyData.origin_country || 'No disponible' }}
-          </strong>
-        </div>
-
-        <div class="information-card">
-          <span>Ubicación principal</span>
-
-          <strong>
-            {{ companyData.headquarters || 'No disponible' }}
-          </strong>
-        </div>
-
-        <div class="information-card">
-          <span>Empresa matriz</span>
-
-          <strong>
-            {{ companyData.parent_company?.name || 'No disponible' }}
-          </strong>
-        </div>
-
-        <div class="information-card">
-          <span>Identificador TMDB</span>
-
-          <strong>
-            {{ companyData.id }}
-          </strong>
-        </div>
-      </div>
-    </section>
-
-    <!-- DESCRIPCIÓN -->
-
+    @if (company(); as companyData) {
+      <section class="information-section">
+        <app-results-header title="Información de la productora" />
+        <app-stats [stats]="companyStats" />
+      </section>
+    }
+    @if (companyData.description) {
+      <section class="description-section">
+        <app-results-header title="Descripción" />
+        <p>{{ companyData.description }}</p>
+      </section>
+    }
     @if (companyData.description) {
       <section class="description-section">
         <h2>Descripción</h2>
@@ -116,45 +84,24 @@
     <!-- PELÍCULAS -->
 
     <section class="movies-section">
-      <div class="section-heading">
-        <div>
-          <span class="section-label"> FILMOGRAFÍA </span>
-
-          <h2>Películas de {{ companyData.name }}</h2>
-        </div>
-
-        <span class="movie-count"> {{ movies().length }} películas </span>
-      </div>
+    
+        <app-results-header
+          title="Películas de {{ companyData.name }}"
+          description="Filmografía de la productora."
+          [totalResults]="movies().length"
+        />
+    
 
       @if (movies().length > 0) {
-        <div class="movies-grid">
-          @for (movie of movies(); track movie.id) {
-            <a class="movie-card" [routerLink]="['/movies', movie.id]">
-              <div class="movie-poster">
-                @if (movie.poster_path) {
-                  <img [src]="getPoster(movie.poster_path)" [alt]="movie.title" />
-                } @else {
-                  <div class="no-poster">Sin imagen</div>
-                }
-              </div>
-
-              <div class="movie-info">
-                <h3>
-                  {{ movie.title }}
-                </h3>
-
-                <span>
-                  {{ formatDate(movie.release_date) }}
-                </span>
-
-                <strong class="rating">
-                  <i class="fas fa-star"></i>
-                  {{ movie.vote_average.toFixed(1) }}
-                </strong>
-              </div>
-            </a>
-          }
-        </div>
+   <div class="movies-grid">
+  @for (movie of movies(); track movie.id) {
+    <app-media-card
+      [media]="movie"
+      mediaType="movie"
+      variant="description"
+    />
+  }
+</div>
       } @else {
         <app-empty-state
           icon="fa-film"

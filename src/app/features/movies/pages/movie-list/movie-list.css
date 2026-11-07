@@ -1,54 +1,7 @@
-
-
-
 .movies-page {
   padding: 35px 40px;
   max-width: 1600px;
   margin: auto;
-}
-
-
-
-.section-heading p {
-  color: #858d9d;
-  font-size: 14px;
-}
-
-.search-container {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: #191d28;
-  border: 1px solid #292e3b;
-  border-radius: 10px;
-  padding: 13px 17px;
-  margin-bottom: 20px;
-}
-
-.search-icon {
-  color: #e5b94b;
-  font-size: 24px;
-}
-
-.search-container input {
-  flex: 1;
-  min-width: 0;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: white;
-  font-size: 14px;
-}
-
-.search-container input::placeholder {
-  color: #858d9d;
-}
-
-.clear-search {
-  border: none;
-  background: transparent;
-  color: #e5b94b;
-  cursor: pointer;
 }
 
 .section-heading {
@@ -70,83 +23,6 @@
   gap: 25px 20px;
 }
 
-.movie-card {
-  display: block;
-  min-width: 0;
-  color: white;
-  text-decoration: none;
-  cursor: pointer;
-  transition: transform 0.25s;
-}
-
-.movie-card:hover {
-  transform: translateY(-6px);
-}
-
-.poster-container {
-  position: relative;
-  height: 300px;
-  overflow: hidden;
-  border-radius: 10px;
-  background: #252b38;
-}
-
-.poster-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.35s;
-}
-
-.movie-card:hover img {
-  transform: scale(1.06);
-}
-
-.rating {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  padding: 6px 9px;
-  background: rgba(17, 20, 29, 0.9);
-  border-radius: 5px;
-  color: #e5b94b;
-  font-size: 12px;
-  font-weight: bold;
-}
-
-.no-poster {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #858d9d;
-}
-
-.no-poster span {
-  font-size: 35px;
-}
-
-.movie-info {
-  padding: 12px 3px;
-}
-
-.movie-info h3 {
-  margin: 0 0 9px;
-  font-size: 14px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.movie-meta {
-  display: flex;
-  justify-content: space-between;
-  color: #858d9d;
-  font-size: 11px;
-}
-
-.loading-state,
 .error-state {
   padding: 55px 20px;
   text-align: center;
@@ -164,7 +40,6 @@
   border-radius: 6px;
   cursor: pointer;
 }
-
 
 @media (max-width: 1200px) {
   .movie-grid {

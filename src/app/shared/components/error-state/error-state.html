@@ -1,0 +1,20 @@
+<div class="error-state">
+  <div class="error-content">
+    <div class="error-icon">
+      <i class="fas" [class]="icon()"></i>
+    </div>
+
+    <h2>{{ title() }}</h2>
+
+    <p>{{ description() }}</p>
+
+    <div class="error-actions">
+      <app-button
+        [text]="linkText()"
+        icon="fa-arrow-left"
+        [routerLink]="linkRoute()"
+        variant="secondary"
+      />
+    </div>
+  </div>
+</div>

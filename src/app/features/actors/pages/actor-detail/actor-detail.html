@@ -9,9 +9,12 @@
 
 @if (errorMessage() && !loading()) {
   <div class="detail-error">
-    <h2>No se pudo cargar el perfil</h2>
-    <p>{{ errorMessage() }}</p>
-    <a routerLink="/actors">Volver a actores</a>
+    <app-error-state
+      title="No se pudo cargar el perfil"
+      [description]="errorMessage()"
+      linkText="Volver a actores"
+      linkRoute="/actors"
+    />
   </div>
 }
 

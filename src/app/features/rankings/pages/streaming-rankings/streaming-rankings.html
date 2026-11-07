@@ -20,6 +20,14 @@
       (clicked)="loadRankings()"
     />
   </div>
+  @if (loading()) {
+    <app-page-loading
+      title="Cargando plataformas de streaming"
+      description="Analizando las plataformas disponibles en Perú."
+      detail="Calculando la popularidad de películas y series..."
+      icon="fa-tv"
+    />
+  }
   @if (error()) {
     <div class="error-message">
       {{ error() }}
@@ -28,12 +36,11 @@
 
   @if (!loading() && rankings().length > 0) {
     <section class="ranking-section">
-      <div class="section-heading">
-        <div>
-          <h2>Las 10 plataformas más populares</h2>
-          <p>Selecciona una plataforma para ver sus mejores títulos.</p>
-        </div>
-      </div>
+      <app-results-header
+        title="Las 10 plataformas más populares"
+        description="Selecciona una plataforma para ver sus mejores títulos."
+        countLabel="10 plataformas de streaming"
+      />
 
       <div class="provider-grid">
         @for (provider of rankings(); track provider.provider_id; let i = $index) {
@@ -91,28 +98,14 @@
         <app-button text="Cerrar" icon="fa-xmark" variant="secondary" (clicked)="closeDetails()" />
       </div>
 
-      <div class="catalog-summary">
-        <div>
-          <strong>{{ provider.movieCount }}</strong>
-          <span>Películas analizadas</span>
-        </div>
-
-        <div>
-          <strong>{{ provider.seriesCount }}</strong>
-          <span>Series analizadas</span>
-        </div>
-
-        <div>
-          <strong>{{ provider.totalTitles }}</strong>
-          <span>Total de títulos</span>
-        </div>
-      </div>
+      <app-stats [stats]="getProviderStats(provider)" />
 
       <div class="media-section">
-        <div class="media-heading">
-          <h3>Top 10 películas</h3>
-          <span>Ordenadas por popularidad</span>
-        </div>
+        <app-results-header
+          title="Top 10 películas"
+          description="Películas ordenadas por popularidad."
+          countLabel="10 películas"
+        />
 
         @if (provider.topMovies.length > 0) {
           <div class="media-grid">
@@ -146,10 +139,11 @@
       </div>
 
       <div class="media-section">
-        <div class="media-heading">
-          <h3>Top 10 series</h3>
-          <span>Ordenadas por popularidad</span>
-        </div>
+        <app-results-header
+          title="Top 10 series"
+          description="Series ordenadas por popularidad."
+          countLabel="10 series"
+        />
 
         @if (provider.topSeries.length > 0) {
           <div class="media-grid">

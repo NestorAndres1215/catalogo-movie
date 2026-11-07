@@ -8,6 +8,7 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 import { SearchComponent } from '../../../../shared/components/search/search';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
 
 @Component({
   selector: 'app-country-list',
@@ -18,7 +19,8 @@ import { SearchComponent } from '../../../../shared/components/search/search';
     PageLoadingComponent,
     PaginationComponent,
     SearchComponent,
-  ],
+    ResultsHeaderComponent
+],
   templateUrl: './country-list.html',
   styleUrl: './country-list.css',
 })

@@ -25,10 +25,7 @@
   <!-- MEJORES SERIES -->
   @if (activeRanking() === 'best') {
     <section class="ranking-section">
-      <div class="ranking-title">
-        <h2>Top 10 mejores series</h2>
-        <span>Más valoradas</span>
-      </div>
+      <app-results-header title="Top 10 mejores series" description="Más valoradas" />
 
       @if (loadingBest()) {
         <div class="loading-message">Cargando mejores series...</div>
@@ -87,10 +84,7 @@
   <!-- PEORES SERIES -->
   @if (activeRanking() === 'worst') {
     <section class="ranking-section">
-      <div class="ranking-title">
-        <h2>Top 10 peores series</h2>
-        <span>Menos valoradas</span>
-      </div>
+      <app-results-header title="Top 10 peores series" description="Menos valoradas" />
 
       @if (loadingWorst()) {
         <div class="loading-message">Cargando peores series...</div>
@@ -149,26 +143,17 @@
   <!-- SERIES POR GÉNERO -->
   @if (activeRanking() === 'genre') {
     <section class="ranking-section">
-      <div class="ranking-title">
-        <h2>Top 10 series por género</h2>
-        <span>Mejor valoradas</span>
-      </div>
+      <div class="genre-header">
+        <app-results-header title="Top 10 series por género" description="Mejor valoradas" />
 
-      <!-- FILTRO -->
-      <div class="genre-filter">
-        <label for="genreSelect"> Selecciona un género </label>
-
-        <select
+        <app-select-filter
           id="genreSelect"
-          [value]="selectedGenre()"
-          (change)="filterByGenre(+$any($event.target).value)"
-        >
-          @for (genre of genres(); track genre.id) {
-            <option [value]="genre.id">
-              {{ genre.name }}
-            </option>
-          }
-        </select>
+          label="Selecciona un género"
+          placeholder="Todos los géneros"
+          [options]="genreOptions()"
+          [selectedValue]="selectedGenre()"
+          (selectionChange)="filterByGenre(+$event)"
+        />
       </div>
 
       @if (loadingGenre()) {

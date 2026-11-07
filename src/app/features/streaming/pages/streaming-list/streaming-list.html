@@ -110,40 +110,16 @@
     }
 
     @if (!loadingContents() && contents().length > 0) {
-      <div class="content-grid">
-        @for (media of contents(); track media.id) {
-          <article class="content-card">
-            <div class="poster-container">
-              @if (media.poster_path) {
-                <img
-                  [src]="getPoster(media.poster_path)"
-                  [alt]="getMediaTitle(media)"
-                  loading="lazy"
-                />
-              } @else {
-                <div class="poster-placeholder">Sin imagen</div>
-              }
-
-              <span class="rating">
-                <span>★</span>
-                {{ media.vote_average | number: '1.1-1' }}
-              </span>
-            </div>
-
-            <div class="content-info">
-              <h3>{{ getMediaTitle(media) }}</h3>
-
-              <span class="release-date">
-                {{ getReleaseDate(media) }}
-              </span>
-
-              <p>
-                {{ media.overview || 'Sin descripción disponible.' }}
-              </p>
-            </div>
-          </article>
-        }
-      </div>
+<div class="content-grid">
+  @for (media of contents(); track media.id) {
+    <app-media-card
+      [media]="media"
+      [mediaType]="mediaType()"
+      variant="description"
+      [isUpcoming]="isUpcoming(media.release_date || media.first_air_date)"
+    />
+  }
+</div>
     }
   </section>
 </section>

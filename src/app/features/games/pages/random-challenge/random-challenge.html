@@ -5,15 +5,15 @@
     description="Elige tu favorito y descubre si puedes vencer al azar."
   />
   <!-- Selección de modalidad -->
-<app-category-selector
-  title="Selecciona tu desafío"
-  [categories]="gameModes"
-  [selected]="gameType()"
-  (selectionChange)="changeGameType($event)"
-/>
+  <app-category-selector
+    title="Selecciona tu desafío"
+    [categories]="gameModes"
+    [selected]="gameType()"
+    (selectionChange)="changeGameType($event)"
+  />
 
   <section class="search-section">
-    <h2>{{ getGameTitle() }}</h2>
+    <app-results-header [title]="getGameTitle()" />
 
     <app-search
       class="search-form"
@@ -30,7 +30,7 @@
     <!-- Resultados de búsqueda -->
     @if (searchResults().length > 0) {
       <div class="search-results">
-        <h3>Selecciona tu elección</h3>
+        <app-results-header title="Selecciona tu elección" />
 
         <div class="results-grid">
           @for (item of searchResults(); track item.id) {

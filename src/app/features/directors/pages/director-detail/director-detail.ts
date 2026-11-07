@@ -11,6 +11,8 @@ import {
 import { PersonService } from '../../../../core/service/person.service';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
+import { ErrorStateComponent } from '../../../../shared/components/error-state/error-state';
 
 @Component({
   selector: 'app-director-detail',
@@ -18,7 +20,9 @@ import { EmptyStateComponent } from '../../../../shared/components/empty-state/e
   imports: [
     RouterLink,
     PageLoadingComponent,
-    EmptyStateComponent
+    EmptyStateComponent,
+    ResultsHeaderComponent,
+    ErrorStateComponent
 ],
   templateUrl: './director-detail.html',
   styleUrl: './director-detail.css'

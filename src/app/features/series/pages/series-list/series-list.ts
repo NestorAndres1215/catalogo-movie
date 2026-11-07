@@ -12,18 +12,22 @@ import { PageLoadingComponent } from '../../../../shared/components/page-loading
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 import { SearchComponent } from '../../../../shared/components/search/search';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
+import { MediaCardComponent } from '../../../../shared/components/media-card/media-card';
 
 @Component({
   selector: 'app-series-list',
   standalone: true,
   imports: [
-    RouterLink,
+    
     SeriesFiltersComponent,
     PageHeaderComponent,
     PageLoadingComponent,
     EmptyStateComponent,
     PaginationComponent,
-    SearchComponent
+    SearchComponent,
+    ResultsHeaderComponent,
+    MediaCardComponent
 ],
   templateUrl: './series-list.html',
   styleUrl: './series-list.css'

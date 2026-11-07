@@ -13,15 +13,15 @@
 
   <app-series-filters [genres]="genres()" (filtersChange)="onFiltersChange($event)" />
 
-  <div class="section-heading">
-    <div>
-      <h2>
-        {{ searchQuery() ? 'Resultados de búsqueda' : 'Catálogo de series' }}
-      </h2>
-
-      <p>Página {{ currentPage() }} de {{ totalPages() }}</p>
-    </div>
-  </div>
+  <app-results-header
+    [title]="searchQuery() ? 'Resultados de búsqueda' : 'Catálogo de series'"
+    [description]="
+      searchQuery()
+        ? 'Series que coinciden con tu búsqueda.'
+        : 'Explora el catálogo de series disponibles.'
+    "
+    [countLabel]="'Página ' + currentPage() + ' de ' + totalPages()"
+  />
 
   @if (loading()) {
     <app-page-loading
@@ -52,29 +52,7 @@
   @if (!loading() && series().length > 0) {
     <div class="series-grid">
       @for (item of series(); track item.id) {
-        <a class="series-card" [routerLink]="['/series', item.id]">
-          <div class="poster-container">
-            @if (item.poster_path) {
-              <img [src]="getPoster(item.poster_path)" [alt]="item.name" loading="lazy" />
-            } @else {
-              <div class="no-poster">
-                <span>📺</span>
-                <p>Sin póster</p>
-              </div>
-            }
-
-            <span class="rating"> ★ {{ item.vote_average.toFixed(1) }} </span>
-          </div>
-
-          <div class="series-info">
-            <h3>{{ item.name }}</h3>
-
-            <div class="series-meta">
-              <span>{{ getYear(item.first_air_date) }}</span>
-              <span>TMDB</span>
-            </div>
-          </div>
-        </a>
+        <app-media-card [media]="item" mediaType="tv" />
       }
     </div>
 

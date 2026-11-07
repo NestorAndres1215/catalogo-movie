@@ -15,18 +15,14 @@
     />
   </div>
 
-  @if (!loading() && !errorMessage()) {
-    <div class="results-header">
-      <div>
-        <h2>Explorar países</h2>
-
-        <p>{{ filteredCountries().length }} países encontrados</p>
-      </div>
-
-      <span class="country-count"> Página {{ currentPage() }} de {{ totalPages() }} </span>
-    </div>
-  }
-
+@if (!loading() && !errorMessage()) {
+  <app-results-header
+    title="Explorar países"
+    [description]="filteredCountries().length + ' países encontrados'"
+    [totalResults]="currentPage()"
+    [countLabel]="'Página ' + currentPage() + ' de ' + totalPages()"
+  />
+}
   @if (loading()) {
     <app-page-loading
       title="Cargando países"

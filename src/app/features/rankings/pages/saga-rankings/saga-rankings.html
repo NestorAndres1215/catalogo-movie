@@ -25,15 +25,11 @@
       <h2>Buscar una saga</h2>
 
       <div class="search-box">
-        <input
-          type="text"
+        <app-search
+          [value]="searchQuery()"
           placeholder="Ejemplo: Harry Potter, Star Wars..."
-          [ngModel]="searchQuery()"
-          (ngModelChange)="searchQuery.set($event)"
-          (keyup.enter)="searchSagas()"
+          (valueChange)="searchQuery.set($event); searchSagas()"
         />
-
-        <button type="button" (click)="searchSagas()" [disabled]="loadingSearch()">Buscar</button>
       </div>
 
       @if (loadingSearch()) {
@@ -71,26 +67,19 @@
     </section>
 
     <section class="ranking-section">
-      @if (activeRanking() === 'best') {
-        <div class="ranking-title">
-          <div>
-            <h2>Top 10 sagas más populares</h2>
-            <p>Mayor popularidad acumulada de sus películas.</p>
-          </div>
-        </div>
-      } @else {
-        <div class="ranking-title">
-          <div>
-            <h2>Top 10 sagas menos populares</h2>
-            <p>Menor popularidad acumulada de sus películas.</p>
-          </div>
-        </div>
-      }
-
+      <app-results-header
+        [title]="
+          activeRanking() === 'best' ? 'Top 10 sagas más populares' : 'Top 10 sagas menos populares'
+        "
+        [description]="
+          activeRanking() === 'best'
+            ? 'Mayor popularidad acumulada de sus películas.'
+            : 'Menor popularidad acumulada de sus películas.'
+        "
+      />
       @if (loadingRankings()) {
-        <p class="loading-message">Calculando popularidad de las sagas...</p>
+        <app-page-loading title="Calculando popularidad de las sagas..." />
       }
-
       @if (error()) {
         <p class="error-message">{{ error() }}</p>
       }

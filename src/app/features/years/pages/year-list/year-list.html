@@ -65,50 +65,18 @@
     @if (media().length > 0) {
       <div class="media-grid">
         @for (item of media(); track item.id) {
-          <a class="media-card" [routerLink]="getMediaRoute(item)">
-            <div class="poster-container">
-              @if (item.poster_path) {
-                <img
-                  [src]="getImageUrl(item.poster_path)"
-                  [alt]="getMediaTitle(item)"
-                  loading="lazy"
-                />
-              } @else {
-                <div class="no-poster">
-                  <span>Sin imagen</span>
-                </div>
-              }
-
-              <span class="rating"> ★ {{ item.vote_average | number: '1.1-1' }} </span>
-
-              <div class="card-overlay">
-                <span>Ver detalles</span>
-              </div>
-            </div>
-
-            <div class="media-info">
-              <h3>{{ getMediaTitle(item) }}</h3>
-
-              <span class="release-date">
-                {{ getMediaDate(item) || 'Fecha no disponible' }}
-              </span>
-
-              <p>
-                {{ item.overview || 'No hay descripción disponible.' }}
-              </p>
-            </div>
-          </a>
+          <app-media-card [media]="item" [mediaType]="mediaType()" variant="description" />
         }
       </div>
 
-     @if (totalPages() > 1) {
-  <app-pagination
-    [currentPage]="currentPage()"
-    [totalPages]="totalPages()"
-    [loading]="loading()"
-    (pageChange)="changePage($event)"
-  />
-}
+      @if (totalPages() > 1) {
+        <app-pagination
+          [currentPage]="currentPage()"
+          [totalPages]="totalPages()"
+          [loading]="loading()"
+          (pageChange)="changePage($event)"
+        />
+      }
     } @else {
       <app-empty-state
         icon="fa-calendar-xmark"

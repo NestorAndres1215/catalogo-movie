@@ -14,14 +14,16 @@
 
     <app-actor-filters [filters]="filters()" (filtersChange)="onFiltersChange($event)" />
   </div>
-  <div class="section-heading">
-    <div>
-      <h2>
-        {{ searchQuery() ? 'Resultados de búsqueda' : 'Personas populares' }}
-      </h2>
-      <p>Página {{ currentPage() }} de {{ totalPages() }}</p>
-    </div>
-  </div>
+  <app-results-header
+    [title]="searchQuery() ? 'Resultados de búsqueda' : 'Personas populares'"
+    [description]="
+      searchQuery()
+        ? 'Personas que coinciden con tu búsqueda.'
+        : 'Descubre las personas más populares del cine y la televisión.'
+    "
+    [totalResults]="currentPage()"
+    [countLabel]="'Página ' + currentPage() + ' de ' + totalPages()"
+  />
 
   @if (loading()) {
     <app-page-loading
@@ -52,32 +54,7 @@
   @if (!loading() && actors().length > 0) {
     <div class="actors-grid">
       @for (actor of actors(); track actor.id) {
-        <a class="actor-card" [routerLink]="['/actors', actor.id]">
-          <div class="profile-container">
-            @if (actor.profile_path) {
-              <img [src]="getProfile(actor.profile_path)" [alt]="actor.name" loading="lazy" />
-            } @else {
-              <div class="no-profile">
-                <span>👤</span>
-                <p>Sin fotografía</p>
-              </div>
-            }
-
-            <span class="popularity"> ★ {{ actor.popularity.toFixed(1) }} </span>
-          </div>
-
-          <div class="actor-info">
-            <h3>{{ actor.name }}</h3>
-
-            <p class="department">
-              {{ getDepartment(actor.known_for_department) }}
-            </p>
-
-            <p class="known-for">
-              {{ getKnownFor(actor) }}
-            </p>
-          </div>
-        </a>
+        <app-actor-card [actor]="actor" [profileUrl]="getProfile(actor.profile_path)" />
       }
     </div>
 

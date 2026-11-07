@@ -4,22 +4,6 @@
   margin: auto;
 }
 
-.reload-button,
-.search-box button {
-  background: #e50914;
-  border: none;
-  border-radius: 6px;
-  padding: 12px 18px;
-  color: #ffffff;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.reload-button:disabled,
-.search-box button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
 
 .ranking-tabs {
   display: flex;

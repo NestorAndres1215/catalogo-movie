@@ -6,34 +6,29 @@
   />
 
   <!-- Selector de rankings -->
-<div class="ranking-toolbar">
-  <section class="ranking-tabs">
-    <app-filter-tabs
-      [tabs]="rankingTabs"
-      [selected]="activeRanking()"
-      (selectionChange)="changeRanking($event)"
-    />
-  </section>
+  <div class="ranking-toolbar">
+    <section class="ranking-tabs">
+      <app-filter-tabs
+        [tabs]="rankingTabs"
+        [selected]="activeRanking()"
+        (selectionChange)="changeRanking($event)"
+      />
+    </section>
 
-  <app-button
-    text="Actualizar"
-    icon="fa-rotate"
-    variant="secondary"
-    (clicked)="reloadRanking()"
-  />
-</div>
+    <app-button
+      text="Actualizar"
+      icon="fa-rotate"
+      variant="secondary"
+      (clicked)="reloadRanking()"
+    />
+  </div>
   <!-- MEJORES PELÍCULAS -->
   @if (activeRanking() === 'best') {
     <section class="ranking-section">
-      <div class="section-heading">
-        <div>
-          <span class="section-label">RANKING TMDB</span>
-          <h2>🏆 Las 10 mejores películas</h2>
-          <p>Ordenadas por puntuación promedio.</p>
-        </div>
-
-       
-      </div>
+      <app-results-header
+        title="Las 10 mejores películas"
+        description="Ordenadas por puntuación promedio."
+      />
 
       @if (loadingBest()) {
         <app-page-loading
@@ -95,13 +90,10 @@
   <!-- PEORES PELÍCULAS -->
   @if (activeRanking() === 'worst') {
     <section class="ranking-section">
-      <div class="section-heading">
-        <div>
-          <span class="section-label">RANKING TMDB</span>
-          <h2>💀 Las 10 peores películas</h2>
-          <p>Ordenadas de menor a mayor puntuación.</p>
-        </div>
-      </div>
+      <app-results-header
+        title="Las 10 peores películas"
+        description="Ordenadas de menor a mayor puntuación."
+      />
 
       @if (loadingWorst()) {
         <app-page-loading

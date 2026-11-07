@@ -8,6 +8,7 @@ import { Movie, MovieVideoResponse } from '../../../../core/models/movie.interfa
 import { MovieCredits } from '../../../../core/models/movie-credits.interface';
 
 import { MovieService } from '../../../../core/service/movie.service';
+import { ErrorStateComponent } from '../../../../shared/components/error-state/error-state';
 
 interface MovieResult {
   movie: Movie | null;
@@ -17,7 +18,7 @@ interface MovieResult {
 @Component({
   selector: 'app-movie-detail',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, ErrorStateComponent],
   templateUrl: './movie-detail.html',
   styleUrl: './movie-detail.css',
 })

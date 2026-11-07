@@ -23,15 +23,11 @@
   </section>
 
   <section class="movies-section">
-    <div class="section-heading">
-      <div>
-        <h2>Década de {{ selectedDecade() }}–{{ selectedDecade() + 9 }}</h2>
-        <p>Películas ordenadas por popularidad</p>
-      </div>
-
-      <span class="movie-count"> {{ movies().length }} películas </span>
-    </div>
-
+    <app-results-header
+      [title]="'Década de ' + selectedDecade() + '–' + (selectedDecade() + 9)"
+      description="Películas ordenadas por popularidad."
+      [countLabel]="movies().length + ' películas'"
+    />
     @if (loading()) {
       <app-page-loading
         title="Cargando películas"
@@ -49,33 +45,15 @@
     }
 
     @if (!loading() && !errorMessage() && movies().length > 0) {
-      <div class="movies-grid">
-        @for (movie of movies(); track movie.id) {
-          <article class="movie-card">
-            <div class="poster-container">
-              @if (movie.poster_path) {
-                <img [src]="getImageUrl(movie.poster_path)" [alt]="movie.title" loading="lazy" />
-              } @else {
-                <div class="no-poster">Sin imagen disponible</div>
-              }
-
-              <span class="rating"> ★ {{ movie.vote_average | number: '1.1-1' }} </span>
-            </div>
-
-            <div class="movie-info">
-              <h3>{{ movie.title }}</h3>
-
-              <span class="release-date">
-                {{ movie.release_date | date: 'yyyy' }}
-              </span>
-
-              <p>
-                {{ movie.overview || 'Sin descripción disponible.' }}
-              </p>
-            </div>
-          </article>
-        }
-      </div>
+     <div class="movies-grid">
+  @for (movie of movies(); track movie.id) {
+    <app-media-card
+      [media]="movie"
+      mediaType="movie"
+      variant="description"
+    />
+  }
+</div>
 
       <app-pagination
         [currentPage]="page()"

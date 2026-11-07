@@ -1,25 +1,20 @@
-import {
-  Component,
-  OnInit,
-  inject,
-  signal
-} from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { forkJoin } from 'rxjs';
 
-import {
-  CompanyDetails
-} from '../../../../core/models/company.interface';
+import { CompanyDetails } from '../../../../core/models/company.interface';
 
-import {
-  CompanyMovie
-} from '../../../../core/models/company-movie.interface';
+import { CompanyMovie } from '../../../../core/models/company-movie.interface';
 
 import { CompanyService } from '../../../../core/service/company.service';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import { ErrorStateComponent } from '../../../../shared/components/error-state/error-state';
+import { StatItem, StatsComponent } from '../../../../shared/components/stats/stats';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
+import { MediaCardComponent } from '../../../../shared/components/media-card/media-card';
 
 @Component({
   selector: 'app-company-detail',
@@ -27,13 +22,16 @@ import { EmptyStateComponent } from '../../../../shared/components/empty-state/e
   imports: [
     RouterLink,
     PageLoadingComponent,
-    EmptyStateComponent
+    EmptyStateComponent,
+    ErrorStateComponent,
+    StatsComponent,
+    ResultsHeaderComponent,
+    MediaCardComponent
 ],
   templateUrl: './company-detail.html',
-  styleUrl: './company-detail.css'
+  styleUrl: './company-detail.css',
 })
 export class CompanyDetailComponent implements OnInit {
-
   private readonly route = inject(ActivatedRoute);
 
   private readonly companyService = inject(CompanyService);
@@ -51,16 +49,11 @@ export class CompanyDetailComponent implements OnInit {
   errorMessage = signal<string>('');
 
   ngOnInit(): void {
-
-    this.route.paramMap.subscribe(params => {
-
+    this.route.paramMap.subscribe((params) => {
       const id = Number(params.get('id'));
 
       if (!id || Number.isNaN(id)) {
-
-        this.errorMessage.set(
-          'El identificador de la productora no es válido.'
-        );
+        this.errorMessage.set('El identificador de la productora no es válido.');
 
         this.loading.set(false);
 
@@ -68,7 +61,6 @@ export class CompanyDetailComponent implements OnInit {
       }
 
       this.loadCompany(id);
-
     });
   }
 
@@ -77,7 +69,6 @@ export class CompanyDetailComponent implements OnInit {
   // =========================================
 
   loadCompany(id: number): void {
-
     this.loading.set(true);
 
     this.errorMessage.set('');
@@ -88,11 +79,9 @@ export class CompanyDetailComponent implements OnInit {
 
     forkJoin({
       company: this.companyService.getCompanyDetails(id),
-      movies: this.companyService.getCompanyMovies(id, 1)
+      movies: this.companyService.getCompanyMovies(id, 1),
     }).subscribe({
-
-      next: response => {
-
+      next: (response) => {
         this.company.set(response.company);
 
         this.movies.set(response.movies.results);
@@ -100,33 +89,52 @@ export class CompanyDetailComponent implements OnInit {
         this.loading.set(false);
       },
 
-      error: error => {
+      error: (error) => {
+        console.error('Error cargando productora:', error);
 
-        console.error(
-          'Error cargando productora:',
-          error
-        );
-
-        this.errorMessage.set(
-          'No se pudo cargar la información de la productora.'
-        );
+        this.errorMessage.set('No se pudo cargar la información de la productora.');
 
         this.loading.set(false);
-      }
-
+      },
     });
   }
 
+  get companyStats(): StatItem[] {
+    const company = this.company();
+
+    if (!company) {
+      return [];
+    }
+
+    return [
+      {
+        icon: 'fa-flag',
+        value: company.origin_country || 'No disponible',
+        label: 'País de origen',
+      },
+      {
+        icon: 'fa-location-dot',
+        value: company.headquarters || 'No disponible',
+        label: 'Ubicación principal',
+      },
+      {
+        icon: 'fa-building',
+        value: company.parent_company?.name || 'No disponible',
+        label: 'Empresa matriz',
+      },
+      {
+        icon: 'fa-fingerprint',
+        value: company.id,
+        label: 'Identificador TMDB',
+      },
+    ];
+  }
   // =========================================
   // LOGOTIPO
   // =========================================
 
   getLogo(path: string | null): string {
-
-    return this.companyService.getLogoUrl(
-      path,
-      'w500'
-    );
+    return this.companyService.getLogoUrl(path, 'w500');
   }
 
   // =========================================
@@ -134,11 +142,7 @@ export class CompanyDetailComponent implements OnInit {
   // =========================================
 
   getPoster(path: string | null): string {
-
-    return this.companyService.getMoviePoster(
-      path,
-      'w500'
-    );
+    return this.companyService.getMoviePoster(path, 'w500');
   }
 
   // =========================================
@@ -146,7 +150,6 @@ export class CompanyDetailComponent implements OnInit {
   // =========================================
 
   formatDate(date: string): string {
-
     if (!date) {
       return 'Fecha no disponible';
     }
@@ -160,8 +163,7 @@ export class CompanyDetailComponent implements OnInit {
     return parsedDate.toLocaleDateString('es-ES', {
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
     });
   }
-
 }

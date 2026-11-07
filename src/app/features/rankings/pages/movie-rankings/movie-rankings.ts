@@ -5,6 +5,7 @@ import { PageLoadingComponent } from '../../../../shared/components/page-loading
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { FilterTab, FilterTabsComponent, FilterType } from '../../../../shared/components/filter-tabs/filter-tabs';
 import { ButtonComponent } from '../../../../shared/components/button/button';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
 
 
 
@@ -13,7 +14,7 @@ import { ButtonComponent } from '../../../../shared/components/button/button';
   standalone: true,
   templateUrl: './movie-rankings.html',
   styleUrl: './movie-rankings.css',
-  imports: [PageHeaderComponent, PageLoadingComponent, EmptyStateComponent, FilterTabsComponent, ButtonComponent]
+  imports: [PageHeaderComponent, PageLoadingComponent, EmptyStateComponent, FilterTabsComponent, ButtonComponent, ResultsHeaderComponent]
 })
 export class MovieRankingsComponent implements OnInit {
 

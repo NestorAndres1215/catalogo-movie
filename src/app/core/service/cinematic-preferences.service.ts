@@ -3,7 +3,6 @@ import { CinematicPreferences } from '../models/cinematic-preferences.model';
 
 @Service()
 export class CinematicPreferencesService {
-
   private getStorageKey(userId: string): string {
     return `cineverse_preferences_${userId}`;
   }
@@ -14,32 +13,29 @@ export class CinematicPreferencesService {
       favoriteGenres: [],
       favoriteActors: [],
       favoriteDirectors: [],
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
 
-    const saved = localStorage.getItem(this.getStorageKey(userId));
-
-    if (!saved) {
-      return defaultPreferences;
-    }
-
     try {
-      const parsed: unknown = JSON.parse(saved);
+      const saved = localStorage.getItem(this.getStorageKey(userId));
 
-      if (
-        typeof parsed !== 'object' ||
-        parsed === null ||
-        !('userId' in parsed) ||
-        parsed.userId !== userId
-      ) {
+      if (!saved) {
+        return defaultPreferences;
+      }
+
+      const parsed = JSON.parse(saved) as Partial<CinematicPreferences> | null;
+
+      if (typeof parsed !== 'object' || parsed === null || parsed.userId !== userId) {
         return defaultPreferences;
       }
 
       return {
         ...defaultPreferences,
-        ...parsed
-      } as CinematicPreferences;
-
+        ...parsed,
+        favoriteGenres: Array.isArray(parsed.favoriteGenres) ? parsed.favoriteGenres : [],
+        favoriteActors: Array.isArray(parsed.favoriteActors) ? parsed.favoriteActors : [],
+        favoriteDirectors: Array.isArray(parsed.favoriteDirectors) ? parsed.favoriteDirectors : [],
+      };
     } catch {
       return defaultPreferences;
     }
@@ -48,12 +44,21 @@ export class CinematicPreferencesService {
   savePreferences(preferences: CinematicPreferences): void {
     const updated: CinematicPreferences = {
       ...preferences,
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
 
-    localStorage.setItem(
-      this.getStorageKey(preferences.userId),
-      JSON.stringify(updated)
-    );
+    try {
+      localStorage.setItem(this.getStorageKey(preferences.userId), JSON.stringify(updated));
+    } catch {
+      // almacenamiento lleno o bloqueado: se ignora sin romper la app
+    }
+  }
+
+  clearPreferences(userId: string): void {
+    try {
+      localStorage.removeItem(this.getStorageKey(userId));
+    } catch {
+      // ignorar
+    }
   }
 }

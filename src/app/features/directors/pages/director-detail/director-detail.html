@@ -8,9 +8,13 @@
 }
 
 @if (errorMessage()) {
-  <div class="message error">
-    {{ errorMessage() }}
-    <a routerLink="/directors">Volver a directores</a>
+  <div class="detail-error">
+    <app-error-state
+      title="Error al cargar los directores"
+      [description]="errorMessage()"
+      linkText="Volver a directores"
+      linkRoute="/directors"
+    />
   </div>
 }
 
@@ -96,14 +100,13 @@
     </section>
 
     <section class="credits-section">
-      <div class="section-heading">
-        <div>
-          <h2>Filmografía como director</h2>
-          <p>Películas y series dirigidas por {{ person.name }}</p>
-        </div>
-
-        <span class="credits-count">{{ credits().length }} trabajos</span>
-      </div>
+      @if (director(); as person) {
+        <app-results-header
+          title="Filmografía como director"
+          [description]="'Películas y series dirigidas por ' + person.name"
+          [countLabel]="credits().length + ' trabajos'"
+        />
+      }
 
       @if (credits().length === 0) {
         <app-empty-state

@@ -11,10 +11,12 @@
       [selected]="mediaType()"
       (selectionChange)="changeMediaType($event)"
     />
-
-    <span class="results-count"> {{ totalResults() | number }} resultados </span>
   </div>
-
+  <app-results-header
+    [title]="mediaType() === 'movie' ? 'Películas más valoradas' : 'Series más valoradas'"
+    description="Contenido con las mejores puntuaciones de la comunidad."
+    [countLabel]="!loading() && !errorMessage() ? (totalResults() | number) + ' resultados' : null"
+  />
   @if (loading()) {
     <app-page-loading
       title="Cargando las más valoradas"
@@ -63,7 +65,7 @@
               />
 
               <div class="rating">
-                <span>★</span>
+                <i class="fas fa-star"></i>
                 {{ item.vote_average | number: '1.1-1' }}
               </div>
             </div>
@@ -86,12 +88,12 @@
         }
       </div>
 
-<app-pagination
-  [currentPage]="currentPage()"
-  [totalPages]="totalPages()"
-  [loading]="loading()"
-  (pageChange)="changePage($event)"
-/>
+      <app-pagination
+        [currentPage]="currentPage()"
+        [totalPages]="totalPages()"
+        [loading]="loading()"
+        (pageChange)="changePage($event)"
+      />
     } @else {
       <app-empty-state
         icon="fa-magnifying-glass"

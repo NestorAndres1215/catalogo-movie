@@ -4,16 +4,7 @@
   margin: auto;
 }
 
-.section-heading {
-  display: flex;
-  justify-content: space-between;
-  margin: 28px 0 20px;
-}
 
-.section-heading h2 {
-  margin-bottom: 6px;
-  font-size: 21px;
-}
 
 .series-grid {
   display: grid;

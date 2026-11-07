@@ -6,30 +6,11 @@
   />
 
   <div class="search-container">
-    <div class="search-box">
-      <span class="search-icon">⌕</span>
-
-      <input
-        type="text"
-        placeholder="Buscar una saga..."
-        [value]="searchQuery()"
-        (input)="searchQuery.set($any($event.target).value)"
-        (keyup.enter)="searchCollections()"
-      />
-
-      @if (searchQuery()) {
-        <button type="button" class="clear-button" (click)="clearSearch()">✕</button>
-      }
-    </div>
-
-    <button
-      type="button"
-      class="search-button"
-      [disabled]="loading()"
-      (click)="searchCollections()"
-    >
-      Buscar
-    </button>
+    <app-search
+      [value]="searchQuery()"
+      placeholder="Buscar una saga..."
+      (valueChange)="searchQuery.set($event)"
+    />
   </div>
 
   @if (!selectedCollection() && collections().length === 0 && !loading()) {
@@ -79,11 +60,11 @@
   }
 
   @if (collections().length > 0 && !selectedCollection()) {
-    <div class="section-heading">
-      <h2>Resultados de búsqueda</h2>
-      <span>{{ collections().length }} colecciones</span>
-    </div>
-
+    <app-results-header
+      title="Resultados de búsqueda"
+      description="Colecciones y sagas que coinciden con tu búsqueda."
+      [countLabel]="collections().length + ' colecciones'"
+    />
     <div class="collections-grid">
       @for (collection of collections(); track collection.id) {
         <article class="collection-card" (click)="selectCollection(collection)">

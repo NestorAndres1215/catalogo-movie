@@ -1,0 +1,46 @@
+<a class="actor-card" [routerLink]="route">
+
+  <div class="profile-container">
+
+    @if (profileUrl() && !imageFailed()) {
+      <img
+        [src]="profileUrl()"
+        [alt]="'Fotografía de ' + actor().name"
+        loading="lazy"
+        (error)="imageFailed.set(true)"
+      />
+    } @else {
+      <div
+        class="no-profile"
+        role="img"
+        [attr.aria-label]="'Sin fotografía de ' + actor().name"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="8" r="4.5" />
+          <path d="M3.5 22c0-4.7 3.8-8 8.5-8s8.5 3.3 8.5 8z" />
+        </svg>
+      </div>
+    }
+
+    <span class="popularity">
+      <i class="fas fa-star"></i>
+      {{ actor().popularity.toFixed(1) }}
+    </span>
+
+  </div>
+
+  <div class="actor-info">
+
+    <h3>{{ actor().name }}</h3>
+
+    <p class="department">
+      {{ department }}
+    </p>
+
+    <p class="known-for">
+      {{ knownFor }}
+    </p>
+
+  </div>
+
+</a>

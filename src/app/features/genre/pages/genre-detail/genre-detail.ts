@@ -22,6 +22,9 @@ import { PageLoadingComponent } from '../../../../shared/components/page-loading
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
+import { MediaCardComponent } from '../../../../shared/components/media-card/media-card';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
+import { ErrorStateComponent } from '../../../../shared/components/error-state/error-state';
 
 type GenreType = 'movie' | 'tv';
 
@@ -33,7 +36,10 @@ type GenreType = 'movie' | 'tv';
     PageLoadingComponent,
     EmptyStateComponent,
     PageHeaderComponent,
-    PaginationComponent
+    PaginationComponent,
+    MediaCardComponent,
+    ResultsHeaderComponent,
+    ErrorStateComponent
 ],
   templateUrl: './genre-detail.html',
   styleUrl: './genre-detail.css'

@@ -11,19 +11,21 @@
       (valueChange)="onSearch($event)"
     />
   </div>
-  <app-movie-filters [genres]="genres()" (filtersChange)="onFiltersChange($event)" />
-
-  <div class="section-heading">
-    <div>
-      <h2>{{ title() }}</h2>
-      <p>Página {{ currentPage() }} de {{ totalPages() }}</p>
-    </div>
+  <div class="my-3">
+    <app-movie-filters [genres]="genres()" (filtersChange)="onFiltersChange($event)" />
   </div>
-
+  <app-results-header
+    [title]="title()"
+    description="Explora y descubre contenido de nuestro catálogo."
+    [countLabel]="'Página ' + currentPage() + ' de ' + totalPages()"
+  />
   @if (loading()) {
-    <div class="loading-state" role="status">
-      <p>Cargando películas...</p>
-    </div>
+    <app-page-loading
+      title="Cargando peliculas"
+      description="Estamos explorando peliculas."
+      detail="Consultando información y créditos en TMDB..."
+      icon="fa-user"
+    />
   }
 
   @if (hasError()) {
@@ -44,30 +46,8 @@
 
   @if (hasMovies()) {
     <div class="movie-grid">
-      @for (movie of movies(); track movie.id) {
-        <a class="movie-card" [routerLink]="['/movies', movie.id]">
-          <div class="poster-container">
-            @if (movie.poster_path) {
-              <img [src]="getPoster(movie.poster_path)" [alt]="movie.title" loading="lazy" />
-            } @else {
-              <div class="no-poster">
-                <span>🎬</span>
-                <p>Sin póster</p>
-              </div>
-            }
-
-            <span class="rating">★ {{ movie.vote_average.toFixed(1) }}</span>
-          </div>
-
-          <div class="movie-info">
-            <h3>{{ movie.title }}</h3>
-
-            <div class="movie-meta">
-              <span>{{ getYear(movie.release_date) }}</span>
-              <span>TMDB</span>
-            </div>
-          </div>
-        </a>
+      @for (item of movies(); track item.id) {
+        <app-media-card [media]="item" mediaType="movie"variant="description" />
       }
     </div>
     @if (totalPages() > 1) {

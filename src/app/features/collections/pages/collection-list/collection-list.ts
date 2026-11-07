@@ -12,6 +12,8 @@ import {
 import { CollectionDetails } from '../../../../core/models/catalog.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
+import { SearchComponent } from '../../../../shared/components/search/search';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
 
 @Component({
   selector: 'app-collection-list',
@@ -19,7 +21,9 @@ import { PageLoadingComponent } from '../../../../shared/components/page-loading
   imports: [
     DecimalPipe,
     PageHeaderComponent,
-    PageLoadingComponent
+    PageLoadingComponent,
+    SearchComponent,
+    ResultsHeaderComponent
 ],
   templateUrl: './collection-list.html',
   styleUrl: './collection-list.css'

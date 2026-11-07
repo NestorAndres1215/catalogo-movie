@@ -11,11 +11,12 @@ import {
 } from '../../../../core/models/person.interface';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import { ErrorStateComponent } from '../../../../shared/components/error-state/error-state';
 
 @Component({
   selector: 'app-actor-detail',
   standalone: true,
-  imports: [RouterLink, PageLoadingComponent, EmptyStateComponent],
+  imports: [RouterLink, PageLoadingComponent, EmptyStateComponent, ErrorStateComponent],
   templateUrl: './actor-detail.html',
   styleUrl: './actor-detail.css'
 })

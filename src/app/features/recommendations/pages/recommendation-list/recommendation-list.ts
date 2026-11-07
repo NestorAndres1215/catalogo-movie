@@ -14,19 +14,21 @@ import {
 } from '../../../../shared/components/filter-tabs/filter-tabs';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 import { FilterOption, SelectFilterComponent } from '../../../../shared/components/select-filter/select-filter';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
+import { MediaCardComponent } from '../../../../shared/components/media-card/media-card';
 
 @Component({
   selector: 'app-recommendation-list',
   standalone: true,
   imports: [
-    RouterLink,
-    DecimalPipe,
     PageHeaderComponent,
     PageLoadingComponent,
     EmptyStateComponent,
     FilterTabsComponent,
     PaginationComponent,
-    SelectFilterComponent
+    SelectFilterComponent,
+    ResultsHeaderComponent,
+    MediaCardComponent
 ],
   templateUrl: './recommendation-list.html',
   styleUrl: './recommendation-list.css',

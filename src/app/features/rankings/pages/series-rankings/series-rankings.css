@@ -24,7 +24,34 @@
 
 /* PESTAÑAS */
 
+.genre-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 24px;
+}
 
+.genre-header app-results-header {
+  flex: 1;
+  min-width: 0;
+}
+
+.genre-filter {
+  width: 240px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .genre-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .genre-filter {
+    width: 100%;
+  }
+}
 
 /* SECCIÓN */
 

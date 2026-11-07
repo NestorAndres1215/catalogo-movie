@@ -1,0 +1,31 @@
+.results-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.results-header h2 {
+  margin: 0 0 6px;
+  font-size: 21px;
+}
+
+.results-header p {
+  margin: 0;
+  color: var(--color-texto-secundario);
+  font-size: 13px;
+}
+
+.results-count {
+  flex-shrink: 0;
+  color: var(--color-texto-secundario);
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  .results-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

@@ -9,6 +9,7 @@ import {
   CategoryOption,
   CategorySelectorComponent,
 } from '../../../../shared/components/category-selector/category-selector';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
 
 type GameType = 'movie' | 'tv' | 'person';
 
@@ -33,7 +34,8 @@ type GameResult = 'user' | 'system' | 'tie';
     ButtonComponent,
     SearchComponent,
     CategorySelectorComponent,
-  ],
+    ResultsHeaderComponent
+],
   templateUrl: './random-challenge.html',
   styleUrl: './random-challenge.css',
 })

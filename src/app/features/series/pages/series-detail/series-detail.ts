@@ -13,11 +13,12 @@ import {
 import { SeriesCredits } from '../../../../core/models/series-credits.interface';
 import { MovieVideoResponse } from '../../../../core/models/movie.interface';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
+import { ErrorStateComponent } from '../../../../shared/components/error-state/error-state';
 
 @Component({
   selector: 'app-series-detail',
   standalone: true,
-  imports: [RouterLink, PageLoadingComponent],
+  imports: [RouterLink, PageLoadingComponent, ErrorStateComponent],
   templateUrl: './series-detail.html',
   styleUrl: './series-detail.css'
 })

@@ -5,11 +5,13 @@
     description="¿Cuánto sabes del mundo del cine?"
   />
 
-  <app-category-selector
-    [categories]="categories"
-    [selected]="category()"
-    (selectionChange)="changeCategory($event)"
-  />
+  @if (questionNumber() === 0 || gameFinished()) {
+    <app-category-selector
+      [categories]="categories"
+      [selected]="category()"
+      (selectionChange)="changeCategory($event)"
+    />
+  }
 
   <!-- Inicio -->
   @if (questionNumber() === 0 && !gameFinished() && !loading()) {
