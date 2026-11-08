@@ -8,11 +8,12 @@ import { SeriesService } from '../../../../core/service/series.service';
 
 import { Movie } from '../../../../core/models/movie.interface';
 import { TvSeries } from '../../../../core/models/series.interface';
+import { Footer } from '../../../../shared/components/footer/footer';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink,Footer],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -29,9 +30,7 @@ export class HomeComponent implements OnInit {
   error = signal<string | null>(null);
 
   // Primeras 5 películas para el carrusel
-  featuredMovies = computed(() =>
-    this.trendingMovies().slice(0, 5)
-  );
+  featuredMovies = computed(() => this.trendingMovies().slice(0, 5));
 
   ngOnInit(): void {
     this.loadHome();
@@ -55,9 +54,7 @@ export class HomeComponent implements OnInit {
         this.topRatedSeries.set(response.topRatedSeries.results);
       },
       error: () => {
-        this.error.set(
-          'No se pudo cargar el contenido. Inténtalo nuevamente.'
-        );
+        this.error.set('No se pudo cargar el contenido. Inténtalo nuevamente.');
       },
     });
   }
@@ -90,15 +87,42 @@ export class HomeComponent implements OnInit {
     return series.id;
   }
 
-getMovieGroups(): Movie[][] {
-  const movies = this.trendingMovies();
-  const groups: Movie[][] = [];
-  const itemsPerSlide = 5;
+  getMovieGroups(): Movie[][] {
+    const movies = this.trendingMovies();
+    const groups: Movie[][] = [];
+    const itemsPerSlide = 5;
 
-  for (let i = 0; i < movies.length; i += itemsPerSlide) {
-    groups.push(movies.slice(i, i + itemsPerSlide));
+    for (let i = 0; i < movies.length; i += itemsPerSlide) {
+      groups.push(movies.slice(i, i + itemsPerSlide));
+    }
+
+    return groups;
   }
 
-  return groups;
-}
+  quickAccess = [
+    {
+      title: 'Películas',
+      description: 'Explora el catálogo',
+      icon: 'fas fa-film',
+      route: '/movies',
+    },
+    {
+      title: 'Series',
+      description: 'Descubre nuevas historias',
+      icon: 'fas fa-tv',
+      route: '/series',
+    },
+    {
+      title: 'Universos',
+      description: 'Explora tus sagas favoritas',
+      icon: 'fas fa-globe',
+      route: '/universes',
+    },
+    {
+      title: 'Rankings',
+      description: 'Descubre los mejores títulos',
+      icon: 'fas fa-trophy',
+      route: '/rankings/movies',
+    },
+  ];
 }

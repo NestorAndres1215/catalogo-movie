@@ -1,4 +1,3 @@
-
 :host {
   display: block;
   color: var(--color-texto);
@@ -157,7 +156,9 @@
   border-radius: 10px;
   background-color: var(--color-texto-atenuado);
   opacity: 0.65;
-  transition: width 0.2s ease, opacity 0.2s ease;
+  transition:
+    width 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .carousel-indicators button.active {
@@ -373,11 +374,7 @@
   border: 1px solid var(--color-borde);
   border-radius: 18px;
   background:
-    radial-gradient(
-      circle at 90% 30%,
-      var(--color-acento-suave),
-      transparent 30%
-    ),
+    radial-gradient(circle at 90% 30%, var(--color-acento-suave), transparent 30%),
     var(--color-superficie-secundaria);
 }
 
@@ -420,50 +417,6 @@
 .library-icon {
   color: var(--color-acento);
   font-size: 85px;
-}
-
-/* ==============================
-   FOOTER
-================================ */
-
-.home-footer {
-  padding: 40px 10px 10px;
-  text-align: center;
-}
-
-.home-footer h3 {
-  margin: 0 0 10px;
-  color: var(--color-texto);
-  font-size: 18px;
-  letter-spacing: 2px;
-}
-
-.home-footer p,
-.home-footer span {
-  color: var(--color-texto-atenuado);
-  font-size: 11px;
-}
-
-/* ==============================
-   ESTADOS DE CARGA Y ERROR
-================================ */
-
-.error-message {
-  margin: 30px 0;
-  padding: 20px;
-  border: 1px solid var(--color-danger);
-  border-radius: 10px;
-  color: var(--color-danger);
-  background: var(--color-danger-hover);
-}
-
-.error-message button {
-  padding: 8px 13px;
-  border: 0;
-  border-radius: 7px;
-  color: var(--color-texto-sobre-acento);
-  background: var(--color-acento);
-  cursor: pointer;
 }
 
 /* ==============================
@@ -615,9 +568,6 @@
 h2 i {
   color: var(--color-acento);
 }
-/* ==============================
-   ACCESIBILIDAD
-================================ */
 
 @media (prefers-reduced-motion: reduce) {
   *,

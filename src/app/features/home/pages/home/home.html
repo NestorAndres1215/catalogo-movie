@@ -114,41 +114,22 @@
 
     <!-- ACCESOS RÁPIDOS -->
     <section class="quick-access">
-      <a routerLink="/movies" class="quick-card">
-        <span><i class="fas fa-film"></i></span>
-        <div>
-          <strong>Películas</strong>
-          <small>Explora el catálogo</small>
-        </div>
-        <span class="quick-arrow">→</span>
-      </a>
+      @for (item of quickAccess; track item.route) {
+        <a [routerLink]="item.route" class="quick-card">
+          <span>
+            <i [class]="item.icon"></i>
+          </span>
 
-      <a routerLink="/series" class="quick-card">
-        <span><i class="fas fa-tv"></i></span>
-        <div>
-          <strong>Series</strong>
-          <small>Descubre nuevas historias</small>
-        </div>
-        <span class="quick-arrow">→</span>
-      </a>
+          <div>
+            <strong>{{ item.title }}</strong>
+            <small>{{ item.description }}</small>
+          </div>
 
-      <a routerLink="/universes" class="quick-card">
-        <span><i class="fas fa-globe"></i></span>
-        <div>
-          <strong>Universos</strong>
-          <small>Explora tus sagas favoritas</small>
-        </div>
-        <span class="quick-arrow">→</span>
-      </a>
-
-      <a routerLink="/rankings/movies" class="quick-card">
-        <span><i class="fas fa-trophy"></i></span>
-        <div>
-          <strong>Rankings</strong>
-          <small>Descubre los mejores títulos</small>
-        </div>
-        <span class="quick-arrow">→</span>
-      </a>
+          <span class="quick-arrow">
+            <i class="fas fa-arrow-right"></i>
+          </span>
+        </a>
+      }
     </section>
 
     <!-- TENDENCIAS DE PELÍCULAS -->
@@ -160,7 +141,7 @@
           <p>Las películas que están destacando esta semana.</p>
         </div>
 
-        <a routerLink="/trending" class="see-all">Ver todas →</a>
+        <a routerLink="/trending" class="see-all"> Ver todas <i class="fas fa-arrow-right"></i> </a>
       </div>
 
       <div class="media-row">
@@ -198,7 +179,7 @@
           <p>Las series más populares de esta semana.</p>
         </div>
 
-        <a routerLink="/series" class="see-all">Ver todas →</a>
+        <a routerLink="/series" class="see-all">Ver todas <i class="fas fa-arrow-right"></i></a>
       </div>
 
       <div class="media-row">
@@ -373,13 +354,6 @@
     </section>
 
     <!-- FOOTER -->
-    <footer class="home-footer">
-      <h3>
-        <i class="fas fa-film"></i>
-        CINEVERSE
-      </h3>
-      <p>Explora, descubre y disfruta el universo del cine.</p>
-      <span>Contenido cinematográfico proporcionado por TMDB.</span>
-    </footer>
+<app-footer />
   }
 </div>
