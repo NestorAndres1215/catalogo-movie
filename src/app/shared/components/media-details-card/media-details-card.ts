@@ -1,5 +1,6 @@
+
 import { Component, input, output } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, NgTemplateOutlet } from '@angular/common';
 
 export interface RatedMedia {
   id: number;
@@ -9,22 +10,21 @@ export interface RatedMedia {
   personalRating?: number | null;
   voteAverage: number;
   releaseDate: string;
-  overview: string | null;
 }
 
 @Component({
   selector: 'app-media-details-card',
   standalone: true,
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, NgTemplateOutlet],
   templateUrl: './media-details-card.html',
   styleUrl: './media-details-card.css',
 })
 export class MediaDetailsCardComponent {
-  item = input.required<RatedMedia>();
+  readonly item = input.required<RatedMedia>();
 
-  showRatingComparison = input(false);
+  readonly showRatingComparison = input(false);
 
-  detailsRequested = output<{
+  readonly detailsRequested = output<{
     id: number;
     mediaType: 'movie' | 'tv';
   }>();
@@ -32,13 +32,31 @@ export class MediaDetailsCardComponent {
   get imageUrl(): string {
     const posterPath = this.item().posterPath;
 
-    return posterPath ? `https://image.tmdb.org/t/p/w500${posterPath}` : '';
+    if (!posterPath) {
+      return 'assets/images/no-poster.png';
+    }
+
+    return `https://image.tmdb.org/t/p/w500${posterPath}`;
   }
 
-  get releaseYear(): string {
+  get releaseDate(): string {
     const date = this.item().releaseDate;
 
-    return date ? date.substring(0, 4) : 'Sin fecha';
+    if (!date) {
+      return 'Fecha no disponible';
+    }
+
+    const parsedDate = new Date(`${date}T00:00:00`);
+
+    if (Number.isNaN(parsedDate.getTime())) {
+      return 'Fecha no disponible';
+    }
+
+    return new Intl.DateTimeFormat('es-PE', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }).format(parsedDate);
   }
 
   get mediaTypeLabel(): string {
@@ -50,19 +68,5 @@ export class MediaDetailsCardComponent {
       id: this.item().id,
       mediaType: this.item().mediaType,
     });
-  }
-
-  get releaseDate(): string {
-    const date = this.item().releaseDate;
-
-    if (!date) return 'Fecha no disponible';
-
-    const parsedDate = new Date(`${date}T00:00:00`);
-
-    return new Intl.DateTimeFormat('es-PE', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    }).format(parsedDate);
   }
 }

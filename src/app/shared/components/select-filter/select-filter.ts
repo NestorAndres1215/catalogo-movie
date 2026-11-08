@@ -21,6 +21,9 @@ export class SelectFilterComponent {
   readonly id = input('select-filter');
   readonly disabled = input(false);
 
+  /** true = el menú se abre hacia arriba; false (por defecto) = hacia abajo */
+  readonly openUp = input(false);
+
   readonly selectionChange = output<string>();
 
   readonly isOpen = signal(false);

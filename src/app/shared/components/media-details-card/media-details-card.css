@@ -10,26 +10,35 @@
   height: 100%;
   min-width: 0;
   flex-direction: column;
-  overflow: hidden;
+  overflow: visible;
   padding: 0;
   border: 1px solid var(--color-borde);
   border-radius: var(--radio-borde);
   background: var(--color-superficie);
   color: var(--color-texto);
-  font-family: inherit;
   text-align: left;
+}
+
+.media-card:focus-within {
+  position: relative;
+  z-index: 20;
+}
+
+.media-card-button {
+  overflow: hidden;
+  font-family: inherit;
   cursor: pointer;
   transition:
     transform var(--transicion-normal),
     border-color var(--transicion-normal);
 }
 
-.media-card:hover {
+.media-card-button:hover {
   transform: translateY(-5px);
   border-color: var(--color-acento);
 }
 
-.media-card:focus-visible {
+.media-card-button:focus-visible {
   outline: 2px solid var(--color-acento);
   outline-offset: 3px;
 }
@@ -40,6 +49,7 @@
   aspect-ratio: 2 / 3;
   flex-shrink: 0;
   overflow: hidden;
+  border-radius: calc(var(--radio-borde) - 1px) calc(var(--radio-borde) - 1px) 0 0;
   background: var(--color-superficie-secundaria);
 }
 
@@ -51,27 +61,8 @@
   transition: transform var(--transicion-normal);
 }
 
-.media-card:hover .poster-container img {
+.media-card-button:hover .poster-container img {
   transform: scale(1.05);
-}
-
-.no-poster {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  color: var(--color-texto-atenuado);
-}
-
-.no-poster i {
-  font-size: 40px;
-}
-
-.no-poster span {
-  font-size: 14px;
 }
 
 .personal-rating-badge,
@@ -125,7 +116,7 @@
   line-clamp: 2;
 }
 
-.release-year {
+.release-date {
   display: flex;
   min-height: 20px;
   align-items: center;
@@ -134,9 +125,9 @@
   font-size: 12px;
 }
 
-.release-year i {
+.release-date i {
   flex-shrink: 0;
-  color: var(--color-acento);
+
   font-size: 13px;
 }
 
@@ -173,6 +164,19 @@
   flex-shrink: 0;
 }
 
+::ng-deep .media-card .personal-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0 16px 16px;
+}
+
+::ng-deep .media-card .control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
 @media (max-width: 650px) {
   .media-info {
     gap: 8px;
@@ -183,7 +187,7 @@
     font-size: 14px;
   }
 
-  .release-year {
+  .release-date {
     font-size: 11px;
   }
 

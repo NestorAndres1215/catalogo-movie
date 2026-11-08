@@ -1,14 +1,22 @@
-<button class="media-card" type="button" (click)="openDetails()">
-  <!-- PÓSTER -->
+@if (showRatingComparison()) {
+  <button
+    class="media-card media-card-button"
+    type="button"
+    (click)="openDetails()"
+    [attr.aria-label]="'Ver detalles de ' + item().title"
+  >
+    <ng-container [ngTemplateOutlet]="cardContent" />
+  </button>
+} @else {
+  <article class="media-card">
+    <ng-container [ngTemplateOutlet]="cardContent" />
+
+    <ng-content />
+  </article>
+}
+<ng-template #cardContent>
   <div class="poster-container">
-    @if (imageUrl) {
-      <img [src]="imageUrl" [alt]="item().title" loading="lazy" />
-    } @else {
-      <div class="no-poster">
-        <i class="fas fa-film"></i>
-        <span>Sin póster</span>
-      </div>
-    }
+    <img [src]="imageUrl" [alt]="item().title" loading="lazy" />
 
     @if (showRatingComparison() && item().personalRating != null) {
       <span class="personal-rating-badge">
@@ -22,11 +30,10 @@
     </span>
   </div>
 
-  <!-- INFORMACIÓN -->
   <div class="media-info">
     <h3>{{ item().title }}</h3>
 
-    <span class="release-year">
+    <span class="release-date">
       <i class="fa-regular fa-calendar-days"></i>
       {{ releaseDate }}
     </span>
@@ -35,9 +42,11 @@
       <div class="rating-comparison">
         <div class="rating-item">
           <span>Mi puntuación</span>
+
           <strong>
             <i class="fas fa-star"></i>
             {{ item().personalRating ?? 'Sin puntuar' }}
+
             @if (item().personalRating != null) {
               / 10
             }
@@ -46,6 +55,7 @@
 
         <div class="rating-item">
           <span>Calificación TMDB</span>
+
           <strong>
             <i class="fas fa-star"></i>
             {{ item().voteAverage | number: '1.1-1' }} / 10
@@ -54,4 +64,4 @@
       </div>
     }
   </div>
-</button>
+</ng-template>

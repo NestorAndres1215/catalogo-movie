@@ -59,6 +59,10 @@
   transform: translateY(-50%) rotate(180deg);
 }
 
+/* ========================================
+   MENÚ (por defecto hacia abajo)
+======================================== */
+
 .select-menu {
   position: absolute;
   top: calc(100% + 6px);
@@ -75,12 +79,36 @@
   border-radius: var(--radio-borde-pequeno);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
   animation: menu-in 0.12s ease-out;
+
+  /* Firefox y navegadores modernos */
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-borde-hover) transparent;
 }
 
 @keyframes menu-in {
   from { opacity: 0; transform: translateY(-4px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* ========================================
+   MENÚ HACIA ARRIBA ([openUp]="true")
+======================================== */
+
+.select-menu.open-up {
+  top: auto;
+  bottom: calc(100% + 6px);
+  box-shadow: 0 -12px 28px rgba(0, 0, 0, 0.45);
+  animation-name: menu-in-up;
+}
+
+@keyframes menu-in-up {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================
+   OPCIONES
+======================================== */
 
 .select-option {
   display: flex;
@@ -99,17 +127,10 @@
 
 .select-option.selected { color: var(--color-acento); font-weight: 600; }
 
-@media (max-width: 576px) {
-  .filter-group { min-width: 100%; }
-}
+/* ========================================
+   SCROLLBAR (Chrome, Edge, Safari)
+======================================== */
 
-.select-menu {
-  /* Firefox y navegadores modernos */
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-borde-hover) transparent;
-}
-
-/* Chrome, Edge, Safari */
 .select-menu::-webkit-scrollbar {
   width: 8px;
 }
@@ -133,4 +154,12 @@
 /* Quita las flechitas arriba y abajo */
 .select-menu::-webkit-scrollbar-button {
   display: none;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 576px) {
+  .filter-group { min-width: 100%; }
 }

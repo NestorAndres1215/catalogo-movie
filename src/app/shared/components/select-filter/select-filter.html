@@ -20,7 +20,7 @@
     </button>
 
     @if (isOpen()) {
-      <ul class="select-menu" role="listbox">
+      <ul class="select-menu" [class.open-up]="openUp()" role="listbox">
         <li
           role="option"
           class="select-option"

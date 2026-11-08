@@ -18,20 +18,21 @@ import {
 } from '../../../../shared/components/select-filter/select-filter';
 import { ButtonComponent } from '../../../../shared/components/button/button';
 import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
+import { MediaDetailsCardComponent } from '../../../../shared/components/media-details-card/media-details-card';
 
 @Component({
   selector: 'app-watchlist-list',
   standalone: true,
   imports: [
-    DecimalPipe,
     PageHeaderComponent,
     FilterTabsComponent,
     StatsComponent,
     EmptyStateComponent,
     SelectFilterComponent,
     ButtonComponent,
-    ResultsHeaderComponent
-],
+    ResultsHeaderComponent,
+    MediaDetailsCardComponent,
+  ],
   templateUrl: './watchlist-list.html',
   styleUrl: './watchlist-list.css',
 })
@@ -64,20 +65,20 @@ export class WatchlistListComponent {
       label: 'Series',
     },
   ]);
-// PUNTUACIONES DISPONIBLES
-readonly ratings = Array.from({ length: 10 }, (_, index) => index + 1);
+  // PUNTUACIONES DISPONIBLES
+  readonly ratings = Array.from({ length: 10 }, (_, index) => index + 1);
 
-// OPCIONES DE PUNTUACIÓN
-readonly ratingOptions: FilterOption[] = this.ratings.map(rating => ({
-  label: `${rating} / 10`,
-  value: rating
-}));
+  // OPCIONES DE PUNTUACIÓN
+  readonly ratingOptions: FilterOption[] = this.ratings.map((rating) => ({
+    label: `${rating} / 10`,
+    value: rating,
+  }));
 
-// OPCIONES DE ESTADO
-readonly statusOptions: FilterOption[] = [
-  { label: 'Pendiente', value: 'pending' },
-  { label: 'Visto', value: 'watched' }
-];
+  // OPCIONES DE ESTADO
+  readonly statusOptions: FilterOption[] = [
+    { label: 'Pendiente', value: 'pending' },
+    { label: 'Visto', value: 'watched' },
+  ];
   // CAMBIAR FILTRO
   selectFilter(filter: FilterType): void {
     this.selectedFilter.set(filter);
@@ -87,7 +88,6 @@ readonly statusOptions: FilterOption[] = [
   readonly watchlist = this.watchlistService.watchlist;
 
   // PUNTUACIONES DISPONIBLES
-
 
   // ELEMENTOS FILTRADOS
   readonly filteredItems = computed(() => {
