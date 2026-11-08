@@ -59,14 +59,11 @@
 
   <!-- LISTADO -->
   @if (directors().length > 0) {
-<div class="directors-grid">
-  @for (director of directors(); track director.id) {
-    <app-actor-card
-      [actor]="director"
-      [profileUrl]="getProfile(director.profile_path)"
-    />
-  }
-</div>
+    <div class="directors-grid">
+      @for (director of directors(); track director.id) {
+        <app-actor-card [actor]="director" [profileUrl]="getProfile(director.profile_path)" />
+      }
+    </div>
     <!-- PAGINACIÓN -->
     <app-pagination
       [currentPage]="currentPage()"

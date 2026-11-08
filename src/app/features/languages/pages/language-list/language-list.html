@@ -38,14 +38,10 @@
 
   <!-- Información del idioma -->
   <section class="results-header">
-    <div>
-      <h2>{{ getSelectedLanguageName() }}</h2>
-
-      <p>
-        {{ mediaType() === 'movie' ? 'Películas' : 'Series' }}
-        en idioma original
-      </p>
-    </div>
+    <app-results-header
+      [title]="getSelectedLanguageName()"
+      [description]="(mediaType() === 'movie' ? 'Películas' : 'Series') + ' en idioma original'"
+    />
 
     <span class="language-code">
       {{ selectedLanguage().toUpperCase() }}
@@ -70,15 +66,11 @@
   }
   <!-- Resultados -->
   @if (!loadingContent() && movies().length > 0) {
- <section class="movies-grid">
-  @for (media of movies(); track media.id) {
-    <app-media-card
-      [media]="media"
-      mediaType="movie"
-      variant="description"
-    />
-  }
-</section>
+    <section class="movies-grid">
+      @for (media of movies(); track media.id) {
+        <app-media-card [media]="media" mediaType="movie" variant="description" />
+      }
+    </section>
 
     <!-- Paginación -->
     <app-pagination

@@ -4,41 +4,10 @@
   margin: auto;
 }
 
-.section-heading {
-  margin: 35px 0 20px;
-}
-
-.section-heading h2 {
-  margin: 0;
-  font-size: 21px;
-}
-
-.section-heading p {
-  margin: 8px 0 0;
-}
-
 .movie-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 25px 20px;
-}
-
-.error-state {
-  padding: 55px 20px;
-  text-align: center;
-  color: #a9afbd;
-}
-
-.error-state span {
-  font-size: 35px;
-}
-
-.error-state button {
-  padding: 10px 16px;
-  background: #e5b94b;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
 }
 
 @media (max-width: 1200px) {
@@ -65,9 +34,5 @@
 
   .poster-container {
     height: 240px;
-  }
-
-  .page-header h1 {
-    font-size: 26px;
   }
 }

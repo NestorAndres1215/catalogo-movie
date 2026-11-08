@@ -21,19 +21,20 @@ import {
 } from '../../../../shared/components/select-filter/select-filter';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 import { MediaCardComponent } from '../../../../shared/components/media-card/media-card';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
 
 @Component({
   selector: 'app-language-list',
   standalone: true,
   imports: [
-
     PageHeaderComponent,
     PageLoadingComponent,
     FilterTabsComponent,
     EmptyStateComponent,
     SelectFilterComponent,
     PaginationComponent,
-    MediaCardComponent
+    MediaCardComponent,
+    ResultsHeaderComponent
 ],
   templateUrl: './language-list.html',
   styleUrl: './language-list.css',
