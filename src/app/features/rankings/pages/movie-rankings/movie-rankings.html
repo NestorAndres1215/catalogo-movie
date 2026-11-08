@@ -50,29 +50,13 @@
       @if (!loadingBest() && bestMovies().length > 0) {
         <div class="movies-grid">
           @for (movie of bestMovies(); track movie.id; let i = $index) {
-            <article class="movie-card">
-              <div class="poster-container">
-                <img [src]="getPoster(movie.poster_path)" [alt]="movie.title ?? 'Película'" />
-
-                <span class="ranking-position"> #{{ i + 1 }} </span>
-
-                <span class="rating-badge"> ⭐ {{ getRating(movie.vote_average) }} </span>
-              </div>
-
-              <div class="movie-information">
-                <h3>{{ movie.title }}</h3>
-
-                <span class="movie-year">
-                  {{ getYear(movie.release_date) }}
-                </span>
-
-                <p class="movie-overview">
-                  {{ movie.overview || 'Sin descripción disponible.' }}
-                </p>
-
-                <span class="vote-count"> {{ movie.vote_count }} votos </span>
-              </div>
-            </article>
+            <app-ranking-card
+              [serie]="movie"
+              [position]="i + 1"
+              [posterUrl]="getPoster(movie.poster_path)"
+              [rating]="getRating(movie.vote_average)"
+              [ranking]="true"
+            />
           }
         </div>
       }
@@ -114,31 +98,13 @@
       @if (!loadingWorst() && worstMovies().length > 0) {
         <div class="movies-grid">
           @for (movie of worstMovies(); track movie.id; let i = $index) {
-            <article class="movie-card">
-              <div class="poster-container">
-                <img [src]="getPoster(movie.poster_path)" [alt]="movie.title ?? 'Película'" />
-
-                <span class="ranking-position worst-position"> #{{ i + 1 }} </span>
-
-                <span class="rating-badge worst-rating">
-                  ⭐ {{ getRating(movie.vote_average) }}
-                </span>
-              </div>
-
-              <div class="movie-information">
-                <h3>{{ movie.title }}</h3>
-
-                <span class="movie-year">
-                  {{ getYear(movie.release_date) }}
-                </span>
-
-                <p class="movie-overview">
-                  {{ movie.overview || 'Sin descripción disponible.' }}
-                </p>
-
-                <span class="vote-count"> {{ movie.vote_count }} votos </span>
-              </div>
-            </article>
+            <app-ranking-card
+              [serie]="movie"
+              [position]="i + 1"
+              [posterUrl]="getPoster(movie.poster_path)"
+              [rating]="getRating(movie.vote_average)"
+              [ranking]="true"
+            />
           }
         </div>
       }
@@ -153,10 +119,5 @@
     </section>
   }
 
-  <footer class="ranking-footer">
-    <p>
-      Datos proporcionados por TMDB. Los rankings se calculan usando sus valoraciones y cantidad de
-      votos.
-    </p>
-  </footer>
+  <app-footer />
 </main>

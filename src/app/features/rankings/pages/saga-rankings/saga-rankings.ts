@@ -20,6 +20,7 @@ import { ButtonComponent } from '../../../../shared/components/button/button';
 import { FilterTab, FilterTabsComponent, FilterType } from '../../../../shared/components/filter-tabs/filter-tabs';
 import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
 import { SearchComponent } from '../../../../shared/components/search/search';
+import { RankingCardComponent } from '../../../../shared/components/ranking-card/ranking-card';
 
 @Component({
   selector: 'app-saga-rankings',
@@ -34,7 +35,8 @@ import { SearchComponent } from '../../../../shared/components/search/search';
     ButtonComponent,
     FilterTabsComponent,
     ResultsHeaderComponent,
-    SearchComponent
+    SearchComponent,
+    RankingCardComponent
 ],
   templateUrl: './saga-rankings.html',
   styleUrl: './saga-rankings.css',

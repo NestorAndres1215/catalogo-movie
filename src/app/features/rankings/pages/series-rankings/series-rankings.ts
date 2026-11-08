@@ -16,6 +16,7 @@ import {
 import { ButtonComponent } from '../../../../shared/components/button/button';
 import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
 import { SelectFilterComponent } from '../../../../shared/components/select-filter/select-filter';
+import { RankingCardComponent } from '../../../../shared/components/ranking-card/ranking-card';
 
 @Component({
   selector: 'app-series-rankings',
@@ -30,7 +31,8 @@ import { SelectFilterComponent } from '../../../../shared/components/select-filt
     ButtonComponent,
     ResultsHeaderComponent,
     SelectFilterComponent,
-  ],
+    RankingCardComponent
+],
   templateUrl: './series-rankings.html',
   styleUrl: './series-rankings.css',
 })

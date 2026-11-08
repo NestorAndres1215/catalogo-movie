@@ -4,12 +4,14 @@
   margin: auto;
 }
 
+/* BÚSQUEDA */
 .search-container {
   display: flex;
   gap: 12px;
   margin-bottom: 20px;
 }
 
+/* SUGERENCIAS */
 .suggestions {
   display: flex;
   align-items: center;
@@ -19,24 +21,27 @@
 }
 
 .suggestions span {
-  color: #999;
+  color: var(--color-texto-secundario);
   font-size: 13px;
 }
 
 .suggestions button {
-  background: #252532;
-  border: 1px solid #424252;
-  color: #ccc;
-  border-radius: 20px;
   padding: 8px 14px;
+  background: var(--color-superficie-secundaria);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-circular);
+  color: var(--color-texto-secundario);
   cursor: pointer;
+  transition: var(--transicion-rapida);
 }
 
 .suggestions button:hover {
-  border-color: #a78bfa;
-  color: #fff;
+  background: var(--color-acento-suave);
+  border-color: var(--color-acento);
+  color: var(--color-acento);
 }
 
+/* ENCABEZADOS */
 .section-heading {
   display: flex;
   justify-content: space-between;
@@ -45,15 +50,18 @@
 }
 
 .section-heading h2 {
-  font-size: 20px;
   margin: 0;
+  color: var(--color-texto);
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .section-heading span {
-  color: #999;
+  color: var(--color-texto-atenuado);
   font-size: 13px;
 }
 
+/* GRILLAS */
 .collections-grid,
 .movies-grid {
   display: grid;
@@ -61,13 +69,22 @@
   gap: 22px;
 }
 
+/* TARJETAS: MISMA ESTÉTICA DE MEDIA CARD */
 .collection-card,
 .movie-card {
-  background: #20202b;
-  border: 1px solid #383844;
-  border-radius: 12px;
+ display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0;
   overflow: hidden;
-  transition: 0.2s;
+  color: var(--color-texto);
+  text-decoration: none;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde);
+  transition:
+    transform var(--transicion-normal),
+    border-color var(--transicion-normal);
 }
 
 .collection-card {
@@ -77,14 +94,16 @@
 .collection-card:hover,
 .movie-card:hover {
   transform: translateY(-5px);
-  border-color: #7c3aed;
+  border-color: var(--color-acento);
 }
 
+/* PÓSTER */
 .collection-poster,
 .movie-poster {
-  height: 280px;
   position: relative;
-  background: #15151d;
+  height: 280px;
+  overflow: hidden;
+  background: var(--color-superficie-elevada);
 }
 
 .collection-poster img,
@@ -92,17 +111,24 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: var(--transicion-normal);
 }
 
+.collection-card:hover .collection-poster img,
+.movie-card:hover .movie-poster img {
+  transform: scale(1.04);
+}
+
+/* OVERLAY */
 .collection-overlay {
   position: absolute;
   inset: 0;
-  background: #0009;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(0, 0, 0, 0.65);
   opacity: 0;
-  transition: 0.2s;
+  transition: var(--transicion-normal);
 }
 
 .collection-card:hover .collection-overlay {
@@ -110,11 +136,14 @@
 }
 
 .collection-overlay span {
-  background: #7c3aed;
   padding: 10px 18px;
-  border-radius: 7px;
+  border-radius: var(--radio-borde-pequeno);
+  background: var(--color-acento);
+  color: var(--color-texto-sobre-acento);
+  font-weight: 700;
 }
 
+/* INFORMACIÓN */
 .collection-info,
 .movie-info {
   padding: 15px;
@@ -122,35 +151,46 @@
 
 .collection-info h3,
 .movie-info h3 {
-  font-size: 15px;
   margin: 0 0 10px;
+  color: var(--color-texto);
+  font-size: 15px;
+  font-weight: 700;
 }
 
 .collection-info p,
 .movie-info p {
-  color: #aaa;
-  font-size: 12px;
-  line-height: 1.6;
   height: 58px;
   overflow: hidden;
+  margin: 0 0 10px;
+  color: var(--color-texto-secundario);
+  font-size: 12px;
+  line-height: 1.6;
 }
 
+/* ENLACES */
 .explore-link {
   display: inline-block;
-  color: #a78bfa;
-  font-size: 13px;
   padding: 8px 0;
+  color: var(--color-acento);
+  font-size: 13px;
+  transition: var(--transicion-rapida);
 }
 
+.explore-link:hover {
+  color: var(--color-acento-hover);
+}
+
+/* ERRORES */
 .error-message {
-  background: #3b2028;
-  border: 1px solid #713744;
-  color: #ffaaaa;
-  padding: 15px;
-  border-radius: 8px;
   margin: 20px 0;
+  padding: 15px;
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radio-borde-pequeno);
+  background: var(--color-danger-hover);
+  color: var(--color-danger);
 }
 
+/* DETALLE DE COLECCIÓN */
 .collection-detail {
   margin-top: 30px;
 }
@@ -158,9 +198,10 @@
 .collection-banner {
   position: relative;
   min-height: 300px;
-  border-radius: 14px;
   overflow: hidden;
-  background: #20202b;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-grande);
+  background: var(--color-superficie-secundaria);
 }
 
 .collection-backdrop {
@@ -177,66 +218,89 @@
   display: flex;
   align-items: center;
   gap: 25px;
-  padding: 30px;
   min-height: 300px;
-  background: linear-gradient(90deg, #15151df2, #15151d88);
+  padding: 30px;
+  background: linear-gradient(
+    90deg,
+    rgba(11, 11, 15, 0.95),
+    rgba(11, 11, 15, 0.53)
+  );
 }
 
 .collection-main-poster {
   width: 150px;
   max-height: 220px;
+  flex-shrink: 0;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: var(--radio-borde);
+  box-shadow: var(--box-shadow);
 }
 
 .collection-banner-content h2 {
-  font-size: 27px;
   margin: 10px 0;
+  color: var(--color-texto);
+  font-size: 27px;
+  font-weight: 700;
 }
 
 .collection-banner-content p {
-  color: #ccc;
-  line-height: 1.7;
   max-width: 650px;
+  color: var(--color-texto-secundario);
+  line-height: 1.7;
 }
 
+/* CANTIDAD DE PELÍCULAS */
 .movie-count {
-  color: #c4a5ff;
+  color: var(--color-acento);
   font-size: 13px;
+  font-weight: 600;
 }
 
+/* VALORACIÓN */
 .movie-rating {
   position: absolute;
   bottom: 10px;
   left: 10px;
-  background: #171720e8;
   padding: 6px 9px;
-  border-radius: 6px;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
+  background: rgba(21, 25, 37, 0.92);
+  color: var(--color-valoracion);
   font-size: 12px;
+  font-weight: 700;
 }
 
+/* AÑO */
 .movie-year {
-  color: #a78bfa;
+  color: var(--color-acento);
   font-size: 12px;
 }
 
+/* ENLACES DE PELÍCULAS */
 .movie-info a {
   display: inline-block;
-  color: #a78bfa;
+  margin-top: 8px;
+  color: var(--color-acento);
   font-size: 13px;
   text-decoration: none;
-  margin-top: 8px;
+  transition: var(--transicion-rapida);
 }
 
+.movie-info a:hover {
+  color: var(--color-acento-hover);
+}
+
+/* SIN PÓSTER */
 .no-poster {
-  height: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--color-texto-atenuado);
   font-size: 45px;
-  color: #777;
 }
 
+/* RESPONSIVE */
 @media (max-width: 768px) {
   .collections-page {
     padding: 18px;

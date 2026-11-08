@@ -1,0 +1,56 @@
+<article class="ranking-card">
+  <div class="ranking-position">
+    {{ position() }}
+  </div>
+
+  <img
+    class="serie-poster"
+    [src]="posterUrl()"
+    [alt]="title"
+    loading="lazy"
+  />
+
+  <div class="serie-information">
+    <h3>{{ title }}</h3>
+
+    @if (isActor()) {
+      <span class="serie-year">
+        Actor / Actriz
+      </span>
+
+      <p class="serie-overview">
+        Profesional de la interpretación en películas y producciones audiovisuales.
+      </p>
+    } @else {
+      <span class="serie-year">
+        {{ year }}
+      </span>
+
+      <p class="serie-overview">
+        {{ overview }}
+      </p>
+    }
+
+    @if (serie().vote_count !== undefined) {
+      <div class="serie-votes">
+        <i class="fa-solid fa-users"></i>
+        {{ serie().vote_count | number }} votos
+      </div>
+    }
+  </div>
+
+  @if (ranking()) {
+    <div class="serie-rating">
+      <i class="fa-solid fa-star"></i>
+      <strong>{{ rating() }}</strong>
+      <small>/ 10</small>
+    </div>
+  } @else if (showPopularity()) {
+    <div class="serie-rating popularity-rating">
+      <div>
+        <small>POPULARIDAD TOTAL</small>
+        <strong>{{ popularity() }}</strong>
+      </div>
+    </div>
+  }
+</article>

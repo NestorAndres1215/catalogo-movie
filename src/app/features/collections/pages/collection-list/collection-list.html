@@ -76,22 +76,14 @@
                 loading="lazy"
               />
             } @else {
-              <div class="no-poster">🎬</div>
+              <div class="no-poster">
+                <i class="fa-solid fa-film"></i>
+              </div>
             }
-
-            <div class="collection-overlay">
-              <span>Ver saga</span>
-            </div>
           </div>
 
           <div class="collection-info">
             <h3>{{ collection.name }}</h3>
-
-            <p>
-              {{ collection.overview || 'Sin descripción disponible.' }}
-            </p>
-
-            <span class="explore-link"> Explorar colección → </span>
           </div>
         </article>
       }

@@ -91,34 +91,15 @@
             track collection.id;
             let i = $index
           ) {
-            <article class="collection-card" (click)="openCollection(collection)">
-              <div class="collection-poster">
-                <img
-                  [src]="getPoster(collection.poster_path)"
-                  [alt]="collection.name"
-                  loading="lazy"
-                />
-
-                <span class="ranking-position">
-                  {{ i + 1 }}
-                </span>
-              </div>
-
-              <div class="collection-information">
-                <h3>{{ collection.name }}</h3>
-
-                <span> {{ collection.movieCount }} películas </span>
-
-                <div class="collection-popularity">
-                  <small>POPULARIDAD TOTAL</small>
-                  <strong>
-                    {{ getPopularity(collection.popularity) }}
-                  </strong>
-                </div>
-
-                <button type="button">Ver películas →</button>
-              </div>
-            </article>
+            <app-ranking-card
+              [serie]="collection"
+              [position]="i + 1"
+              [posterUrl]="getPoster(collection.poster_path)"
+              [rating]="''"
+              [ranking]="false"
+              [showPopularity]="true"
+              [popularity]="getPopularity(collection.popularity)"
+            />
           } @empty {
             <app-empty-state
               icon="fa-layer-group"

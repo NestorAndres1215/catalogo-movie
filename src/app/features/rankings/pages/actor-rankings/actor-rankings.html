@@ -47,29 +47,16 @@
 
         <div class="ranking-list">
           @for (actor of bestActors(); track actor.id; let i = $index) {
-            <article class="ranking-card">
-              <span class="ranking-position">
-                {{ i + 1 }}
-              </span>
-
-              <img
-                class="actor-poster"
-                [src]="getPoster(actor.profile_path)"
-                [alt]="actor.name"
-                loading="lazy"
-              />
-
-              <div class="actor-information">
-                <h3>{{ actor.name }}</h3>
-                <span class="actor-category">Actor / Actriz</span>
-                <p class="actor-description">Popularidad según los datos de TMDB.</p>
-              </div>
-
-              <div class="actor-rating">
-                <span>POPULARIDAD</span>
-                <strong>{{ getPopularity(actor.popularity) }}</strong>
-              </div>
-            </article>
+            <app-ranking-card
+              [serie]="actor"
+              [position]="i + 1"
+              [posterUrl]="getPoster(actor.profile_path)"
+              [rating]="''"
+              [ranking]="false"
+              [showPopularity]="true"
+              [popularity]="getPopularity(actor.popularity)"
+              [isActor]="true"
+            />
           } @empty {
             <app-empty-state
               icon="fa-user"
@@ -90,31 +77,16 @@
 
         <div class="ranking-list">
           @for (actor of worstActors(); track actor.id; let i = $index) {
-            <article class="ranking-card">
-              <span class="ranking-position">
-                {{ i + 1 }}
-              </span>
-
-              <img
-                class="actor-poster"
-                [src]="getPoster(actor.profile_path)"
-                [alt]="actor.name"
-                loading="lazy"
-              />
-
-              <div class="actor-information">
-                <h3>{{ actor.name }}</h3>
-                <span class="actor-category">Actor / Actriz</span>
-                <p class="actor-description">
-                  Menor popularidad dentro de los resultados consultados.
-                </p>
-              </div>
-
-              <div class="actor-rating worst-rating">
-                <span>POPULARIDAD</span>
-                <strong>{{ getPopularity(actor.popularity) }}</strong>
-              </div>
-            </article>
+            <app-ranking-card
+              [serie]="actor"
+              [position]="i + 1"
+              [posterUrl]="getPoster(actor.profile_path)"
+              [rating]="''"
+              [ranking]="false"
+              [showPopularity]="true"
+              [popularity]="getPopularity(actor.popularity)"
+              [isActor]="true"
+            />
           } @empty {
             <app-empty-state
               icon="fa-users"

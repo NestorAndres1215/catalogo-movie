@@ -10,12 +10,13 @@ import { Footer } from '../../../../shared/components/footer/footer';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { FilterTab, FilterTabsComponent, FilterType } from '../../../../shared/components/filter-tabs/filter-tabs';
 import { ButtonComponent } from '../../../../shared/components/button/button';
+import { RankingCardComponent } from '../../../../shared/components/ranking-card/ranking-card';
 
 
 @Component({
   selector: 'app-actor-rankings',
   standalone: true,
-  imports: [CommonModule, PageHeaderComponent, EmptyStateComponent, Footer, PageLoadingComponent, FilterTabsComponent, ButtonComponent],
+  imports: [CommonModule, PageHeaderComponent, EmptyStateComponent, Footer, PageLoadingComponent, FilterTabsComponent, ButtonComponent, RankingCardComponent],
   templateUrl: './actor-rankings.html',
   styleUrl: './actor-rankings.css',
 })

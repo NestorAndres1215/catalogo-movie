@@ -1,0 +1,218 @@
+.ranking-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 15px;
+  background: var(--color-superficie-secundaria);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-pequeno);
+  transition: var(--transicion-rapida);
+}
+
+.ranking-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-acento);
+  background: var(--color-superficie-hover);
+}
+
+/* POSICIÓN */
+.ranking-position {
+  min-width: 35px;
+  color: var(--color-acento);
+  font-size: 24px;
+  font-weight: 800;
+  text-align: center;
+}
+
+/* PÓSTER */
+.serie-poster {
+  width: 85px;
+  height: 125px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: var(--radio-borde-pequeno);
+  background: var(--color-superficie-elevada);
+}
+
+/* INFORMACIÓN */
+.serie-information {
+  flex: 1;
+  min-width: 0;
+}
+
+.serie-information h3 {
+  margin: 0 0 5px;
+  color: var(--color-texto);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.serie-year {
+  color: var(--color-acento);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* DESCRIPCIÓN */
+.serie-overview {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 10px 0;
+  color: var(--color-texto-secundario);
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+/* VOTOS */
+.serie-votes {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-texto-atenuado);
+  font-size: 11px;
+}
+
+.serie-votes i {
+  color: var(--color-texto-secundario);
+}
+
+/* POPULARIDAD */
+.collection-popularity {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 12px;
+}
+
+.collection-popularity small {
+  color: var(--color-texto-atenuado);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.collection-popularity strong {
+  color: var(--color-acento);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+/* VALORACIÓN */
+.serie-rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px;
+  border-radius: var(--radio-borde-pequeno);
+  background: var(--color-acento-suave);
+  white-space: nowrap;
+}
+
+.serie-rating i,
+.serie-rating strong {
+  color: var(--color-valoracion);
+}
+
+.serie-rating i {
+  font-size: 18px;
+}
+
+.serie-rating strong {
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.serie-rating small {
+  color: var(--color-texto-atenuado);
+  font-size: 11px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .ranking-card {
+    gap: 12px;
+    padding: 10px;
+  }
+
+  .ranking-position {
+    min-width: 25px;
+    font-size: 19px;
+  }
+
+  .serie-poster {
+    width: 65px;
+    height: 100px;
+  }
+
+  .serie-information h3 {
+    font-size: 14px;
+  }
+
+  .serie-overview {
+    font-size: 11px;
+  }
+
+  .serie-rating {
+    gap: 3px;
+    padding: 7px;
+  }
+
+  .serie-rating i {
+    font-size: 14px;
+  }
+
+  .serie-rating strong {
+    font-size: 15px;
+  }
+
+  .serie-rating small {
+    font-size: 9px;
+  }
+
+  .collection-popularity strong {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ranking-card {
+    flex-wrap: wrap;
+  }
+
+  .serie-information {
+    flex: 1;
+    width: calc(100% - 120px);
+  }
+
+  .serie-rating {
+    margin-left: auto;
+  }
+}
+
+.popularity-rating {
+  min-width: 125px;
+  justify-content: center;
+  text-align: center;
+}
+
+.popularity-rating div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.popularity-rating small {
+  color: var(--color-texto-atenuado);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+}
+
+.popularity-rating strong {
+  color: var(--color-acento);
+  font-size: 19px;
+  font-weight: 800;
+}

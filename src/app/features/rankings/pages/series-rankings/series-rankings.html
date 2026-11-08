@@ -42,33 +42,13 @@
       @if (!loadingBest() && !errorBest()) {
         <div class="ranking-list">
           @for (serie of bestSeries(); track serie.id; let i = $index) {
-            <article class="ranking-card">
-              <div class="ranking-position">
-                {{ i + 1 }}
-              </div>
-
-              <img class="serie-poster" [src]="getPoster(serie.poster_path)" [alt]="serie.name" />
-
-              <div class="serie-information">
-                <h3>{{ serie.name }}</h3>
-
-                <span class="serie-year">
-                  {{ getYear(serie.first_air_date) }}
-                </span>
-
-                <p class="serie-overview">
-                  {{ serie.overview || 'Sin descripción disponible.' }}
-                </p>
-
-                <div class="serie-votes">{{ serie.vote_count | number }} votos</div>
-              </div>
-
-              <div class="serie-rating">
-                <span>★</span>
-                <strong>{{ getRating(serie.vote_average) }}</strong>
-                <small>/ 10</small>
-              </div>
-            </article>
+            <app-ranking-card
+              [serie]="serie"
+              [position]="i + 1"
+              [posterUrl]="getPoster(serie.poster_path)"
+              [rating]="getRating(serie.vote_average)"
+              [ranking]="true"
+            />
           } @empty {
             <app-empty-state
               icon="fa-tv"
@@ -101,33 +81,13 @@
       @if (!loadingWorst() && !errorWorst()) {
         <div class="ranking-list">
           @for (serie of worstSeries(); track serie.id; let i = $index) {
-            <article class="ranking-card">
-              <div class="ranking-position">
-                {{ i + 1 }}
-              </div>
-
-              <img class="serie-poster" [src]="getPoster(serie.poster_path)" [alt]="serie.name" />
-
-              <div class="serie-information">
-                <h3>{{ serie.name }}</h3>
-
-                <span class="serie-year">
-                  {{ getYear(serie.first_air_date) }}
-                </span>
-
-                <p class="serie-overview">
-                  {{ serie.overview || 'Sin descripción disponible.' }}
-                </p>
-
-                <div class="serie-votes">{{ serie.vote_count | number }} votos</div>
-              </div>
-
-              <div class="serie-rating worst-rating">
-                <span>★</span>
-                <strong>{{ getRating(serie.vote_average) }}</strong>
-                <small>/ 10</small>
-              </div>
-            </article>
+            <app-ranking-card
+              [serie]="serie"
+              [position]="i + 1"
+              [posterUrl]="getPoster(serie.poster_path)"
+              [rating]="getRating(serie.vote_average)"
+              [ranking]="true"
+            />
           } @empty {
             <app-empty-state
               icon="fa-tv"
@@ -176,33 +136,13 @@
       @if (!loadingGenre() && !errorGenre()) {
         <div class="ranking-list">
           @for (serie of genreSeries(); track serie.id; let i = $index) {
-            <article class="ranking-card">
-              <div class="ranking-position">
-                {{ i + 1 }}
-              </div>
-
-              <img class="serie-poster" [src]="getPoster(serie.poster_path)" [alt]="serie.name" />
-
-              <div class="serie-information">
-                <h3>{{ serie.name }}</h3>
-
-                <span class="serie-year">
-                  {{ getYear(serie.first_air_date) }}
-                </span>
-
-                <p class="serie-overview">
-                  {{ serie.overview || 'Sin descripción disponible.' }}
-                </p>
-
-                <div class="serie-votes">{{ serie.vote_count | number }} votos</div>
-              </div>
-
-              <div class="serie-rating">
-                <span>★</span>
-                <strong>{{ getRating(serie.vote_average) }}</strong>
-                <small>/ 10</small>
-              </div>
-            </article>
+            <app-ranking-card
+              [serie]="serie"
+              [position]="i + 1"
+              [posterUrl]="getPoster(serie.poster_path)"
+              [rating]="getRating(serie.vote_average)"
+              [ranking]="true"
+            />
           } @empty {
             <app-empty-state
               icon="fa-tv"
