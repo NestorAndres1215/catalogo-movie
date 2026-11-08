@@ -1,13 +1,15 @@
+
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject, signal } from '@angular/core';
-
 import { forkJoin, from, of, Observable } from 'rxjs';
-
 import { catchError, map, mergeMap, switchMap, toArray } from 'rxjs/operators';
 
 import { StreamingService } from '../../../../core/service/streaming.service';
+import {
+  StreamingProvider,
+  StreamingRanking,
+} from '../../../../core/models/streaming.interface';
 
-import { StreamingProvider, StreamingRanking } from '../../../../core/models/streaming.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { Footer } from '../../../../shared/components/footer/footer';
@@ -15,11 +17,22 @@ import { ButtonComponent } from '../../../../shared/components/button/button';
 import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { StatItem, StatsComponent } from '../../../../shared/components/stats/stats';
+import { MovieCardRankingDetailsComponent } from '../../../../shared/components/movie-card-ranking-details/movie-card-ranking-details';
 
 @Component({
   selector: 'app-streaming-rankings',
   standalone: true,
-  imports: [CommonModule, PageHeaderComponent, EmptyStateComponent, Footer, ButtonComponent, ResultsHeaderComponent, PageLoadingComponent, StatsComponent],
+  imports: [
+    CommonModule,
+    PageHeaderComponent,
+    EmptyStateComponent,
+    Footer,
+    ButtonComponent,
+    ResultsHeaderComponent,
+    PageLoadingComponent,
+    StatsComponent,
+    MovieCardRankingDetailsComponent,
+  ],
   templateUrl: './streaming-rankings.html',
   styleUrl: './streaming-rankings.css',
 })
@@ -27,9 +40,7 @@ export class StreamingRankingsComponent implements OnInit {
   private readonly streamingService = inject(StreamingService);
 
   readonly rankings = signal<StreamingRanking[]>([]);
-
   readonly selectedProvider = signal<StreamingRanking | null>(null);
-
   readonly loading = signal(false);
   readonly error = signal('');
 
@@ -49,11 +60,10 @@ export class StreamingRankingsComponent implements OnInit {
       seriesProviders: this.streamingService.getSeriesProviders(),
     })
       .pipe(
-        // Unificamos los proveedores de películas y series.
         map(({ movieProviders, seriesProviders }) => {
           const providers = new Map<number, StreamingProvider>();
 
-          [...movieProviders.results, ...seriesProviders.results].forEach((provider) => {
+          [...movieProviders.results, ...seriesProviders.results].forEach(provider => {
             if (!providers.has(provider.provider_id)) {
               providers.set(provider.provider_id, provider);
             }
@@ -61,25 +71,21 @@ export class StreamingRankingsComponent implements OnInit {
 
           return Array.from(providers.values());
         }),
-
-        // Procesamos los proveedores con concurrencia controlada.
-        switchMap((providers) =>
+        switchMap(providers =>
           from(providers).pipe(
-            mergeMap((provider) => this.loadProviderRanking(provider), 1),
+            mergeMap(provider => this.loadProviderRanking(provider), 1),
             toArray(),
           ),
         ),
-
-        // Ordenamos según el promedio de popularidad.
-        map((results) =>
+        map(results =>
           results
-            .filter((provider) => provider.totalTitles > 0)
+            .filter(provider => provider.totalTitles > 0)
             .sort((a, b) => b.averagePopularity - a.averagePopularity)
             .slice(0, 10),
         ),
       )
       .subscribe({
-        next: (results) => {
+        next: results => {
           this.rankings.set(results);
           this.loading.set(false);
 
@@ -93,50 +99,62 @@ export class StreamingRankingsComponent implements OnInit {
         },
       });
   }
-getProviderStats(provider: StreamingRanking): StatItem[] {
-  return [
-    {
-      icon: 'fa-film',
-      value: provider.movieCount,
-      label: 'Películas analizadas',
-    },
-    {
-      icon: 'fa-tv',
-      value: provider.seriesCount,
-      label: 'Series analizadas',
-    },
-    {
-      icon: 'fa-layer-group',
-      value: provider.totalTitles,
-      label: 'Total de títulos',
-    },
-  ];
-}
-  private loadProviderRanking(provider: StreamingProvider): Observable<StreamingRanking> {
-    const movieRequests = Array.from({ length: this.pagesToLoad }, (_, index) =>
-      this.streamingService.discoverMoviesByProvider(provider.provider_id, index + 1).pipe(
-        catchError(() =>
-          of({
-            page: index + 1,
-            results: [],
-            total_pages: 0,
-            total_results: 0,
-          }),
-        ),
-      ),
+
+  getProviderStats(provider: StreamingRanking): StatItem[] {
+    return [
+      {
+        icon: 'fa-film',
+        value: provider.movieCount,
+        label: 'Películas analizadas',
+      },
+      {
+        icon: 'fa-tv',
+        value: provider.seriesCount,
+        label: 'Series analizadas',
+      },
+      {
+        icon: 'fa-layer-group',
+        value: provider.totalTitles,
+        label: 'Total de títulos',
+      },
+    ];
+  }
+
+  private loadProviderRanking(
+    provider: StreamingProvider,
+  ): Observable<StreamingRanking> {
+    const movieRequests = Array.from(
+      { length: this.pagesToLoad },
+      (_, index) =>
+        this.streamingService
+          .discoverMoviesByProvider(provider.provider_id, index + 1)
+          .pipe(
+            catchError(() =>
+              of({
+                page: index + 1,
+                results: [],
+                total_pages: 0,
+                total_results: 0,
+              }),
+            ),
+          ),
     );
 
-    const seriesRequests = Array.from({ length: this.pagesToLoad }, (_, index) =>
-      this.streamingService.discoverSeriesByProvider(provider.provider_id, index + 1).pipe(
-        catchError(() =>
-          of({
-            page: index + 1,
-            results: [],
-            total_pages: 0,
-            total_results: 0,
-          }),
-        ),
-      ),
+    const seriesRequests = Array.from(
+      { length: this.pagesToLoad },
+      (_, index) =>
+        this.streamingService
+          .discoverSeriesByProvider(provider.provider_id, index + 1)
+          .pipe(
+            catchError(() =>
+              of({
+                page: index + 1,
+                results: [],
+                total_pages: 0,
+                total_results: 0,
+              }),
+            ),
+          ),
     );
 
     return forkJoin({
@@ -144,35 +162,32 @@ getProviderStats(provider: StreamingRanking): StatItem[] {
       series: forkJoin(seriesRequests),
     }).pipe(
       map(({ movies, series }) => {
-        // Unificamos los resultados de todas las páginas.
-        const allMovies = movies.flatMap((response) => response.results);
+        const allMovies = movies.flatMap(response => response.results);
+        const allSeries = series.flatMap(response => response.results);
 
-        const allSeries = series.flatMap((response) => response.results);
-
-        // Evitamos duplicados.
         const uniqueMovies = Array.from(
-          new Map(allMovies.map((movie) => [movie.id, movie])).values(),
+          new Map(allMovies.map(movie => [movie.id, movie])).values(),
         );
 
-        const uniqueSeries = Array.from(new Map(allSeries.map((show) => [show.id, show])).values());
+        const uniqueSeries = Array.from(
+          new Map(allSeries.map(show => [show.id, show])).values(),
+        );
 
         const movieCount = uniqueMovies.length;
         const seriesCount = uniqueSeries.length;
-
         const totalTitles = movieCount + seriesCount;
 
         const totalPopularity =
           uniqueMovies.reduce((total, movie) => total + movie.popularity, 0) +
           uniqueSeries.reduce((total, show) => total + show.popularity, 0);
 
-        const averagePopularity = totalTitles > 0 ? totalPopularity / totalTitles : 0;
+        const averagePopularity =
+          totalTitles > 0 ? totalPopularity / totalTitles : 0;
 
-        // Top 10 películas.
         const topMovies = [...uniqueMovies]
           .sort((a, b) => b.popularity - a.popularity)
           .slice(0, 10);
 
-        // Top 10 series.
         const topSeries = [...uniqueSeries]
           .sort((a, b) => b.popularity - a.popularity)
           .slice(0, 10);

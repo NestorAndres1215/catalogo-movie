@@ -1,0 +1,43 @@
+<a class="media-card" [routerLink]="[route(), media().id]">
+  <div class="poster-container">
+    @if (media().poster_path) {
+      <img [src]="imageUrl" [alt]="title" loading="lazy" />
+    } @else {
+      <div class="no-poster">
+        <i [class]="mediaType() === 'movie' ? 'fa-solid fa-film' : 'fa-solid fa-tv'"></i>
+
+        <span>Sin imagen</span>
+      </div>
+    }
+
+    <span class="ranking"> #{{ position() }} </span>
+
+    <div class="rating">
+      <i class="fa-solid fa-star"></i>
+      {{ media().vote_average | number: '1.1-1' }}
+    </div>
+  </div>
+
+  <div class="media-info">
+    <h3>{{ title }}</h3>
+
+    <div class="media-meta">
+      <span>
+        <i class="fa-regular fa-calendar"></i>
+        {{ formattedDate }}
+      </span>
+
+      @if (media().vote_count !== undefined) {
+        <span>
+          <i class="fa-solid fa-users"></i>
+          {{ media().vote_count | number }} votos
+        </span>
+      } @else if (media().popularity !== undefined) {
+        <span>
+          <i class="fa-solid fa-chart-line"></i>
+          Popularidad: {{ media().popularity | number: '1.0-0' }}
+        </span>
+      }
+    </div>
+  </div>
+</a>
