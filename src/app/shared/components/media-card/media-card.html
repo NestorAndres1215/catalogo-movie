@@ -1,11 +1,7 @@
 <a class="movie-card" [routerLink]="[route, media().id]">
   <div class="poster-container">
     @if (media().poster_path) {
-      <img
-        [src]="getPoster(media().poster_path)"
-        [alt]="title"
-        loading="lazy"
-      />
+      <img [src]="getPoster(media().poster_path)" [alt]="title" loading="lazy" />
     } @else {
       <div class="no-poster">
         <i [class]="mediaType() === 'movie' ? 'fas fa-film' : 'fas fa-tv'"></i>
@@ -39,6 +35,7 @@
     <h3>{{ title }}</h3>
 
     <span class="media-date">
+      <i class="fa-regular fa-calendar-days"></i>
       {{ getLongDate(date) }}
     </span>
   </div>

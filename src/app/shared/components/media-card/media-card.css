@@ -1,16 +1,8 @@
-/* ========================================
-   HOST (el componente se estira en el grid)
-======================================== */
-
 :host {
   display: block;
   height: 100%;
   min-width: 0;
 }
-
-/* ========================================
-   TARJETA
-======================================== */
 
 .movie-card {
   display: flex;
@@ -33,10 +25,6 @@
   border-color: var(--color-acento);
 }
 
-/* ========================================
-   PÓSTER (proporción fija y responsive)
-======================================== */
-
 .poster-container {
   position: relative;
   width: 100%;
@@ -58,10 +46,6 @@
   transform: scale(1.05);
 }
 
-/* ========================================
-   SIN PÓSTER
-======================================== */
-
 .no-poster {
   display: flex;
   width: 100%;
@@ -81,10 +65,6 @@
   margin: 0;
   font-size: 14px;
 }
-
-/* ========================================
-   VALORACIÓN
-======================================== */
 
 .rating {
   position: absolute;
@@ -141,10 +121,6 @@
   font-size: 11px;
 }
 
-/* ========================================
-   INFORMACIÓN (título + fecha)
-======================================== */
-
 .media-info {
   display: flex;
   flex: 1;
@@ -155,8 +131,10 @@
 
 .media-info h3 {
   display: -webkit-box;
+  min-height: 39px;
+  max-height: 39px;
   overflow: hidden;
-  margin: 11px 0 5px;
+  margin: 0;
   color: var(--color-texto);
   font-size: 13px;
   line-height: 1.5;
@@ -166,13 +144,17 @@
 }
 
 .media-date {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: auto;
   color: var(--color-texto-atenuado);
-  font-size: 11px;
+  font-size: 12px;
 }
 
-/* ========================================
-   RESPONSIVE
-======================================== */
+.media-date i {
+  font-size: 13px;
+}
 
 @media (max-width: 576px) {
   .rating {

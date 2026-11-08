@@ -135,31 +135,7 @@
 
       <div class="movies-grid">
         @for (movie of collection.parts; track movie.id) {
-          <article class="movie-card">
-            <div class="movie-poster">
-              @if (movie.poster_path) {
-                <img [src]="getImageUrl(movie.poster_path)" [alt]="movie.title" loading="lazy" />
-              } @else {
-                <div class="no-poster">🎬</div>
-              }
-
-              <span class="movie-rating"> ⭐ {{ movie.vote_average | number: '1.1-1' }} </span>
-            </div>
-
-            <div class="movie-info">
-              <h3>{{ movie.title }}</h3>
-
-              <span class="movie-year">
-                {{ getReleaseYear(movie.release_date) }}
-              </span>
-
-              <p>
-                {{ movie.overview || 'Sin descripción disponible.' }}
-              </p>
-
-              <a [href]="'/movies/' + movie.id"> Ver película → </a>
-            </div>
-          </article>
+          <app-media-card [media]="movie" [mediaType]="'movie'" variant="description" />
         }
       </div>
     </section>

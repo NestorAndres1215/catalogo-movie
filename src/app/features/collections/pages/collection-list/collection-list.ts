@@ -4,36 +4,32 @@ import { RouterLink } from '@angular/router';
 import { forkJoin } from 'rxjs';
 
 import { CollectionService } from '../../../../core/service/collection.service';
-import {
-  Collection,
-
-  CollectionSummary
-} from '../../../../core/models/collection.interface';
+import { Collection, CollectionSummary } from '../../../../core/models/collection.interface';
 import { CollectionDetails } from '../../../../core/models/catalog.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { SearchComponent } from '../../../../shared/components/search/search';
 import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
+import { MediaCardComponent } from '../../../../shared/components/media-card/media-card';
 
 @Component({
   selector: 'app-collection-list',
   standalone: true,
   imports: [
-    DecimalPipe,
     PageHeaderComponent,
     PageLoadingComponent,
     SearchComponent,
-    ResultsHeaderComponent
-],
+    ResultsHeaderComponent,
+    MediaCardComponent,
+  ],
   templateUrl: './collection-list.html',
-  styleUrl: './collection-list.css'
+  styleUrl: './collection-list.css',
 })
 export class CollectionListComponent {
-
   private readonly collectionService = inject(CollectionService);
 
   readonly searchQuery = signal('');
-readonly collections = signal<CollectionSummary[]>([]);
+  readonly collections = signal<CollectionSummary[]>([]);
   readonly selectedCollection = signal<CollectionDetails | null>(null);
 
   readonly loading = signal(false);
@@ -51,7 +47,8 @@ readonly collections = signal<CollectionSummary[]>([]);
     'The Lord of the Rings',
     'The Hunger Games',
     'Jurassic Park',
-    'Pirates of the Caribbean'
+    'Pirates of the Caribbean',
+    'Fast & Furious',
   ];
 
   constructor() {
@@ -69,25 +66,18 @@ readonly collections = signal<CollectionSummary[]>([]);
 
     const currentVersion = this.searchVersion;
 
-    const requests = this.defaultCollections.map(query =>
-      this.collectionService.searchCollections(query)
+    const requests = this.defaultCollections.map((query) =>
+      this.collectionService.searchCollections(query),
     );
 
     forkJoin(requests).subscribe({
-      next: responses => {
+      next: (responses) => {
         if (currentVersion !== this.searchVersion) return;
 
-        const allCollections = responses.flatMap(
-          response => response.results
-        );
+        const allCollections = responses.flatMap((response) => response.results);
 
         const uniqueCollections = Array.from(
-          new Map(
-            allCollections.map(collection => [
-              collection.id,
-              collection
-            ])
-          ).values()
+          new Map(allCollections.map((collection) => [collection.id, collection])).values(),
         );
 
         this.collections.set(uniqueCollections);
@@ -96,12 +86,10 @@ readonly collections = signal<CollectionSummary[]>([]);
       error: () => {
         if (currentVersion !== this.searchVersion) return;
 
-        this.errorMessage.set(
-          'No se pudieron cargar las sagas. Inténtalo nuevamente.'
-        );
+        this.errorMessage.set('No se pudieron cargar las sagas. Inténtalo nuevamente.');
 
         this.loading.set(false);
-      }
+      },
     });
   }
 
@@ -125,59 +113,60 @@ readonly collections = signal<CollectionSummary[]>([]);
     this.collections.set([]);
 
     this.collectionService.searchCollections(query).subscribe({
-      next: response => {
+      next: (response) => {
         if (currentVersion !== this.searchVersion) return;
 
         this.collections.set(response.results);
         this.loading.set(false);
 
         if (response.results.length === 0) {
-          this.errorMessage.set(
-            'No se encontraron colecciones con ese nombre.'
-          );
+          this.errorMessage.set('No se encontraron colecciones con ese nombre.');
         }
       },
       error: () => {
         if (currentVersion !== this.searchVersion) return;
 
-        this.errorMessage.set(
-          'Ocurrió un error al buscar las colecciones.'
-        );
+        this.errorMessage.set('Ocurrió un error al buscar las colecciones.');
 
         this.loading.set(false);
-      }
+      },
     });
   }
 
+  selectCollection(collection: CollectionSummary): void {
+    this.detailVersion++;
 
-selectCollection(collection: CollectionSummary): void {
-  this.detailVersion++;
+    const currentVersion = this.detailVersion;
 
-  const currentVersion = this.detailVersion;
+    this.loadingDetails.set(true);
+    this.errorMessage.set('');
+    this.selectedCollection.set(null);
 
-  this.loadingDetails.set(true);
-  this.errorMessage.set('');
-  this.selectedCollection.set(null);
+    this.collectionService.getCollectionDetails(collection.id).subscribe({
+      next: (details) => {
+        if (currentVersion !== this.detailVersion) return;
 
-  this.collectionService.getCollectionDetails(collection.id).subscribe({
-    next: details => {
-      if (currentVersion !== this.detailVersion) return;
+        const sortedDetails = {
+          ...details,
+          parts: [...details.parts].sort((a, b) => {
+            const dateA = a.release_date || '9999-12-31';
+            const dateB = b.release_date || '9999-12-31';
 
-      this.selectedCollection.set(details);
-      this.loadingDetails.set(false);
-    },
-    error: () => {
-      if (currentVersion !== this.detailVersion) return;
+            return dateA.localeCompare(dateB);
+          }),
+        };
 
-      this.errorMessage.set(
-        'No se pudo cargar el contenido de esta saga.'
-      );
+        this.selectedCollection.set(sortedDetails);
+        this.loadingDetails.set(false);
+      },
+      error: () => {
+        if (currentVersion !== this.detailVersion) return;
 
-      this.loadingDetails.set(false);
-    }
-  });
-}
-
+        this.errorMessage.set('No se pudo cargar el contenido de esta saga.');
+        this.loadingDetails.set(false);
+      },
+    });
+  }
 
   backToResults(): void {
     this.detailVersion++;

@@ -20,7 +20,7 @@ export type MediaCardVariant = 'catalog' | 'description';
   standalone: true,
   imports: [RouterLink],
   templateUrl: './media-card.html',
-  styleUrl: './media-card.css'
+  styleUrl: './media-card.css',
 })
 export class MediaCardComponent {
   readonly media = input.required<MediaCard>();
@@ -30,8 +30,18 @@ export class MediaCardComponent {
   readonly isWatched = input(false);
 
   private readonly months = [
-    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
-    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+    'enero',
+    'febrero',
+    'marzo',
+    'abril',
+    'mayo',
+    'junio',
+    'julio',
+    'agosto',
+    'septiembre',
+    'octubre',
+    'noviembre',
+    'diciembre',
   ];
 
   get title(): string {
@@ -40,8 +50,8 @@ export class MediaCardComponent {
 
   get date(): string {
     return this.mediaType() === 'movie'
-      ? this.media().release_date ?? ''
-      : this.media().first_air_date ?? '';
+      ? (this.media().release_date ?? '')
+      : (this.media().first_air_date ?? '');
   }
 
   get route(): string {
@@ -49,9 +59,7 @@ export class MediaCardComponent {
   }
 
   getPoster(posterPath: string | null): string {
-    return posterPath
-      ? `https://image.tmdb.org/t/p/w500${posterPath}`
-      : '';
+    return posterPath ? `https://image.tmdb.org/t/p/w500${posterPath}` : '';
   }
 
   getYear(date: string): string {
