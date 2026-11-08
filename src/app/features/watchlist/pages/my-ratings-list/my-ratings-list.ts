@@ -12,6 +12,7 @@ import {
   FilterTabsComponent,
   FilterType,
 } from '../../../../shared/components/filter-tabs/filter-tabs';
+import { MediaDetailsCardComponent } from '../../../../shared/components/media-details-card/media-details-card';
 
 type RatingFilter = 'all' | 'movie' | 'tv';
 
@@ -19,11 +20,11 @@ type RatingFilter = 'all' | 'movie' | 'tv';
   selector: 'app-my-ratings-list',
   standalone: true,
   imports: [
-    DecimalPipe,
     PageHeaderComponent,
     StatsComponent,
     EmptyStateComponent,
     FilterTabsComponent,
+    MediaDetailsCardComponent,
   ],
   templateUrl: './my-ratings-list.html',
   styleUrl: './my-ratings-list.css',

@@ -29,61 +29,11 @@
   @if (ratedItems().length > 0) {
     <div class="media-grid">
       @for (item of ratedItems(); track item.mediaType + '-' + item.id) {
-        <article class="media-card">
-          <!-- POSTER -->
-          <div class="poster-container">
-            <img [src]="getImageUrl(item.posterPath)" [alt]="item.title" loading="lazy" />
-
-            <span class="personal-rating-badge">
-              <i class="fas fa-star"></i>
-              {{ item.personalRating }} / 10
-            </span>
-
-            <span class="media-type-badge">
-              {{ getMediaTypeLabel(item.mediaType) }}
-            </span>
-          </div>
-
-          <!-- INFORMACIÓN -->
-          <div class="media-info">
-            <h3>{{ item.title }}</h3>
-
-            <span class="release-year">
-              {{ getReleaseYear(item.releaseDate) }}
-            </span>
-
-            <div class="rating-comparison">
-              <div class="rating-item">
-                <span>Mi puntuación</span>
-                <strong>
-                  <i class="fas fa-star"></i>
-                  {{ item.personalRating }} / 10
-                </strong>
-              </div>
-
-              <div class="rating-item">
-                <span>Calificación TMDB</span>
-                <strong>
-                  <i class="fas fa-star"></i>
-                  {{ item.voteAverage | number: '1.1-1' }}
-                </strong>
-              </div>
-            </div>
-
-            <p class="overview">
-              {{ item.overview || 'Sin descripción disponible.' }}
-            </p>
-
-            <button
-              class="details-button"
-              type="button"
-              (click)="openDetails(item.id, item.mediaType)"
-            >
-              Ver detalles
-              <span>→</span>
-            </button>
-          </div>
-        </article>
+         <app-media-details-card
+      [item]="item"
+      [showRatingComparison]="true"
+      (detailsRequested)="openDetails($event.id, $event.mediaType)"
+    />
       }
     </div>
   } @else {

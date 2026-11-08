@@ -1,0 +1,57 @@
+<button class="media-card" type="button" (click)="openDetails()">
+  <!-- PÓSTER -->
+  <div class="poster-container">
+    @if (imageUrl) {
+      <img [src]="imageUrl" [alt]="item().title" loading="lazy" />
+    } @else {
+      <div class="no-poster">
+        <i class="fas fa-film"></i>
+        <span>Sin póster</span>
+      </div>
+    }
+
+    @if (showRatingComparison() && item().personalRating != null) {
+      <span class="personal-rating-badge">
+        <i class="fas fa-star"></i>
+        {{ item().personalRating }} / 10
+      </span>
+    }
+
+    <span class="media-type-badge">
+      {{ mediaTypeLabel }}
+    </span>
+  </div>
+
+  <!-- INFORMACIÓN -->
+  <div class="media-info">
+    <h3>{{ item().title }}</h3>
+
+    <span class="release-year">
+      <i class="fa-regular fa-calendar-days"></i>
+      {{ releaseDate }}
+    </span>
+
+    @if (showRatingComparison()) {
+      <div class="rating-comparison">
+        <div class="rating-item">
+          <span>Mi puntuación</span>
+          <strong>
+            <i class="fas fa-star"></i>
+            {{ item().personalRating ?? 'Sin puntuar' }}
+            @if (item().personalRating != null) {
+              / 10
+            }
+          </strong>
+        </div>
+
+        <div class="rating-item">
+          <span>Calificación TMDB</span>
+          <strong>
+            <i class="fas fa-star"></i>
+            {{ item().voteAverage | number: '1.1-1' }} / 10
+          </strong>
+        </div>
+      </div>
+    }
+  </div>
+</button>
