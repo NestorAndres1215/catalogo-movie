@@ -4,14 +4,7 @@
   margin: auto;
 }
 
-.statistics-badge {
-  padding: 10px 16px;
-  border: 1px solid #493879;
-  border-radius: 20px;
-  background: #211936;
-  color: #c4b5fd;
-  font-size: 13px;
-}
+
 
 /* SECCIONES */
 .statistics-section {
@@ -19,11 +12,9 @@
   flex-direction: column;
   gap: 20px;
   padding: 24px;
-  border: 1px solid #30303a;
-  border-radius: 16px;
-  background: #18181f;
-  margin-top: 2px;
-  margin-bottom: 10px;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-grande);
+  background: var(--color-superficie-secundaria);
 }
 
 /* GÉNEROS */

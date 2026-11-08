@@ -25,62 +25,73 @@
     <!-- RESUMEN -->
     <app-stats [stats]="stats()" />
 
-    <!-- GÉNEROS -->
-    <section class="statistics-section">
-      <app-results-header
-        title="Películas por género"
-        description="Los géneros que más aparecen en tu historial."
-      />
+    <div class="row g-4 mt-3 mb-4">
+      <!-- GÉNEROS -->
+      <div class="col-12 col-lg-6">
+        <section class="statistics-section h-100">
+          <app-results-header
+            title="Películas por género"
+            description="Los géneros que más aparecen en tu historial."
+          />
 
-      @if (genreStatistics().length > 0) {
-        <div class="genre-list">
-          @for (genre of genreStatistics(); track genre.id) {
-            <article class="genre-item">
-              <div class="genre-heading">
-                <strong>{{ genre.name }}</strong>
-                <span>{{ genre.count }} películas</span>
-              </div>
+          @if (genreStatistics().length > 0) {
+            <div class="genre-list">
+              @for (genre of genreStatistics(); track genre.id) {
+                <article class="genre-item">
+                  <div class="genre-heading">
+                    <strong>{{ genre.name }}</strong>
+                    <span>{{ genre.count }} películas</span>
+                  </div>
 
-              <div class="progress-track">
-                <div class="progress-value" [style.width.%]="getGenrePercentage(genre.count)"></div>
-              </div>
-            </article>
-          }
-        </div>
-      } @else {
-        <app-empty-state
-          icon="fa-tags"
-          title="No hay información de géneros disponible"
-          description="No se encontraron géneros para mostrar en este momento."
-        />
-      }
-    </section>
-
-    <!-- TOP 5 PELÍCULAS -->
-    <section class="statistics-section">
-      <app-results-header
-        title="Top 5 películas mejor calificadas"
-        description="Ordenadas según tu puntuación personal."
-      />
-
-      <div class="top-movies">
-        @for (movie of topFiveMovies(); track movie.id; let i = $index) {
-          <article class="top-movie-card">
-            <span class="ranking">#{{ i + 1 }}</span>
-
-            <img [src]="getImageUrl(movie.posterPath)" [alt]="movie.title" loading="lazy" />
-
-            <div class="top-movie-info">
-              <h3>{{ movie.title }}</h3>
-              <span>Tu puntuación</span>
+                  <div class="progress-track">
+                    <div
+                      class="progress-value"
+                      [style.width.%]="getGenrePercentage(genre.count)"
+                    ></div>
+                  </div>
+                </article>
+              }
             </div>
-
-            <strong class="movie-rating"> ⭐ {{ movie.personalRating }}/10 </strong>
-          </article>
-        }
+          } @else {
+            <app-empty-state
+              icon="fa-tags"
+              title="No hay información de géneros disponible"
+              description="No se encontraron géneros para mostrar en este momento."
+            />
+          }
+        </section>
       </div>
-    </section>
 
+      <!-- TOP 5 PELÍCULAS -->
+      <div class="col-12 col-lg-6">
+        <section class="statistics-section h-100">
+          <app-results-header
+            title="Top 5 películas mejor calificadas"
+            description="Ordenadas según tu puntuación personal."
+          />
+
+          <div class="top-movies">
+            @for (movie of topFiveMovies(); track movie.id; let i = $index) {
+              <article class="top-movie-card">
+                <span class="ranking">#{{ i + 1 }}</span>
+
+                <img [src]="getImageUrl(movie.posterPath)" [alt]="movie.title" loading="lazy" />
+
+                <div class="top-movie-info">
+                  <h3>{{ movie.title }}</h3>
+                  <span>Tu puntuación</span>
+                </div>
+
+                <strong class="movie-rating">
+                  <i class="fas fa-star"></i>
+                  {{ movie.personalRating }}/10
+                </strong>
+              </article>
+            }
+          </div>
+        </section>
+      </div>
+    </div>
     <!-- TOP 5 ACTORES -->
     <section class="statistics-section">
       <app-results-header
