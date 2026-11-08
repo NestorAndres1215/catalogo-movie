@@ -15,21 +15,20 @@ import {
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
+import { MediaCardComponent } from '../../../../shared/components/media-card/media-card';
 
 @Component({
   selector: 'app-trending-list',
   standalone: true,
   imports: [
-    RouterLink,
-    DecimalPipe,
-    FavoriteButtonComponent,
     PageHeaderComponent,
     PageLoadingComponent,
     FilterTabsComponent,
     EmptyStateComponent,
     PaginationComponent,
-    ResultsHeaderComponent
-],
+    ResultsHeaderComponent,
+    MediaCardComponent,
+  ],
   templateUrl: './trending-list.html',
   styleUrl: './trending-list.css',
 })
@@ -107,19 +106,19 @@ export class TrendingListComponent implements OnInit {
     { label: 'Hoy', value: 'day' },
     { label: 'Esta semana', value: 'week' },
   ];
-changeTimeWindow(type: FilterType): void {
-  if (type !== 'day' && type !== 'week') {
-    return;
-  }
+  changeTimeWindow(type: FilterType): void {
+    if (type !== 'day' && type !== 'week') {
+      return;
+    }
 
-  if (this.timeWindow() === type) {
-    return;
-  }
+    if (this.timeWindow() === type) {
+      return;
+    }
 
-  this.timeWindow.set(type);
-  this.currentPage.set(1);
-  this.loadTrending();
-}
+    this.timeWindow.set(type);
+    this.currentPage.set(1);
+    this.loadTrending();
+  }
 
   changePage(page: number): void {
     if (page < 1 || page > this.totalPages() || this.loading()) {

@@ -4,26 +4,11 @@
   margin: auto;
 }
 
-.section-heading p {
-  color: #929aaa;
-  font-size: 14px;
-}
-
-.section-heading {
-  margin: 28px 0 20px;
-}
-
-.section-heading h2 {
-  margin-bottom: 6px;
-  font-size: 21px;
-}
-
 .actors-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 24px 18px;
 }
-
 
 @media (max-width: 1200px) {
   .actors-grid {

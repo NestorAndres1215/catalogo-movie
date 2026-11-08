@@ -7,11 +7,7 @@
   >
     <div class="favorite-card__poster">
       @if (imageUrl()) {
-        <img
-          [src]="imageUrl()"
-          [alt]="movie().title"
-          loading="lazy"
-        />
+        <img [src]="imageUrl()" [alt]="movie().title" loading="lazy" />
       } @else {
         <div class="favorite-card__placeholder">
           <i class="fas fa-film"></i>
