@@ -10,38 +10,6 @@
   box-sizing: border-box;
 }
 
-.section-label {
-  color: #e50914;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 2px;
-}
-
-.rankings-header h1 {
-  margin: 10px 0;
-  font-size: 32px;
-}
-
-.rankings-header p {
-  color: #999999;
-  margin: 0;
-}
-
-.reload-button {
-  background: #e50914;
-  border: none;
-  border-radius: 6px;
-  padding: 12px 18px;
-  color: #ffffff;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.reload-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
 .ranking-tabs {
   display: flex;
   gap: 12px;
@@ -99,138 +67,13 @@
   gap: 12px;
 }
 
-.ranking-card {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 14px;
-  background: var(--color-superficie-secundaria);
-  border: 1px solid var(--color-borde);
-  border-radius: var(--radio-borde-pequeno);
-  transition: background var(--transicion-rapida);
-}
-
-.ranking-card:hover {
-  background: var(--color-superficie-elevada);
-  border-color: var(--color-borde-hover);
-}
-.ranking-position {
-  min-width: 30px;
-  color: var(--color-acento);
-  font-size: 23px;
-  font-weight: 800;
-  text-align: center;
-}
-
-.actor-poster {
-  width: 75px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 7px;
-  background: #292929;
-}
-
-.actor-information {
-  flex: 1;
-  min-width: 0;
-}
-
-.actor-information h3 {
-  margin: 0 0 7px;
-  font-size: 17px;
-}
-
-.actor-category {
-  color: var(--color-acento);
-  font-size: 12px;
-  font-weight: 600;
-  border: 1px solid var(--color-acento);
-  border-radius: var(--radio-borde-pequeno);
-  padding: 4px 8px;
-}
-
-.actor-description {
-  margin: 8px 0 0;
-  color: #999999;
-  font-size: 13px;
-}
-
-.actor-rating {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 6px;
-  min-width: 110px;
-}
-
-.actor-rating span {
-  color: #999999;
-  font-size: 10px;
-  letter-spacing: 1px;
-}
-
-.actor-rating strong {
-  color: var(--color-exito);
-  font-size: 20px;
-}
-
-.worst-rating strong {
-  color: var(--color-advertencia);
-}
-
-.error-message {
-  padding: 30px;
-  text-align: center;
-  color: var(--color-texto-atenuado);
-}
-
-.error-message {
-  color: #ff5252;
-}
-
 @media (max-width: 600px) {
   .rankings-container {
     padding: 18px;
   }
 
-  .rankings-header {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
   .ranking-title {
     align-items: flex-start;
     flex-direction: column;
-  }
-
-  .ranking-card {
-    gap: 12px;
-    padding: 10px;
-  }
-
-  .actor-poster {
-    width: 60px;
-    height: 85px;
-  }
-
-  .actor-information h3 {
-    font-size: 14px;
-  }
-
-  .actor-description {
-    font-size: 11px;
-  }
-
-  .actor-rating {
-    min-width: 75px;
-  }
-
-  .actor-rating strong {
-    font-size: 16px;
-  }
-
-  .ranking-position {
-    min-width: 20px;
-    font-size: 18px;
   }
 }
