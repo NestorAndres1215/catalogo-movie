@@ -4,33 +4,7 @@
   margin: auto;
 }
 
-.ranking-tabs {
-  display: flex;
-  gap: 12px;
-}
-.ranking-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: nowrap;
-  gap: 15px;
-  margin-bottom: 25px;
-}
 
-@media (max-width: 768px) {
-  .ranking-toolbar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .ranking-tabs {
-    width: 100%;
-  }
-
-  .ranking-toolbar app-button {
-    align-self: flex-end;
-  }
-}
 
 .movies-grid {
   display: flex;
@@ -55,16 +29,12 @@
     padding: 22px 12px 40px;
   }
 
-  .ranking-section {
-    padding: 14px;
-  }
+
 
   .movies-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px 10px;
   }
 
-  .ranking-tabs {
-    flex-direction: column;
-  }
+
 }

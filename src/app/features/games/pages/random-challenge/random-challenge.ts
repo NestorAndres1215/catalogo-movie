@@ -318,7 +318,7 @@ export class RandomChallengeComponent {
   readonly gameModes: CategoryOption[] = [
     { value: 'movie', label: 'Películas', icon: 'fas fa-film' },
     { value: 'tv', label: 'Series', icon: 'fas fa-tv' },
-    { value: 'person', label: 'Actores', icon: 'fas fa-user-star' },
+    { value: 'person', label: 'Actores', icon: 'fas fa-user' },
   ];
   onSearch(query: string): void {
     this.searchQuery.set(query.trim());

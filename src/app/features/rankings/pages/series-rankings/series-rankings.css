@@ -18,19 +18,6 @@
   min-width: 0;
 }
 
-/* BARRA DE HERRAMIENTAS */
-.ranking-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-  margin-bottom: 25px;
-}
-
-.ranking-toolbar app-button {
-  flex-shrink: 0;
-}
-
 /* SECCIONES */
 .ranking-section {
   margin-top: 20px;
@@ -48,42 +35,8 @@
     padding: 18px;
   }
 
-  .genre-header,
-  .ranking-toolbar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .ranking-toolbar app-button {
-    align-self: flex-end;
-  }
-
-  .ranking-tabs {
-    width: 100%;
-  }
-
-  .rankings-header {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .rankings-header h1 {
-    font-size: 25px;
-  }
-
-  .ranking-card {
-    gap: 12px;
-    padding: 10px;
-  }
-
   .ranking-position {
     min-width: 25px;
     font-size: 19px;
-  }
-}
-
-@media (max-width: 480px) {
-  .ranking-card {
-    flex-wrap: wrap;
   }
 }

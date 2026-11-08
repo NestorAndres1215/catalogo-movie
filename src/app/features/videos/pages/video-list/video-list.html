@@ -4,35 +4,51 @@
     title="Trailers y videos"
     description="Descubre los avances y videos de tus películas y series favoritas."
   />
-  <div class="media-selector">
-    <app-filter-tabs
-      [tabs]="mediaTabs"
-      [selected]="mediaType()"
-      (selectionChange)="changeMediaType($event)"
-    />
-  </div>
-  <div class="filters">
-    <button [class.active]="selectedFilter() === 'all'" (click)="filterVideos('all')">Todos</button>
+  <div class="filters-bar">
+    <!-- TIPO DE CONTENIDO -->
+    <div class="filter-section">
+      <span class="filter-title">Contenido</span>
 
-    <button [class.active]="selectedFilter() === 'Trailer'" (click)="filterVideos('Trailer')">
-      Trailers
-    </button>
+      <app-filter-tabs
+        [tabs]="mediaTabs"
+        [selected]="mediaType()"
+        (selectionChange)="changeMediaType($event)"
+      />
+    </div>
 
-    <button [class.active]="selectedFilter() === 'Teaser'" (click)="filterVideos('Teaser')">
-      Teasers
-    </button>
+    <!-- TIPO DE VIDEO -->
+    <div class="filter-section">
+      <span class="filter-title">Tipo de video</span>
 
-    <button [class.active]="selectedFilter() === 'Clip'" (click)="filterVideos('Clip')">
-      Clips
-    </button>
+      <div class="filters">
+        <button [class.active]="selectedFilter() === 'all'" (click)="filterVideos('all')">
+          Todos
+        </button>
 
-    <button [class.active]="selectedFilter() === 'Featurette'" (click)="filterVideos('Featurette')">
-      Featurettes
-    </button>
+        <button [class.active]="selectedFilter() === 'Trailer'" (click)="filterVideos('Trailer')">
+          Trailers
+        </button>
 
-    <button [class.active]="selectedFilter() === 'official'" (click)="filterVideos('official')">
-      Oficiales
-    </button>
+        <button [class.active]="selectedFilter() === 'Teaser'" (click)="filterVideos('Teaser')">
+          Teasers
+        </button>
+
+        <button [class.active]="selectedFilter() === 'Clip'" (click)="filterVideos('Clip')">
+          Clips
+        </button>
+
+        <button
+          [class.active]="selectedFilter() === 'Featurette'"
+          (click)="filterVideos('Featurette')"
+        >
+          Featurettes
+        </button>
+
+        <button [class.active]="selectedFilter() === 'official'" (click)="filterVideos('official')">
+          Oficiales
+        </button>
+      </div>
+    </div>
   </div>
 
   @if (loading()) {
@@ -44,9 +60,12 @@
   }
 
   @if (!loading() && filteredVideos.length === 0) {
-    <p class="message">No se encontraron videos para este filtro.</p>
+    <app-empty-state
+      icon="fa-video"
+      title="No se encontraron videos"
+      description="No hay videos disponibles para este filtro."
+    />
   }
-
   <div class="videos-grid">
     @for (video of filteredVideos; track video.id) {
       <article class="video-card">

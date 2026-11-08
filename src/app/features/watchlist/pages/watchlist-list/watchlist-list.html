@@ -11,7 +11,9 @@
   <app-stats [stats]="stats()" />
 
   <!-- FILTROS -->
-  <div class="filter-container">
+  <div
+    class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4"
+  >
     <app-filter-tabs
       [tabs]="watchlistTabs"
       [selected]="selectedFilter()"

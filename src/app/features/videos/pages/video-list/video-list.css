@@ -11,7 +11,7 @@
 }
 
 .filters button {
- display: flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
@@ -53,6 +53,41 @@
 .filters button {
   padding: 10px 35px;
   font-size: 13px;
+}
+
+/* BARRA DE FILTROS (tipo de contenido + tipo de video) */
+
+.filters-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px 36px;
+  margin-bottom: 30px;
+}
+
+.filter-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.filter-title {
+  color: var(--color-texto-atenuado);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+}
+
+.filters-bar .filters {
+  margin-bottom: 0;
+}
+
+.filters-bar .filters button {
+  min-height: 48px;
+  padding: 10px 22px;
 }
 
 /* GRID DE VIDEOS */
@@ -260,6 +295,43 @@
     font-size: 24px;
   }
 
+  /* BARRA DE FILTROS: una sección debajo de la otra */
+  .filters-bar {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+
+  .filter-section {
+    width: 100%;
+  }
+
+  .filters-bar .filters button {
+    padding: 10px 8px;
+  }
+
+  /* FILTROS: cuadrícula de 3 columnas iguales */
+  .filters {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin-bottom: 22px;
+  }
+
+  .filters button {
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+    padding: 10px 8px;
+    font-size: 13px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .videos-grid {
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 15px;
@@ -292,11 +364,12 @@
   }
 
   .filters {
-    gap: 7px;
+    gap: 6px;
   }
 
   .filters button {
-    padding: 7px 11px;
+    min-height: 42px;
+    padding: 8px 4px;
     font-size: 12px;
   }
 }

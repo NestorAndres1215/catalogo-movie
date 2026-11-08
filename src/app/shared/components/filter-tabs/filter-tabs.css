@@ -2,6 +2,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  width: 100%;
+  min-width: 0;
   padding: 5px;
   background: var(--color-superficie-secundaria);
   border: 1px solid var(--color-borde);
@@ -9,13 +11,20 @@
 }
 
 .filter-tabs button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 10px 18px;
   color: var(--color-texto-secundario);
   background: transparent;
   border: 1px solid transparent;
   border-radius: 7px;
   cursor: pointer;
+  font: inherit;
   font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;
   transition: all 0.2s ease;
 }
 
@@ -30,9 +39,34 @@
   border-color: var(--color-acento);
 }
 
-@media (max-width: 480px) {
+.filter-tabs button:focus-visible {
+  outline: 2px solid var(--color-acento);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   RESPONSIVE
+   Los botones se reparten todo el ancho:
+   cada fila queda completa y sin huecos.
+======================================== */
+
+@media (max-width: 650px) {
+  .filter-tabs {
+    gap: 4px;
+    padding: 4px;
+  }
+
   .filter-tabs button {
-    padding: 9px 13px;
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 380px) {
+  .filter-tabs button {
+    padding: 9px 8px;
     font-size: 12px;
   }
 }

@@ -7,7 +7,9 @@
 
   <app-stats [stats]="stats()" />
 
-  <div class="favorites-toolbar">
+  <div
+    class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4"
+  >
     <app-filter-tabs
       [tabs]="favoriteTabs"
       [selected]="selectedType()"
@@ -18,16 +20,16 @@
   </div>
 
   @if (filteredFavorites().length > 0) {
-<div class="favorites-grid">
-  @for (favorite of filteredFavorites(); track favorite.mediaType + '-' + favorite.id) {
-<app-favorite-movie-card
-  [movie]="toSavedMovie(favorite)"
-  [imageUrl]="getImageUrl(favorite.posterPath)"
-  (open)="openFavorite(favorite)"
-  (remove)="removeFavorite(favorite)"
-/>
-  }
-</div>
+    <div class="favorites-grid">
+      @for (favorite of filteredFavorites(); track favorite.mediaType + '-' + favorite.id) {
+        <app-favorite-movie-card
+          [movie]="toSavedMovie(favorite)"
+          [imageUrl]="getImageUrl(favorite.posterPath)"
+          (open)="openFavorite(favorite)"
+          (remove)="removeFavorite(favorite)"
+        />
+      }
+    </div>
   } @else {
     @if (totalFavorites() === 0) {
       <app-empty-state

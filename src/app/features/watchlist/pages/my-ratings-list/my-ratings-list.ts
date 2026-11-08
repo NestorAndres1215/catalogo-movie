@@ -13,6 +13,7 @@ import {
   FilterType,
 } from '../../../../shared/components/filter-tabs/filter-tabs';
 import { MediaDetailsCardComponent } from '../../../../shared/components/media-details-card/media-details-card';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
 
 type RatingFilter = 'all' | 'movie' | 'tv';
 
@@ -25,7 +26,8 @@ type RatingFilter = 'all' | 'movie' | 'tv';
     EmptyStateComponent,
     FilterTabsComponent,
     MediaDetailsCardComponent,
-  ],
+    ResultsHeaderComponent
+],
   templateUrl: './my-ratings-list.html',
   styleUrl: './my-ratings-list.css',
 })

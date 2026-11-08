@@ -14,11 +14,12 @@ import {
   FilterTabsComponent,
   FilterType,
 } from '../../../../shared/components/filter-tabs/filter-tabs';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-video-list',
   standalone: true,
-  imports: [DatePipe, PageHeaderComponent, FilterTabsComponent],
+  imports: [DatePipe, PageHeaderComponent, FilterTabsComponent, EmptyStateComponent],
   templateUrl: './video-list.html',
   styleUrl: './video-list.css',
 })

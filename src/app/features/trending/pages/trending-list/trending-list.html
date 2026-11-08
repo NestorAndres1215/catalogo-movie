@@ -14,29 +14,31 @@
     <div class="banner-decoration">TRENDING</div>
   </div>
 
-  <div class="filters-container">
+  <div
+    class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4"
+  >
     <div class="filter-group">
       <span class="filter-label">Contenido</span>
 
-      <div class="filter-tabs">
+  
         <app-filter-tabs
           [tabs]="mediaTabs"
           [selected]="mediaType()"
           (selectionChange)="changeMediaType($event)"
         />
-      </div>
+ 
     </div>
 
     <div class="filter-group">
       <span class="filter-label">Periodo</span>
 
-      <div class="filter-tabs">
+
         <app-filter-tabs
           [tabs]="timeTabs"
           [selected]="timeWindow()"
           (selectionChange)="changeTimeWindow($event)"
         />
-      </div>
+
     </div>
   </div>
 

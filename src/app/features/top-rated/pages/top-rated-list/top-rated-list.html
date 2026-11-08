@@ -5,7 +5,9 @@
     description="Descubre las películas y series con las mejores puntuaciones de la comunidad."
   />
 
-  <div class="filters">
+  <div
+    class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4"
+  >
     <app-filter-tabs
       [tabs]="mediaTabs"
       [selected]="mediaType()"

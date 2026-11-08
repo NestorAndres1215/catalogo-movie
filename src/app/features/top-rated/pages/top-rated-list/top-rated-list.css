@@ -4,13 +4,6 @@
   margin: auto;
 }
 
-.filters {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
-}
-
 .results-count {
   color: var(--color-texto-secundario);
   font-size: 13px;
@@ -22,120 +15,6 @@
   gap: 25px;
 }
 
-.media-card {
-  min-width: 0;
-  overflow: hidden;
-  border-radius: var(--radio-borde);
-  background: var(--color-superficie-secundaria);
-  transition: transform 0.25s ease;
-}
-
-.media-card:hover {
-  transform: translateY(-6px);
-}
-
-.poster-container {
-  position: relative;
-  aspect-ratio: 2 / 3;
-  overflow: hidden;
-  background: var(--color-superficie-elevada);
-}
-
-.poster-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.no-poster {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  color: var(--color-texto-atenuado);
-}
-
-.ranking {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  padding: 6px 10px;
-  border-radius: 6px;
-  background: var(--color-acento);
-  color: var(--color-texto-sobre-acento);
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.rating {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  padding: 6px 10px;
-  border-radius: 6px;
-  background: rgba(11, 11, 15, 0.9);
-  color: var(--color-texto);
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.rating span {
-  color: var(--color-valoracion);
-}
-
-.media-info {
-  padding: 14px;
-}
-
-.media-info h3 {
-  margin: 0 0 12px;
-  font-size: 15px;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-.media-info h3:hover {
-  color: var(--color-acento);
-}
-.media-meta {
-  display: flex;
-  justify-content: space-between;
-  gap: 5px;
-  color: var(--color-texto-atenuado);
-  font-size: 11px;
-}
-
-.detail-button {
-  width: 100%;
-  margin-top: 15px;
-  padding: 9px;
-  border: 1px solid var(--color-acento);
-  border-radius: 7px;
-  background: transparent;
-  color: var(--color-acento);
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.detail-button:hover {
-  background: var(--color-acento);
-  color: var(--color-texto-sobre-acento);
-}
-
-.error-message {
-  padding: 60px 20px;
-  text-align: center;
-  color: var(--color-texto-secundario);
-}
-
-.error-message button {
-  padding: 9px 18px;
-  border: none;
-  border-radius: 7px;
-  background: var(--color-acento);
-  color: var(--color-texto-sobre-acento);
-  cursor: pointer;
-}
 @media (max-width: 650px) {
   .top-rated-page {
     padding: 20px;
@@ -159,5 +38,4 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
   }
-
 }

@@ -14,17 +14,41 @@
   font-weight: 700;
 }
 
+/* ========================================
+   GRID (escritorio): columnas = cantidad de botones, máximo 4
+======================================== */
+
 .category-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
 }
 
+/* 3 botones → 3 columnas */
+.category-grid:not(:has(button:nth-child(4))) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* 2 botones → 2 columnas */
+.category-grid:not(:has(button:nth-child(3))) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* 1 botón → 1 columna */
+.category-grid:not(:has(button:nth-child(2))) {
+  grid-template-columns: 1fr;
+}
+
+/* ========================================
+   BOTONES
+======================================== */
+
 .category-grid button {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  min-width: 0;
   min-height: 52px;
   padding: 14px 10px;
   color: var(--color-texto-secundario);
@@ -46,22 +70,49 @@
 }
 
 .category-grid button i {
+  flex-shrink: 0;
   font-size: 17px;
 }
-.category-grid:not(:has(button:nth-child(4))) {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
 
-.category-grid:not(:has(button:nth-child(3))) {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.category-grid:not(:has(button:nth-child(2))) {
-  grid-template-columns: 1fr;
-}
+/* ========================================
+   RESPONSIVE
+   4 o más botones → 2 columnas
+   3 botones       → 3 columnas (icono arriba, texto abajo)
+   2 botones       → 2 columnas
+   1 botón         → 1 columna
+======================================== */
 
 @media (max-width: 600px) {
+  .category-section {
+    padding: 18px 14px;
+  }
+
+  .category-section h2 {
+    margin-bottom: 14px;
+  }
+
+  /* 4 o más botones → 2 columnas
+     (con 3, 2 o 1 se mantienen las reglas de arriba, que tienen más prioridad) */
   .category-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  /* Si la cantidad es impar (5, 7…), el último ocupa todo el ancho */
+  .category-grid:has(button:nth-child(4)) button:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
+  .category-grid button {
+    padding: 12px 8px;
+    font-size: 13px;
+  }
+
+  /* Exactamente 3 botones: icono arriba y texto abajo para que quepan */
+  .category-grid:not(:has(button:nth-child(4))):has(button:nth-child(3)) button {
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px 6px;
+    font-size: 12px;
   }
 }

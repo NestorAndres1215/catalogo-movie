@@ -6,7 +6,7 @@
   />
 
   @if (!selectedCollection()) {
-    <div class="ranking-tabs">
+     <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mt-4 mb-4">
       <app-filter-tabs
         [tabs]="rankingTabs"
         [selected]="activeRanking()"
@@ -22,7 +22,7 @@
     </div>
 
     <section class="search-section">
-      <h2>Buscar una saga</h2>
+
 
       <div class="search-box">
         <app-search

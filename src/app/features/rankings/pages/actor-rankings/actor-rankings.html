@@ -1,18 +1,18 @@
-<div class="rankings-container">
+<div class="rankings-container container-fluid">
   <app-page-header
     section="CINEVERSE / RANKINGS"
     title="Ranking de actores"
     description="Descubre los actores más y menos populares de TMDB."
   />
 
-  <div class="ranking-toolbar">
-    <nav class="ranking-tabs">
-      <app-filter-tabs
-        [tabs]="rankingTabs"
-        [selected]="activeRanking()"
-        (selectionChange)="changeRanking($event)"
-      />
-    </nav>
+  <!-- CONTROLES -->
+  <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mt-4 mb-4">
+    <app-filter-tabs
+      [tabs]="rankingTabs"
+      [selected]="activeRanking()"
+      (selectionChange)="changeRanking($event)"
+    />
+
     <app-button
       text="Actualizar"
       icon="fa-rotate-right"
@@ -22,6 +22,7 @@
     />
   </div>
 
+  <!-- CARGANDO -->
   @if (loading()) {
     <app-page-loading
       title="Cargando ranking de actores..."
@@ -31,21 +32,31 @@
     />
   }
 
+  <!-- ERROR -->
   @if (error()) {
-    <div class="error-message">
+    <div class="error-message my-4" role="alert">
+      <i class="fas fa-circle-exclamation"></i>
       {{ error() }}
     </div>
   }
 
+  <!-- RESULTADOS -->
   @if (!loading() && !error()) {
     @if (activeRanking() === 'best') {
-      <section class="ranking-section">
-        <div class="ranking-title">
-          <h2>Top 10 actores más populares</h2>
-          <span>Mayor popularidad</span>
+      <section class="ranking-section mt-4">
+        <div class="ranking-title d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4">
+          <div>
+            <h2>Top 10 actores más populares</h2>
+            <p>Los actores que más destacan en el catálogo.</p>
+          </div>
+
+          <span class="ranking-description">
+            <i class="fas fa-arrow-trend-up"></i>
+            Mayor popularidad
+          </span>
         </div>
 
-        <div class="ranking-list">
+        <div class="ranking-list d-flex flex-column gap-3">
           @for (actor of bestActors(); track actor.id; let i = $index) {
             <app-ranking-card
               [serie]="actor"
@@ -69,13 +80,20 @@
     }
 
     @if (activeRanking() === 'worst') {
-      <section class="ranking-section">
-        <div class="ranking-title">
-          <h2>Top 10 de menor popularidad</h2>
-          <span>Menor popularidad</span>
+      <section class="ranking-section mt-4">
+        <div class="ranking-title d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4">
+          <div>
+            <h2>Top 10 de menor popularidad</h2>
+            <p>Actores con menor popularidad dentro del catálogo.</p>
+          </div>
+
+          <span class="ranking-description">
+            <i class="fas fa-arrow-trend-down"></i>
+            Menor popularidad
+          </span>
         </div>
 
-        <div class="ranking-list">
+        <div class="ranking-list d-flex flex-column gap-3">
           @for (actor of worstActors(); track actor.id; let i = $index) {
             <app-ranking-card
               [serie]="actor"
@@ -98,5 +116,6 @@
       </section>
     }
   }
+
   <app-footer />
 </div>
