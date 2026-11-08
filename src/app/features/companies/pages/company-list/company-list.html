@@ -31,11 +31,7 @@
   @if (!searchQuery()) {
     <div class="quick-search">
       @for (company of popularSearches; track company) {
-        <button
-          class="quick-search__chip"
-          type="button"
-          (click)="searchPopularCompany(company)"
-        >
+        <button class="quick-search__chip" type="button" (click)="searchPopularCompany(company)">
           {{ company }}
         </button>
       }
@@ -47,9 +43,7 @@
     <header class="results-header">
       <span class="results-header__label">RESULTADOS</span>
       <h2 class="results-header__title">Productoras encontradas</h2>
-      <p class="results-header__text">
-        {{ totalResults() }} resultados para "{{ searchQuery() }}"
-      </p>
+      <p class="results-header__text">{{ totalResults() }} resultados para "{{ searchQuery() }}"</p>
     </header>
   }
 
@@ -68,8 +62,6 @@
     <div class="message message--error" role="alert">
       <h2 class="message__title">No se pudieron cargar las productoras</h2>
       <p class="message__text">{{ errorMessage() }}</p>
-
-    
     </div>
   }
 
@@ -110,11 +102,6 @@
               <i class="fas fa-globe" aria-hidden="true"></i>
               {{ company.origin_country || 'País no disponible' }}
             </span>
-          </div>
-
-          <div class="company-card__footer">
-            <span>Explorar productora</span>
-            <i class="fas fa-arrow-right company-card__arrow" aria-hidden="true"></i>
           </div>
         </a>
       }

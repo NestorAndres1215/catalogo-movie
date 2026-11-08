@@ -5,29 +5,17 @@
     description="Descubre películas y series de diferentes partes del mundo según su idioma original."
   />
 
-  <!-- Selector de idioma -->
   <section class="filters-section">
-    <div class="filter-group">
-      @if (loadingLanguages()) {
-        <app-page-loading
-          title="Cargando idiomas..."
-          description="Explorando los idiomas disponibles en el cine."
-          detail="Consultando TMDB..."
-          icon="fa-language"
-        />
-      } @else {
-        <app-select-filter
-          id="language-select"
-          label="Selecciona un idioma"
-          placeholder="Todos los idiomas"
-          [options]="languageOptions()"
-          [selectedValue]="selectedLanguage()"
-          (selectionChange)="changeLanguage($event)"
-        />
-      }
-    </div>
+    <app-select-filter
+      id="language-select"
+      label="Selecciona un idioma"
+      placeholder="Todos los idiomas"
+      [options]="languageOptions()"
+      [selectedValue]="selectedLanguage()"
+      (selectionChange)="changeLanguage($event)"
+    />
 
-    <div class="media-selector">
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
       <app-filter-tabs
         [tabs]="mediaTabs"
         [selected]="mediaType()"
@@ -36,7 +24,6 @@
     </div>
   </section>
 
-  <!-- Información del idioma -->
   <section class="results-header">
     <app-results-header
       [title]="getSelectedLanguageName()"
@@ -48,14 +35,6 @@
     </span>
   </section>
 
-  <!-- Error -->
-  @if (errorMessage()) {
-    <div class="error-message">
-      {{ errorMessage() }}
-    </div>
-  }
-
-  <!-- Cargando contenido -->
   @if (loadingContent()) {
     <app-page-loading
       title="Buscando contenido"
@@ -64,7 +43,7 @@
       icon="fa-magnifying-glass"
     />
   }
-  <!-- Resultados -->
+
   @if (!loadingContent() && movies().length > 0) {
     <section class="movies-grid">
       @for (media of movies(); track media.id) {
@@ -72,7 +51,6 @@
       }
     </section>
 
-    <!-- Paginación -->
     <app-pagination
       [currentPage]="page()"
       [totalPages]="totalPages()"
@@ -81,7 +59,6 @@
     />
   }
 
-  <!-- Sin resultados -->
   @if (!loadingContent() && !errorMessage() && movies().length === 0) {
     <app-empty-state
       icon="fa-language"

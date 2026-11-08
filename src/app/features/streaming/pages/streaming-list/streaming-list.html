@@ -1,12 +1,15 @@
 <section class="streaming-page">
+  <!-- ===== ENCABEZADO ===== -->
   <app-page-header
     section="CINEVERSE ORIGINAL"
     title="Streaming y plataformas"
     description="Explora películas y series disponibles en tus plataformas favoritas."
   />
 
-  <!-- Selector de contenido -->
-  <div class="media-selector">
+  <!-- ===== SELECTOR: PELÍCULAS / SERIES ===== -->
+  <div
+    class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4"
+  >
     <app-filter-tabs
       [tabs]="mediaTabs"
       [selected]="mediaType()"
@@ -14,7 +17,7 @@
     />
   </div>
 
-  <!-- Plataformas -->
+  <!-- ===== PLATAFORMAS ===== -->
   <section class="providers-section">
     <div class="section-heading">
       <div>
@@ -23,7 +26,7 @@
       </div>
 
       <div class="carousel-controls">
-        <span class="provider-count"> {{ providers().length }} plataformas </span>
+        <span class="provider-count">{{ providers().length }} plataformas</span>
 
         <button
           type="button"
@@ -47,9 +50,7 @@
 
     @if (loadingProviders()) {
       <div class="loading-message">Cargando plataformas...</div>
-    }
-
-    @if (!loadingProviders() && providers().length > 0) {
+    } @else if (providers().length > 0) {
       <div class="providers-carousel" #providersCarousel>
         @for (provider of providers(); track provider.provider_id) {
           <button
@@ -63,14 +64,14 @@
               [alt]="provider.provider_name"
               loading="lazy"
             />
-
             <span>{{ provider.provider_name }}</span>
           </button>
         }
       </div>
     }
   </section>
-  <!-- Contenido de plataforma -->
+
+  <!-- ===== CATÁLOGO ===== -->
   <section class="catalog-section">
     <div class="section-heading">
       <div>
@@ -88,38 +89,25 @@
         detail="Conectando con TMDB..."
         icon="fa-tv"
       />
-    }
-
-    @if (errorMessage()) {
-      <div class="error-message">
-        {{ errorMessage() }}
-      </div>
-    }
-
-    @if (
-      !loadingContents() &&
-      !errorMessage() &&
-      contents().length === 0 &&
-      selectedProvider() !== null
-    ) {
+    } @else if (errorMessage()) {
+      <div class="error-message">{{ errorMessage() }}</div>
+    } @else if (contents().length === 0 && selectedProvider() !== null) {
       <app-empty-state
         icon="fa-tv"
         title="No se encontró contenido"
         description="No se encontró contenido para esta plataforma."
       />
-    }
-
-    @if (!loadingContents() && contents().length > 0) {
-<div class="content-grid">
-  @for (media of contents(); track media.id) {
-    <app-media-card
-      [media]="media"
-      [mediaType]="mediaType()"
-      variant="description"
-      [isUpcoming]="isUpcoming(media.release_date || media.first_air_date)"
-    />
-  }
-</div>
+    } @else if (contents().length > 0) {
+      <div class="content-grid">
+        @for (media of contents(); track media.id) {
+          <app-media-card
+            [media]="media"
+            [mediaType]="mediaType()"
+            variant="description"
+            [isUpcoming]="isUpcoming(media.release_date || media.first_air_date)"
+          />
+        }
+      </div>
     }
   </section>
 </section>

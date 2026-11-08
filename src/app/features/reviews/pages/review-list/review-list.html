@@ -5,7 +5,9 @@
     description="Descubre las opiniones y valoraciones de la comunidad sobre películas y series."
   />
 
-  <div class="media-selector">
+  <div
+    class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4"
+  >
     <app-filter-tabs
       [tabs]="mediaTabs"
       [selected]="mediaType()"

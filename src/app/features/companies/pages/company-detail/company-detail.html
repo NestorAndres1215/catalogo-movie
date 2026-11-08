@@ -24,8 +24,6 @@
   @if (!loading() && company(); as companyData) {
     <a class="back-link" routerLink="/companies"> ← Volver a productoras </a>
 
-    <!-- ENCABEZADO -->
-
     <header class="company-header">
       <div class="company-logo">
         @if (companyData.logo_path) {
@@ -84,24 +82,18 @@
     <!-- PELÍCULAS -->
 
     <section class="movies-section">
-    
-        <app-results-header
-          title="Películas de {{ companyData.name }}"
-          description="Filmografía de la productora."
-          [totalResults]="movies().length"
-        />
-    
+      <app-results-header
+        title="Películas de {{ companyData.name }}"
+        description="Filmografía de la productora."
+        [totalResults]="movies().length"
+      />
 
       @if (movies().length > 0) {
-   <div class="movies-grid">
-  @for (movie of movies(); track movie.id) {
-    <app-media-card
-      [media]="movie"
-      mediaType="movie"
-      variant="description"
-    />
-  }
-</div>
+        <div class="movies-grid">
+          @for (movie of movies(); track movie.id) {
+            <app-media-card [media]="movie" mediaType="movie" variant="description" />
+          }
+        </div>
       } @else {
         <app-empty-state
           icon="fa-film"

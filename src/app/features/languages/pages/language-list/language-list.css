@@ -13,13 +13,6 @@
   margin-bottom: 35px;
 }
 
-.filter-group {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  min-width: 250px;
-}
-
 .media-selector {
   display: flex;
   gap: 10px;

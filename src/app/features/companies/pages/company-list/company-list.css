@@ -210,26 +210,6 @@
   font-size: 13px;
 }
 
-/* Pie */
-.company-card__footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 17px 23px;
-  color: var(--color-acento);
-  font-size: 13px;
-  font-weight: 700;
-  border-top: 1px solid var(--color-borde);
-}
-
-.company-card__arrow {
-  transition: transform 0.2s ease;
-}
-
-.company-card:hover .company-card__arrow {
-  transform: translateX(5px);
-}
-
 /* ---------- Responsive ---------- */
 @media (max-width: 750px) {
   .companies-page {

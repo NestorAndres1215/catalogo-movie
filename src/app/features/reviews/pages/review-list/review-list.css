@@ -4,12 +4,6 @@
   margin: auto;
 }
 
-.media-selector {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 30px;
-}
-
 .reviews-count {
   margin-bottom: 20px;
   color: var(--color-texto-secundario);
@@ -153,23 +147,6 @@
 
 .review-footer a:hover {
   color: var(--color-acento-hover);
-}
-
-.message {
-  padding: 50px 20px;
-  text-align: center;
-  color: var(--color-texto-secundario);
-}
-
-
-
-.error-message {
-  padding: 15px;
-  margin-bottom: 20px;
-  border: 1px solid var(--color-danger);
-  border-radius: 8px;
-  background: var(--color-danger-hover);
-  color: var(--color-danger);
 }
 
 @media (max-width: 768px) {
