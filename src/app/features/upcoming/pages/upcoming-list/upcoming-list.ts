@@ -4,7 +4,6 @@ import { DecimalPipe } from '@angular/common';
 
 import { UpcomingService } from '../../../../core/service/upcoming.service';
 import { UpcomingMedia } from '../../../../core/models/upcoming.interface';
-import { FavoriteButtonComponent } from '../../../../shared/components/favorite-button/favorite-button';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import {
@@ -21,14 +20,13 @@ import { MediaCardComponent } from '../../../../shared/components/media-card/med
   standalone: true,
   imports: [
     DecimalPipe,
-    
     PageHeaderComponent,
     PageLoadingComponent,
     FilterTabsComponent,
     EmptyStateComponent,
     PaginationComponent,
-    MediaCardComponent
-],
+    MediaCardComponent,
+  ],
   templateUrl: './upcoming-list.html',
   styleUrl: './upcoming-list.css',
 })
@@ -93,20 +91,20 @@ export class UpcomingListComponent {
     });
   }
 
-changeMediaType(type: FilterType): void {
-  if (type !== 'movie' && type !== 'tv') {
-    return;
+  changeMediaType(type: FilterType): void {
+    if (type !== 'movie' && type !== 'tv') {
+      return;
+    }
+
+    if (this.mediaType() === type) {
+      return;
+    }
+
+    this.mediaType.set(type);
+    this.currentPage.set(1);
+
+    this.loadUpcoming();
   }
-
-  if (this.mediaType() === type) {
-    return;
-  }
-
-  this.mediaType.set(type);
-  this.currentPage.set(1);
-
-  this.loadUpcoming();
-}
 
   changePage(page: number): void {
     if (page < 1 || page > this.totalPages() || page === this.currentPage()) {

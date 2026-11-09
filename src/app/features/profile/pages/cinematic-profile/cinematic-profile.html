@@ -50,36 +50,42 @@
           </div>
         </div>
 
-        <div class="information-grid">
-          <article class="information-card">
-            <span class="card-icon">
-              <i class="fas fa-user"></i>
-            </span>
-            <div>
-              <small>Nombre de usuario</small>
-              <strong>{{ currentUser.name }}</strong>
-            </div>
-          </article>
+        <div class="row g-3">
+          <div class="col-12 col-lg-4">
+            <article class="information-card h-100">
+              <span class="card-icon">
+                <i class="fas fa-user"></i>
+              </span>
+              <div>
+                <small>Nombre de usuario</small>
+                <strong>{{ currentUser.name }}</strong>
+              </div>
+            </article>
+          </div>
 
-          <article class="information-card">
-            <span class="card-icon">
-              <i class="fas fa-envelope"></i>
-            </span>
-            <div>
-              <small>Correo electrónico</small>
-              <strong>{{ currentUser.email }}</strong>
-            </div>
-          </article>
+          <div class="col-12 col-lg-4">
+            <article class="information-card h-100">
+              <span class="card-icon">
+                <i class="fas fa-envelope"></i>
+              </span>
+              <div>
+                <small>Correo electrónico</small>
+                <strong>{{ currentUser.email }}</strong>
+              </div>
+            </article>
+          </div>
 
-          <article class="information-card">
-            <span class="card-icon">
-              <i class="fas fa-id-card"></i>
-            </span>
-            <div>
-              <small>Identificador de usuario</small>
-              <strong class="user-id">{{ currentUser.id }}</strong>
-            </div>
-          </article>
+          <div class="col-12 col-lg-4">
+            <article class="information-card h-100">
+              <span class="card-icon">
+                <i class="fas fa-id-card"></i>
+              </span>
+              <div>
+                <small>Identificador de usuario</small>
+                <strong class="user-id">{{ currentUser.id }}</strong>
+              </div>
+            </article>
+          </div>
         </div>
 
         <div class="quick-access">
@@ -223,9 +229,12 @@
                 </div>
               </div>
 
-              <button type="button" class="add-button" (click)="addActor()">
-                ❤️ Agregar a mis favoritos
-              </button>
+              <app-button
+                text="Agregar a mis favoritos"
+                icon="fa-heart"
+                variant="primary"
+                (clicked)="addActor()"
+              />
             </div>
 
             @if (loadingActorMovies()) {
@@ -270,7 +279,6 @@
             </div>
           }
 
-          <!-- ACTORES GUARDADOS -->
           <div class="tag-list">
             <app-results-header
               title="Actores que guardaste"
@@ -283,10 +291,11 @@
 
                 <button
                   type="button"
+                  class="remove-button"
                   (click)="removeActor(actor)"
                   [attr.aria-label]="'Eliminar ' + actor"
                 >
-                  ×
+                  <i class="fas fa-xmark"></i>
                 </button>
               </span>
             } @empty {
@@ -298,10 +307,6 @@
             }
           </div>
         </article>
-
-        <!-- ================================= -->
-        <!-- DIRECTORES FAVORITOS -->
-        <!-- ================================= -->
 
         <article class="preference-card">
           <div class="preference-heading">
@@ -359,9 +364,12 @@
                 </div>
               </div>
 
-              <button type="button" class="add-button" (click)="addDirector()">
-                ❤️ Agregar a mis favoritos
-              </button>
+              <app-button
+                text="Agregar a mis favoritos"
+                icon="fa-heart"
+                variant="primary"
+                (clicked)="addDirector()"
+              />
             </div>
 
             @if (loadingDirectorMovies()) {
@@ -369,7 +377,10 @@
             }
 
             <div class="filmography-section">
-              <h4>🎬 Películas de {{ director.name }}</h4>
+              <h4>
+                <i class="fas fa-film"></i>
+                Películas de {{ director.name }}
+              </h4>
 
               @if (directorMovies().length > 0) {
                 <div class="filmography-grid">
@@ -419,10 +430,11 @@
 
                 <button
                   type="button"
+                  class="remove-button"
                   (click)="removeDirector(director)"
                   [attr.aria-label]="'Eliminar ' + director"
                 >
-                  ×
+                  <i class="fas fa-xmark"></i>
                 </button>
               </span>
             } @empty {
@@ -435,10 +447,6 @@
           </div>
         </article>
 
-        <!-- ================================= -->
-        <!-- PELÍCULAS GUARDADAS -->
-        <!-- ================================= -->
-
         <article class="preference-card">
           <div class="preference-heading">
             <div class="preference-icon">
@@ -450,9 +458,12 @@
             </div>
 
             @if (savedMovies().length > 0) {
-              <button type="button" class="clear-button" (click)="clearSavedMovies()">
-                <i class="fas fa-trash"></i> Eliminar todas
-              </button>
+              <app-button
+                text="Eliminar todas"
+                icon="fa-trash"
+                variant="secondary"
+                (clicked)="clearSavedMovies()"
+              />
             }
           </div>
 
