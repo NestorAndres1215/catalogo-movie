@@ -70,6 +70,23 @@
     padding: 18px;
   }
 
+  .decades-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .decade-button {
+    width: 100%;
+    min-width: 0;
+    padding: 12px 6px;
+    font-size: 13px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .page-header h1 {
     font-size: 27px;
   }

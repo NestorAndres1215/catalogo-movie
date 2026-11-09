@@ -12,7 +12,7 @@
 
   <!-- FILTROS -->
   <div
-    class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4"
+    class="ranking-toolbar d-flex flex-column flex-md-row align-items-stretch align-items-md-end justify-content-between gap-3 mt-4 mb-4"
   >
     <app-filter-tabs
       [tabs]="watchlistTabs"
@@ -20,12 +20,14 @@
       (selectionChange)="selectFilter($event)"
     />
     @if (watchlist().length > 0) {
-      <app-button
-        text="Vaciar lista"
-        icon="fa-trash"
-        variant="secondary"
-        (clicked)="clearWatchlist()"
-      />
+      <div class="ranking-action">
+        <app-button
+          text="Vaciar lista"
+          icon="fa-trash"
+          variant="secondary"
+          (clicked)="clearWatchlist()"
+        />
+      </div>
     }
   </div>
   <app-results-header

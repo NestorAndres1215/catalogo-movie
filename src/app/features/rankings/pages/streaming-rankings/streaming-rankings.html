@@ -8,10 +8,9 @@
     class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4"
   >
     <div class="region-info">
-      <span>🇵🇪 Perú</span>
-      <span>Películas y series</span>
-      <span>Suscripción</span>
-      <span>Promedio de popularidad</span>
+      @for (info of regionInfo; track info) {
+        <span>{{ info }}</span>
+      }
     </div>
 
     <app-button

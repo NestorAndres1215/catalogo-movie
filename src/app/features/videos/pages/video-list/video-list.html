@@ -4,11 +4,9 @@
     title="Trailers y videos"
     description="Descubre los avances y videos de tus películas y series favoritas."
   />
-  <div class="filters-bar">
-    <!-- TIPO DE CONTENIDO -->
-    <div class="filter-section">
-      <span class="filter-title">Contenido</span>
 
+  <div class="row g-3 mb-4 justify-content-md-between">
+    <div class="col-12 col-md-auto">
       <app-filter-tabs
         [tabs]="mediaTabs"
         [selected]="mediaType()"
@@ -16,48 +14,24 @@
       />
     </div>
 
-    <!-- TIPO DE VIDEO -->
-    <div class="filter-section">
-      <span class="filter-title">Tipo de video</span>
+    <div class="col-12 col-md-auto">
+      <div class="filter-section d-flex flex-column gap-2">
+        <span class="filter-title">Tipo de video</span>
 
-      <div class="filters">
-        <button [class.active]="selectedFilter() === 'all'" (click)="filterVideos('all')">
-          Todos
-        </button>
-
-        <button [class.active]="selectedFilter() === 'Trailer'" (click)="filterVideos('Trailer')">
-          Trailers
-        </button>
-
-        <button [class.active]="selectedFilter() === 'Teaser'" (click)="filterVideos('Teaser')">
-          Teasers
-        </button>
-
-        <button [class.active]="selectedFilter() === 'Clip'" (click)="filterVideos('Clip')">
-          Clips
-        </button>
-
-        <button
-          [class.active]="selectedFilter() === 'Featurette'"
-          (click)="filterVideos('Featurette')"
-        >
-          Featurettes
-        </button>
-
-        <button [class.active]="selectedFilter() === 'official'" (click)="filterVideos('official')">
-          Oficiales
-        </button>
+        <div class="filters">
+          @for (filter of videoFilters; track filter.value) {
+            <button
+              type="button"
+              [class.active]="selectedFilter() === filter.value"
+              (click)="filterVideos(filter.value)"
+            >
+              {{ filter.label }}
+            </button>
+          }
+        </div>
       </div>
     </div>
   </div>
-
-  @if (loading()) {
-    <p class="message">Cargando trailers y videos...</p>
-  }
-
-  @if (errorMessage()) {
-    <p class="error-message">{{ errorMessage() }}</p>
-  }
 
   @if (!loading() && filteredVideos.length === 0) {
     <app-empty-state
@@ -72,7 +46,9 @@
         <div class="video-thumbnail" (click)="playVideo(video)">
           <img [src]="getYoutubeThumbnail(video.key)" [alt]="video.name" />
 
-          <span class="play-icon">▶</span>
+          <span class="play-icon">
+            <i class="fas fa-play"></i>
+          </span>
         </div>
 
         <div class="video-info">

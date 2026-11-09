@@ -6,13 +6,15 @@
   />
 
   <!-- Selector de rankings -->
- <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mt-4 mb-4">
-    <app-filter-tabs
-      [tabs]="rankingTabs"
-      [selected]="activeRanking()"
-      (selectionChange)="changeRanking($event)"
-    />
+<div class="ranking-toolbar d-flex flex-column flex-md-row align-items-stretch align-items-md-end justify-content-between gap-3 mt-4 mb-4">
+  <app-filter-tabs
+    label="Contenido"
+    [tabs]="rankingTabs"
+    [selected]="activeRanking()"
+    (selectionChange)="changeRanking($event)"
+  />
 
+  <div class="ranking-action">
     <app-button
       text="Actualizar"
       icon="fa-rotate"
@@ -20,6 +22,7 @@
       (clicked)="reloadRanking()"
     />
   </div>
+</div>
   <!-- MEJORES PELÍCULAS -->
   @if (activeRanking() === 'best') {
     <section class="ranking-section">

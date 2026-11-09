@@ -17,7 +17,7 @@ export interface FilterTab {
 export class FilterTabsComponent {
   readonly tabs = input.required<FilterTab[]>();
   readonly selected = input.required<FilterType>();
-
+  readonly label = input<string>('Contenido');
   readonly selectionChange = output<FilterType>();
 
   selectTab(value: FilterType): void {

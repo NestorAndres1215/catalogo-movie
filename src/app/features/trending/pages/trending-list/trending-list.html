@@ -18,27 +18,19 @@
     class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4"
   >
     <div class="filter-group">
-      <span class="filter-label">Contenido</span>
-
-  
-        <app-filter-tabs
-          [tabs]="mediaTabs"
-          [selected]="mediaType()"
-          (selectionChange)="changeMediaType($event)"
-        />
- 
+      <app-filter-tabs
+        [tabs]="mediaTabs"
+        [selected]="mediaType()"
+        (selectionChange)="changeMediaType($event)"
+      />
     </div>
 
     <div class="filter-group">
-      <span class="filter-label">Periodo</span>
-
-
-        <app-filter-tabs
-          [tabs]="timeTabs"
-          [selected]="timeWindow()"
-          (selectionChange)="changeTimeWindow($event)"
-        />
-
+      <app-filter-tabs
+        [tabs]="timeTabs"
+        [selected]="timeWindow()"
+        (selectionChange)="changeTimeWindow($event)"
+      />
     </div>
   </div>
 

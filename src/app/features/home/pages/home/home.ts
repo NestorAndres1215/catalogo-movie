@@ -13,7 +13,7 @@ import { Footer } from '../../../../shared/components/footer/footer';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink,Footer],
+  imports: [CommonModule, RouterLink, Footer],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -116,7 +116,7 @@ export class HomeComponent implements OnInit {
       title: 'Universos',
       description: 'Explora tus sagas favoritas',
       icon: 'fas fa-globe',
-      route: '/universes',
+      route: '/collections',
     },
     {
       title: 'Rankings',

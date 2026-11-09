@@ -1,14 +1,10 @@
-
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { forkJoin, from, of, Observable } from 'rxjs';
 import { catchError, map, mergeMap, switchMap, toArray } from 'rxjs/operators';
 
 import { StreamingService } from '../../../../core/service/streaming.service';
-import {
-  StreamingProvider,
-  StreamingRanking,
-} from '../../../../core/models/streaming.interface';
+import { StreamingProvider, StreamingRanking } from '../../../../core/models/streaming.interface';
 
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
@@ -63,7 +59,7 @@ export class StreamingRankingsComponent implements OnInit {
         map(({ movieProviders, seriesProviders }) => {
           const providers = new Map<number, StreamingProvider>();
 
-          [...movieProviders.results, ...seriesProviders.results].forEach(provider => {
+          [...movieProviders.results, ...seriesProviders.results].forEach((provider) => {
             if (!providers.has(provider.provider_id)) {
               providers.set(provider.provider_id, provider);
             }
@@ -71,21 +67,21 @@ export class StreamingRankingsComponent implements OnInit {
 
           return Array.from(providers.values());
         }),
-        switchMap(providers =>
+        switchMap((providers) =>
           from(providers).pipe(
-            mergeMap(provider => this.loadProviderRanking(provider), 1),
+            mergeMap((provider) => this.loadProviderRanking(provider), 1),
             toArray(),
           ),
         ),
-        map(results =>
+        map((results) =>
           results
-            .filter(provider => provider.totalTitles > 0)
+            .filter((provider) => provider.totalTitles > 0)
             .sort((a, b) => b.averagePopularity - a.averagePopularity)
             .slice(0, 10),
         ),
       )
       .subscribe({
-        next: results => {
+        next: (results) => {
           this.rankings.set(results);
           this.loading.set(false);
 
@@ -120,41 +116,31 @@ export class StreamingRankingsComponent implements OnInit {
     ];
   }
 
-  private loadProviderRanking(
-    provider: StreamingProvider,
-  ): Observable<StreamingRanking> {
-    const movieRequests = Array.from(
-      { length: this.pagesToLoad },
-      (_, index) =>
-        this.streamingService
-          .discoverMoviesByProvider(provider.provider_id, index + 1)
-          .pipe(
-            catchError(() =>
-              of({
-                page: index + 1,
-                results: [],
-                total_pages: 0,
-                total_results: 0,
-              }),
-            ),
-          ),
+  private loadProviderRanking(provider: StreamingProvider): Observable<StreamingRanking> {
+    const movieRequests = Array.from({ length: this.pagesToLoad }, (_, index) =>
+      this.streamingService.discoverMoviesByProvider(provider.provider_id, index + 1).pipe(
+        catchError(() =>
+          of({
+            page: index + 1,
+            results: [],
+            total_pages: 0,
+            total_results: 0,
+          }),
+        ),
+      ),
     );
 
-    const seriesRequests = Array.from(
-      { length: this.pagesToLoad },
-      (_, index) =>
-        this.streamingService
-          .discoverSeriesByProvider(provider.provider_id, index + 1)
-          .pipe(
-            catchError(() =>
-              of({
-                page: index + 1,
-                results: [],
-                total_pages: 0,
-                total_results: 0,
-              }),
-            ),
-          ),
+    const seriesRequests = Array.from({ length: this.pagesToLoad }, (_, index) =>
+      this.streamingService.discoverSeriesByProvider(provider.provider_id, index + 1).pipe(
+        catchError(() =>
+          of({
+            page: index + 1,
+            results: [],
+            total_pages: 0,
+            total_results: 0,
+          }),
+        ),
+      ),
     );
 
     return forkJoin({
@@ -162,16 +148,14 @@ export class StreamingRankingsComponent implements OnInit {
       series: forkJoin(seriesRequests),
     }).pipe(
       map(({ movies, series }) => {
-        const allMovies = movies.flatMap(response => response.results);
-        const allSeries = series.flatMap(response => response.results);
+        const allMovies = movies.flatMap((response) => response.results);
+        const allSeries = series.flatMap((response) => response.results);
 
         const uniqueMovies = Array.from(
-          new Map(allMovies.map(movie => [movie.id, movie])).values(),
+          new Map(allMovies.map((movie) => [movie.id, movie])).values(),
         );
 
-        const uniqueSeries = Array.from(
-          new Map(allSeries.map(show => [show.id, show])).values(),
-        );
+        const uniqueSeries = Array.from(new Map(allSeries.map((show) => [show.id, show])).values());
 
         const movieCount = uniqueMovies.length;
         const seriesCount = uniqueSeries.length;
@@ -181,8 +165,7 @@ export class StreamingRankingsComponent implements OnInit {
           uniqueMovies.reduce((total, movie) => total + movie.popularity, 0) +
           uniqueSeries.reduce((total, show) => total + show.popularity, 0);
 
-        const averagePopularity =
-          totalTitles > 0 ? totalPopularity / totalTitles : 0;
+        const averagePopularity = totalTitles > 0 ? totalPopularity / totalTitles : 0;
 
         const topMovies = [...uniqueMovies]
           .sort((a, b) => b.popularity - a.popularity)
@@ -236,4 +219,6 @@ export class StreamingRankingsComponent implements OnInit {
   getPopularity(popularity: number): string {
     return popularity.toFixed(2);
   }
+
+  regionInfo = ['🇵🇪 Perú', 'Películas y series', 'Suscripción', 'Promedio de popularidad'];
 }

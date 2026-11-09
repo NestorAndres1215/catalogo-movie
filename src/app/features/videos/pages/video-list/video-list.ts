@@ -43,6 +43,15 @@ export class VideoListComponent {
     this.loadPopularMovies();
   }
 
+videoFilters = [
+  { label: 'Todos', value: 'all' },
+  { label: 'Trailers', value: 'Trailer' },
+  { label: 'Teasers', value: 'Teaser' },
+  { label: 'Clips', value: 'Clip' },
+  { label: 'Featurettes', value: 'Featurette' },
+  { label: 'Oficiales', value: 'official' }
+];
+
   loadPopularMovies(): void {
     this.loading.set(true);
     this.errorMessage.set('');

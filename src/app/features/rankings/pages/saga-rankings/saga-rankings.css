@@ -41,3 +41,24 @@
     gap: 12px;
   }
 }
+
+
+.ranking-action {
+  display: flex;
+}
+
+/* Mismo alto que las tabs (52px) */
+:host ::ng-deep .ranking-action button {
+  height: 52px;
+  min-height: 52px;
+  padding: 0 22px;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .ranking-action,
+  :host ::ng-deep .ranking-action app-button,
+  :host ::ng-deep .ranking-action button {
+    width: 100%;
+  }
+}

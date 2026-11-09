@@ -6,20 +6,23 @@
   />
 
   <!-- CONTROLES -->
-  <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mt-4 mb-4">
+  <div
+    class="ranking-toolbar d-flex flex-column flex-md-row align-items-stretch align-items-md-end justify-content-between gap-3 mt-4 mb-4"
+  >
     <app-filter-tabs
       [tabs]="rankingTabs"
       [selected]="activeRanking()"
       (selectionChange)="changeRanking($event)"
     />
-
-    <app-button
-      text="Actualizar"
-      icon="fa-rotate-right"
-      [disabled]="loading()"
-      variant="secondary"
-      (clicked)="loadRankings()"
-    />
+    <div class="ranking-action">
+      <app-button
+        text="Actualizar"
+        icon="fa-rotate-right"
+        [disabled]="loading()"
+        variant="secondary"
+        (clicked)="loadRankings()"
+      />
+    </div>
   </div>
 
   <!-- CARGANDO -->
@@ -44,7 +47,9 @@
   @if (!loading() && !error()) {
     @if (activeRanking() === 'best') {
       <section class="ranking-section mt-4">
-        <div class="ranking-title d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4">
+        <div
+          class="ranking-title d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4"
+        >
           <div>
             <h2>Top 10 actores más populares</h2>
             <p>Los actores que más destacan en el catálogo.</p>
@@ -81,7 +86,9 @@
 
     @if (activeRanking() === 'worst') {
       <section class="ranking-section mt-4">
-        <div class="ranking-title d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4">
+        <div
+          class="ranking-title d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4"
+        >
           <div>
             <h2>Top 10 de menor popularidad</h2>
             <p>Actores con menor popularidad dentro del catálogo.</p>

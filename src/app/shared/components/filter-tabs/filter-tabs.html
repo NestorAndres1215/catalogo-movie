@@ -1,12 +1,18 @@
-<div class="filter-tabs">
-  @for (tab of tabs(); track tab.value) {
-    <button
-      type="button"
-      [class.active]="selected() === tab.value"
-      [attr.aria-pressed]="selected() === tab.value"
-      (click)="selectTab(tab.value)"
-    >
-      {{ tab.label }}
-    </button>
-  }
+<div class="filter-group" role="group" aria-labelledby="filter-content-label">
+  <span id="filter-content-label" class="filter-label">
+    {{ label() }}
+  </span>
+
+  <div class="filter-tabs">
+    @for (tab of tabs(); track tab.value) {
+      <button
+        type="button"
+        [class.active]="selected() === tab.value"
+        [attr.aria-pressed]="selected() === tab.value"
+        (click)="selectTab(tab.value)"
+      >
+        {{ tab.label }}
+      </button>
+    }
+  </div>
 </div>
