@@ -6,10 +6,10 @@
     description="Explora películas y series según tus géneros favoritos."
   />
 
- <div
+  <div
     class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4"
   >
-  <app-filter-tabs
+    <app-filter-tabs
       [tabs]="mediaTabs"
       [selected]="selectedType()"
       (selectionChange)="changeType($event)"
@@ -58,10 +58,12 @@
               {{ genre.name }}
             </h3>
 
-            <span> Explorar contenido → </span>
+            <span> Explorar contenido <i class="fas fa-arrow-right"></i> </span>
           </div>
 
-          <div class="genre-arrow">→</div>
+          <div class="genre-arrow">
+            <i class="fas fa-arrow-right"></i>
+          </div>
         </a>
       }
     </div>
