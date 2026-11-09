@@ -15,14 +15,14 @@
     />
   </div>
 
-@if (!loading() && !errorMessage()) {
-  <app-results-header
-    title="Explorar países"
-    [description]="filteredCountries().length + ' países encontrados'"
-    [totalResults]="currentPage()"
-    [countLabel]="'Página ' + currentPage() + ' de ' + totalPages()"
-  />
-}
+  @if (!loading() && !errorMessage()) {
+    <app-results-header
+      title="Explorar países"
+      [description]="filteredCountries().length + ' países encontrados'"
+      [totalResults]="currentPage()"
+      [countLabel]="'Página ' + currentPage() + ' de ' + totalPages()"
+    />
+  }
   @if (loading()) {
     <app-page-loading
       title="Cargando países"
@@ -49,29 +49,27 @@
   }
 
   @if (!loading() && !errorMessage() && paginatedCountries().length > 0) {
-    <div class="countries-grid">
+    <div class="row g-3">
       @for (country of paginatedCountries(); track country.iso_3166_1) {
-        <a class="country-card" [routerLink]="['/countries', country.iso_3166_1]">
-          <div class="country-flag">
-            {{ getFlag(country.iso_3166_1) }}
-          </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <a class="country-card h-100" [routerLink]="['/countries', country.iso_3166_1]">
+            <div class="country-flag">
+              {{ getFlag(country.iso_3166_1) }}
+            </div>
 
-          <div class="country-info">
-            <h3>
-              {{ country.english_name }}
-            </h3>
+            <div class="country-info">
+              <h3>{{ country.english_name }}</h3>
 
-            <span>
-              {{ country.native_name }}
+              <span>{{ country.native_name }}</span>
+
+              <small>Código: {{ country.iso_3166_1 }}</small>
+            </div>
+
+            <span class="country-arrow">
+              <i class="fas fa-arrow-right"></i>
             </span>
-
-            <small> Código: {{ country.iso_3166_1 }} </small>
-          </div>
-
-          <span class="country-arrow">
-            <i class="fas fa-arrow-right"></i>
-          </span>
-        </a>
+          </a>
+        </div>
       }
     </div>
 

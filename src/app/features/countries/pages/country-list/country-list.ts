@@ -37,7 +37,7 @@ export class CountryListComponent implements OnInit {
 
   currentPage = signal<number>(1);
 
-  readonly pageSize = 20;
+  readonly pageSize = 21;
 
   filteredCountries = computed(() => {
     const query = this.searchQuery().trim().toLocaleLowerCase();
