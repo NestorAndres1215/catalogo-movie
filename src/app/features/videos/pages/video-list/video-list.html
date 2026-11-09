@@ -40,33 +40,33 @@
       description="No hay videos disponibles para este filtro."
     />
   }
-  <div class="videos-grid">
+  <div class="row g-4">
     @for (video of filteredVideos; track video.id) {
-      <article class="video-card">
-        <div class="video-thumbnail" (click)="playVideo(video)">
-          <img [src]="getYoutubeThumbnail(video.key)" [alt]="video.name" />
+      <div class="col-12 col-lg-4">
+        <article class="video-card h-100">
+          <div class="video-thumbnail" (click)="playVideo(video)">
+            <img [src]="getYoutubeThumbnail(video.key)" [alt]="video.name" loading="lazy" />
 
-          <span class="play-icon">
-            <i class="fas fa-play"></i>
-          </span>
-        </div>
-
-        <div class="video-info">
-          <h3>{{ video.name }}</h3>
-
-          <div class="video-meta">
-            <span>{{ video.type }}</span>
-
-            @if (video.official) {
-              <span class="official">Oficial</span>
-            }
+            <span class="play-icon">
+              <i class="fas fa-play"></i>
+            </span>
           </div>
 
-          <p>
-            {{ video.published_at | date: 'dd/MM/yyyy' }}
-          </p>
-        </div>
-      </article>
+          <div class="video-info">
+            <h3>{{ video.name }}</h3>
+
+            <div class="video-meta">
+              <span>{{ video.type }}</span>
+
+              @if (video.official) {
+                <span class="official">Oficial</span>
+              }
+            </div>
+
+            <p>{{ video.published_at | date: 'dd/MM/yyyy' }}</p>
+          </div>
+        </article>
+      </div>
     }
   </div>
 

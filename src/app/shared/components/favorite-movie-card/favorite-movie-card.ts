@@ -1,11 +1,12 @@
 import { Component, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import type { SavedMovie } from '../../../core/service/saved-movies.service';
+import { ButtonComponent } from '../button/button';
 
 @Component({
   selector: 'app-favorite-movie-card',
   standalone: true,
-  imports: [],
+  imports: [ButtonComponent],
   templateUrl: './favorite-movie-card.html',
   styleUrl: './favorite-movie-card.css',
 })

@@ -28,17 +28,15 @@
     </section>
 
     <!-- NAVEGACIÓN -->
-    <nav class="profile-tabs">
+    <div
+      class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4 mt-4"
+    >
       <app-filter-tabs
         [tabs]="profileTabs"
         [selected]="activeSection()"
         (selectionChange)="selectSection($event)"
       />
-    </nav>
-
-    <!-- ================================= -->
-    <!-- MI PERFIL -->
-    <!-- ================================= -->
+    </div>
 
     @if (activeSection() === 'profile') {
       <section class="content-section">
@@ -120,10 +118,6 @@
       </section>
     }
 
-    <!-- ================================= -->
-    <!-- MIS PREFERENCIAS -->
-    <!-- ================================= -->
-
     @if (activeSection() === 'preferences') {
       <section class="content-section">
         <div class="section-heading">
@@ -169,10 +163,6 @@
           </p>
         </article>
 
-        <!-- ================================= -->
-        <!-- ACTORES FAVORITOS -->
-        <!-- ================================= -->
-
         <article class="preference-card">
           <div class="preference-heading">
             <div class="preference-icon">
@@ -184,7 +174,6 @@
             </div>
           </div>
 
-          <!-- BUSCADOR -->
           <div class="add-form">
             <app-search
               [value]="actorInput()"
@@ -193,7 +182,6 @@
             />
           </div>
 
-          <!-- CARGANDO -->
           @if (loadingActors()) {
             <p class="loading-message">Buscando actores...</p>
           }
@@ -216,7 +204,6 @@
             </div>
           }
 
-          <!-- ACTOR SELECCIONADO -->
           @if (selectedActor(); as actor) {
             <div class="selected-person">
               <div class="selected-person-header">
@@ -319,7 +306,6 @@
             </div>
           </div>
 
-          <!-- BUSCADOR -->
           <div class="add-form">
             <app-search
               [value]="directorInput()"
@@ -448,13 +434,16 @@
         </article>
 
         <article class="preference-card">
-          <div class="preference-heading">
-            <div class="preference-icon">
-              <i class="fas fa-bookmark"></i>
-            </div>
-            <div>
-              <h3>Mis películas guardadas</h3>
-              <p>Se guardan en este navegador y puedes eliminarlas cuando quieras.</p>
+          <div class="preference-heading d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-3">
+              <div class="preference-icon">
+                <i class="fas fa-bookmark"></i>
+              </div>
+
+              <div>
+                <h3>Mis películas guardadas</h3>
+                <p>Se guardan en este navegador y puedes eliminarlas cuando quieras.</p>
+              </div>
             </div>
 
             @if (savedMovies().length > 0) {
@@ -502,7 +491,6 @@
       </section>
     }
   } @else {
-    <!-- SIN SESIÓN -->
     <app-empty-state
       icon="fa-user"
       title="No hay una sesión activa"

@@ -31,13 +31,10 @@
     </div>
   </button>
 
-  <button
-    type="button"
-    class="favorite-card__remove"
-    (click)="removeMovie()"
-    [attr.aria-label]="'Quitar ' + movie().title"
-  >
-    <i class="fas fa-trash-alt"></i>
-    Quitar de guardadas
-  </button>
+  <app-button
+    text="Quitar de guardadas"
+    icon="fa-trash-alt"
+    variant="secondary"
+    (clicked)="removeMovie()"
+  />
 </article>
