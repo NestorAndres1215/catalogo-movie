@@ -4,31 +4,6 @@
   margin: auto;
 }
 
-/* SELECTOR */
-
-.type-selector {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 35px;
-}
-
-.filter-label {
-  color: var(--color-texto-secundario);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.4px;
-}
-
-/* GRID */
-
-.genres-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
-}
-
 .genre-card {
   display: flex;
   align-items: center;
@@ -81,58 +56,9 @@
   color: var(--color-acento);
   font-size: 20px;
 }
-/* MENSAJES */
-
-.message {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 250px;
-  text-align: center;
-}
-
-.message p {
-  color: #999;
-}
-
-.message button {
-  margin-top: 15px;
-  padding: 10px 18px;
-  border: none;
-  border-radius: 7px;
-  background: #e5a00d;
-  color: #111;
-  cursor: pointer;
-}
-
-.error p {
-  color: #ff7777;
-}
-
-/* RESPONSIVE */
-
-@media (max-width: 1050px) {
-  .genres-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
 
 @media (max-width: 650px) {
   .genres-page {
     padding: 20px;
-  }
-
-  .genres-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .page-header h1 {
-    font-size: 30px;
-  }
-
-  .genres-heading {
-    align-items: flex-start;
-    flex-direction: column;
   }
 }

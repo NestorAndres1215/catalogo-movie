@@ -46,26 +46,32 @@
   <!-- LISTADO -->
 
   @if (!loading() && !errorMessage()) {
-    <div class="genres-grid">
-      @for (genre of genres(); track genre.id) {
-        <a class="genre-card" [routerLink]="['/genres', selectedType(), genre.id]">
-          <div class="genre-icon">
-            <i [class]="'fas ' + getGenreIcon(genre.name)"></i>
-          </div>
+<div class="row g-3">
+  @for (genre of genres(); track genre.id) {
+    <div class="col-12 col-md-6 col-lg-4">
+      <a
+        class="genre-card h-100"
+        [routerLink]="['/genres', selectedType(), genre.id]"
+      >
+        <div class="genre-icon">
+          <i [class]="'fas ' + getGenreIcon(genre.name)"></i>
+        </div>
 
-          <div class="genre-info">
-            <h3>
-              {{ genre.name }}
-            </h3>
+        <div class="genre-info">
+          <h3>{{ genre.name }}</h3>
 
-            <span> Explorar contenido <i class="fas fa-arrow-right"></i> </span>
-          </div>
-
-          <div class="genre-arrow">
+          <span>
+            Explorar contenido
             <i class="fas fa-arrow-right"></i>
-          </div>
-        </a>
-      }
+          </span>
+        </div>
+
+        <div class="genre-arrow">
+          <i class="fas fa-arrow-right"></i>
+        </div>
+      </a>
     </div>
+  }
+</div>
   }
 </section>

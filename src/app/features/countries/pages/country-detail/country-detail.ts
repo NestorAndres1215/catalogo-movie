@@ -19,6 +19,7 @@ import {
   SelectFilterComponent,
 } from '../../../../shared/components/select-filter/select-filter';
 import { ErrorStateComponent } from '../../../../shared/components/error-state/error-state';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
 
 type CountryMediaType = 'movie' | 'tv';
 
@@ -35,7 +36,8 @@ type CountrySortOption = 'rating-desc' | 'rating-asc' | 'date-desc' | 'date-asc'
     MediaCardComponent,
     EmptyStateComponent,
     SelectFilterComponent,
-    ErrorStateComponent
+    ErrorStateComponent,
+    ResultsHeaderComponent
 ],
   templateUrl: './country-detail.html',
   styleUrl: './country-detail.css',

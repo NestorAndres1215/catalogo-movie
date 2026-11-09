@@ -12,14 +12,14 @@
 
   <!-- ERROR -->
 
-@if (errorMessage() && !country()) {
-  <app-error-state
-    title="Error"
-    [description]="errorMessage()"
-    linkText="Volver a países"
-    linkRoute="/countries"
-  />
-}
+  @if (errorMessage() && !country()) {
+    <app-error-state
+      title="Error"
+      [description]="errorMessage()"
+      linkText="Volver a países"
+      linkRoute="/countries"
+    />
+  }
 
   <!-- DETALLE DEL PAÍS -->
 
@@ -62,49 +62,33 @@
       </div>
 
       <!-- SELECTOR DE TIPO -->
-      <div class="media-controls">
-        <div class="type-selector">
-          <app-filter-tabs
-            [tabs]="mediaTabs"
-            [selected]="selectedType()"
-            (selectionChange)="changeType($event)"
-          />
-        </div>
+      <div
+        class="ranking-toolbar d-flex flex-column flex-md-row align-items-stretch align-items-md-end justify-content-between gap-3 mt-4 mb-4"
+      >
+        <app-filter-tabs
+          [tabs]="mediaTabs"
+          [selected]="selectedType()"
+          (selectionChange)="changeType($event)"
+        />
 
-        <div class="sort-control">
-          <app-select-filter
-            id="country-sort"
-            label="Ordenar por"
-            placeholder="Seleccionar orden"
-            [options]="sortOptions"
-            [selectedValue]="selectedSort()"
-            [disabled]="loading() || media().length === 0"
-            (selectionChange)="onSortChange($event)"
-          />
-        </div>
+        <app-select-filter
+          id="country-sort"
+          label="Ordenar por"
+          placeholder="Seleccionar orden"
+          [options]="sortOptions"
+          [selectedValue]="selectedSort()"
+          [disabled]="loading() || media().length === 0"
+          (selectionChange)="onSortChange($event)"
+        />
       </div>
 
       <!-- RESULTADOS Y FILTROS -->
 
-      <div class="results-header">
-        <div class="results-title">
-          <span class="section-label"> CATÁLOGO CINEMATOGRÁFICO </span>
-
-          <h3>
-            @if (selectedType() === 'movie') {
-              Películas
-            } @else {
-              Series
-            }
-          </h3>
-
-          <p>{{ totalResults() }} resultados encontrados</p>
-        </div>
-
-        <div class="results-controls">
-          <span class="page-info"> Página {{ currentPage() }} de {{ totalPages() }} </span>
-        </div>
-      </div>
+      <app-results-header
+        [title]="selectedType() === 'movie' ? 'Películas' : 'Series'"
+        [description]="totalResults() + ' resultados encontrados'"
+        [countLabel]="'Página ' + currentPage() + ' de ' + totalPages()"
+      />
 
       <!-- CARGANDO CONTENIDO -->
 
