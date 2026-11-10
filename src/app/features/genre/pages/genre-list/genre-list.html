@@ -1,29 +1,25 @@
 <section class="genres-page">
-  <!-- ENCABEZADO -->
   <app-page-header
     section="CINEVERSE / EXPLORAR"
     title="Géneros"
     description="Explora películas y series según tus géneros favoritos."
   />
 
-  <div
-    class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4"
-  >
-    <app-filter-tabs
-      [tabs]="mediaTabs"
-      [selected]="selectedType()"
-      (selectionChange)="changeType($event)"
-    />
+  <div class="row g-4 mb-4">
+    <div class="col-12 col-md-6 col-lg-4">
+      <app-filter-tabs
+        [tabs]="mediaTabs"
+        [selected]="selectedType()"
+        (selectionChange)="changeType($event)"
+      />
+    </div>
   </div>
 
-  <!-- INFORMACIÓN -->
   <app-results-header
     [title]="selectedType() === 'movie' ? 'Géneros de películas' : 'Géneros de series'"
     description="Selecciona un género para descubrir contenido."
     [countLabel]="!loading() ? genres().length + ' géneros' : null"
   />
-
-  <!-- CARGANDO -->
 
   @if (loading()) {
     <app-page-loading
@@ -33,7 +29,6 @@
       icon="fa-layer-group"
     />
   }
-  <!-- ERROR -->
 
   @if (errorMessage()) {
     <div class="message error">
@@ -43,35 +38,30 @@
     </div>
   }
 
-  <!-- LISTADO -->
-
   @if (!loading() && !errorMessage()) {
-<div class="row g-3">
-  @for (genre of genres(); track genre.id) {
-    <div class="col-12 col-md-6 col-lg-4">
-      <a
-        class="genre-card h-100"
-        [routerLink]="['/genres', selectedType(), genre.id]"
-      >
-        <div class="genre-icon">
-          <i [class]="'fas ' + getGenreIcon(genre.name)"></i>
-        </div>
+    <div class="row g-3">
+      @for (genre of genres(); track genre.id) {
+        <div class="col-12 col-md-6 col-lg-4">
+          <a class="genre-card h-100" [routerLink]="['/genres', selectedType(), genre.id]">
+            <div class="genre-icon">
+              <i [class]="'fas ' + getGenreIcon(genre.name)"></i>
+            </div>
 
-        <div class="genre-info">
-          <h3>{{ genre.name }}</h3>
+            <div class="genre-info">
+              <h3>{{ genre.name }}</h3>
 
-          <span>
-            Explorar contenido
-            <i class="fas fa-arrow-right"></i>
-          </span>
-        </div>
+              <span>
+                Explorar contenido
+                <i class="fas fa-arrow-right"></i>
+              </span>
+            </div>
 
-        <div class="genre-arrow">
-          <i class="fas fa-arrow-right"></i>
+            <div class="genre-arrow">
+              <i class="fas fa-arrow-right"></i>
+            </div>
+          </a>
         </div>
-      </a>
+      }
     </div>
-  }
-</div>
   }
 </section>

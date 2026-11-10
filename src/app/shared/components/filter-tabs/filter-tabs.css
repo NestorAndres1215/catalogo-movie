@@ -1,13 +1,17 @@
+:host {
+  display: block;
+  width: var(--filter-width, 100%);  /* el padre puede cambiarlo */
+  max-width: 100%;
+}
+
 .filter-group {
   --filter-height: 52px;
-
   display: flex;
   flex-direction: column;
   gap: 8px;
-  width: fit-content; /* ya no ocupa todo el ancho */
+  width: 100%;      /* llena el host */
   min-width: 0;
 }
-
 .filter-label {
   color: var(--color-texto-atenuado);
   font-size: 11px;
@@ -17,22 +21,32 @@
   text-transform: uppercase;
   white-space: nowrap;
 }
-
 .filter-tabs {
   display: flex;
   flex-wrap: nowrap;
   align-items: stretch;
   gap: 6px;
-  width: fit-content;
+  width: 100%;
   height: var(--filter-height);
   padding: 4px;
   box-sizing: border-box;
   background: var(--color-superficie-secundaria);
   border: 1px solid var(--color-borde);
   border-radius: 10px;
+
+  /* si hay tantos botones que ya no caben, scroll horizontal */
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.filter-tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .filter-tabs button {
+  flex: 1 1 0;              /* todos los botones miden lo mismo y llenan la barra */
+  min-width: max-content;   /* nunca se encogen por debajo de su texto */
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -70,14 +84,7 @@
 }
 
 @media (max-width: 768px) {
-  .filter-group,
-  .filter-tabs {
-    width: 100%;
-  }
-
   .filter-tabs button {
-    flex: 1 1 0;
-    min-width: 0;
     padding: 0 12px;
   }
 }

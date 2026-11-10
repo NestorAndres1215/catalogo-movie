@@ -4,16 +4,6 @@
   margin: auto;
 }
 
-.year-selector {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-width: 150px;
-  margin-top: 15px;
-  margin-bottom: 25px;
-}
-
-
 .year-highlight {
   position: relative;
   display: flex;
@@ -60,34 +50,11 @@
 .year-decoration {
   position: absolute;
   right: 25px;
-  color: rgba(255, 255, 255, 0.05);
+ color: var(--color-texto-atenuado);
   font-size: 150px !important;
   font-weight: 900;
   letter-spacing: -10px !important;
   pointer-events: none;
-}
-
-.content-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.media-tabs {
-  display: flex;
-  gap: 8px;
-  padding: 5px;
-  background: var(--color-superficie-elevada);
-  border: 1px solid var(--color-borde);
-  border-radius: var(--radio-borde-pequeno);
-}
-
-
-.results-count {
-  color: #999;
-  font-size: 13px;
 }
 
 .media-grid {
@@ -96,140 +63,9 @@
   gap: 24px 18px;
 }
 
-.media-card {
-  min-width: 0;
-  color: inherit;
-  text-decoration: none;
-  transition: transform 0.2s;
-}
-
-.media-card:hover {
-  transform: translateY(-5px);
-}
-
-.poster-container {
-  position: relative;
-  aspect-ratio: 2 / 3;
-  overflow: hidden;
-  background: #242431;
-  border-radius: 12px;
-}
-
-.poster-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s;
-}
-
-.media-card:hover .poster-container img {
-  transform: scale(1.06);
-}
-
-.no-poster {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  color: #888;
-}
-
-.rating {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  padding: 6px 9px;
-  color: var(--color-valoracion);
-  background: rgba(0, 0, 0, 0.75);
-  border-radius: var(--radio-borde-pequeno);
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.card-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgb(0 0 0 / 55%);
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
-.card-overlay span {
-  padding: 10px 16px;
-  color: var(--color-texto-sobre-acento);
-  background: var(--color-acento);
-  border-radius: var(--radio-borde-pequeno);
-  font-size: 13px;
-  font-weight: 600;
-
-}
-.media-card:hover .card-overlay {
-  opacity: 1;
-}
-
-.media-info h3 {
-  margin: 12px 0 5px;
-  overflow: hidden;
-  font-size: 15px;
-  font-weight: 700;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.release-date {
-  color: var(--color-acento-hover);
-  font-size: 12px;
-}
-
-.media-info p {
-  display: -webkit-box;
-  margin: 8px 0 0;
-  overflow: hidden;
-  color: var(--color-texto-secundario);
-  font-size: 12px;
-  line-height: 1.5;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-}
-
-
-.error-message {
-  padding: 60px 20px;
-  text-align: center;
-  color: #aaa;
-}
-
-.error-message button {
-  padding: 10px 18px;
-  color: white;
-  background: #7c3aed;
-  border: none;
-  border-radius: 7px;
-  cursor: pointer;
-}
-
-
 @media (max-width: 650px) {
   .years-page {
     padding: 20px 14px;
-  }
-
-  .page-header {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .page-header h1 {
-    font-size: 25px;
-  }
-
-  .year-selector {
-    max-width: 200px;
   }
 
   .year-highlight {
