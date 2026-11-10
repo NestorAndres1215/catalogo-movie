@@ -144,26 +144,30 @@
         <a routerLink="/trending" class="see-all"> Ver todas <i class="fas fa-arrow-right"></i> </a>
       </div>
 
-      <div class="media-row">
-        @for (movie of trendingMovies(); track trackMovie($index, movie)) {
-          <a class="media-card" [routerLink]="['/movies', movie.id]">
-            <div class="poster">
-              @if (movie.poster_path) {
-                <img [src]="getMovieImage(movie.poster_path)" [alt]="movie.title" loading="lazy" />
-              } @else {
-                <div class="poster-placeholder">🎬</div>
-              }
+      <div class="media-carousel">
+        <button
+          type="button"
+          class="row-arrow prev"
+          aria-label="Anterior"
+          (click)="scrollRow(trendingRow, -1)"
+        >
+          <i class="fas fa-chevron-left"></i>
+        </button>
 
-              <span class="rating">
-                <i class="fas fa-star"></i>
-                {{ getRating(movie.vote_average) }}
-              </span>
-            </div>
+        <div class="media-row" #trendingRow>
+          @for (movie of trendingMovies(); track trackMovie($index, movie)) {
+            <app-media-card [media]="movie" mediaType="movie" variant="catalog" />
+          }
+        </div>
 
-            <h3>{{ movie.title }}</h3>
-            <span class="media-year">{{ getYear(movie.release_date) }}</span>
-          </a>
-        }
+        <button
+          type="button"
+          class="row-arrow next"
+          aria-label="Siguiente"
+          (click)="scrollRow(trendingRow, 1)"
+        >
+          <i class="fas fa-chevron-right"></i>
+        </button>
       </div>
     </section>
 
@@ -179,30 +183,33 @@
           <p>Las series más populares de esta semana.</p>
         </div>
 
-        <a routerLink="/series" class="see-all">Ver todas <i class="fas fa-arrow-right"></i></a>
+        <a routerLink="/series" class="see-all"> Ver todas <i class="fas fa-arrow-right"></i> </a>
       </div>
 
-      <div class="media-row">
-        @for (series of trendingSeries(); track trackSeries($index, series)) {
-          <a class="media-card" [routerLink]="['/series', series.id]">
-            <div class="poster">
-              @if (series.poster_path) {
-                <img
-                  [src]="getSeriesImage(series.poster_path)"
-                  [alt]="series.name"
-                  loading="lazy"
-                />
-              } @else {
-                <div class="poster-placeholder">📺</div>
-              }
+      <div class="media-carousel">
+        <button
+          type="button"
+          class="row-arrow prev"
+          aria-label="Anterior"
+          (click)="scrollRow(seriesRow, -1)"
+        >
+          <i class="fas fa-chevron-left"></i>
+        </button>
 
-              <span class="rating">⭐ {{ getRating(series.vote_average) }}</span>
-            </div>
+        <div class="media-row" #seriesRow>
+          @for (series of trendingSeries(); track trackSeries($index, series)) {
+            <app-media-card [media]="series" mediaType="tv" variant="catalog" />
+          }
+        </div>
 
-            <h3>{{ series.name }}</h3>
-            <span class="media-year">{{ getYear(series.first_air_date) }}</span>
-          </a>
-        }
+        <button
+          type="button"
+          class="row-arrow next"
+          aria-label="Siguiente"
+          (click)="scrollRow(seriesRow, 1)"
+        >
+          <i class="fas fa-chevron-right"></i>
+        </button>
       </div>
     </section>
 
@@ -221,23 +228,30 @@
         <a routerLink="/upcoming" class="see-all">Ver calendario →</a>
       </div>
 
-      <div class="media-row">
-        @for (movie of upcomingMovies(); track trackMovie($index, movie)) {
-          <a class="media-card" [routerLink]="['/movies', movie.id]">
-            <div class="poster">
-              @if (movie.poster_path) {
-                <img [src]="getMovieImage(movie.poster_path)" [alt]="movie.title" loading="lazy" />
-              } @else {
-                <div class="poster-placeholder">🍿</div>
-              }
+      <div class="media-carousel">
+        <button
+          type="button"
+          class="row-arrow prev"
+          aria-label="Anterior"
+          (click)="scrollRow(upcomingRow, -1)"
+        >
+          <i class="fas fa-chevron-left"></i>
+        </button>
 
-              <span class="rating">⭐ {{ getRating(movie.vote_average) }}</span>
-            </div>
+        <div class="media-row" #upcomingRow>
+          @for (movie of upcomingMovies(); track trackMovie($index, movie)) {
+            <app-media-card [media]="movie" mediaType="movie" variant="catalog" />
+          }
+        </div>
 
-            <h3>{{ movie.title }}</h3>
-            <span class="media-year">{{ getYear(movie.release_date) }}</span>
-          </a>
-        }
+        <button
+          type="button"
+          class="row-arrow next"
+          aria-label="Siguiente"
+          (click)="scrollRow(upcomingRow, 1)"
+        >
+          <i class="fas fa-chevron-right"></i>
+        </button>
       </div>
     </section>
 
@@ -253,26 +267,35 @@
           <p>Grandes películas según las puntuaciones de TMDB.</p>
         </div>
 
-        <a routerLink="/top-rated" class="see-all">Ver todas →</a>
+        <a routerLink="/top-rated" class="see-all">
+          Ver todas <i class="fas fa-arrow-right"></i>
+        </a>
       </div>
 
-      <div class="media-row">
-        @for (movie of topRatedMovies(); track trackMovie($index, movie)) {
-          <a class="media-card" [routerLink]="['/movies', movie.id]">
-            <div class="poster">
-              @if (movie.poster_path) {
-                <img [src]="getMovieImage(movie.poster_path)" [alt]="movie.title" loading="lazy" />
-              } @else {
-                <div class="poster-placeholder">⭐</div>
-              }
+      <div class="media-carousel">
+        <button
+          type="button"
+          class="row-arrow prev"
+          aria-label="Anterior"
+          (click)="scrollRow(topMoviesRow, -1)"
+        >
+          <i class="fas fa-chevron-left"></i>
+        </button>
 
-              <span class="rating">⭐ {{ getRating(movie.vote_average) }}</span>
-            </div>
+        <div class="media-row" #topMoviesRow>
+          @for (movie of topRatedMovies(); track trackMovie($index, movie)) {
+            <app-media-card [media]="movie" mediaType="movie" variant="catalog" />
+          }
+        </div>
 
-            <h3>{{ movie.title }}</h3>
-            <span class="media-year">{{ getYear(movie.release_date) }}</span>
-          </a>
-        }
+        <button
+          type="button"
+          class="row-arrow next"
+          aria-label="Siguiente"
+          (click)="scrollRow(topMoviesRow, 1)"
+        >
+          <i class="fas fa-chevron-right"></i>
+        </button>
       </div>
     </section>
 
@@ -288,30 +311,35 @@
           <p>Series destacadas por la comunidad de TMDB.</p>
         </div>
 
-        <a routerLink="/rankings/series" class="see-all">Ver ranking →</a>
+        <a routerLink="/rankings/series" class="see-all">
+          Ver ranking <i class="fas fa-arrow-right"></i>
+        </a>
       </div>
 
-      <div class="media-row">
-        @for (series of topRatedSeries(); track trackSeries($index, series)) {
-          <a class="media-card" [routerLink]="['/series', series.id]">
-            <div class="poster">
-              @if (series.poster_path) {
-                <img
-                  [src]="getSeriesImage(series.poster_path)"
-                  [alt]="series.name"
-                  loading="lazy"
-                />
-              } @else {
-                <div class="poster-placeholder">📺</div>
-              }
+      <div class="media-carousel">
+        <button
+          type="button"
+          class="row-arrow prev"
+          aria-label="Anterior"
+          (click)="scrollRow(topSeriesRow, -1)"
+        >
+          <i class="fas fa-chevron-left"></i>
+        </button>
 
-              <span class="rating">⭐ {{ getRating(series.vote_average) }}</span>
-            </div>
+        <div class="media-row" #topSeriesRow>
+          @for (series of topRatedSeries(); track trackSeries($index, series)) {
+            <app-media-card [media]="series" mediaType="tv" variant="catalog" />
+          }
+        </div>
 
-            <h3>{{ series.name }}</h3>
-            <span class="media-year">{{ getYear(series.first_air_date) }}</span>
-          </a>
-        }
+        <button
+          type="button"
+          class="row-arrow next"
+          aria-label="Siguiente"
+          (click)="scrollRow(topSeriesRow, 1)"
+        >
+          <i class="fas fa-chevron-right"></i>
+        </button>
       </div>
     </section>
 
@@ -354,6 +382,6 @@
     </section>
 
     <!-- FOOTER -->
-<app-footer />
+    <app-footer />
   }
 </div>

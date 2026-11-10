@@ -9,11 +9,12 @@ import { SeriesService } from '../../../../core/service/series.service';
 import { Movie } from '../../../../core/models/movie.interface';
 import { TvSeries } from '../../../../core/models/series.interface';
 import { Footer } from '../../../../shared/components/footer/footer';
+import { MediaCardComponent } from '../../../../shared/components/media-card/media-card';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink, Footer],
+  imports: [CommonModule, RouterLink, Footer, MediaCardComponent],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -125,4 +126,23 @@ export class HomeComponent implements OnInit {
       route: '/rankings/movies',
     },
   ];
+
+  scrollRow(row: HTMLElement, direction: 1 | -1): void {
+  const maxScroll = row.scrollWidth - row.clientWidth;
+  const tolerance = 4;
+
+  // Al final de la fila: vuelve al inicio
+  if (direction === 1 && row.scrollLeft >= maxScroll - tolerance) {
+    row.scrollTo({ left: 0, behavior: 'smooth' });
+    return;
+  }
+
+  // Al inicio de la fila: salta al final
+  if (direction === -1 && row.scrollLeft <= tolerance) {
+    row.scrollTo({ left: maxScroll, behavior: 'smooth' });
+    return;
+  }
+
+  row.scrollBy({ left: direction * row.clientWidth * 0.85, behavior: 'smooth' });
+}
 }
