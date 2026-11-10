@@ -14,15 +14,14 @@
     <div class="banner-decoration">CINE</div>
   </div>
 
-  <div
-    class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4"
-  >
-    <app-filter-tabs
-      [tabs]="mediaTabs"
-      [selected]="mediaType()"
-      (selectionChange)="changeMediaType($event)"
-    />
-  </div>
+<div class="col-12 col-md-4 mb-4">
+  <app-filter-tabs
+    class="d-block w-100"
+    [tabs]="mediaTabs"
+    [selected]="mediaType()"
+    (selectionChange)="changeMediaType($event)"
+  />
+</div>
   <div class="source-selector">
     <div class="selector-information">
       <label for="source">Recomendar a partir de</label>
@@ -66,19 +65,6 @@
       detail="Analizando tus preferencias cinematográficas..."
       icon="fa-lightbulb"
     />
-  }
-
-  @if (errorMessage()) {
-    <div class="error-message">
-      <p>{{ errorMessage() }}</p>
-
-      <button
-        type="button"
-        (click)="popularMedia().length === 0 ? loadPopularMedia() : loadRecommendations()"
-      >
-        Reintentar
-      </button>
-    </div>
   }
 
   @if (!loadingSources() && !loading() && !errorMessage() && selectedId() !== null) {

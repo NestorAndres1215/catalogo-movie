@@ -14,13 +14,6 @@
   font-size: 21px;
 }
 
-.search-box {
-  display: flex;
-  gap: 10px;
-  max-width: 650px;
-  margin-bottom: 20px;
-}
-
 .collections-grid {
   display: flex;
   flex-direction: column;

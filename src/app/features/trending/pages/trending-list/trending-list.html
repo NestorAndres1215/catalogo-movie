@@ -14,25 +14,25 @@
     <div class="banner-decoration">TRENDING</div>
   </div>
 
-  <div
-    class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4"
-  >
-    <div class="filter-group">
-      <app-filter-tabs
-        [tabs]="mediaTabs"
-        [selected]="mediaType()"
-        (selectionChange)="changeMediaType($event)"
-      />
-    </div>
-
-    <div class="filter-group">
-      <app-filter-tabs
-        [tabs]="timeTabs"
-        [selected]="timeWindow()"
-        (selectionChange)="changeTimeWindow($event)"
-      />
-    </div>
+<div class="row g-3 mb-4">
+  <div class="col-12 col-md-6">
+    <app-filter-tabs
+      class="d-block w-100"
+      [tabs]="mediaTabs"
+      [selected]="mediaType()"
+      (selectionChange)="changeMediaType($event)"
+    />
   </div>
+
+  <div class="col-12 col-md-4 ms-md-auto">
+    <app-filter-tabs
+      class="d-block w-100"
+      [tabs]="timeTabs"
+      [selected]="timeWindow()"
+      (selectionChange)="changeTimeWindow($event)"
+    />
+  </div>
+</div>
 
   <app-results-header
     [title]="timeWindow() === 'day' ? 'Tendencias de hoy' : 'Tendencias de esta semana'"

@@ -1,13 +1,7 @@
-:host {
-  display: block;
-  color: #ffffff;
-}
-
 .game-container {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 35px 25px;
+  padding: 35px 40px;
+  max-width: 1600px;
+  margin: auto;
 }
 
 .eyebrow {

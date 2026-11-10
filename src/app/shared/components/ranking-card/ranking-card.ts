@@ -30,7 +30,7 @@ export class RankingCardComponent {
   readonly rating = input.required<number | string>();
 
   readonly ranking = input<boolean>(false);
-readonly isActor = input<boolean>(false);
+  readonly isActor = input<boolean>(false);
   readonly showPopularity = input<boolean>(false);
   readonly popularity = input<number | string>(0);
 

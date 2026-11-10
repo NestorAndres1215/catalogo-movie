@@ -28,13 +28,11 @@
     </div>
 
     <section class="search-section">
-      <div class="search-box">
-        <app-search
-          [value]="searchQuery()"
-          placeholder="Ejemplo: Harry Potter, Star Wars..."
-          (valueChange)="searchQuery.set($event); searchSagas()"
-        />
-      </div>
+      <app-search
+        [value]="searchQuery()"
+        placeholder="Ejemplo: Harry Potter, Star Wars..."
+        (valueChange)="searchQuery.set($event); searchSagas()"
+      />
 
       @if (loadingSearch()) {
         <app-page-loading

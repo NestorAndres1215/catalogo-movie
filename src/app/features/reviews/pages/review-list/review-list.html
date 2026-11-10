@@ -5,15 +5,16 @@
     description="Descubre las opiniones y valoraciones de la comunidad sobre películas y series."
   />
 
-  <div
-    class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4"
-  >
+<div class="row mb-4">
+  <div class="col-12 col-md-4">
     <app-filter-tabs
+      class="d-block w-100"
       [tabs]="mediaTabs"
       [selected]="mediaType()"
       (selectionChange)="changeMediaType($event)"
     />
   </div>
+</div>
   @if (loading()) {
     <app-page-loading
       title="Cargando críticas y reseñas"

@@ -15,8 +15,8 @@
   min-height: 100vh;
   padding: 40px 20px;
   overflow: hidden;
-  background: #0b0912;
-  color: #ffffff;
+  background: var(--color-fondo);
+  color: var(--color-texto);
   font-family: inherit;
 }
 
@@ -204,39 +204,6 @@
   color: var(--color-danger);
 }
 
-.submit-button,
-.secondary-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: 49px;
-  border-radius: 10px;
-  font-size: 13px;
-  font-weight: 750;
-  text-decoration: none;
-  transition: 0.2s;
-  cursor: pointer;
-}
-
-.submit-button {
-  gap: 10px;
-  margin-top: 28px;
-  border: none;
-  background: linear-gradient(110deg, var(--color-acento), var(--color-acento-hover));
-  color: var(--color-texto-sobre-acento);
-  box-shadow: 0 8px 24px var(--color-acento-suave);
-}
-
-.submit-button:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: var(--box-shadow-hover);
-}
-.submit-button:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
-}
-
 .auth-divider {
   display: flex;
   align-items: center;
@@ -253,17 +220,6 @@
   height: 1px;
   background: var(--color-borde);
   content: '';
-}
-
-.secondary-button {
-  border: 1px solid var(--color-borde);
-  background: var(--color-acento-suave);
-  color: var(--color-acento);
-}
-
-.secondary-button:hover {
-  border-color: var(--color-acento);
-  background: var(--color-acento-suave);
 }
 
 .terms {

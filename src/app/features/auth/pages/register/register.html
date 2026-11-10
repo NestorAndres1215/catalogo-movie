@@ -156,17 +156,20 @@
           }
         </div>
 
-<button class="submit-button" type="submit">
-  Crear mi cuenta
-  <i class="fas fa-arrow-right"></i>
-</button>
+        <app-button
+          class="w-100"
+          text="Crear mi cuenta"
+          endIcon="fa-arrow-right"
+          type="submit"
+          variant="primary"
+        />
       </form>
 
       <div class="auth-divider">
         <span>¿Ya tienes una cuenta?</span>
       </div>
 
-      <a class="secondary-button" routerLink="/login"> Iniciar sesión </a>
+      <app-button class="w-100" text="Iniciar sesión" routerLink="/login" variant="secondary" />
 
       <p class="terms">
         Al crear tu cuenta podrás mantener tu biblioteca cinematográfica personal en este navegador.

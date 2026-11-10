@@ -3,26 +3,35 @@
     {{ position() }}
   </div>
 
-  <img
-    class="serie-poster"
-    [src]="posterUrl()"
-    [alt]="title"
-    loading="lazy"
-  />
+  <div class="poster-wrapper">
+    <img
+      class="serie-poster"
+      [src]="posterUrl()"
+      [alt]="title"
+      loading="lazy"
+    />
+
+    @if (ranking()) {
+      <div class="serie-rating">
+        <i class="fa-solid fa-star"></i>
+        <strong>{{ rating() }}</strong>
+        <small>/ 10</small>
+      </div>
+    }
+  </div>
 
   <div class="serie-information">
     <h3>{{ title }}</h3>
 
     @if (isActor()) {
-      <span class="serie-year">
-        Actor / Actriz
-      </span>
+      <span class="serie-year">Actor / Actriz</span>
 
       <p class="serie-overview">
         Profesional de la interpretación en películas y producciones audiovisuales.
       </p>
     } @else {
       <span class="serie-year">
+        <i class="fa-regular fa-calendar"></i>
         {{ year }}
       </span>
 
@@ -39,13 +48,7 @@
     }
   </div>
 
-  @if (ranking()) {
-    <div class="serie-rating">
-      <i class="fa-solid fa-star"></i>
-      <strong>{{ rating() }}</strong>
-      <small>/ 10</small>
-    </div>
-  } @else if (showPopularity()) {
+  @if (!ranking() && showPopularity()) {
     <div class="serie-rating popularity-rating">
       <div>
         <small>POPULARIDAD TOTAL</small>

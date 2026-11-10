@@ -6,17 +6,17 @@
   />
 
   <!-- CONTROLES -->
- <div
-  class="ranking-toolbar d-flex flex-column flex-md-row align-items-stretch align-items-md-end gap-3 mt-4 mb-4"
->
-  <app-filter-tabs
-    class="flex-md-grow-1"
-    [tabs]="rankingTabs"
-    [selected]="activeRanking()"
-    (selectionChange)="changeRanking($event)"
-  />
+ <div class="ranking-toolbar d-flex flex-column flex-md-row align-items-stretch align-items-md-end gap-3 mt-4 mb-4">
+  <div class="col-12 col-md-8 col-lg-6">
+    <app-filter-tabs
+      class="d-block w-100"
+      [tabs]="rankingTabs"
+      [selected]="activeRanking()"
+      (selectionChange)="changeRanking($event)"
+    />
+  </div>
 
-  <div class="ranking-action flex-shrink-0">
+  <div class="ranking-action flex-shrink-0 ms-md-auto">
     <app-button
       text="Actualizar"
       icon="fa-rotate-right"
@@ -26,7 +26,6 @@
     />
   </div>
 </div>
-
   <!-- CARGANDO -->
   @if (loading()) {
     <app-page-loading

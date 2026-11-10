@@ -5,14 +5,15 @@
     description="Descubre las películas y series con las mejores puntuaciones de la comunidad."
   />
 
-  <div
-    class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4"
-  >
-    <app-filter-tabs
-      [tabs]="mediaTabs"
-      [selected]="mediaType()"
-      (selectionChange)="changeMediaType($event)"
-    />
+  <div class="row mb-4">
+    <div class="col-12 col-md-4">
+      <app-filter-tabs
+        class="d-block w-100"
+        [tabs]="mediaTabs"
+        [selected]="mediaType()"
+        (selectionChange)="changeMediaType($event)"
+      />
+    </div>
   </div>
   <app-results-header
     [title]="mediaType() === 'movie' ? 'Películas más valoradas' : 'Series más valoradas'"

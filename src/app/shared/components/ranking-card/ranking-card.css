@@ -1,4 +1,9 @@
+:host {
+  display: block;
+}
+
 .ranking-card {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 20px;
@@ -15,7 +20,6 @@
   background: var(--color-superficie-hover);
 }
 
-/* POSICIÓN */
 .ranking-position {
   min-width: 35px;
   color: var(--color-acento);
@@ -24,7 +28,6 @@
   text-align: center;
 }
 
-/* PÓSTER */
 .serie-poster {
   width: 85px;
   height: 125px;
@@ -34,7 +37,6 @@
   background: var(--color-superficie-elevada);
 }
 
-/* INFORMACIÓN */
 .serie-information {
   flex: 1;
   min-width: 0;
@@ -53,7 +55,6 @@
   font-weight: 600;
 }
 
-/* DESCRIPCIÓN */
 .serie-overview {
   display: -webkit-box;
   overflow: hidden;
@@ -66,7 +67,6 @@
   line-clamp: 2;
 }
 
-/* VOTOS */
 .serie-votes {
   display: flex;
   align-items: center;
@@ -77,27 +77,6 @@
 
 .serie-votes i {
   color: var(--color-texto-secundario);
-}
-
-/* POPULARIDAD */
-.collection-popularity {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-top: 12px;
-}
-
-.collection-popularity small {
-  color: var(--color-texto-atenuado);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-.collection-popularity strong {
-  color: var(--color-acento);
-  font-size: 18px;
-  font-weight: 800;
 }
 
 /* VALORACIÓN */
@@ -130,68 +109,6 @@
   font-size: 11px;
 }
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .ranking-card {
-    gap: 12px;
-    padding: 10px;
-  }
-
-  .ranking-position {
-    min-width: 25px;
-    font-size: 19px;
-  }
-
-  .serie-poster {
-    width: 65px;
-    height: 100px;
-  }
-
-  .serie-information h3 {
-    font-size: 14px;
-  }
-
-  .serie-overview {
-    font-size: 11px;
-  }
-
-  .serie-rating {
-    gap: 3px;
-    padding: 7px;
-  }
-
-  .serie-rating i {
-    font-size: 14px;
-  }
-
-  .serie-rating strong {
-    font-size: 15px;
-  }
-
-  .serie-rating small {
-    font-size: 9px;
-  }
-
-  .collection-popularity strong {
-    font-size: 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  .ranking-card {
-    flex-wrap: wrap;
-  }
-
-  .serie-information {
-    flex: 1;
-    width: calc(100% - 120px);
-  }
-
-  .serie-rating {
-    margin-left: auto;
-  }
-}
-
 .popularity-rating {
   min-width: 125px;
   justify-content: center;
@@ -215,4 +132,134 @@
   color: var(--color-acento);
   font-size: 19px;
   font-weight: 800;
+}
+
+@media (max-width: 768px) {
+  .ranking-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 16px;
+  }
+
+  .ranking-position {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 6px;
+    color: #fff;
+    font-size: 16px;
+    background: var(--color-acento);
+    border-radius: 8px;
+  }
+
+  .serie-poster {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2 / 3;
+    border-radius: 0;
+  }
+  .serie-rating:not(.popularity-rating) {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    gap: 4px;
+    padding: 5px 9px;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    border-radius: 10px;
+  }
+
+  .serie-rating i {
+    font-size: 13px;
+  }
+
+  .serie-rating strong {
+    font-size: 14px;
+  }
+  .serie-rating small {
+    display: none;
+  }
+
+  .serie-information {
+    flex: none;
+    width: 100%;
+    padding: 12px;
+  }
+
+  .serie-information h3 {
+    margin-bottom: 8px;
+    font-size: 15px;
+  }
+
+  .serie-year {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--color-texto-atenuado);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .serie-overview {
+    display: none;
+  }
+
+  .serie-votes {
+    margin-top: 8px;
+  }
+
+  .popularity-rating {
+    min-width: 0;
+    margin: 0 12px 12px;
+  }
+
+  .popularity-rating small {
+    font-size: 9px;
+  }
+
+  .popularity-rating strong {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ranking-card {
+    border-radius: 14px;
+  }
+
+  .ranking-position {
+    top: 8px;
+    left: 8px;
+    min-width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+
+  .serie-rating:not(.popularity-rating) {
+    top: 8px;
+    right: 8px;
+    padding: 4px 8px;
+  }
+
+  .serie-information {
+    padding: 10px;
+  }
+
+  .serie-information h3 {
+    font-size: 14px;
+  }
+
+  .serie-year {
+    font-size: 11px;
+  }
 }

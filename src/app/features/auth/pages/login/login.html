@@ -82,17 +82,25 @@
           }
         </div>
 
-        <button class="submit-button" type="submit">
-          Iniciar sesión
-          <i class="fas fa-arrow-right"></i>
-        </button>
+        <app-button
+          text="Iniciar sesión"
+          class="w-100"
+          endIcon="fa-arrow-right"
+          type="submit"
+          variant="primary"
+        />
       </form>
 
       <div class="auth-divider">
         <span>¿Aún no tienes una cuenta?</span>
       </div>
 
-      <a class="secondary-button" routerLink="/register"> Crear una cuenta </a>
+      <app-button
+        class="w-100"
+        text="Crear una cuenta"
+        routerLink="/register"
+        variant="secondary"
+      />
 
       <p class="terms">Al continuar, podrás disfrutar de tu biblioteca cinematográfica personal.</p>
     </section>

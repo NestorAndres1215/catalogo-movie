@@ -1,13 +1,9 @@
-:host {
-  display: block;
-  width: 100%;
-}
+
 
 .rankings-container {
-  width: 100%;
-  padding: 30px;
-  color: #ffffff;
-  box-sizing: border-box;
+  padding: 35px 40px;
+  max-width: 1600px;
+  margin: auto;
 }
 
 .ranking-tabs {
