@@ -9,11 +9,13 @@
     <div
       class="ranking-toolbar d-flex flex-column flex-md-row align-items-stretch align-items-md-end justify-content-between gap-3 mt-4 mb-4"
     >
-      <app-filter-tabs
-        [tabs]="rankingTabs"
-        [selected]="activeRanking()"
-        (selectionChange)="changeRanking($event)"
-      />
+      <div class="col-12 col-md-6 col-lg-4">
+        <app-filter-tabs
+          [tabs]="rankingTabs"
+          [selected]="activeRanking()"
+          (selectionChange)="changeRanking($event)"
+        />
+      </div>
       <div class="ranking-action">
         <app-button
           text="Actualizar"

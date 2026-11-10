@@ -87,3 +87,8 @@
     gap: 20px 12px;
   }
 }
+@media (max-width: 576px) {
+  .year-decoration {
+    display: none;
+  }
+}

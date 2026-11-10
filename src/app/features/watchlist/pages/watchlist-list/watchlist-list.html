@@ -14,11 +14,13 @@
   <div
     class="ranking-toolbar d-flex flex-column flex-md-row align-items-stretch align-items-md-end justify-content-between gap-3 mt-4 mb-4"
   >
-    <app-filter-tabs
-      [tabs]="watchlistTabs"
-      [selected]="selectedFilter()"
-      (selectionChange)="selectFilter($event)"
-    />
+    <div class="col-12 col-md-6 col-lg-4">
+      <app-filter-tabs
+        [tabs]="watchlistTabs"
+        [selected]="selectedFilter()"
+        (selectionChange)="selectFilter($event)"
+      />
+    </div>
     @if (watchlist().length > 0) {
       <div class="ranking-action">
         <app-button

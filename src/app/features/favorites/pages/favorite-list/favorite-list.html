@@ -10,12 +10,13 @@
   <div
     class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4"
   >
+   <div class="col-12 col-md-6 col-lg-4">
     <app-filter-tabs
       [tabs]="favoriteTabs"
       [selected]="selectedType()"
       (selectionChange)="changeType($event)"
     />
-
+</div>
     <span class="results-count"> {{ filteredFavorites().length }} resultados </span>
   </div>
 

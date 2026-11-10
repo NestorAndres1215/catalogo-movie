@@ -31,16 +31,17 @@
         (selectionChange)="changeMediaType($event)"
       />
     </div>
-
-    <app-select-filter
-      class="ms-md-auto"
-      id="year"
-      label="Seleccionar año"
-      placeholder="Todos los años"
-      [options]="yearOptions"
-      [selectedValue]="year()"
-      (selectionChange)="onYearChange($event)"
-    />
+    <div class="col-12 col-md-6 col-lg-2">
+      <app-select-filter
+        class="ms-md-auto"
+        id="year"
+        label="Seleccionar año"
+        placeholder="Todos los años"
+        [options]="yearOptions"
+        [selectedValue]="year()"
+        (selectionChange)="onYearChange($event)"
+      />
+    </div>
   </div>
 
   @if (loading()) {

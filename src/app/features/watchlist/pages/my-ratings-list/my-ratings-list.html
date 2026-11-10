@@ -13,18 +13,18 @@
   <div
     class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4"
   >
-    <app-results-header
-      title="Mis puntuaciones"
-      [description]="totalRated() + ' títulos registrados'"
-    />
-
-    <app-filter-tabs
-      [tabs]="filterTabs"
-      [selected]="selectedFilter()"
-      (selectionChange)="selectFilter($event)"
-    />
+    <div class="col-12 col-md-6 col-lg-4">
+      <app-filter-tabs
+        [tabs]="filterTabs"
+        [selected]="selectedFilter()"
+        (selectionChange)="selectFilter($event)"
+      />
+    </div>
   </div>
-
+  <app-results-header
+    title="Mis puntuaciones"
+    [description]="totalRated() + ' títulos registrados'"
+  />
   <!-- LISTADO -->
   @if (ratedItems().length > 0) {
     <div class="media-grid">
