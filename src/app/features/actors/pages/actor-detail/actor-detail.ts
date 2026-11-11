@@ -21,7 +21,9 @@ import { ErrorStateComponent } from '../../../../shared/components/error-state/e
   styleUrl: './actor-detail.css'
 })
 export class ActorDetailComponent implements OnInit {
-
+getProfileLarge(path: string | null): string {
+  return this.personService.getImageUrl(path, 'h632'); // usa tu servicio de personas
+}
   private readonly route = inject(ActivatedRoute);
   private readonly personService = inject(PersonService);
 

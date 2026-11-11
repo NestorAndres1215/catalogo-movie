@@ -80,21 +80,19 @@
 
     <!-- CREADORES -->
     @if (creators.length > 0) {
-      <section class="creators-section">
-        <app-results-header title="Creadores" />
-        <div class="row g-3">
-          @for (creator of creators; track creator.id) {
-            <div class="col-6 col-md-4 col-lg-2">
-              <app-actor-card
-                [actor]="creator"
-                [profileUrl]="creator.profile_path ? getProfile(creator.profile_path) : ''"
-                [clickable]="false"
-                character="Creador"
-              />
-            </div>
-          }
-        </div>
-      </section>
+      <app-results-header title="Creadores" />
+      <div class="row g-3">
+        @for (creator of creators; track creator.id) {
+          <div class="col-6 col-md-4 col-lg-2">
+            <app-actor-card
+              [actor]="creator"
+              [profileUrl]="creator.profile_path ? getProfile(creator.profile_path) : ''"
+              [clickable]="false"
+              character="Creador"
+            />
+          </div>
+        }
+      </div>
     }
     <!-- REPARTO -->
     @if (cast.length > 0) {

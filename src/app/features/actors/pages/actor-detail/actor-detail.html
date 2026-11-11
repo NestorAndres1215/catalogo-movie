@@ -20,52 +20,49 @@
 
 @if (person(); as item) {
   <section class="actor-detail-page">
-    <!-- PERFIL PRINCIPAL -->
-    <div class="profile-header">
-      <div class="profile-image">
-        @if (item.profile_path) {
-          <img [src]="getProfile(item.profile_path)" [alt]="item.name" />
-        } @else {
-          <div class="profile-placeholder">👤</div>
-        }
-      </div>
-
-      <div class="profile-information">
-        <a class="back-link" routerLink="/actors"> ← Volver a actores </a>
-
+    <!-- HERO -->
+    <div
+      class="detail-hero"
+      [style.--hero-image]="
+        item.profile_path ? 'url(' + getProfile(item.profile_path) + ')' : 'none'
+      "
+    >
+      <div class="hero-content">
         <span class="eyebrow">CINEVERSE / PERSONAS</span>
 
         <h1>{{ item.name }}</h1>
 
-        <p class="department">
-          {{ getDepartment(item.known_for_department) }}
-        </p>
+        <p class="tagline">{{ getDepartment(item.known_for_department) }}</p>
 
-        <div class="profile-meta">
-          <span>⭐ {{ item.popularity.toFixed(1) }} popularidad</span>
-          <span>{{ genderLabel }}</span>
+        <div class="hero-badges">
+          <span class="badge badge-rating">★ {{ item.popularity.toFixed(1) }} popularidad</span>
+          @if (genderLabel) {
+            <span class="badge">{{ genderLabel }}</span>
+          }
         </div>
 
-        @if (item.birthday) {
-          <p>
-            <strong>Fecha de nacimiento:</strong>
-            {{ item.birthday }}
-          </p>
-        }
+        <div class="profile-facts">
+          @if (item.birthday) {
+            <div class="fact">
+              <span>Nacimiento</span>
+              <strong>{{ item.birthday }}</strong>
+            </div>
+          }
 
-        @if (item.deathday) {
-          <p>
-            <strong>Fecha de fallecimiento:</strong>
-            {{ item.deathday }}
-          </p>
-        }
+          @if (item.deathday) {
+            <div class="fact">
+              <span>Fallecimiento</span>
+              <strong>{{ item.deathday }}</strong>
+            </div>
+          }
 
-        @if (item.place_of_birth) {
-          <p>
-            <strong>Lugar de nacimiento:</strong>
-            {{ item.place_of_birth }}
-          </p>
-        }
+          @if (item.place_of_birth) {
+            <div class="fact">
+              <span>Lugar de nacimiento</span>
+              <strong>{{ item.place_of_birth }}</strong>
+            </div>
+          }
+        </div>
 
         @if (item.homepage) {
           <a class="homepage-link" [href]="item.homepage" target="_blank" rel="noopener noreferrer">
@@ -136,7 +133,7 @@
                 }
 
                 @if (credit.vote_average > 0) {
-                  <span class="credit-rating"> ⭐ {{ credit.vote_average.toFixed(1) }} </span>
+                  <span class="credit-rating">★ {{ credit.vote_average.toFixed(1) }}</span>
                 }
               </div>
             </article>
@@ -146,7 +143,7 @@
         <app-empty-state
           icon="fa-film"
           title="No hay producciones disponibles"
-          description="Este director todavía no tiene producciones registradas."
+          description="Esta persona todavía no tiene producciones registradas."
         />
       }
     </section>
