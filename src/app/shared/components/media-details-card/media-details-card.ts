@@ -1,5 +1,4 @@
-
-import { Component, input, output } from '@angular/core';
+import { Component, effect, input, output, signal } from '@angular/core';
 import { DecimalPipe, NgTemplateOutlet } from '@angular/common';
 
 export interface RatedMedia {
@@ -23,6 +22,12 @@ export class MediaDetailsCardComponent {
   readonly item = input.required<RatedMedia>();
 
   readonly showRatingComparison = input(false);
+
+  /** true = tarjeta actual (botón o artículo con ratings). false = tarjeta simple, sin interacción. */
+  readonly clickable = input(true);
+
+  /** Línea extra cuando clickable = false (personaje, trabajo, etc.) */
+  readonly subtitle = input('');
 
   readonly detailsRequested = output<{
     id: number;
@@ -59,6 +64,13 @@ export class MediaDetailsCardComponent {
     }).format(parsedDate);
   }
 
+  /** Solo el año, para el modo simple. */
+  get year(): string {
+    const date = this.item().releaseDate;
+
+    return date && /^\d{4}/.test(date) ? date.substring(0, 4) : 'Sin fecha';
+  }
+
   get mediaTypeLabel(): string {
     return this.item().mediaType === 'movie' ? 'Película' : 'Serie';
   }
@@ -69,4 +81,19 @@ export class MediaDetailsCardComponent {
       mediaType: this.item().mediaType,
     });
   }
+  readonly imageFailed = signal(false);
+
+constructor() {
+  // Si cambia el póster, se vuelve a intentar cargar
+  effect(() => {
+    this.item();
+    this.imageFailed.set(false);
+  });
+}
+
+get hasImage(): boolean {
+  return !!this.item().posterPath && !this.imageFailed();
+}
+
+
 }

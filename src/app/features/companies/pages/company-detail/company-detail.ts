@@ -26,8 +26,8 @@ import { MediaCardComponent } from '../../../../shared/components/media-card/med
     ErrorStateComponent,
     StatsComponent,
     ResultsHeaderComponent,
-    MediaCardComponent
-],
+    MediaCardComponent,
+  ],
   templateUrl: './company-detail.html',
   styleUrl: './company-detail.css',
 })

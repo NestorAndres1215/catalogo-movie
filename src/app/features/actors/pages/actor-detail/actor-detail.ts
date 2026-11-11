@@ -1,29 +1,36 @@
-
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { PersonService } from '../../../../core/service/person.service';
 
 import {
   PersonDetails,
   PersonCredit,
-  PersonCombinedCredits
+  PersonCombinedCredits,
 } from '../../../../core/models/person.interface';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { ErrorStateComponent } from '../../../../shared/components/error-state/error-state';
+import {
+  MediaDetailsCardComponent,
+  RatedMedia,
+} from '../../../../shared/components/media-details-card/media-details-card';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
 
 @Component({
   selector: 'app-actor-detail',
   standalone: true,
-  imports: [RouterLink, PageLoadingComponent, EmptyStateComponent, ErrorStateComponent],
+  imports: [
+    PageLoadingComponent,
+    EmptyStateComponent,
+    ErrorStateComponent,
+    MediaDetailsCardComponent,
+    ResultsHeaderComponent,
+  ],
   templateUrl: './actor-detail.html',
-  styleUrl: './actor-detail.css'
+  styleUrl: './actor-detail.css',
 })
 export class ActorDetailComponent implements OnInit {
-getProfileLarge(path: string | null): string {
-  return this.personService.getImageUrl(path, 'h632'); // usa tu servicio de personas
-}
   private readonly route = inject(ActivatedRoute);
   private readonly personService = inject(PersonService);
 
@@ -48,22 +55,22 @@ getProfileLarge(path: string | null): string {
 
   loadPerson(id: number): void {
     this.personService.getPersonDetails(id).subscribe({
-      next: response => {
+      next: (response) => {
         this.person.set(response);
         this.loading.set(false);
       },
       error: () => {
         this.errorMessage.set('No se pudo cargar el perfil de esta persona.');
         this.loading.set(false);
-      }
+      },
     });
   }
 
   loadCredits(id: number): void {
     this.personService.getPersonCredits(id).subscribe({
-      next: response => {
+      next: (response) => {
         this.credits.set(response);
-      }
+      },
     });
   }
 
@@ -84,7 +91,7 @@ getProfileLarge(path: string | null): string {
       Camera: 'Cámara',
       Editing: 'Edición',
       Sound: 'Sonido',
-      Art: 'Arte'
+      Art: 'Arte',
     };
 
     return departments[department] ?? department;
@@ -109,7 +116,7 @@ getProfileLarge(path: string | null): string {
 
     const uniqueCredits = new Map<number, PersonCredit>();
 
-    [...cast, ...crew].forEach(credit => {
+    [...cast, ...crew].forEach((credit) => {
       const current = uniqueCredits.get(credit.id);
 
       if (!current || (!current.character && credit.character)) {
@@ -117,9 +124,7 @@ getProfileLarge(path: string | null): string {
       }
     });
 
-    return [...uniqueCredits.values()]
-      .sort((a, b) => b.vote_average - a.vote_average)
-      .slice(0, 20);
+    return [...uniqueCredits.values()].sort((a, b) => b.vote_average - a.vote_average).slice(0, 20);
   }
 
   getTitle(credit: PersonCredit): string {
@@ -130,5 +135,24 @@ getProfileLarge(path: string | null): string {
     const date = credit.release_date ?? credit.first_air_date;
 
     return date ? date.substring(0, 4) : 'Sin fecha';
+  }
+
+  // Convierte un crédito al formato que espera app-media-details-card.
+  toMediaItem(credit: PersonCredit): RatedMedia {
+    return {
+      id: credit.id,
+      title: this.getTitle(credit),
+      posterPath: credit.poster_path ?? null,
+      mediaType: credit.media_type === 'movie' ? 'movie' : 'tv',
+      voteAverage: credit.vote_average,
+      releaseDate: credit.release_date ?? credit.first_air_date ?? '',
+    };
+  }
+
+  // Línea extra bajo el año: personaje o trabajo.
+  getCreditDetail(credit: PersonCredit): string {
+    if (credit.character) return `Personaje: ${credit.character}`;
+    if (credit.job) return `Trabajo: ${credit.job}`;
+    return '';
   }
 }

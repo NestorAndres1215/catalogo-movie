@@ -1,4 +1,38 @@
-@if (showRatingComparison()) {
+<ng-template #poster>
+  @if (hasImage) {
+    <img
+      [src]="imageUrl"
+      [alt]="item().title"
+      loading="lazy"
+      (error)="imageFailed.set(true)"
+    />
+  } @else {
+    <div class="no-poster" role="img" [attr.aria-label]="'Sin póster de ' + item().title">
+      <i class="fa-solid fa-film"></i>
+    </div>
+  }
+</ng-template>
+
+@if (!clickable()) {
+  <!-- Modo simple: póster, tipo, título, año y detalle -->
+  <article class="media-card static">
+    <div class="poster-container">
+      <ng-container [ngTemplateOutlet]="poster" />
+    </div>
+
+    <div class="media-info">
+      <span class="media-type">{{ mediaTypeLabel }}</span>
+
+      <h3>{{ item().title }}</h3>
+
+      <p class="year">{{ year }}</p>
+
+      @if (subtitle()) {
+        <p class="subtitle">{{ subtitle() }}</p>
+      }
+    </div>
+  </article>
+} @else if (showRatingComparison()) {
   <button
     class="media-card media-card-button"
     type="button"
@@ -14,9 +48,10 @@
     <ng-content />
   </article>
 }
+
 <ng-template #cardContent>
   <div class="poster-container">
-    <img [src]="imageUrl" [alt]="item().title" loading="lazy" />
+    <ng-container [ngTemplateOutlet]="poster" />
 
     @if (showRatingComparison() && item().personalRating != null) {
       <span class="personal-rating-badge">

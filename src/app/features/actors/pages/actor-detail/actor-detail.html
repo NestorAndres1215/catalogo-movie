@@ -84,7 +84,7 @@
     <!-- OTROS NOMBRES -->
     @if (item.also_known_as.length > 0) {
       <section class="detail-section">
-        <h2>También conocido como</h2>
+        <app-results-header title="También conocido como" />
 
         <div class="aliases">
           @for (alias of item.also_known_as.slice(0, 12); track alias) {
@@ -96,47 +96,21 @@
 
     <!-- TRABAJOS -->
     <section class="detail-section">
-      <div class="section-heading">
-        <div>
-          <h2>Películas y series</h2>
-          <p>Producciones en las que ha participado</p>
-        </div>
-      </div>
+      <app-results-header
+        title="Películas y series"
+        description="Producciones en las que ha participado"
+      />
 
       @if (knownCredits.length > 0) {
-        <div class="credits-grid">
+        <div class="row g-3">
           @for (credit of knownCredits; track credit.id) {
-            <article class="credit-card">
-              @if (credit.poster_path) {
-                <img
-                  [src]="getPoster(credit.poster_path)"
-                  [alt]="getTitle(credit)"
-                  loading="lazy"
-                />
-              } @else {
-                <div class="credit-placeholder">🎬</div>
-              }
-
-              <div class="credit-info">
-                <span class="media-type">
-                  {{ credit.media_type === 'movie' ? 'Película' : 'Serie' }}
-                </span>
-
-                <h3>{{ getTitle(credit) }}</h3>
-
-                <p>{{ getYear(credit) }}</p>
-
-                @if (credit.character) {
-                  <p>Personaje: {{ credit.character }}</p>
-                } @else if (credit.job) {
-                  <p>Trabajo: {{ credit.job }}</p>
-                }
-
-                @if (credit.vote_average > 0) {
-                  <span class="credit-rating">★ {{ credit.vote_average.toFixed(1) }}</span>
-                }
-              </div>
-            </article>
+            <div class="col-6 col-lg-3">
+              <app-media-details-card
+                [item]="toMediaItem(credit)"
+                [clickable]="false"
+                [subtitle]="getCreditDetail(credit)"
+              />
+            </div>
           }
         </div>
       } @else {
