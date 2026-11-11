@@ -9,6 +9,9 @@ import { MovieCredits } from '../../../../core/models/movie-credits.interface';
 
 import { MovieService } from '../../../../core/service/movie.service';
 import { ErrorStateComponent } from '../../../../shared/components/error-state/error-state';
+import { VideoTrailerComponent } from '../../../../shared/components/video-trailer/video-trailer';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
+import { ActorCard } from '../../../../shared/components/actor-card/actor-card';
 
 interface MovieResult {
   movie: Movie | null;
@@ -18,7 +21,7 @@ interface MovieResult {
 @Component({
   selector: 'app-movie-detail',
   standalone: true,
-  imports: [RouterLink, ErrorStateComponent],
+  imports: [ErrorStateComponent, VideoTrailerComponent, ResultsHeaderComponent, ActorCard],
   templateUrl: './movie-detail.html',
   styleUrl: './movie-detail.css',
 })
@@ -29,9 +32,7 @@ export class MovieDetailComponent {
 
   // ID reactivo: permite cargar otra película si cambia la ruta.
   private readonly id = toSignal(
-    this.route.paramMap.pipe(
-      map(params => Number(params.get('id')))
-    ),
+    this.route.paramMap.pipe(map((params) => Number(params.get('id')))),
     {
       initialValue: Number(this.route.snapshot.paramMap.get('id')),
     },
@@ -40,7 +41,7 @@ export class MovieDetailComponent {
   // Información principal de la película.
   private readonly result = toSignal(
     toObservable(this.id).pipe(
-      switchMap(id => {
+      switchMap((id) => {
         if (!Number.isInteger(id) || id <= 0) {
           return of<MovieResult>({
             movie: null,
@@ -73,11 +74,9 @@ export class MovieDetailComponent {
   // Créditos de la película.
   readonly credits = toSignal(
     toObservable(this.id).pipe(
-      switchMap(id =>
+      switchMap((id) =>
         Number.isInteger(id) && id > 0
-          ? this.movieService.getMovieCredits(id).pipe(
-              catchError(() => of(null)),
-            )
+          ? this.movieService.getMovieCredits(id).pipe(catchError(() => of(null)))
           : of(null),
       ),
     ),
@@ -86,14 +85,32 @@ export class MovieDetailComponent {
     },
   );
 
+  // Todos los directores (a veces hay más de uno).
+  readonly directors = computed(
+    () => this.credits()?.crew.filter((member) => member.job === 'Director') ?? [],
+  );
+getProfile(path: string | null): string {
+  return this.movieService.getImageUrl(path, 'w185');
+}
+
+getStatusLabel(status: string | undefined): string {
+  const statuses: Record<string, string> = {
+    Released: 'Estrenada',
+    'In Production': 'En producción',
+    'Post Production': 'En posproducción',
+    Planned: 'Planeada',
+    Rumored: 'Rumoreada',
+    Canceled: 'Cancelada',
+  };
+
+  return status ? (statuses[status] ?? status) : 'No disponible';
+}
   // Videos disponibles de la película.
   readonly videos = toSignal(
     toObservable(this.id).pipe(
-      switchMap(id =>
+      switchMap((id) =>
         Number.isInteger(id) && id > 0
-          ? this.movieService.getMovieVideos(id).pipe(
-              catchError(() => of(null)),
-            )
+          ? this.movieService.getMovieVideos(id).pipe(catchError(() => of(null)))
           : of(null),
       ),
     ),
@@ -106,20 +123,16 @@ export class MovieDetailComponent {
   readonly trailerUrl = computed<SafeResourceUrl | null>(() => {
     const availableVideos = this.videos()?.results ?? [];
 
-    const officialTrailer = availableVideos.find(video =>
-      video.site === 'YouTube' &&
-      video.type === 'Trailer' &&
-      video.official
+    const officialTrailer = availableVideos.find(
+      (video) => video.site === 'YouTube' && video.type === 'Trailer' && video.official,
     );
 
-    const anyTrailer = availableVideos.find(video =>
-      video.site === 'YouTube' &&
-      video.type === 'Trailer'
+    const anyTrailer = availableVideos.find(
+      (video) => video.site === 'YouTube' && video.type === 'Trailer',
     );
 
-    const teaser = availableVideos.find(video =>
-      video.site === 'YouTube' &&
-      video.type === 'Teaser'
+    const teaser = availableVideos.find(
+      (video) => video.site === 'YouTube' && video.type === 'Teaser',
     );
 
     const selectedVideo = officialTrailer ?? anyTrailer ?? teaser;
@@ -139,12 +152,10 @@ export class MovieDetailComponent {
   readonly errorMessage = computed(() => this.result().error);
 
   readonly director = computed(() =>
-    this.credits()?.crew.find(member => member.job === 'Director'),
+    this.credits()?.crew.find((member) => member.job === 'Director'),
   );
 
-  readonly cast = computed(() =>
-    this.credits()?.cast.slice(0, 12) ?? [],
-  );
+  readonly cast = computed(() => this.credits()?.cast.slice(0, 12) ?? []);
 
   // Imágenes.
   getBackdrop(path: string | null): string {

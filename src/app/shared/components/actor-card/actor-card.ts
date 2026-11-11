@@ -1,18 +1,28 @@
+import { NgTemplateOutlet } from '@angular/common';
 import { Component, effect, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { Person } from '../../../core/models/person.interface';
 
+/** Acepta un Person completo o un miembro del reparto (solo id y name son obligatorios). */
+export type ActorCardData = Pick<Person, 'id' | 'name'> & Partial<Person>;
+
 @Component({
   selector: 'app-actor-card',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, NgTemplateOutlet],
   templateUrl: './actor-card.html',
   styleUrl: './actor-card.css'
 })
 export class ActorCard {
-  readonly actor = input.required<Person>();
+  readonly actor = input.required<ActorCardData>();
   readonly profileUrl = input.required<string>();
+
+  /** true = tarjeta con enlace (por defecto). false = tarjeta de reparto, sin redirección. */
+  readonly clickable = input(true);
+
+  /** Personaje que se muestra cuando clickable = false */
+  readonly character = input('');
 
   readonly imageFailed = signal(false);
 
@@ -36,7 +46,7 @@ export class ActorCard {
       Art: 'Arte'
     };
 
-    const department = this.actor().known_for_department;
+    const department = this.actor().known_for_department ?? '';
 
     return departments[department] ?? department;
   }

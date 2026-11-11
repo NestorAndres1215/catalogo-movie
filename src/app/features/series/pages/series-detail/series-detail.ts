@@ -1,29 +1,27 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { SeriesService } from '../../../../core/service/series.service';
 
-import {
-  TvSeries,
-  SeriesCreator,
-  SeriesSeason
-} from '../../../../core/models/series.interface';
+import { TvSeries, SeriesCreator, SeriesSeason } from '../../../../core/models/series.interface';
 
 import { SeriesCredits } from '../../../../core/models/series-credits.interface';
 import { MovieVideoResponse } from '../../../../core/models/movie.interface';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { ErrorStateComponent } from '../../../../shared/components/error-state/error-state';
+import { VideoTrailerComponent } from '../../../../shared/components/video-trailer/video-trailer';
+import { ActorCard } from '../../../../shared/components/actor-card/actor-card';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
 
 @Component({
   selector: 'app-series-detail',
   standalone: true,
-  imports: [RouterLink, PageLoadingComponent, ErrorStateComponent],
+  imports: [PageLoadingComponent, ErrorStateComponent, VideoTrailerComponent, ActorCard, ResultsHeaderComponent],
   templateUrl: './series-detail.html',
-  styleUrl: './series-detail.css'
+  styleUrl: './series-detail.css',
 })
 export class SeriesDetailComponent implements OnInit {
-
   private readonly route = inject(ActivatedRoute);
   private readonly seriesService = inject(SeriesService);
   private readonly sanitizer = inject(DomSanitizer);
@@ -45,7 +43,7 @@ export class SeriesDetailComponent implements OnInit {
       this.loading.set(false);
       return;
     }
-
+console.log("hola")
     this.loadSeries(id);
     this.loadCredits(id);
     this.loadVideos(id);
@@ -54,28 +52,27 @@ export class SeriesDetailComponent implements OnInit {
   // Información principal de la serie.
   loadSeries(id: number): void {
     this.seriesService.getSeriesDetails(id).subscribe({
-      next: response => {
+      next: (response) => {
         this.series.set(response);
         this.loading.set(false);
       },
       error: () => {
-        this.errorMessage.set(
-          'No se pudo cargar la información de la serie.'
-        );
+        this.errorMessage.set('No se pudo cargar la información de la serie.');
         this.loading.set(false);
-      }
+      },
     });
   }
 
   // Créditos de la serie.
   loadCredits(id: number): void {
     this.seriesService.getSeriesCredits(id).subscribe({
-      next: response => {
+      next: (response) => {
+        console.log(response)
         this.credits.set(response);
       },
       error: () => {
         this.credits.set(null);
-      }
+      },
     });
   }
 
@@ -84,12 +81,12 @@ export class SeriesDetailComponent implements OnInit {
     this.trailerUrl.set(null);
 
     this.seriesService.getSeriesVideos(id).subscribe({
-      next: response => {
+      next: (response) => {
         this.setTrailer(response);
       },
       error: () => {
         this.trailerUrl.set(null);
-      }
+      },
     });
   }
 
@@ -97,21 +94,13 @@ export class SeriesDetailComponent implements OnInit {
   private setTrailer(response: MovieVideoResponse): void {
     const videos = response.results ?? [];
 
-    const officialTrailer = videos.find(video =>
-      video.site === 'YouTube' &&
-      video.type === 'Trailer' &&
-      video.official
+    const officialTrailer = videos.find(
+      (video) => video.site === 'YouTube' && video.type === 'Trailer' && video.official,
     );
 
-    const anyTrailer = videos.find(video =>
-      video.site === 'YouTube' &&
-      video.type === 'Trailer'
-    );
+    const anyTrailer = videos.find((video) => video.site === 'YouTube' && video.type === 'Trailer');
 
-    const teaser = videos.find(video =>
-      video.site === 'YouTube' &&
-      video.type === 'Teaser'
-    );
+    const teaser = videos.find((video) => video.site === 'YouTube' && video.type === 'Teaser');
 
     const selectedVideo = officialTrailer ?? anyTrailer ?? teaser;
 
@@ -122,9 +111,7 @@ export class SeriesDetailComponent implements OnInit {
 
     const url = `https://www.youtube-nocookie.com/embed/${selectedVideo.key}`;
 
-    this.trailerUrl.set(
-      this.sanitizer.bypassSecurityTrustResourceUrl(url)
-    );
+    this.trailerUrl.set(this.sanitizer.bypassSecurityTrustResourceUrl(url));
   }
 
   // Imágenes.
@@ -157,4 +144,34 @@ export class SeriesDetailComponent implements OnInit {
   get cast() {
     return this.credits()?.cast.slice(0, 12) ?? [];
   }
+
+  getStatusLabel(status: string | undefined): string {
+    const statuses: Record<string, string> = {
+      Ended: 'Finalizado',
+      'Returning Series': 'En emisión',
+    };
+
+    return status ? (statuses[status] ?? status) : 'No disponible';
+  }
+
+  readonly information = computed(() => {
+    const item = this.series();
+
+    if (!item) return [];
+
+    return [
+      { label: 'Estado', value: this.getStatusLabel(item.status) },
+      { label: 'Primera emisión', value: item.first_air_date || 'No disponible' },
+      { label: 'Temporadas', value: item.number_of_seasons ?? 0 },
+      { label: 'Episodios', value: item.number_of_episodes ?? 0 },
+      {
+        label: 'Idioma original',
+        value: item.original_language?.toUpperCase() || 'No disponible',
+      },
+      {
+        label: 'País de origen',
+        value: item.origin_country?.join(', ') || 'No disponible',
+      },
+    ];
+  });
 }

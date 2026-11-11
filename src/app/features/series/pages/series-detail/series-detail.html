@@ -9,34 +9,25 @@
 
 @if (errorMessage() && !loading()) {
   <div class="detail-error">
-  <app-error-state
-    title="No se pudo cargar la serie"
-    [description]="errorMessage()"
-    linkText="Volver a series"
-    linkRoute="/series"
-  />
+    <app-error-state
+      title="No se pudo cargar la serie"
+      [description]="errorMessage()"
+      linkText="Volver a series"
+      linkRoute="/series"
+    />
   </div>
 }
 
 @if (series(); as item) {
-
   <section class="series-detail-page">
-
     <!-- PORTADA -->
     <div
       class="detail-hero"
-      [style.background-image]="
-        'linear-gradient(90deg, #0d1018 5%, rgba(13,16,24,.9) 45%, rgba(13,16,24,.2) 100%), url(' +
-        getBackdrop(item.backdrop_path) +
-        ')'
+      [style.--hero-image]="
+        item.backdrop_path ? 'url(' + getBackdrop(item.backdrop_path) + ')' : 'none'
       "
     >
       <div class="detail-hero-content">
-
-        <a class="back-link" routerLink="/series">
-          ← Volver a series
-        </a>
-
         <span class="eyebrow">CINEVERSE / SERIES</span>
 
         <h1>{{ item.name }}</h1>
@@ -46,14 +37,9 @@
         }
 
         <div class="detail-meta">
-          <span class="rating">
-            ⭐ {{ item.vote_average.toFixed(1) }}
-          </span>
-
+          <span class="rating">★ {{ item.vote_average.toFixed(1) }}</span>
           <span>{{ getYear(item.first_air_date) }}</span>
-
           <span>{{ item.number_of_seasons }} temporadas</span>
-
           <span>{{ item.number_of_episodes }} episodios</span>
         </div>
 
@@ -66,145 +52,64 @@
         <p class="overview">
           {{ item.overview || 'No hay descripción disponible.' }}
         </p>
-
-        @if (item.homepage) {
-          <a
-            class="homepage-link"
-            [href]="item.homepage"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Sitio oficial ↗
-          </a>
-        }
-
       </div>
     </div>
 
-    <!-- TRÁILER -->
-    @if (trailerUrl(); as trailer) {
-      <section class="trailer-section">
-
-        <div class="trailer-heading">
-          <span class="eyebrow">VIDEO OFICIAL</span>
-          <h2>Tráiler de {{ item.name }}</h2>
-          <p>
-            Mira el avance de esta serie directamente en CINEVERSE.
-          </p>
-        </div>
-
-        <div class="trailer-container">
-          <iframe
-            [src]="trailer"
-            [title]="'Tráiler de ' + item.name"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-          ></iframe>
-        </div>
-
-      </section>
+    @if (trailerUrl()) {
+      <app-video-trailer
+        [trailerUrl]="trailerUrl()"
+        [title]="item.name"
+        description="Mira el avance de esta serie directamente en CINEVERSE."
+      />
     }
 
     <!-- INFORMACIÓN -->
-    <section class="detail-section">
-
-      <h2>Información de la serie</h2>
-
-      <div class="information-grid">
-
-        <article class="information-card">
-          <span>Estado</span>
-          <strong>{{ item.status || 'No disponible' }}</strong>
-        </article>
-
-        <article class="information-card">
-          <span>Primera emisión</span>
-          <strong>{{ item.first_air_date || 'No disponible' }}</strong>
-        </article>
-
-        <article class="information-card">
-          <span>Temporadas</span>
-          <strong>{{ item.number_of_seasons ?? 0 }}</strong>
-        </article>
-
-        <article class="information-card">
-          <span>Episodios</span>
-          <strong>{{ item.number_of_episodes ?? 0 }}</strong>
-        </article>
-
-        <article class="information-card">
-          <span>Idioma original</span>
-          <strong>{{ item.original_language.toUpperCase() }}</strong>
-        </article>
-
-        <article class="information-card">
-          <span>País de origen</span>
-          <strong>
-            {{ item.origin_country?.join(', ') || 'No disponible' }}
-          </strong>
-        </article>
-
+    <section class="my-4">
+      <app-results-header title="Información de la serie" />
+      <div class="row g-3">
+        @for (info of information(); track info.label) {
+          <div class="col-6 col-lg-4">
+            <article class="information-card h-100">
+              <span>{{ info.label }}</span>
+              <strong>{{ info.value }}</strong>
+            </article>
+          </div>
+        }
       </div>
     </section>
 
     <!-- CREADORES -->
     @if (creators.length > 0) {
-      <section class="detail-section">
-
-        <h2>Creadores</h2>
-
-        <div class="people-grid">
+      <section class="creators-section">
+        <app-results-header title="Creadores" />
+        <div class="row g-3">
           @for (creator of creators; track creator.id) {
-            <article class="person-card">
-
-              @if (creator.profile_path) {
-                <img
-                  [src]="getProfile(creator.profile_path)"
-                  [alt]="creator.name"
-                  loading="lazy"
-                />
-              } @else {
-                <div class="person-placeholder">👤</div>
-              }
-
-              <div>
-                <h3>{{ creator.name }}</h3>
-                <p>Creador</p>
-              </div>
-
-            </article>
+            <div class="col-6 col-md-4 col-lg-2">
+              <app-actor-card
+                [actor]="creator"
+                [profileUrl]="creator.profile_path ? getProfile(creator.profile_path) : ''"
+                [clickable]="false"
+                character="Creador"
+              />
+            </div>
           }
         </div>
       </section>
     }
-
     <!-- REPARTO -->
     @if (cast.length > 0) {
-      <section class="detail-section">
-
-        <h2>Reparto principal</h2>
-
-        <div class="people-grid">
+      <section class="my-4">
+        <app-results-header title="Reparto principal" />
+        <div class="row g-3">
           @for (person of cast; track person.id) {
-            <article class="person-card">
-
-              @if (person.profile_path) {
-                <img
-                  [src]="getProfile(person.profile_path)"
-                  [alt]="person.name"
-                  loading="lazy"
-                />
-              } @else {
-                <div class="person-placeholder">👤</div>
-              }
-
-              <div>
-                <h3>{{ person.name }}</h3>
-                <p>{{ person.character }}</p>
-              </div>
-
-            </article>
+            <div class="col-6 col-md-4 col-lg-2">
+              <app-actor-card
+                [actor]="person"
+                [profileUrl]="person.profile_path ? getProfile(person.profile_path) : ''"
+                [clickable]="false"
+                [character]="person.character"
+              />
+            </div>
           }
         </div>
       </section>
@@ -213,42 +118,28 @@
     <!-- TEMPORADAS -->
     @if (seasons.length > 0) {
       <section class="detail-section">
-
         <h2>Temporadas</h2>
 
-        <div class="seasons-grid">
-
+        <div class="row g-3">
           @for (season of seasons; track season.id) {
-            <article class="season-card">
+            <div class="col-6 col-lg-3">
+              <article class="season-card h-100">
+                @if (season.poster_path) {
+                  <img [src]="getPoster(season.poster_path)" [alt]="season.name" loading="lazy" />
+                } @else {
+                  <div class="season-placeholder">📺</div>
+                }
 
-              @if (season.poster_path) {
-                <img
-                  [src]="getPoster(season.poster_path)"
-                  [alt]="season.name"
-                  loading="lazy"
-                />
-              } @else {
-                <div class="season-placeholder">📺</div>
-              }
-
-              <div class="season-info">
-                <h3>{{ season.name }}</h3>
-
-                <p>
-                  {{ season.episode_count }} episodios
-                </p>
-
-                <span>
-                  {{ season.air_date || 'Fecha no disponible' }}
-                </span>
-              </div>
-
-            </article>
+                <div class="season-info">
+                  <h3>{{ season.name }}</h3>
+                  <p>{{ season.episode_count }} episodios</p>
+                  <span>{{ season.air_date || 'Fecha no disponible' }}</span>
+                </div>
+              </article>
+            </div>
           }
-
         </div>
       </section>
     }
-
   </section>
 }

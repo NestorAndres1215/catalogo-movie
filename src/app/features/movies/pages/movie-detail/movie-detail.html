@@ -23,8 +23,6 @@
       "
     >
       <div class="hero-content">
-        <a routerLink="/movies" class="back-link"> ← Volver al catálogo </a>
-
         <span class="eyebrow"> DETALLES DE LA PELÍCULA </span>
 
         <h1>{{ movie.title }}</h1>
@@ -77,36 +75,34 @@
         <h2>Información</h2>
 
         <div class="information-grid">
-          <div>
+          <div class="info-item">
             <span>Fecha de estreno</span>
             <strong>{{ movie.release_date || 'No disponible' }}</strong>
           </div>
 
-          <div>
+          <div class="info-item">
             <span>Idioma original</span>
             <strong>{{ movie.original_language.toUpperCase() }}</strong>
           </div>
 
-          <div>
+          <div class="info-item">
             <span>Estado</span>
-            <strong>{{ movie.status || 'No disponible' }}</strong>
+            <strong>{{ getStatusLabel(movie.status) }}</strong>
           </div>
 
-          <div>
+          <div class="info-item">
             <span>Votos</span>
             <strong>{{ movie.vote_count }}</strong>
           </div>
 
-          <div>
-            <span>Popularidad</span>
-            <strong>{{ movie.vote_average.toFixed(1) }} / 10</strong>
+          <div class="info-item">
+            <span>Valoración</span>
+            <strong>★ {{ movie.vote_average.toFixed(1) }} / 10</strong>
           </div>
 
-          <div>
+          <div class="info-item">
             <span>Duración</span>
-            <strong>
-              {{ movie.runtime ? movie.runtime + ' min' : 'No disponible' }}
-            </strong>
+            <strong>{{ movie.runtime ? movie.runtime + ' min' : 'No disponible' }}</strong>
           </div>
         </div>
 
@@ -124,52 +120,44 @@
 
     <!-- TRÁILER -->
     @if (trailerUrl(); as trailer) {
-      <section class="trailer-section">
-        <div class="trailer-heading">
-          <span class="eyebrow">VIDEO OFICIAL</span>
-          <h2>Tráiler de {{ movie.title }}</h2>
-          <p>Mira el avance de esta película directamente en CINEVERSE.</p>
-        </div>
+      <app-video-trailer
+        [trailerUrl]="trailerUrl()"
+        [title]="movie.title"
+        description="Mira el avance de esta serie directamente en CINEVERSE."
+      />
+    }
 
-        <div class="trailer-container">
-          <iframe
-            [src]="trailer"
-            [title]="'Tráiler de ' + movie.title"
-            allow="
-              accelerometer;
-              autoplay;
-              clipboard-write;
-              encrypted-media;
-              gyroscope;
-              picture-in-picture;
-              web-share;
-            "
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-          ></iframe>
+    @if (directors().length > 0) {
+      <section class="my-4">
+        <app-results-header title="Dirección" />
+        <div class="row g-3">
+          @for (person of directors(); track person.id) {
+            <div class="col-6 col-md-4 col-lg-2">
+              <app-actor-card
+                [actor]="person"
+                [profileUrl]="person.profile_path ? getProfile(person.profile_path) : ''"
+                [clickable]="false"
+                character="Director"
+              />
+            </div>
+          }
         </div>
       </section>
     }
 
-    <!-- REPARTO -->
     @if (cast().length > 0) {
-      <section class="cast-section">
-        <h2>Reparto principal</h2>
-
-        <div class="cast-grid">
+      <section class="my-4">
+        <app-results-header title="Reparto principal" />
+        <div class="row g-3">
           @for (person of cast(); track person.id) {
-            <article class="cast-card">
-              @if (person.profile_path) {
-                <img [src]="getPoster(person.profile_path)" [alt]="person.name" loading="lazy" />
-              } @else {
-                <div class="no-profile">👤</div>
-              }
-
-              <div class="cast-info">
-                <h3>{{ person.name }}</h3>
-                <p>{{ person.character }}</p>
-              </div>
-            </article>
+            <div class="col-6 col-md-4 col-lg-2">
+              <app-actor-card
+                [actor]="person"
+                [profileUrl]="person.profile_path ? getPoster(person.profile_path) : ''"
+                [clickable]="false"
+                [character]="person.character"
+              />
+            </div>
           }
         </div>
       </section>

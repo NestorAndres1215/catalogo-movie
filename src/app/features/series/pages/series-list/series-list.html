@@ -32,15 +32,6 @@
     />
   }
 
-  @if (errorMessage() && !loading()) {
-    <div class="error-state">
-      <span>⚠</span>
-      <p>{{ errorMessage() }}</p>
-
-      <button type="button" (click)="loadSeries()">Intentar nuevamente</button>
-    </div>
-  }
-
   @if (!loading() && !errorMessage() && series().length === 0) {
     <app-empty-state
       icon="fa-tv"
