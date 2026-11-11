@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -98,7 +98,12 @@ export class CompanyDetailComponent implements OnInit {
       },
     });
   }
+// Logo de la productora como fondo del banner
+readonly heroImage = computed(() => {
+  const logo = this.company()?.logo_path;
 
+  return logo ? `url(${this.getLogo(logo)})` : 'none';
+});
   get companyStats(): StatItem[] {
     const company = this.company();
 

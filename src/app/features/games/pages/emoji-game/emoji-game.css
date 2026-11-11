@@ -74,25 +74,6 @@
   font-size: 12px;
 }
 
-.start-button {
-  width: 100%;
-  max-width: 350px;
-  padding: 17px;
-  border: none;
-  border-radius: 13px;
-  background: var(--color-acento);
-  color: var(--color-texto-sobre-acento);
-  font-size: 16px;
-  font-weight: 800;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-.start-button:hover {
-  filter: brightness(1.15);
-  transform: translateY(-3px);
-}
-
 /* ENCABEZADO DEL JUEGO */
 
 .game-header {
@@ -110,33 +91,6 @@
   color: var(--color-texto-secundario);
   font-size: 15px;
   line-height: 1.6;
-}
-
-/* ESTADÍSTICAS */
-
-.game-stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 15px;
-  margin-bottom: 25px;
-}
-
-.stat-card {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 18px;
-  background: #1b1f2d;
-  border: 1px solid #303548;
-  border-radius: 14px;
-}
-
-.stat-card span {
-  color: var(--color-texto-secundario);
-  font-size: 13px;
-}
-.stat-card strong {
-  font-size: 23px;
 }
 
 /* CRONÓMETRO */
@@ -347,28 +301,6 @@
   font-weight: 700;
 }
 
-/* BOTONES */
-
-.next-button,
-.restart-button {
-  width: 100%;
-  margin-top: 25px;
-  padding: 15px;
-  border: none;
-  border-radius: var(--radio-borde-pequeno, 8px);
-  background: var(--color-acento);
-  color: var(--color-texto-sobre-acento);
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-.next-button:hover,
-.restart-button:hover {
-  background: var(--color-acento-hover);
-  transform: translateY(-2px);
-}
 /* RESULTADO FINAL */
 
 .result-card {
@@ -440,19 +372,6 @@
   font-size: 12px;
 }
 
-/* FOOTER */
-
-.game-footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  margin-top: 40px;
-  color: #777f95;
-  font-size: 12px;
-  text-align: center;
-}
-
 /* RESPONSIVE */
 
 @media (max-width: 650px) {
@@ -474,14 +393,7 @@
     min-height: auto;
   }
 
-  .game-stats {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
 
-  .stat-card {
-    padding: 14px;
-  }
 
   .question-card {
     padding: 22px 15px;

@@ -1,5 +1,7 @@
-import { Component, OnDestroy, signal } from '@angular/core';
+import { Component, computed, OnDestroy, signal } from '@angular/core';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { StatItem, StatsComponent } from '../../../../shared/components/stats/stats';
+import { ButtonComponent } from '../../../../shared/components/button/button';
 
 interface EmojiQuestion {
   id: number;
@@ -12,7 +14,7 @@ interface EmojiQuestion {
 @Component({
   selector: 'app-emoji-game',
   standalone: true,
-  imports: [PageHeaderComponent],
+  imports: [PageHeaderComponent, StatsComponent, ButtonComponent],
   templateUrl: './emoji-game.html',
   styleUrl: './emoji-game.css',
 })
@@ -98,24 +100,14 @@ export class EmojiGameComponent implements OnDestroy {
       emojis: '💍 🧙 🏔️ 🧝',
       hint: 'Un pequeño hobbit debe destruir un poderoso anillo.',
       answer: 'El señor de los anillos',
-      options: [
-        'Harry Potter',
-        'El hobbit',
-        'El señor de los anillos',
-        'Las crónicas de Narnia',
-      ],
+      options: ['Harry Potter', 'El hobbit', 'El señor de los anillos', 'Las crónicas de Narnia'],
     },
     {
       id: 12,
       emojis: '🏴‍☠️ 🚢 🦜 ⚔️',
       hint: 'Un pirata muy peculiar busca un barco legendario.',
       answer: 'Piratas del Caribe',
-      options: [
-        'Piratas del Caribe',
-        'Peter Pan',
-        'La isla del tesoro',
-        'Master and Commander',
-      ],
+      options: ['Piratas del Caribe', 'Peter Pan', 'La isla del tesoro', 'Master and Commander'],
     },
     {
       id: 13,
@@ -206,12 +198,7 @@ export class EmojiGameComponent implements OnDestroy {
       emojis: '🦇 🌃 🃏 💰',
       hint: 'Un héroe de Gotham se enfrenta a un villano llamado Joker.',
       answer: 'Batman: El caballero de la noche',
-      options: [
-        'Superman',
-        'Batman: El caballero de la noche',
-        'Joker',
-        'Iron Man',
-      ],
+      options: ['Superman', 'Batman: El caballero de la noche', 'Joker', 'Iron Man'],
     },
     {
       id: 26,
@@ -305,12 +292,7 @@ export class EmojiGameComponent implements OnDestroy {
       emojis: '🚀 🌌 🤖 ⭐',
       hint: 'Un grupo de héroes viaja por el espacio con un mapache.',
       answer: 'Guardianes de la Galaxia',
-      options: [
-        'Star Trek',
-        'Guardianes de la Galaxia',
-        'Star Wars',
-        'Interstellar',
-      ],
+      options: ['Star Trek', 'Guardianes de la Galaxia', 'Star Wars', 'Interstellar'],
     },
     {
       id: 38,
@@ -357,36 +339,21 @@ export class EmojiGameComponent implements OnDestroy {
       emojis: '🧙‍♀️ 🧹 🐈 🌙',
       hint: 'Una joven bruja aprende a vivir por su cuenta.',
       answer: 'Kiki: Entregas a domicilio',
-      options: [
-        'El viaje de Chihiro',
-        'Kiki: Entregas a domicilio',
-        'Mi vecino Totoro',
-        'Ponyo',
-      ],
+      options: ['El viaje de Chihiro', 'Kiki: Entregas a domicilio', 'Mi vecino Totoro', 'Ponyo'],
     },
     {
       id: 44,
       emojis: '🐉 🏯 👧 👻',
       hint: 'Una niña entra en un misterioso mundo de espíritus.',
       answer: 'El viaje de Chihiro',
-      options: [
-        'Ponyo',
-        'El viaje de Chihiro',
-        'La princesa Mononoke',
-        'Mi vecino Totoro',
-      ],
+      options: ['Ponyo', 'El viaje de Chihiro', 'La princesa Mononoke', 'Mi vecino Totoro'],
     },
     {
       id: 45,
       emojis: '🌳 🐱 👧 🌧️',
       hint: 'Dos niñas conocen a una criatura gigante del bosque.',
       answer: 'Mi vecino Totoro',
-      options: [
-        'Mi vecino Totoro',
-        'Ponyo',
-        'El viaje de Chihiro',
-        'El castillo ambulante',
-      ],
+      options: ['Mi vecino Totoro', 'Ponyo', 'El viaje de Chihiro', 'El castillo ambulante'],
     },
     {
       id: 46,
@@ -551,9 +518,7 @@ export class EmojiGameComponent implements OnDestroy {
   }
 
   getProgress(): number {
-    return (
-      ((this.currentQuestionIndex() + 1) / this.totalQuestions) * 100
-    );
+    return ((this.currentQuestionIndex() + 1) / this.totalQuestions) * 100;
   }
 
   getResultMessage(): string {
@@ -591,4 +556,22 @@ export class EmojiGameComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.stopTimer();
   }
+
+  readonly gameStats = computed<StatItem[]>(() => [
+    {
+      icon: 'fa-circle-question',
+      value: `${this.currentQuestionIndex() + 1}/${this.totalQuestions}`,
+      label: 'Pregunta',
+    },
+    {
+      icon: 'fa-star',
+      value: this.score(),
+      label: 'Puntuación',
+    },
+    {
+      icon: 'fa-stopwatch',
+      value: `${this.timeLeft()}s`,
+      label: 'Tiempo restante',
+    },
+  ]);
 }
