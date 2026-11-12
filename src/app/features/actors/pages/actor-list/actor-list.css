@@ -4,38 +4,12 @@
   margin: auto;
 }
 
-.actors-grid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 24px 18px;
-}
-
-@media (max-width: 1200px) {
-  .actors-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 900px) {
-  .actors-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
 @media (max-width: 600px) {
   .actors-page {
     padding: 20px 14px;
   }
-
-  .page-header h1 {
-    font-size: 25px;
-  }
-
-  .actors-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px 12px;
-  }
 }
+
 .actor-toolbar {
   display: flex;
   align-items: flex-end;

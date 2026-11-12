@@ -12,11 +12,12 @@ import {
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { MediaCardComponent } from '../../../../shared/components/media-card/media-card';
+import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
 
 @Component({
   selector: 'app-streaming-list',
   standalone: true,
-  imports: [ PageHeaderComponent, FilterTabsComponent, PageLoadingComponent, EmptyStateComponent, MediaCardComponent],
+  imports: [PageHeaderComponent, FilterTabsComponent, PageLoadingComponent, EmptyStateComponent, MediaCardComponent, ResultsHeaderComponent],
   templateUrl: './streaming-list.html',
   styleUrl: './streaming-list.css',
 })

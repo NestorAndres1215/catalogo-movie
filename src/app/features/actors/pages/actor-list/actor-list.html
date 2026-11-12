@@ -52,9 +52,11 @@
   }
 
   @if (!loading() && actors().length > 0) {
-    <div class="actors-grid">
+    <div class="row row-cols-2 row-cols-lg-3 row-cols-xl-5 g-4">
       @for (actor of actors(); track actor.id) {
-        <app-actor-card [actor]="actor" [profileUrl]="getProfile(actor.profile_path)" />
+        <div class="col">
+          <app-actor-card [actor]="actor" [profileUrl]="getProfile(actor.profile_path)" />
+        </div>
       }
     </div>
 

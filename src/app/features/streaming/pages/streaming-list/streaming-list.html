@@ -7,16 +7,16 @@
   />
 
   <!-- ===== SELECTOR: PELÍCULAS / SERIES ===== -->
-<div class="row mb-4">
-  <div class="col-12 col-md-4">
-    <app-filter-tabs
-      class="d-block w-100"
-      [tabs]="mediaTabs"
-      [selected]="mediaType()"
-      (selectionChange)="changeMediaType($event)"
-    />
+  <div class="row mb-4">
+    <div class="col-12 col-md-4">
+      <app-filter-tabs
+        class="d-block w-100"
+        [tabs]="mediaTabs"
+        [selected]="mediaType()"
+        (selectionChange)="changeMediaType($event)"
+      />
+    </div>
   </div>
-</div>
 
   <!-- ===== PLATAFORMAS ===== -->
   <section class="providers-section">
@@ -90,8 +90,6 @@
         detail="Conectando con TMDB..."
         icon="fa-tv"
       />
-    } @else if (errorMessage()) {
-      <div class="error-message">{{ errorMessage() }}</div>
     } @else if (contents().length === 0 && selectedProvider() !== null) {
       <app-empty-state
         icon="fa-tv"
@@ -99,14 +97,16 @@
         description="No se encontró contenido para esta plataforma."
       />
     } @else if (contents().length > 0) {
-      <div class="content-grid">
+      <div class="row row-cols-2 row-cols-lg-3 row-cols-xl-5 g-4">
         @for (media of contents(); track media.id) {
-          <app-media-card
-            [media]="media"
-            [mediaType]="mediaType()"
-            variant="description"
-            [isUpcoming]="isUpcoming(media.release_date || media.first_air_date)"
-          />
+          <div class="col">
+            <app-media-card
+              [media]="media"
+              [mediaType]="mediaType()"
+              variant="description"
+              [isUpcoming]="isUpcoming(media.release_date || media.first_air_date)"
+            />
+          </div>
         }
       </div>
     }

@@ -1,18 +1,10 @@
-/* ===== PÁGINA ===== */
+
 .streaming-page {
   padding: 35px 40px;
   max-width: 1600px;
   margin: auto;
 }
 
-/* ===== SELECTOR DE TABS ===== */
-.media-selector {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 28px;
-}
-
-/* ===== SECCIONES ===== */
 .providers-section,
 .catalog-section {
   width: 100%;
@@ -39,7 +31,7 @@
   font-size: 14px;
 }
 
-/* ===== CONTROLES DEL CARRUSEL ===== */
+
 .carousel-controls {
   display: flex;
   align-items: center;
@@ -125,13 +117,6 @@
   text-align: center;
 }
 
-/* ===== CATÁLOGO ===== */
-.content-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-  gap: 22px;
-}
-
 /* ===== RESPONSIVE ===== */
 @media (max-width: 650px) {
   .streaming-page {
@@ -151,10 +136,5 @@
 
   .provider-card {
     flex-basis: 115px;
-  }
-
-  .content-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
   }
 }

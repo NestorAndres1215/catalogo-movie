@@ -64,11 +64,7 @@
           }
         </div>
 
-        @if (item.homepage) {
-          <a class="homepage-link" [href]="item.homepage" target="_blank" rel="noopener noreferrer">
-            Sitio oficial ↗
-          </a>
-        }
+
       </div>
     </div>
 
@@ -86,7 +82,7 @@
       <section class="detail-section">
         <app-results-header title="También conocido como" />
 
-        <div class="aliases">
+        <div class="aliases d-flex flex-wrap gap-2">
           @for (alias of item.also_known_as.slice(0, 12); track alias) {
             <span>{{ alias }}</span>
           }
