@@ -1,6 +1,6 @@
 import { Component, OnInit, inject, signal, computed } from '@angular/core';
 
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { Country, CountryMedia } from '../../../../core/models/country.interface';
 
@@ -20,7 +20,6 @@ import {
 } from '../../../../shared/components/select-filter/select-filter';
 import { ErrorStateComponent } from '../../../../shared/components/error-state/error-state';
 import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
-import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 type CountryMediaType = 'movie' | 'tv';
 
@@ -38,7 +37,7 @@ type CountrySortOption = 'rating-desc' | 'rating-asc' | 'date-desc' | 'date-asc'
     SelectFilterComponent,
     ErrorStateComponent,
     ResultsHeaderComponent,
-],
+  ],
   templateUrl: './country-detail.html',
   styleUrl: './country-detail.css',
 })
@@ -46,10 +45,6 @@ export class CountryDetailComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
 
   private readonly countryService = inject(CountryService);
-
-  // =========================================
-  // ESTADOS
-  // =========================================
 
   readonly country = signal<Country | null>(null);
 
@@ -69,16 +64,17 @@ export class CountryDetailComponent implements OnInit {
 
   readonly totalResults = signal<number>(0);
 
+  // Si la imagen de la bandera falla, se usa el emoji.
+  readonly flagFailed = signal<boolean>(false);
+
   private countryCode = '';
 
   private requestVersion = 0;
+
   readonly mediaTabs: FilterTab[] = [
     { label: 'Películas', value: 'movie' },
     { label: 'Series', value: 'tv' },
   ];
-  // =========================================
-  // ORDENAMIENTO DE PELÍCULAS Y SERIES
-  // =========================================
 
   readonly sortedMedia = computed(() => {
     const items = [...this.media()];
@@ -126,10 +122,6 @@ export class CountryDetailComponent implements OnInit {
     }
   });
 
-  // =========================================
-  // INICIALIZACIÓN
-  // =========================================
-
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       const code = params.get('code');
@@ -158,15 +150,14 @@ export class CountryDetailComponent implements OnInit {
 
       this.errorMessage.set('');
 
+      // Reintenta cargar la bandera al cambiar de país
+      this.flagFailed.set(false);
+
       this.loadCountry();
 
       this.loadMedia();
     });
   }
-
-  // =========================================
-  // CARGAR INFORMACIÓN DEL PAÍS
-  // =========================================
 
   loadCountry(): void {
     const code = this.countryCode;
@@ -197,10 +188,6 @@ export class CountryDetailComponent implements OnInit {
       },
     });
   }
-
-  // =========================================
-  // CARGAR PELÍCULAS O SERIES
-  // =========================================
 
   loadMedia(): void {
     const version = ++this.requestVersion;
@@ -245,10 +232,6 @@ export class CountryDetailComponent implements OnInit {
     });
   }
 
-  // =========================================
-  // CAMBIAR ENTRE PELÍCULAS Y SERIES
-  // =========================================
-
   changeType(type: FilterType): void {
     if (type !== 'movie' && type !== 'tv') {
       return;
@@ -262,10 +245,6 @@ export class CountryDetailComponent implements OnInit {
     this.currentPage.set(1);
     this.loadMedia();
   }
-
-  // =========================================
-  // CAMBIAR ORDENAMIENTO
-  // =========================================
 
   readonly sortOptions: FilterOption[] = [
     { label: 'Mejor valoración', value: 'rating-desc' },
@@ -285,10 +264,6 @@ export class CountryDetailComponent implements OnInit {
     }
   }
 
-  // =========================================
-  // CAMBIAR PÁGINA
-  // =========================================
-
   changePage(page: number): void {
     if (page < 1 || page > this.totalPages() || this.loading()) {
       return;
@@ -304,25 +279,13 @@ export class CountryDetailComponent implements OnInit {
     });
   }
 
-  // =========================================
-  // IMÁGENES
-  // =========================================
-
   getPoster(path: string | null): string {
     return this.countryService.getImageUrl(path, 'w500');
   }
 
-  // =========================================
-  // TÍTULO
-  // =========================================
-
   getMediaTitle(item: CountryMedia): string {
     return item.title ?? item.name ?? 'Sin título';
   }
-
-  // =========================================
-  // FECHA
-  // =========================================
 
   getMediaDate(item: CountryMedia): string {
     const date = this.selectedType() === 'movie' ? item.release_date : item.first_air_date;
@@ -344,19 +307,15 @@ export class CountryDetailComponent implements OnInit {
     });
   }
 
-  // =========================================
-  // RUTA DEL CONTENIDO
-  // =========================================
-
   getMediaRoute(item: CountryMedia): string[] {
     return this.selectedType() === 'movie'
       ? ['/movies', String(item.id)]
       : ['/series', String(item.id)];
   }
 
-  // =========================================
-  // BANDERA
-  // =========================================
+  getFlagUrl(): string {
+    return `https://flagcdn.com/${this.countryCode.toLowerCase()}.svg`;
+  }
 
   getFlag(): string {
     if (!/^[A-Z]{2}$/i.test(this.countryCode)) {

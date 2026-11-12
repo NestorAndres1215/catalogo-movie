@@ -95,3 +95,154 @@
     font-size: 30px;
   }
 }
+.country-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: 340px;
+  margin-bottom: 30px;
+  padding: 48px;
+  overflow: hidden;
+  background-color: var(--color-fondo, #0d1018);
+  border: 1px solid var(--color-borde, #292e3b);
+  border-radius: var(--radio-borde-grande, 16px);
+  box-shadow: var(--box-shadow, 0 20px 50px rgba(0, 0, 0, 0.35));
+}
+
+/* Bandera grande a la derecha, fundida con el fondo */
+.country-hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -2;
+  width: 65%;
+  background-image: var(--hero-image);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.55;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 70%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 70%);
+}
+
+/* Degradado oscuro para leer el texto */
+.country-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(13, 16, 24, 0.96) 0%,
+      rgba(13, 16, 24, 0.75) 45%,
+      rgba(13, 16, 24, 0.15) 100%
+    ),
+    linear-gradient(0deg, rgba(13, 16, 24, 0.7) 0%, transparent 35%);
+}
+
+.hero-layout {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+/* Placa con la bandera nítida */
+.flag-plate {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 200px;
+  height: 135px;
+  overflow: hidden;
+  background: var(--color-superficie-secundaria, #191d28);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 16px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+}
+
+.flag-plate img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.flag-emoji {
+  font-size: 72px;
+  line-height: 1;
+}
+
+.hero-content {
+  min-width: 0;
+  max-width: 600px;
+}
+
+.eyebrow {
+  display: block;
+  color: var(--color-acento, #e5b94b);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.country-hero h1 {
+  margin: 14px 0 10px;
+  font-size: 44px;
+  line-height: 1.1;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+.tagline {
+  margin: 0;
+  color: var(--color-texto-secundario, #c3c9d4);
+  font-style: italic;
+}
+
+.genre-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.genre-list span {
+  padding: 6px 13px;
+  color: var(--color-acento, #e5b94b);
+  background: var(--color-acento-suave, rgba(229, 185, 75, 0.1));
+  border: 1px solid var(--color-borde-hover, rgba(229, 185, 75, 0.28));
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+@media (max-width: 700px) {
+  .country-hero {
+    min-height: 0;
+    padding: 28px 20px;
+  }
+
+  .country-hero::after {
+    width: 100%;
+    opacity: 0.3;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .hero-layout {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 22px;
+  }
+
+  .flag-plate {
+    width: 150px;
+    height: 100px;
+  }
+
+  .country-hero h1 {
+    font-size: 30px;
+  }
+}

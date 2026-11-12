@@ -18,24 +18,39 @@
   }
 
   @if (country(); as countryData) {
-    <header class="country-header">
-      <div class="country-flag">
-        {{ getFlag() }}
+   <header
+  class="detail-hero country-hero"
+  [style.--hero-image]="flagFailed() ? 'none' : 'url(&quot;' + getFlagUrl() + '&quot;)'"
+>
+  <div class="hero-layout">
+    <div class="flag-plate">
+      @if (!flagFailed()) {
+        <img
+          [src]="getFlagUrl()"
+          [alt]="'Bandera de ' + countryData.english_name"
+          (error)="flagFailed.set(true)"
+        />
+      } @else {
+        <span class="flag-emoji">{{ getFlag() }}</span>
+      }
+    </div>
+
+    <div class="hero-content">
+      <span class="eyebrow">CINEVERSE / PAÍSES</span>
+
+      <h1>{{ countryData.english_name }}</h1>
+
+      <p class="tagline">Nombre nativo: {{ countryData.native_name }}</p>
+
+      <div class="genre-list">
+        <span>Código ISO: {{ countryData.iso_3166_1 }}</span>
+        @if (totalResults() > 0) {
+          <span>{{ totalResults() }} {{ selectedType() === 'movie' ? 'películas' : 'series' }}</span>
+        }
       </div>
-
-      <div class="country-heading-info">
-        <span class="section-label"> CINEVERSE / PAÍSES </span>
-
-        <h1>
-          {{ countryData.english_name }}
-        </h1>
-
-        <p>Nombre nativo: {{ countryData.native_name }}</p>
-
-        <span class="country-code"> Código ISO: {{ countryData.iso_3166_1 }} </span>
-      </div>
-    </header>
-
+    </div>
+  </div>
+</header>
     <!-- CONTENIDO -->
 
     <section class="content-section">
