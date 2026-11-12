@@ -73,39 +73,6 @@
   line-height: 1.6;
 }
 
-/* ---------- Mensajes ---------- */
-.message {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 18px;
-  min-height: 280px;
-  text-align: center;
-}
-
-.message__title {
-  margin: 0;
-  font-size: 21px;
-}
-
-.message__text {
-  margin: 0;
-  color: var(--color-texto-secundario);
-  line-height: 1.6;
-}
-
-.message--error .message__text {
-  color: var(--color-danger);
-}
-
-/* ---------- Grid ---------- */
-.companies-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 25px;
-}
-
 /* ---------- Tarjeta ---------- */
 .company-card {
   display: flex;
@@ -229,10 +196,5 @@
 @media (max-width: 520px) {
   .companies-page {
     padding: 20px 15px;
-  }
-
-  .companies-grid {
-    grid-template-columns: 1fr;
-    gap: 18px;
   }
 }

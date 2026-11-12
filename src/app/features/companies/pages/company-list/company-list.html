@@ -58,13 +58,7 @@
     />
   }
 
-  <!-- ERROR -->
-  @if (errorMessage()) {
-    <div class="message message--error" role="alert">
-      <h2 class="message__title">No se pudieron cargar las productoras</h2>
-      <p class="message__text">{{ errorMessage() }}</p>
-    </div>
-  }
+
 
   <!-- SIN RESULTADOS -->
   @if (!loading() && !errorMessage() && searchQuery() && companies().length === 0) {
@@ -77,36 +71,46 @@
 
   <!-- LISTADO -->
   @if (!loading() && companies().length > 0) {
-    <div class="companies-grid">
-      @for (company of companies(); track company.id) {
-        <a class="company-card" [routerLink]="['/companies', company.id]">
-          <div class="company-card__logo">
-            @if (company.logo_path) {
-              <img
-                [src]="getLogo(company.logo_path)"
-                [alt]="'Logotipo de ' + company.name"
-                loading="lazy"
-              />
-            } @else {
-              <div class="company-card__no-logo">
-                <i class="fas fa-film" aria-hidden="true"></i>
-                <p>Logotipo no disponible</p>
-              </div>
-            }
-          </div>
+<div class="row g-3">
+  @for (company of companies(); track company.id) {
+    <div class="col-12 col-lg-4">
+      <a
+        class="company-card"
+        [routerLink]="['/companies', company.id]"
+      >
+        <div class="company-card__logo">
+          @if (company.logo_path) {
+            <img
+              [src]="getLogo(company.logo_path)"
+              [alt]="'Logotipo de ' + company.name"
+              loading="lazy"
+            />
+          } @else {
+            <div class="company-card__no-logo">
+              <i class="fas fa-film" aria-hidden="true"></i>
+              <p>Logotipo no disponible</p>
+            </div>
+          }
+        </div>
 
-          <div class="company-card__info">
-            <span class="company-card__label">PRODUCTORA CINEMATOGRÁFICA</span>
-            <h2 class="company-card__name">{{ company.name }}</h2>
+        <div class="company-card__info">
+          <span class="company-card__label">
+            PRODUCTORA CINEMATOGRÁFICA
+          </span>
 
-            <span class="company-card__country">
-              <i class="fas fa-globe" aria-hidden="true"></i>
-              {{ company.origin_country || 'País no disponible' }}
-            </span>
-          </div>
-        </a>
-      }
+          <h2 class="company-card__name">
+            {{ company.name }}
+          </h2>
+
+          <span class="company-card__country">
+            <i class="fas fa-globe" aria-hidden="true"></i>
+            {{ company.origin_country || 'País no disponible' }}
+          </span>
+        </div>
+      </a>
     </div>
+  }
+</div>
   }
 
   <!-- PAGINACIÓN -->

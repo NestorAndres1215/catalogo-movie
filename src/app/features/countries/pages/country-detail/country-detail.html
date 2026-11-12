@@ -18,44 +18,44 @@
   }
 
   @if (country(); as countryData) {
-   <header
-  class="detail-hero country-hero"
-  [style.--hero-image]="flagFailed() ? 'none' : 'url(&quot;' + getFlagUrl() + '&quot;)'"
->
-  <div class="hero-layout">
-    <div class="flag-plate">
-      @if (!flagFailed()) {
-        <img
-          [src]="getFlagUrl()"
-          [alt]="'Bandera de ' + countryData.english_name"
-          (error)="flagFailed.set(true)"
-        />
-      } @else {
-        <span class="flag-emoji">{{ getFlag() }}</span>
-      }
-    </div>
+    <header
+      class="detail-hero country-hero"
+      [style.--hero-image]="flagFailed() ? 'none' : 'url(&quot;' + getFlagUrl() + '&quot;)'"
+    >
+      <div class="hero-layout">
+        <div class="flag-plate">
+          @if (!flagFailed()) {
+            <img
+              [src]="getFlagUrl()"
+              [alt]="'Bandera de ' + countryData.english_name"
+              (error)="flagFailed.set(true)"
+            />
+          } @else {
+            <span class="flag-emoji">{{ getFlag() }}</span>
+          }
+        </div>
 
-    <div class="hero-content">
-      <span class="eyebrow">CINEVERSE / PAÍSES</span>
+        <div class="hero-content">
+          <span class="eyebrow">CINEVERSE / PAÍSES</span>
 
-      <h1>{{ countryData.english_name }}</h1>
+          <h1>{{ countryData.english_name }}</h1>
 
-      <p class="tagline">Nombre nativo: {{ countryData.native_name }}</p>
+          <p class="tagline">Nombre nativo: {{ countryData.native_name }}</p>
 
-      <div class="genre-list">
-        <span>Código ISO: {{ countryData.iso_3166_1 }}</span>
-        @if (totalResults() > 0) {
-          <span>{{ totalResults() }} {{ selectedType() === 'movie' ? 'películas' : 'series' }}</span>
-        }
+          <div class="genre-list">
+            <span>Código ISO: {{ countryData.iso_3166_1 }}</span>
+            @if (totalResults() > 0) {
+              <span
+                >{{ totalResults() }}
+                {{ selectedType() === 'movie' ? 'películas' : 'series' }}</span
+              >
+            }
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</header>
-    <!-- CONTENIDO -->
+    </header>
 
     <section class="content-section">
-      <!-- ENCABEZADO DE SECCIÓN -->
-
       <app-results-header
         [title]="'Contenido de ' + countryData.english_name"
         description="Descubre las producciones cinematográficas de este país."
@@ -82,15 +82,11 @@
         </div>
       </div>
 
-      <!-- RESULTADOS Y FILTROS -->
-
       <app-results-header
         [title]="selectedType() === 'movie' ? 'Películas' : 'Series'"
         [description]="totalResults() + ' resultados encontrados'"
         [countLabel]="'Página ' + currentPage() + ' de ' + totalPages()"
       />
-
-      <!-- CARGANDO CONTENIDO -->
 
       @if (loading()) {
         <app-page-loading
@@ -108,7 +104,6 @@
           description="No se encontraron resultados para este país."
         />
       }
-
 
       @if (!loading() && !errorMessage() && sortedMedia().length > 0) {
         <div class="row row-cols-2 row-cols-lg-3 row-cols-xl-5 g-4">

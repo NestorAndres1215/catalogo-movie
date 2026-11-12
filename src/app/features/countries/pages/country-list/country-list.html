@@ -1,12 +1,10 @@
 <section class="countries-page">
-  <!-- ENCABEZADO -->
-
-<app-page-header
-  section="CINEVERSE / EXPLORAR"
-  title="Países"
-  description="Descubre películas y series de diferentes países del mundo."
-  icon="fa-earth-americas"
-/>
+  <app-page-header
+    section="CINEVERSE / EXPLORAR"
+    title="Países"
+    description="Descubre películas y series de diferentes países del mundo."
+    icon="fa-earth-americas"
+  />
   <div class="mb-4">
     <app-search
       [value]="searchQuery()"
@@ -30,22 +28,6 @@
       detail="Consultando información en TMDB..."
       icon="fa-globe"
     />
-  }
-
-  @if (errorMessage()) {
-    <div class="message error">
-      <p>{{ errorMessage() }}</p>
-
-      <button type="button" (click)="loadCountries()">Reintentar</button>
-    </div>
-  }
-
-  @if (!loading() && !errorMessage() && filteredCountries().length === 0) {
-    <div class="message">
-      <h2>No se encontraron países</h2>
-
-      <p>Intenta buscar con otro nombre o código.</p>
-    </div>
   }
 
   @if (!loading() && !errorMessage() && paginatedCountries().length > 0) {

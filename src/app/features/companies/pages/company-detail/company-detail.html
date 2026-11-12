@@ -1,6 +1,4 @@
 <section class="company-detail-page">
-  <!-- CARGANDO -->
-
   @if (loading()) {
     <app-page-loading
       title="Cargando información de la productora"
@@ -9,7 +7,6 @@
       icon="fa-building"
     />
   }
-  <!-- ERROR -->
 
   @if (!loading() && errorMessage()) {
     <div class="detail-error">
