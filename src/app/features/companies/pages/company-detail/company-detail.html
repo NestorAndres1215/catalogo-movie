@@ -24,8 +24,6 @@
   <!-- DETALLE -->
 
   @if (!loading() && company(); as companyData) {
-    <a class="back-link" routerLink="/companies"> ← Volver a productoras </a>
-
     <header class="company-header">
       <div class="company-logo">
         @if (companyData.logo_path) {
@@ -45,17 +43,6 @@
         <p>
           {{ companyData.origin_country || 'País no disponible' }}
         </p>
-
-        @if (companyData.homepage) {
-          <a
-            class="homepage-link"
-            [href]="companyData.homepage"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Visitar sitio web →
-          </a>
-        }
       </div>
     </header>
 
@@ -71,15 +58,6 @@
         <p>{{ companyData.description }}</p>
       </section>
     }
-    @if (companyData.description) {
-      <section class="description-section">
-        <h2>Descripción</h2>
-
-        <p>
-          {{ companyData.description }}
-        </p>
-      </section>
-    }
 
     <!-- PELÍCULAS -->
 
@@ -91,9 +69,11 @@
       />
 
       @if (movies().length > 0) {
-        <div class="movies-grid">
+        <div class="row row-cols-2 row-cols-lg-3 row-cols-xl-5 g-4">
           @for (movie of movies(); track movie.id) {
-            <app-media-card [media]="movie" mediaType="movie" variant="description" />
+            <div class="col">
+              <app-media-card [media]="movie" mediaType="movie" variant="description" />
+            </div>
           }
         </div>
       } @else {

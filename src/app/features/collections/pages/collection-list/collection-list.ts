@@ -1,26 +1,24 @@
 import { Component, inject, signal } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { Subject, debounceTime, distinctUntilChanged, forkJoin } from 'rxjs';
 
 import { CollectionService } from '../../../../core/service/collection.service';
-import { Collection, CollectionSummary } from '../../../../core/models/collection.interface';
-import { CollectionDetails } from '../../../../core/models/catalog.interface';
-import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
+import { CollectionSummary } from '../../../../core/models/collection.interface';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { SearchComponent } from '../../../../shared/components/search/search';
 import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
-import { MediaCardComponent } from '../../../../shared/components/media-card/media-card';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 @Component({
   selector: 'app-collection-list',
   standalone: true,
   imports: [
-    PageHeaderComponent,
+    RouterLink,
     PageLoadingComponent,
     SearchComponent,
     ResultsHeaderComponent,
-    MediaCardComponent,
+    PageHeaderComponent,
   ],
   templateUrl: './collection-list.html',
   styleUrl: './collection-list.css',
@@ -30,14 +28,14 @@ export class CollectionListComponent {
 
   readonly searchQuery = signal('');
   readonly collections = signal<CollectionSummary[]>([]);
-  readonly selectedCollection = signal<CollectionDetails | null>(null);
 
   readonly loading = signal(false);
-  readonly loadingDetails = signal(false);
   readonly errorMessage = signal('');
 
   private searchVersion = 0;
-  private detailVersion = 0;
+
+  // Emite lo que el usuario escribe; se procesa con retraso para no saturar la API.
+  private readonly search$ = new Subject<string>();
 
   readonly defaultCollections = [
     'Harry Potter',
@@ -53,18 +51,23 @@ export class CollectionListComponent {
 
   constructor() {
     this.loadDefaultCollections();
+
+    this.search$
+      .pipe(debounceTime(400), distinctUntilChanged(), takeUntilDestroyed())
+      .subscribe(() => this.searchCollections());
+  }
+
+  onSearchChange(value: string): void {
+    this.searchQuery.set(value);
+    this.search$.next(value.trim());
   }
 
   loadDefaultCollections(): void {
     this.searchVersion++;
-    this.detailVersion++;
+    const currentVersion = this.searchVersion;
 
     this.loading.set(true);
-    this.loadingDetails.set(false);
     this.errorMessage.set('');
-    this.selectedCollection.set(null);
-
-    const currentVersion = this.searchVersion;
 
     const requests = this.defaultCollections.map((query) =>
       this.collectionService.searchCollections(query),
@@ -87,7 +90,6 @@ export class CollectionListComponent {
         if (currentVersion !== this.searchVersion) return;
 
         this.errorMessage.set('No se pudieron cargar las sagas. Inténtalo nuevamente.');
-
         this.loading.set(false);
       },
     });
@@ -102,14 +104,10 @@ export class CollectionListComponent {
     }
 
     this.searchVersion++;
-    this.detailVersion++;
-
     const currentVersion = this.searchVersion;
 
     this.loading.set(true);
-    this.loadingDetails.set(false);
     this.errorMessage.set('');
-    this.selectedCollection.set(null);
     this.collections.set([]);
 
     this.collectionService.searchCollections(query).subscribe({
@@ -127,52 +125,9 @@ export class CollectionListComponent {
         if (currentVersion !== this.searchVersion) return;
 
         this.errorMessage.set('Ocurrió un error al buscar las colecciones.');
-
         this.loading.set(false);
       },
     });
-  }
-
-  selectCollection(collection: CollectionSummary): void {
-    this.detailVersion++;
-
-    const currentVersion = this.detailVersion;
-
-    this.loadingDetails.set(true);
-    this.errorMessage.set('');
-    this.selectedCollection.set(null);
-
-    this.collectionService.getCollectionDetails(collection.id).subscribe({
-      next: (details) => {
-        if (currentVersion !== this.detailVersion) return;
-
-        const sortedDetails = {
-          ...details,
-          parts: [...details.parts].sort((a, b) => {
-            const dateA = a.release_date || '9999-12-31';
-            const dateB = b.release_date || '9999-12-31';
-
-            return dateA.localeCompare(dateB);
-          }),
-        };
-
-        this.selectedCollection.set(sortedDetails);
-        this.loadingDetails.set(false);
-      },
-      error: () => {
-        if (currentVersion !== this.detailVersion) return;
-
-        this.errorMessage.set('No se pudo cargar el contenido de esta saga.');
-        this.loadingDetails.set(false);
-      },
-    });
-  }
-
-  backToResults(): void {
-    this.detailVersion++;
-    this.selectedCollection.set(null);
-    this.loadingDetails.set(false);
-    this.errorMessage.set('');
   }
 
   clearSearch(): void {
@@ -182,11 +137,5 @@ export class CollectionListComponent {
 
   getImageUrl(path: string | null, size = 'w500'): string {
     return this.collectionService.getImageUrl(path, size);
-  }
-
-  getReleaseYear(date: string | undefined): string {
-    if (!date) return 'Sin fecha';
-
-    return date.substring(0, 4);
   }
 }

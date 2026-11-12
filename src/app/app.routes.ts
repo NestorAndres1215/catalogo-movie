@@ -16,8 +16,7 @@ export const routes: Routes = [
     path: '',
     canActivate: [authGuard],
     canActivateChild: [authGuard],
-    loadComponent: () =>
-      import('./core/layout/layout').then((m) => m.Layout),
+    loadComponent: () => import('./core/layout/layout').then((m) => m.Layout),
 
     children: [
       {
@@ -193,6 +192,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'collections/:id',
+        loadComponent: () =>
+          import('./features/collections/pages/collection-detail/collection-detail').then(
+            (m) => m.CollectionDetailComponent,
+          ),
+      },
+      {
         path: 'videos',
         loadComponent: () =>
           import('./features/videos/pages/video-list/video-list').then((m) => m.VideoListComponent),
@@ -318,7 +324,7 @@ export const routes: Routes = [
         path: 'settings',
         loadComponent: () =>
           import('./features/settings/pages/settings/settings').then((m) => m.Settings),
-      }
+      },
     ],
   },
   {

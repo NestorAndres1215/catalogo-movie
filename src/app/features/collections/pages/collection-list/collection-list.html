@@ -9,31 +9,9 @@
     <app-search
       [value]="searchQuery()"
       placeholder="Buscar una saga..."
-      (valueChange)="searchQuery.set($event)"
+      (valueChange)="onSearchChange($event)"
     />
   </div>
-
-  @if (!selectedCollection() && collections().length === 0 && !loading()) {
-    <div class="suggestions">
-      <span>Prueba buscando:</span>
-
-      <button type="button" (click)="searchQuery.set('Harry Potter'); searchCollections()">
-        Harry Potter
-      </button>
-
-      <button type="button" (click)="searchQuery.set('Star Wars'); searchCollections()">
-        Star Wars
-      </button>
-
-      <button type="button" (click)="searchQuery.set('Toy Story'); searchCollections()">
-        Toy Story
-      </button>
-
-      <button type="button" (click)="searchQuery.set('The Avengers'); searchCollections()">
-        The Avengers
-      </button>
-    </div>
-  }
 
   @if (loading()) {
     <app-page-loading
@@ -44,100 +22,37 @@
     />
   }
 
-  @if (loadingDetails()) {
-    <app-page-loading
-      title="Cargando películas de la saga"
-      description="Reuniendo todas las películas de esta colección."
-      detail="Consultando los detalles en TMDB..."
-      icon="fa-film"
-    />
-  }
-
-  @if (errorMessage()) {
-    <div class="error-message">
-      {{ errorMessage() }}
-    </div>
-  }
-
-  @if (collections().length > 0 && !selectedCollection()) {
+  @if (collections().length > 0) {
     <app-results-header
       title="Resultados de búsqueda"
       description="Colecciones y sagas que coinciden con tu búsqueda."
       [countLabel]="collections().length + ' colecciones'"
     />
-    <div class="collections-grid">
-      @for (collection of collections(); track collection.id) {
-        <article class="collection-card" (click)="selectCollection(collection)">
-          <div class="collection-poster">
-            @if (collection.poster_path) {
-              <img
-                [src]="getImageUrl(collection.poster_path)"
-                [alt]="collection.name"
-                loading="lazy"
-              />
-            } @else {
-              <div class="no-poster">
-                <i class="fa-solid fa-film"></i>
-              </div>
-            }
-          </div>
 
-          <div class="collection-info">
-            <h3>{{ collection.name }}</h3>
-          </div>
-        </article>
+    <div class="row row-cols-2 row-cols-lg-3 row-cols-xl-5 g-4">
+      @for (collection of collections(); track collection.id) {
+        <div class="col">
+          <a class="collection-card" [routerLink]="['/collections', collection.id]">
+            <div class="collection-poster">
+              @if (collection.poster_path) {
+                <img
+                  [src]="getImageUrl(collection.poster_path)"
+                  [alt]="collection.name"
+                  loading="lazy"
+                />
+              } @else {
+                <div class="no-poster">
+                  <i class="fa-solid fa-film"></i>
+                </div>
+              }
+            </div>
+
+            <div class="collection-info">
+              <h3>{{ collection.name }}</h3>
+            </div>
+          </a>
+        </div>
       }
     </div>
-  }
-
-  @if (selectedCollection(); as collection) {
-    <section class="collection-detail">
-      <button type="button" class="back-button" (click)="backToResults()">
-        ← Volver a resultados
-      </button>
-
-      <div class="collection-banner">
-        @if (collection.backdrop_path) {
-          <img
-            class="collection-backdrop"
-            [src]="getImageUrl(collection.backdrop_path, 'w1280')"
-            [alt]="collection.name"
-          />
-        }
-
-        <div class="collection-banner-content">
-          @if (collection.poster_path) {
-            <img
-              class="collection-main-poster"
-              [src]="getImageUrl(collection.poster_path)"
-              [alt]="collection.name"
-            />
-          }
-
-          <div>
-            <span class="page-subtitle">COLECCIÓN CINEMATOGRÁFICA</span>
-
-            <h2>{{ collection.name }}</h2>
-
-            <p>
-              {{ collection.overview || 'Sin descripción disponible.' }}
-            </p>
-
-            <span class="movie-count"> 🎬 {{ collection.parts.length }} películas </span>
-          </div>
-        </div>
-      </div>
-
-      <div class="section-heading">
-        <h2>Películas de la colección</h2>
-        <span>{{ collection.parts.length }} títulos</span>
-      </div>
-
-      <div class="movies-grid">
-        @for (movie of collection.parts; track movie.id) {
-          <app-media-card [media]="movie" [mediaType]="'movie'" variant="description" />
-        }
-      </div>
-    </section>
   }
 </section>

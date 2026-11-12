@@ -17,7 +17,7 @@ import { ResultsHeaderComponent } from '../../../../shared/components/results-he
 @Component({
   selector: 'app-streaming-list',
   standalone: true,
-  imports: [PageHeaderComponent, FilterTabsComponent, PageLoadingComponent, EmptyStateComponent, MediaCardComponent, ResultsHeaderComponent],
+  imports: [PageHeaderComponent, FilterTabsComponent, PageLoadingComponent, EmptyStateComponent, MediaCardComponent],
   templateUrl: './streaming-list.html',
   styleUrl: './streaming-list.css',
 })

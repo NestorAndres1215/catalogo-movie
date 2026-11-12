@@ -1,0 +1,69 @@
+<section class="collection-detail-page">
+  @if (loading()) {
+    <app-page-loading
+      title="Cargando películas de la saga"
+      description="Reuniendo todas las películas de esta colección."
+      detail="Consultando los detalles en TMDB..."
+      icon="fa-film"
+    />
+  }
+
+  @if (!loading() && errorMessage()) {
+    <app-error-state
+      title="Colección no disponible"
+      [description]="errorMessage()"
+      linkText="Volver a colecciones"
+      linkRoute="/collections"
+    />
+  }
+
+  @if (collection(); as collection) {
+    <div
+      class="detail-hero"
+      [style.--hero-image]="
+        collection.backdrop_path
+          ? 'url(' + getImageUrl(collection.backdrop_path, 'original') + ')'
+          : 'none'
+      "
+    >
+      <div class="hero-layout">
+        @if (collection.poster_path) {
+          <img
+            class="hero-poster"
+            [src]="getImageUrl(collection.poster_path)"
+            [alt]="collection.name"
+          />
+        }
+
+        <div class="hero-content">
+          <span class="eyebrow">COLECCIÓN CINEMATOGRÁFICA</span>
+
+          <h1>{{ collection.name }}</h1>
+
+          <div class="genre-list">
+            <span>{{ collection.parts.length }} películas</span>
+          </div>
+
+          <p class="overview">
+            {{ collection.overview || 'Sin descripción disponible.' }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <section class="movies-section">
+      <app-results-header
+        title="Películas de la colección"
+        [description]="collection.parts.length + ' títulos'"
+      />
+
+      <div class="row row-cols-2 row-cols-lg-3 row-cols-xl-5 g-4">
+        @for (movie of collection.parts; track movie.id) {
+          <div class="col">
+            <app-media-card [media]="movie" mediaType="movie" variant="description" />
+          </div>
+        }
+      </div>
+    </section>
+  }
+</section>
