@@ -7,23 +7,42 @@
   />
 
   @if (user(); as currentUser) {
-    <!-- TARJETA PRINCIPAL -->
-    <section class="profile-banner">
-      <div class="banner-decoration">🎬</div>
+    <!-- BANNER PRINCIPAL -->
+    <section
+      class="detail-hero profile-banner"
+      [class.has-image]="bannerImage()"
+      [style.--hero-image]="bannerImage() ? 'url(&quot;' + bannerImage() + '&quot;)' : 'none'"
+    >
+      @if (!bannerImage()) {
+        <span class="banner-decoration" aria-hidden="true">🎬</span>
+      }
 
-      <div class="user-avatar">
-        {{ getUserInitial() }}
-      </div>
+      <div class="hero-layout">
+        <div class="user-avatar" aria-hidden="true">
+          {{ getUserInitial() }}
+        </div>
 
-      <div class="user-information">
-        <span class="user-label">CINEVERSE MEMBER</span>
-        <h2>{{ currentUser.name }}</h2>
-        <p>{{ currentUser.email }}</p>
-      </div>
+        <div class="hero-content user-information">
+          <span class="eyebrow">CINEVERSE MEMBER</span>
 
-      <div class="member-badge">
-        <i class="fas fa-star"></i>
-        Cinéfilo
+          <h1>{{ currentUser.name }}</h1>
+
+          <p class="user-email">{{ currentUser.email }}</p>
+
+          <div class="banner-tags">
+            <span class="member-badge">
+              <i class="fas fa-star"></i>
+              Cinéfilo
+            </span>
+
+            @if (bannerMovieTitle()) {
+              <span class="member-badge movie-badge">
+                <i class="fas fa-bookmark"></i>
+                {{ bannerMovieTitle() }}
+              </span>
+            }
+          </div>
+        </div>
       </div>
     </section>
 
@@ -163,6 +182,7 @@
           </p>
         </article>
 
+        <!-- ACTORES -->
         <article class="preference-card">
           <div class="preference-heading">
             <div class="preference-icon">
@@ -186,7 +206,6 @@
             <p class="loading-message">Buscando actores...</p>
           }
 
-          <!-- RESULTADOS -->
           @if (actorResults().length > 0) {
             <div class="person-results">
               @for (person of actorResults(); track person.id) {
@@ -295,6 +314,7 @@
           </div>
         </article>
 
+        <!-- DIRECTORES -->
         <article class="preference-card">
           <div class="preference-heading">
             <div class="preference-icon">
@@ -314,12 +334,10 @@
             />
           </div>
 
-          <!-- CARGANDO -->
           @if (loadingDirectors()) {
             <p class="loading-message">Buscando directores...</p>
           }
 
-          <!-- RESULTADOS -->
           @if (directorResults().length > 0) {
             <div class="person-results">
               @for (person of directorResults(); track person.id) {
@@ -337,7 +355,6 @@
             </div>
           }
 
-          <!-- DIRECTOR SELECCIONADO -->
           @if (selectedDirector(); as director) {
             <div class="selected-person">
               <div class="selected-person-header">
@@ -403,7 +420,6 @@
             </div>
           }
 
-          <!-- DIRECTORES GUARDADOS -->
           <div class="tag-list">
             <app-results-header
               title="Directores que guardaste"
@@ -433,6 +449,7 @@
           </div>
         </article>
 
+        <!-- PELÍCULAS GUARDADAS -->
         <article class="preference-card">
           <div class="preference-heading d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center gap-3">

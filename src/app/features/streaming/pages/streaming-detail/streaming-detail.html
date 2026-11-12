@@ -1,0 +1,100 @@
+<section class="streaming-detail-page">
+  @if (loadingProvider()) {
+    <app-page-loading
+      title="Cargando plataforma"
+      description="Reuniendo el catálogo disponible en Perú."
+      detail="Conectando con TMDB..."
+      icon="fa-tv"
+    />
+  }
+
+  @if (!loadingProvider() && errorMessage() && !provider()) {
+    <app-error-state
+      title="Plataforma no disponible"
+      [description]="errorMessage()"
+      linkText="Volver a plataformas"
+      linkRoute="/streaming"
+    />
+  }
+
+  @if (provider(); as provider) {
+    <!-- BANNER -->
+    <div class="detail-hero" [style.--hero-image]="heroImage()">
+      <div class="hero-layout">
+        <div class="hero-logo">
+          <img [src]="getProviderLogo(provider.logo_path)" [alt]="provider.provider_name" />
+        </div>
+
+        <div class="hero-content">
+          <span class="eyebrow">CATÁLOGO DE STREAMING</span>
+
+          <h1>{{ provider.provider_name }}</h1>
+
+          <div class="genre-list">
+            <span>🇵🇪 Perú</span>
+            <span>{{ mediaType() === 'movie' ? 'Películas' : 'Series' }}</span>
+          </div>
+
+          <p class="overview">
+            Explora las {{ mediaType() === 'movie' ? 'películas' : 'series' }} disponibles en
+            {{ provider.provider_name }} dentro de Perú.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CATÁLOGO -->
+    <section class="catalog-section">
+      <div class="row mb-4">
+        <div class="col-12 col-md-4">
+          <app-filter-tabs
+            class="d-block w-100"
+            [tabs]="mediaTabs"
+            [selected]="mediaType()"
+            (selectionChange)="changeMediaType($event)"
+          />
+        </div>
+      </div>
+
+      <app-results-header
+        [title]="mediaType() === 'movie' ? 'Películas disponibles' : 'Series disponibles'"
+        description="Contenido disponible en esta plataforma."
+      />
+
+      @if (loadingContents()) {
+        <app-page-loading
+          title="Cargando catálogo..."
+          description="Estamos buscando el contenido disponible."
+          detail="Conectando con TMDB..."
+          icon="fa-tv"
+        />
+      } @else if (contents().length === 0) {
+        <app-empty-state
+          icon="fa-tv"
+          title="No se encontró contenido"
+          description="No se encontró contenido para esta plataforma."
+        />
+      } @else {
+        <div class="row row-cols-2 row-cols-lg-3 row-cols-xl-5 g-4">
+          @for (media of contents(); track media.id) {
+            <div class="col">
+              <app-media-card
+                [media]="media"
+                [mediaType]="mediaType()"
+                variant="description"
+                [isUpcoming]="isUpcoming(media.release_date || media.first_air_date)"
+              />
+            </div>
+          }
+        </div>
+
+        <app-pagination
+          [currentPage]="currentPage()"
+          [totalPages]="totalPages()"
+          [loading]="loadingContents()"
+          (pageChange)="changePage($event)"
+        />
+      }
+    </section>
+  }
+</section>

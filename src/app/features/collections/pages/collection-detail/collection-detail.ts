@@ -14,7 +14,7 @@ import { MediaCardComponent } from '../../../../shared/components/media-card/med
   selector: 'app-collection-detail',
   standalone: true,
   imports: [
-    RouterLink,
+  
     PageLoadingComponent,
     ErrorStateComponent,
     ResultsHeaderComponent,

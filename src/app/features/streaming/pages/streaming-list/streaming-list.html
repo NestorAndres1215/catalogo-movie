@@ -1,12 +1,10 @@
 <section class="streaming-page">
-  <!-- ===== ENCABEZADO ===== -->
   <app-page-header
     section="CINEVERSE ORIGINAL"
     title="Streaming y plataformas"
     description="Explora películas y series disponibles en tus plataformas favoritas."
   />
 
-  <!-- ===== SELECTOR: PELÍCULAS / SERIES ===== -->
   <div class="row mb-4">
     <div class="col-12 col-md-4">
       <app-filter-tabs
@@ -18,97 +16,61 @@
     </div>
   </div>
 
-  <!-- ===== PLATAFORMAS ===== -->
-  <section class="providers-section">
-    <div class="section-heading">
-      <div>
-        <h2>Plataformas disponibles</h2>
-        <p>Selecciona una plataforma para explorar su catálogo.</p>
-      </div>
+  @if (loading()) {
+    <app-page-loading
+      title="Cargando plataformas"
+      description="Buscando las plataformas disponibles en Perú."
+      detail="Conectando con TMDB..."
+      icon="fa-tv"
+    />
+  }
 
-      <div class="carousel-controls">
-        <span class="provider-count">{{ providers().length }} plataformas</span>
+  @if (!loading() && errorMessage()) {
+    <p class="error-message">{{ errorMessage() }}</p>
+  }
 
-        <button
-          type="button"
-          class="carousel-arrow"
-          (click)="scrollProviders('left')"
-          aria-label="Ver plataformas anteriores"
-        >
-          &#10094;
-        </button>
+  @if (!loading() && providers().length > 0) {
+    <app-results-header
+      title="Plataformas disponibles"
+      description="Selecciona una plataforma para explorar su catálogo."
+      [countLabel]="providers().length + ' plataformas'"
+    />
 
-        <button
-          type="button"
-          class="carousel-arrow"
-          (click)="scrollProviders('right')"
-          aria-label="Ver más plataformas"
-        >
-          &#10095;
-        </button>
-      </div>
-    </div>
-
-    @if (loadingProviders()) {
-      <div class="loading-message">Cargando plataformas...</div>
-    } @else if (providers().length > 0) {
-      <div class="providers-carousel" #providersCarousel>
-        @for (provider of providers(); track provider.provider_id) {
-          <button
-            type="button"
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-3 g-md-4">
+      @for (provider of pagedProviders(); track provider.provider_id) {
+        <div class="col">
+          <a
             class="provider-card"
-            [class.selected]="selectedProvider() === provider.provider_id"
-            (click)="selectProvider(provider.provider_id)"
+            [routerLink]="['/streaming', provider.provider_id]"
+            [queryParams]="{ type: mediaType() }"
           >
-            <img
-              [src]="getProviderLogo(provider.logo_path)"
-              [alt]="provider.provider_name"
-              loading="lazy"
-            />
-            <span>{{ provider.provider_name }}</span>
-          </button>
-        }
-      </div>
-    }
-  </section>
-
-  <!-- ===== CATÁLOGO ===== -->
-  <section class="catalog-section">
-    <div class="section-heading">
-      <div>
-        <h2>
-          {{ mediaType() === 'movie' ? 'Películas disponibles' : 'Series disponibles' }}
-        </h2>
-        <p>Contenido asociado a la plataforma seleccionada.</p>
-      </div>
+            <div class="provider-logo">
+              <img
+                [src]="getProviderLogo(provider.logo_path)"
+                [alt]="provider.provider_name"
+                loading="lazy"
+              />
+            </div>
+            <span class="provider-name">{{ provider.provider_name }}</span>
+            <span class="view-details">Ver catálogo →</span>
+          </a>
+        </div>
+      }
     </div>
 
-    @if (loadingContents()) {
-      <app-page-loading
-        title="Cargando catálogo..."
-        description="Estamos buscando el contenido disponible en las plataformas."
-        detail="Conectando con TMDB..."
-        icon="fa-tv"
-      />
-    } @else if (contents().length === 0 && selectedProvider() !== null) {
-      <app-empty-state
-        icon="fa-tv"
-        title="No se encontró contenido"
-        description="No se encontró contenido para esta plataforma."
-      />
-    } @else if (contents().length > 0) {
-      <div class="row row-cols-2 row-cols-lg-3 row-cols-xl-5 g-4">
-        @for (media of contents(); track media.id) {
-          <div class="col">
-            <app-media-card
-              [media]="media"
-              [mediaType]="mediaType()"
-              variant="description"
-              [isUpcoming]="isUpcoming(media.release_date || media.first_air_date)"
-            />
-          </div>
-        }
-      </div>
-    }
-  </section>
+    <app-pagination
+      [currentPage]="currentPage()"
+      [totalPages]="totalPages()"
+      [loading]="loading()"
+      (pageChange)="changePage($event)"
+    />
+  }
+
+  @if (!loading() && !errorMessage() && providers().length === 0) {
+    <app-empty-state
+      icon="fa-tv"
+      title="No se encontraron plataformas"
+      description="No hay plataformas disponibles para mostrar."
+    />
+  }
 </section>

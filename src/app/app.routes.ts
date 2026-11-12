@@ -218,6 +218,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'streaming/:id',
+        loadComponent: () =>
+          import('./features/streaming/pages/streaming-detail/streaming-detail').then(
+            (m) => m.StreamingDetailComponent,
+          ),
+      },
+      {
         path: 'decades',
         loadComponent: () =>
           import('./features/decades/pages/decades-list/decades-list').then(

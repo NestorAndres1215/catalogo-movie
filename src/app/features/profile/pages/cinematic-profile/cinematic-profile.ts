@@ -55,6 +55,7 @@ export class CinematicProfile implements OnDestroy {
   private directorSearchSub?: Subscription;
   private actorMoviesSub?: Subscription;
   private directorMoviesSub?: Subscription;
+  private bannerSub?: Subscription;
 
   readonly profileTabs: FilterTab[] = [
     { label: 'Mi perfil', value: 'profile' },
@@ -93,6 +94,10 @@ export class CinematicProfile implements OnDestroy {
   /** Películas guardadas (persistidas en localStorage) */
   readonly savedMovies = signal<SavedMovie[]>([]);
 
+  /** Fondo del banner: backdrop de una película guardada al azar */
+  readonly bannerImage = signal<string | null>(null);
+  readonly bannerMovieTitle = signal('');
+
   readonly actorInput = signal('');
   readonly directorInput = signal('');
 
@@ -119,7 +124,35 @@ export class CinematicProfile implements OnDestroy {
     if (currentUser) {
       this.preferences.set(this.preferencesService.getPreferences(currentUser.id));
       this.savedMovies.set(this.savedMoviesService.getMovies(currentUser.id));
+      this.loadBannerImage();
     }
+  }
+
+  // --------------------------------------------------
+  // BANNER
+  // --------------------------------------------------
+
+  // Elige una película guardada al azar y usa su backdrop como fondo.
+  private loadBannerImage(): void {
+    const movies = this.savedMovies();
+
+    if (movies.length === 0) {
+      return;
+    }
+
+    const random = movies[Math.floor(Math.random() * movies.length)];
+
+    this.bannerSub = this.movieService.getMovieDetails(random.id).subscribe({
+      next: (movie) => {
+        if (!movie.backdrop_path) {
+          return;
+        }
+
+        this.bannerImage.set(this.movieService.getImageUrl(movie.backdrop_path, 'original'));
+        this.bannerMovieTitle.set(movie.title);
+      },
+      error: () => this.bannerImage.set(null),
+    });
   }
 
   // --------------------------------------------------
@@ -442,5 +475,6 @@ export class CinematicProfile implements OnDestroy {
     this.directorSearchSub?.unsubscribe();
     this.actorMoviesSub?.unsubscribe();
     this.directorMoviesSub?.unsubscribe();
+    this.bannerSub?.unsubscribe();
   }
 }
