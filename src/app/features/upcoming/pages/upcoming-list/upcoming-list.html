@@ -5,23 +5,20 @@
     description="Descubre las películas y series que llegarán próximamente."
   />
 
+  <div class="d-flex align-items-center justify-content-between gap-3 mb-4">
+    <div class="col-12 col-md-4">
+      <app-filter-tabs
+        class="d-block w-100"
+        [tabs]="mediaTabs"
+        [selected]="mediaType()"
+        (selectionChange)="changeMediaType($event)"
+      />
+    </div>
 
-<div class="d-flex align-items-center justify-content-between gap-3 mb-4">
-  <div class="col-12 col-md-4">
-    <app-filter-tabs
-      class="d-block w-100"
-      [tabs]="mediaTabs"
-      [selected]="mediaType()"
-      (selectionChange)="changeMediaType($event)"
-    />
+    <span class="results-count ms-auto text-nowrap">
+      {{ totalResults() | number }} resultados
+    </span>
   </div>
-
-  <span class="results-count ms-auto text-nowrap">
-    {{ totalResults() | number }} resultados
-  </span>
-</div>
-   
-
 
   @if (mediaType() === 'tv') {
     <p class="information">
@@ -37,19 +34,13 @@
     />
   }
 
-  @if (errorMessage()) {
-    <div class="error-message">
-      <p>{{ errorMessage() }}</p>
-
-      <button type="button" (click)="loadUpcoming()">Reintentar</button>
-    </div>
-  }
-
   @if (!loading() && !errorMessage()) {
     @if (items.length > 0) {
-      <section class="media-grid">
+      <section class="row row-cols-2 row-cols-lg-3 row-cols-xl-5 g-4">
         @for (item of items; track item.id) {
-          <app-media-card [media]="item" [mediaType]="mediaType()" [isUpcoming]="true" />
+          <div class="col">
+            <app-media-card [media]="item" [mediaType]="mediaType()" [isUpcoming]="true" />
+          </div>
         }
       </section>
 

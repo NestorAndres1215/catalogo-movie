@@ -29,11 +29,6 @@
       icon="fa-tv"
     />
   }
-  @if (error()) {
-    <div class="error-message">
-      {{ error() }}
-    </div>
-  }
 
   @if (!loading() && rankings().length > 0) {
     <section class="ranking-section">
@@ -43,38 +38,40 @@
         countLabel="10 plataformas de streaming"
       />
 
-      <div class="provider-grid">
+      <div class="row row-cols-2 row-cols-lg-3 row-cols-xl-4 g-4">
         @for (provider of rankings(); track provider.provider_id; let i = $index) {
-          <article
-            class="provider-card"
-            [class.selected]="selectedProvider()?.provider_id === provider.provider_id"
-            (click)="selectProvider(provider)"
-          >
-            <div class="provider-position">#{{ i + 1 }}</div>
+          <div class="col">
+            <article
+              class="provider-card"
+              [class.selected]="selectedProvider()?.provider_id === provider.provider_id"
+              (click)="selectProvider(provider)"
+            >
+              <div class="provider-position">#{{ i + 1 }}</div>
 
-            <div class="provider-logo">
-              <img [src]="getProviderLogo(provider.logo_path)" [alt]="provider.provider_name" />
-            </div>
-
-            <div class="provider-information">
-              <h3>{{ provider.provider_name }}</h3>
-
-              <div class="average-label">Popularidad promedio</div>
-
-              <div class="average-value">
-                {{ getPopularity(provider.averagePopularity) }}
+              <div class="provider-logo">
+                <img [src]="getProviderLogo(provider.logo_path)" [alt]="provider.provider_name" />
               </div>
 
-              <div class="provider-counts">
-                <span>{{ provider.movieCount }} películas</span>
-                <span>{{ provider.seriesCount }} series</span>
+              <div class="provider-information">
+                <h3>{{ provider.provider_name }}</h3>
+
+                <div class="average-label">Popularidad promedio</div>
+
+                <div class="average-value">
+                  {{ getPopularity(provider.averagePopularity) }}
+                </div>
+
+                <div class="provider-counts">
+                  <span>{{ provider.movieCount }} películas</span>
+                  <span>{{ provider.seriesCount }} series</span>
+                </div>
+
+                <div class="total-titles">{{ provider.totalTitles }} títulos analizados</div>
               </div>
 
-              <div class="total-titles">{{ provider.totalTitles }} títulos analizados</div>
-            </div>
-
-            <span class="view-details">Ver catálogo →</span>
-          </article>
+              <span class="view-details">Ver catálogo →</span>
+            </article>
+          </div>
         }
       </div>
     </section>
@@ -109,14 +106,16 @@
         />
 
         @if (provider.topMovies.length > 0) {
-          <div class="media-grid">
+          <div class="row row-cols-2 row-cols-lg-3 row-cols-xl-5 g-4">
             @for (movie of provider.topMovies; track movie.id; let i = $index) {
-              <app-movie-card-ranking-details
-                [media]="movie"
-                [position]="i + 1"
-                [mediaType]="'movie'"
-                [route]="'/movies'"
-              />
+              <div class="col">
+                <app-movie-card-ranking-details
+                  [media]="movie"
+                  [position]="i + 1"
+                  [mediaType]="'movie'"
+                  [route]="'/movies'"
+                />
+              </div>
             }
           </div>
         } @else {
@@ -136,14 +135,16 @@
         />
 
         @if (provider.topSeries.length > 0) {
-          <div class="media-grid">
+          <div class="row row-cols-2 row-cols-lg-3 row-cols-xl-5 g-4">
             @for (show of provider.topSeries; track show.id; let i = $index) {
-              <app-movie-card-ranking-details
-                [media]="show"
-                [position]="i + 1"
-                [mediaType]="'tv'"
-                [route]="'/series'"
-              />
+              <div class="col">
+                <app-movie-card-ranking-details
+                  [media]="show"
+                  [position]="i + 1"
+                  [mediaType]="'tv'"
+                  [route]="'/series'"
+                />
+              </div>
             }
           </div>
         } @else {

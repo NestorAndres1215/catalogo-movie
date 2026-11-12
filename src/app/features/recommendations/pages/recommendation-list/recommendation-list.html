@@ -14,14 +14,14 @@
     <div class="banner-decoration">CINE</div>
   </div>
 
-<div class="col-12 col-md-4 mb-4">
-  <app-filter-tabs
-    class="d-block w-100"
-    [tabs]="mediaTabs"
-    [selected]="mediaType()"
-    (selectionChange)="changeMediaType($event)"
-  />
-</div>
+  <div class="col-12 col-md-4 mb-4">
+    <app-filter-tabs
+      class="d-block w-100"
+      [tabs]="mediaTabs"
+      [selected]="mediaType()"
+      (selectionChange)="changeMediaType($event)"
+    />
+  </div>
   <div class="source-selector">
     <div class="selector-information">
       <label for="source">Recomendar a partir de</label>
@@ -69,12 +69,13 @@
 
   @if (!loadingSources() && !loading() && !errorMessage() && selectedId() !== null) {
     @if (recommendations().length > 0) {
-      <div class="recommendations-grid">
+      <div class="row row-cols-2 row-cols-lg-3 row-cols-xl-5 g-4">
         @for (item of recommendations(); track item.id) {
-          <app-media-card [media]="item" [mediaType]="mediaType()" variant="description" />
+          <div class="col">
+            <app-media-card [media]="item" [mediaType]="mediaType()" variant="description" />
+          </div>
         }
       </div>
-
       @if (totalPages() > 1) {
         <app-pagination
           [currentPage]="currentPage()"

@@ -4,8 +4,6 @@
   margin: auto;
 }
 
-
-
 .movies-grid {
   display: flex;
   flex-direction: column;
@@ -29,14 +27,10 @@
     padding: 22px 12px 40px;
   }
 
-
-
   .movies-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px 10px;
   }
-
-
 }
 .ranking-action {
   display: flex;

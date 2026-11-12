@@ -8,12 +8,7 @@
   font-size: 60px;
 }
 
-.filters {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
+
 
 .results-count {
   color: #999;
@@ -29,30 +24,14 @@
   font-size: 13px;
 }
 
-.media-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
-  gap: 25px;
-}
-
 @media (max-width: 650px) {
   .upcoming-page {
     padding: 20px;
   }
 
-
   .calendar-icon {
     font-size: 45px;
   }
 
-  .filters {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 15px;
-  }
 
-  .media-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
-  }
 }

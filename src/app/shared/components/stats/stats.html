@@ -1,14 +1,14 @@
-<div class="stats-container">
-  @for (stat of stats(); track stat.label) {
-    <article class="stat-card">
-      <span class="stat-icon">
-        <i [class]="'fas ' + stat.icon"></i>
-      </span>
-
-      <div class="stat-info">
-        <strong>{{ stat.value }}</strong>
-        <span>{{ stat.label }}</span>
+<section class="stats-container" aria-label="Estadísticas">
+  <div class="row g-3" [ngClass]="gridClasses()">
+    @for (stat of stats(); track stat.label) {
+      <div class="col">
+        <article class="stat-card">
+          <div class="stat-info">
+            <strong class="stat-value">{{ stat.value }}</strong>
+            <span class="stat-label">{{ stat.label }}</span>
+          </div>
+        </article>
       </div>
-    </article>
-  }
-</div>
+    }
+  </div>
+</section>

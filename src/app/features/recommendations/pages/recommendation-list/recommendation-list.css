@@ -128,19 +128,9 @@
   font-size: 16px;
 }
 
-.recommendations-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-  gap: 24px 18px;
-}
-
 @media (max-width: 650px) {
   .recommendations-page {
-       padding: 17px;
-  }
-
-  .page-header h1 {
-    font-size: 26px;
+    padding: 17px;
   }
 
   .recommendation-banner {
@@ -164,15 +154,5 @@
 
   .source-selector select {
     width: 100%;
-  }
-
-  .recommendations-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px 12px;
-  }
-
-  .results-header {
-    align-items: flex-start;
-    flex-direction: column;
   }
 }
