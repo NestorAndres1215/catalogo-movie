@@ -3,18 +3,19 @@
     section="CINEVERSE / RANKINGS"
     title=" Top 10 de series"
     description="Descubre las series mejor y peor valoradas por la comunidad."
+    icon="fas fa-trophy"
   />
   <div
     class="ranking-toolbar d-flex flex-column flex-md-row align-items-stretch align-items-md-end justify-content-between gap-3 mt-4 mb-4"
   >
-<div class="col-12 col-md-8 col-lg-6 overflow-auto">
-  <app-filter-tabs
-    class="d-block w-100"
-    [tabs]="rankingTabs"
-    [selected]="activeRanking()"
-    (selectionChange)="changeRanking($event)"
-  />
-</div>
+    <div class="col-12 col-md-8 col-lg-6 overflow-auto">
+      <app-filter-tabs
+        class="d-block w-100"
+        [tabs]="rankingTabs"
+        [selected]="activeRanking()"
+        (selectionChange)="changeRanking($event)"
+      />
+    </div>
 
     <div class="ranking-action">
       <app-button

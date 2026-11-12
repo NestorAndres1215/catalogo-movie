@@ -4,6 +4,7 @@
     section="CINEVERSE / INDUSTRIA CINEMATOGRÁFICA"
     title="Productoras"
     description="Descubre los estudios y compañías responsables de producir grandes películas."
+    [image]="bannerImage"
   />
 
   <!-- BÚSQUEDA -->
@@ -16,8 +17,6 @@
     />
 
     @if (!searchQuery()) {
-
-      
       <app-button
         class="companies-random"
         text="Mostrar otras"

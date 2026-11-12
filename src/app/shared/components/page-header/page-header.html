@@ -1,11 +1,20 @@
-<header class="page-header">
-  <div>
-    <span class="section-label">
-      {{ section() }}
-    </span>
+<header
+  class="page-header"
+  [class.with-image]="hasImage()"
+  [class.with-icon]="hasIcon()"
+  [style.--hero-image]="heroImage()"
+>
+  @if (hasIcon()) {
+    <i class="hero-icon" [class]="iconClass()" aria-hidden="true"></i>
+  }
+
+  <div class="page-header-content">
+    <span class="section-label">{{ section() }}</span>
 
     <h1>{{ title() }}</h1>
 
     <p>{{ description() }}</p>
+
+    <ng-content />
   </div>
 </header>

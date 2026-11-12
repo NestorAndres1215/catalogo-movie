@@ -4,10 +4,7 @@ import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { CatalogService } from '../../../../core/service/catalog.service';
-import {
-  CatalogMedia,
-  CatalogResponse
-} from '../../../../core/models/catalog.interface';
+import { CatalogMedia, CatalogResponse } from '../../../../core/models/catalog.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
@@ -24,14 +21,13 @@ interface CalendarDay {
 @Component({
   selector: 'app-release-calendar',
   standalone: true,
-  imports: [ PageHeaderComponent, PageLoadingComponent, EmptyStateComponent, MediaCardComponent],
+  imports: [PageHeaderComponent, PageLoadingComponent, EmptyStateComponent, MediaCardComponent],
   templateUrl: './release-calendar.html',
-  styleUrl: './release-calendar.css'
+  styleUrl: './release-calendar.css',
 })
 export class ReleaseCalendarComponent implements OnInit {
-
   private readonly catalogService = inject(CatalogService);
-
+  readonly bannerImage = '/images/banners/calendario.jpg';
   readonly currentDate = signal(new Date());
   readonly selectedDate = signal(new Date());
 
@@ -47,21 +43,21 @@ export class ReleaseCalendarComponent implements OnInit {
     this.generateCalendar();
     this.loadMonthMovies();
   }
-isUpcoming(releaseDate: string | null | undefined): boolean {
-  if (!releaseDate) {
-    return false;
+  isUpcoming(releaseDate: string | null | undefined): boolean {
+    if (!releaseDate) {
+      return false;
+    }
+
+    const today = new Date();
+
+    const todayString = [
+      today.getFullYear(),
+      String(today.getMonth() + 1).padStart(2, '0'),
+      String(today.getDate()).padStart(2, '0'),
+    ].join('-');
+
+    return releaseDate > todayString;
   }
-
-  const today = new Date();
-
-  const todayString = [
-    today.getFullYear(),
-    String(today.getMonth() + 1).padStart(2, '0'),
-    String(today.getDate()).padStart(2, '0')
-  ].join('-');
-
-  return releaseDate > todayString;
-}
   // Generar los días del calendario.
   generateCalendar(): void {
     const current = this.currentDate();
@@ -89,7 +85,7 @@ isUpcoming(releaseDate: string | null | undefined): boolean {
         key: this.formatDate(date),
         day: date.getDate(),
         currentMonth: date.getMonth() === month,
-        today: this.isToday(date)
+        today: this.isToday(date),
       });
     }
 
@@ -112,12 +108,7 @@ isUpcoming(releaseDate: string | null | undefined): boolean {
     this.errorMessage.set('');
     this.movies.set([]);
 
-    this.catalogService.getMoviesByReleaseDateRange(
-      startDate,
-      endDate,
-      1,
-      'PE'
-    ).subscribe({
+    this.catalogService.getMoviesByReleaseDateRange(startDate, endDate, 1, 'PE').subscribe({
       next: (response: CatalogResponse) => {
         if (version !== this.requestVersion) {
           return;
@@ -132,17 +123,10 @@ isUpcoming(releaseDate: string | null | undefined): boolean {
           return;
         }
 
-        const requests = Array.from(
-          { length: pagesToLoad - 1 },
-          (_, index) =>
-            this.catalogService.getMoviesByReleaseDateRange(
-              startDate,
-              endDate,
-              index + 2,
-              'PE'
-            ).pipe(
-              catchError(() => of(null))
-            )
+        const requests = Array.from({ length: pagesToLoad - 1 }, (_, index) =>
+          this.catalogService
+            .getMoviesByReleaseDateRange(startDate, endDate, index + 2, 'PE')
+            .pipe(catchError(() => of(null))),
         );
 
         forkJoin(requests).subscribe({
@@ -152,15 +136,10 @@ isUpcoming(releaseDate: string | null | undefined): boolean {
             }
 
             const additionalMovies = additionalResponses
-              .filter(
-                (item): item is CatalogResponse => item !== null
-              )
-              .flatMap(item => item.results);
+              .filter((item): item is CatalogResponse => item !== null)
+              .flatMap((item) => item.results);
 
-            this.setMovies([
-              ...response.results,
-              ...additionalMovies
-            ]);
+            this.setMovies([...response.results, ...additionalMovies]);
           },
           error: () => {
             if (version !== this.requestVersion) {
@@ -168,7 +147,7 @@ isUpcoming(releaseDate: string | null | undefined): boolean {
             }
 
             this.setMovies(response.results);
-          }
+          },
         });
       },
       error: () => {
@@ -177,18 +156,14 @@ isUpcoming(releaseDate: string | null | undefined): boolean {
         }
 
         this.loading.set(false);
-        this.errorMessage.set(
-          'No se pudieron cargar los estrenos de este mes.'
-        );
-      }
+        this.errorMessage.set('No se pudieron cargar los estrenos de este mes.');
+      },
     });
   }
 
   setMovies(results: CatalogMedia[]): void {
     this.movies.set(
-      [...results].sort((a, b) =>
-        (a.release_date || '').localeCompare(b.release_date || '')
-      )
+      [...results].sort((a, b) => (a.release_date || '').localeCompare(b.release_date || '')),
     );
 
     this.loading.set(false);
@@ -197,9 +172,7 @@ isUpcoming(releaseDate: string | null | undefined): boolean {
   // Seleccionar un día.
   selectDay(day: CalendarDay): void {
     if (!day.currentMonth) {
-      this.currentDate.set(
-        new Date(day.date.getFullYear(), day.date.getMonth(), 1)
-      );
+      this.currentDate.set(new Date(day.date.getFullYear(), day.date.getMonth(), 1));
 
       this.generateCalendar();
       this.loadMonthMovies();
@@ -212,13 +185,7 @@ isUpcoming(releaseDate: string | null | undefined): boolean {
   changeMonth(amount: number): void {
     const current = this.currentDate();
 
-    this.currentDate.set(
-      new Date(
-        current.getFullYear(),
-        current.getMonth() + amount,
-        1
-      )
-    );
+    this.currentDate.set(new Date(current.getFullYear(), current.getMonth() + amount, 1));
 
     this.selectedDate.set(this.currentDate());
 
@@ -229,9 +196,7 @@ isUpcoming(releaseDate: string | null | undefined): boolean {
   goToToday(): void {
     const today = new Date();
 
-    this.currentDate.set(
-      new Date(today.getFullYear(), today.getMonth(), 1)
-    );
+    this.currentDate.set(new Date(today.getFullYear(), today.getMonth(), 1));
 
     this.selectedDate.set(today);
 
@@ -243,9 +208,7 @@ isUpcoming(releaseDate: string | null | undefined): boolean {
   getMoviesForSelectedDay(): CatalogMedia[] {
     const selectedKey = this.formatDate(this.selectedDate());
 
-    return this.movies().filter(
-      movie => movie.release_date === selectedKey
-    );
+    return this.movies().filter((movie) => movie.release_date === selectedKey);
   }
 
   // Comprobar si un día tiene estrenos.
@@ -254,9 +217,7 @@ isUpcoming(releaseDate: string | null | undefined): boolean {
   }
 
   getMovieCount(day: CalendarDay): number {
-    return this.movies().filter(
-      movie => movie.release_date === day.key
-    ).length;
+    return this.movies().filter((movie) => movie.release_date === day.key).length;
   }
 
   isSelected(day: CalendarDay): boolean {
@@ -285,7 +246,7 @@ isUpcoming(releaseDate: string | null | undefined): boolean {
   getMonthName(): string {
     return this.currentDate().toLocaleDateString('es-PE', {
       month: 'long',
-      year: 'numeric'
+      year: 'numeric',
     });
   }
 
@@ -294,7 +255,7 @@ isUpcoming(releaseDate: string | null | undefined): boolean {
       weekday: 'long',
       day: 'numeric',
       month: 'long',
-      year: 'numeric'
+      year: 'numeric',
     });
   }
 

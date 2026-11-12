@@ -32,9 +32,18 @@ interface MoviesResult {
 @Component({
   selector: 'app-movie-list',
   standalone: true,
-  imports: [ MovieFiltersComponent, PageHeaderComponent, EmptyStateComponent, PaginationComponent, SearchComponent, ResultsHeaderComponent, PageLoadingComponent, MediaCardComponent],
+  imports: [
+    MovieFiltersComponent,
+    PageHeaderComponent,
+    EmptyStateComponent,
+    PaginationComponent,
+    SearchComponent,
+    ResultsHeaderComponent,
+    PageLoadingComponent,
+    MediaCardComponent,
+  ],
   templateUrl: './movie-list.html',
-  styleUrl: './movie-list.css'
+  styleUrl: './movie-list.css',
 })
 export class MovieListComponent {
   private readonly movieService = inject(MovieService);
@@ -47,63 +56,60 @@ export class MovieListComponent {
   readonly filters = signal<MovieFilters>({
     genreId: null,
     year: null,
-    sortBy: 'popularity.desc'
+    sortBy: 'popularity.desc',
   });
 
   // ---------- Géneros ----------
   readonly genres = toSignal(
     this.movieService.getMovieGenres().pipe(
-      map(response => response.genres),
-      catchError(() => of([] as Genre[]))
+      map((response) => response.genres),
+      catchError(() => of([] as Genre[])),
     ),
-    { initialValue: [] as Genre[] }
+    { initialValue: [] as Genre[] },
   );
-
+  readonly bannerImage = '/images/banners/peliculas.jpg';
   // ---------- Petición derivada: cualquier cambio dispara una nueva carga ----------
   private readonly request = computed<MoviesRequest>(() => ({
     query: this.searchQuery().trim(),
     page: this.currentPage(),
     filters: this.filters(),
-    retry: this.retryTick()
+    retry: this.retryTick(),
   }));
 
   private readonly result = toSignal(
     toObservable(this.request).pipe(
       // switchMap cancela la petición anterior si llega una nueva
-      switchMap(request => {
+      switchMap((request) => {
         const source$ = request.query
           ? this.movieService.searchMovies(request.query, request.page)
           : this.movieService.discoverMovies(request.page, request.filters);
 
         return source$.pipe(
-          map(
-            (response): MoviesResult => ({
-              request,
-              movies: response.results,
-              totalPages: Math.min(response.total_pages, 500),
-              error: ''
-            })
-          ),
+          map((response): MoviesResult => ({
+            request,
+            movies: response.results,
+            totalPages: Math.min(response.total_pages, 500),
+            error: '',
+          })),
           catchError(() =>
             of<MoviesResult>({
               request,
               movies: [],
               totalPages: 1,
-              error:
-                'No se pudieron cargar las películas. Verifica tu conexión y API Key.'
-            })
-          )
+              error: 'No se pudieron cargar las películas. Verifica tu conexión y API Key.',
+            }),
+          ),
         );
-      })
+      }),
     ),
     {
       initialValue: {
         request: null,
         movies: [],
         totalPages: 1,
-        error: ''
-      } as MoviesResult
-    }
+        error: '',
+      } as MoviesResult,
+    },
   );
 
   // ---------- Estado derivado (computed) ----------
@@ -116,7 +122,7 @@ export class MovieListComponent {
 
   readonly hasError = computed(() => !this.loading() && !!this.errorMessage());
   readonly isEmpty = computed(
-    () => !this.loading() && !this.errorMessage() && this.movies().length === 0
+    () => !this.loading() && !this.errorMessage() && this.movies().length === 0,
   );
   readonly hasMovies = computed(() => !this.loading() && this.movies().length > 0);
 
@@ -124,7 +130,7 @@ export class MovieListComponent {
   readonly canGoNext = computed(() => this.currentPage() < this.totalPages());
 
   readonly title = computed(() =>
-    this.searchQuery() ? 'Resultados de búsqueda' : 'Catálogo de películas'
+    this.searchQuery() ? 'Resultados de búsqueda' : 'Catálogo de películas',
   );
 
   // ---------- Acciones ----------
@@ -134,10 +140,10 @@ export class MovieListComponent {
     this.currentPage.set(1);
   }
 
-onSearch(query: string): void {
-  this.searchQuery.set(query.trim());
-  this.currentPage.set(1);
-}
+  onSearch(query: string): void {
+    this.searchQuery.set(query.trim());
+    this.currentPage.set(1);
+  }
 
   clearSearch(): void {
     this.searchQuery.set('');
@@ -145,7 +151,7 @@ onSearch(query: string): void {
   }
 
   retry(): void {
-    this.retryTick.update(n => n + 1);
+    this.retryTick.update((n) => n + 1);
   }
 
   changePage(page: number): void {

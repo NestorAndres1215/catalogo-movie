@@ -39,7 +39,7 @@ export class ActorListComponent implements OnInit {
   totalPages = signal<number>(1);
 
   searchQuery = signal<string>('');
-
+readonly bannerImage = '/images/banners/actores.jpg';
   filters = signal<PersonFilters>({
     department: '',
     sortBy: 'popularity.desc',

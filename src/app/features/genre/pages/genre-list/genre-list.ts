@@ -40,7 +40,7 @@ export class GenreListComponent implements OnInit {
   ngOnInit(): void {
     this.loadGenres();
   }
-
+ readonly bannerImage = '/images/banners/genero.png';
   loadGenres(): void {
     const version = ++this.requestVersion;
 

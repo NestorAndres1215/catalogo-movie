@@ -3,8 +3,8 @@
     section="CINEVERSE GAMES"
     title="Trivia de películas"
     description="¿Cuánto sabes del mundo del cine?"
+    icon="fa-circle-question"
   />
-
   @if (questionNumber() === 0 || gameFinished()) {
     <app-category-selector
       [categories]="categories"

@@ -1,10 +1,9 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { DecimalPipe } from '@angular/common';
 
 import { TopRatedService } from '../../../../core/service/top-rated.service';
-import { FavoriteButtonComponent } from '../../../../shared/components/favorite-button/favorite-button';
 
 import { TopRatedMedia } from '../../../../core/models/top-rated.interface';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
@@ -25,7 +24,6 @@ import { MovieCardRankingDetailsComponent } from '../../../../shared/components/
   imports: [
     DecimalPipe,
     MovieCardRankingDetailsComponent,
-
     PageHeaderComponent,
     PageLoadingComponent,
     FilterTabsComponent,
@@ -44,7 +42,6 @@ export class TopRatedListComponent {
 
   readonly movies = signal<TopRatedMedia[]>([]);
   readonly series = signal<TopRatedMedia[]>([]);
-  readonly route = input.required<string>();
   readonly loading = signal(false);
   readonly errorMessage = signal('');
 
@@ -52,15 +49,30 @@ export class TopRatedListComponent {
   readonly totalPages = signal(1);
   readonly totalResults = signal(0);
 
+  // Mejor valorado: primer título de la página 1 con imagen horizontal.
+  readonly topRated = signal<TopRatedMedia | null>(null);
+
+  readonly bannerImage = computed(() => {
+    const path = this.topRated()?.backdrop_path;
+    return path ? this.topRatedService.getImageUrl(path, 'original') : null;
+  });
+
+  readonly topTitle = computed(() => {
+    const item = this.topRated();
+    return item ? this.getMediaTitle(item) : '';
+  });
+
+  readonly mediaTabs: FilterTab[] = [
+    { label: 'Películas', value: 'movie' },
+    { label: 'Series', value: 'tv' },
+  ];
+
   private requestVersion = 0;
 
   constructor() {
     this.loadTopRated();
   }
-  readonly mediaTabs: FilterTab[] = [
-    { label: 'Películas', value: 'movie' },
-    { label: 'Series', value: 'tv' },
-  ];
+
   loadTopRated(): void {
     const requestId = ++this.requestVersion;
 
@@ -82,6 +94,11 @@ export class TopRatedListComponent {
           this.series.set(response.results);
         }
 
+        // El banner solo se actualiza en la página 1 (el mejor del ranking).
+        if (this.currentPage() === 1) {
+          this.topRated.set(response.results.find((item) => item.backdrop_path) ?? null);
+        }
+
         this.totalPages.set(Math.min(response.total_pages, 500));
         this.totalResults.set(response.total_results);
         this.loading.set(false);
@@ -90,7 +107,6 @@ export class TopRatedListComponent {
         if (requestId !== this.requestVersion) return;
 
         this.errorMessage.set('No se pudo cargar el contenido. Inténtalo nuevamente.');
-
         this.loading.set(false);
       },
     });
@@ -141,17 +157,16 @@ export class TopRatedListComponent {
     return date.substring(0, 4);
   }
 
-  getImageUrl(path: string | null): string {
-    return this.topRatedService.getImageUrl(path);
+  getImageUrl(path: string | null, size = 'w500'): string {
+    return this.topRatedService.getImageUrl(path, size);
   }
 
-openDetail(id: number): void {
-  const route = this.mediaType() === 'movie'
-    ? '/movies'
-    : '/series';
+  openDetail(id: number): void {
+    const route = this.mediaType() === 'movie' ? '/movies' : '/series';
 
-  this.router.navigate([route, id]);
-}
+    this.router.navigate([route, id]);
+  }
+
   getFavoriteReleaseDate(item: TopRatedMedia): string {
     return item.release_date || item.first_air_date || '';
   }

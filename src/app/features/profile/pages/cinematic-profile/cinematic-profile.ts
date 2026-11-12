@@ -33,7 +33,7 @@ import { FavoriteMovieCardComponent } from '../../../../shared/components/favori
   imports: [
     RouterLink,
     FavoriteMovieCardComponent,
-    PageHeaderComponent,
+
     ButtonComponent,
     FilterTabsComponent,
     EmptyStateComponent,

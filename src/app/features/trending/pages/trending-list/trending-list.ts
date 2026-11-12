@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -163,4 +163,19 @@ export class TrendingListComponent implements OnInit {
   getMediaLabel(item: TrendingMedia): string {
     return this.getMediaType(item) === 'movie' ? 'Película' : 'Serie';
   }
+
+  // Primer título en tendencia que tenga imagen horizontal (backdrop)
+readonly topTrending = computed(
+  () => this.trending().find((item) => item.backdrop_path) ?? null,
+);
+
+readonly bannerImage = computed(() => {
+  const path = this.topTrending()?.backdrop_path;
+  return path ? this.trendingService.getImageUrl(path, 'original') : null;
+});
+
+readonly topTitle = computed(() => {
+  const item = this.topTrending();
+  return item ? this.getMediaTitle(item) : '';
+});
 }

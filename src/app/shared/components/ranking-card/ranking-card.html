@@ -3,22 +3,7 @@
     {{ position() }}
   </div>
 
-  <div class="poster-wrapper">
-    <img
-      class="serie-poster"
-      [src]="posterUrl()"
-      [alt]="title"
-      loading="lazy"
-    />
-
-    @if (ranking()) {
-      <div class="serie-rating">
-        <i class="fa-solid fa-star"></i>
-        <strong>{{ rating() }}</strong>
-        <small>/ 10</small>
-      </div>
-    }
-  </div>
+  <img class="serie-poster" [src]="posterUrl()" [alt]="title" loading="lazy" />
 
   <div class="serie-information">
     <h3>{{ title }}</h3>
@@ -47,6 +32,15 @@
       </div>
     }
   </div>
+
+  <!-- Valoración: ahora a la derecha -->
+  @if (ranking()) {
+    <div class="serie-rating">
+      <i class="fa-solid fa-star"></i>
+      <strong>{{ rating() }}</strong>
+      <small>/ 10</small>
+    </div>
+  }
 
   @if (!ranking() && showPopularity()) {
     <div class="serie-rating popularity-rating">

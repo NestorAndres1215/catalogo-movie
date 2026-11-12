@@ -4,7 +4,7 @@
   height: 100dvh;
   background: var(--color-fondo);
   color: var(--color-texto);
-  overflow: hidden; /* la página ya no scrollea, scrollea .main-content */
+  overflow: hidden;
 }
 
 .app-container {
@@ -16,13 +16,12 @@
   flex: 1;
   min-width: 0;
   height: 100%;
-  overflow-y: auto;   /* aquí vive el scroll: crece el router-outlet y scrollea */
-  overflow-x: hidden; /* evita el scroll horizontal */
+  overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
 }
 
-/* La página que carga el router-outlet */
 .main-content > router-outlet + * {
   display: block;
   flex: 1 0 auto;

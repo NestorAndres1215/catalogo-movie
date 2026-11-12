@@ -3,36 +3,28 @@
     section="LO MÁS POPULAR"
     title="Tendencias"
     description="Descubre las películas y series que están dando de qué hablar."
+    [image]="bannerImage()"
   />
-  <div class="trending-banner">
-    <div class="banner-content">
-      <span>EN CINEVERSE</span>
-      <h2>Lo que todos están viendo</h2>
-      <p>Explora las producciones más populares del momento.</p>
+
+  <div class="row g-3 mb-4">
+    <div class="col-12 col-md-6">
+      <app-filter-tabs
+        class="d-block w-100"
+        [tabs]="mediaTabs"
+        [selected]="mediaType()"
+        (selectionChange)="changeMediaType($event)"
+      />
     </div>
 
-    <div class="banner-decoration">TRENDING</div>
+    <div class="col-12 col-md-4 ms-md-auto">
+      <app-filter-tabs
+        class="d-block w-100"
+        [tabs]="timeTabs"
+        [selected]="timeWindow()"
+        (selectionChange)="changeTimeWindow($event)"
+      />
+    </div>
   </div>
-
-<div class="row g-3 mb-4">
-  <div class="col-12 col-md-6">
-    <app-filter-tabs
-      class="d-block w-100"
-      [tabs]="mediaTabs"
-      [selected]="mediaType()"
-      (selectionChange)="changeMediaType($event)"
-    />
-  </div>
-
-  <div class="col-12 col-md-4 ms-md-auto">
-    <app-filter-tabs
-      class="d-block w-100"
-      [tabs]="timeTabs"
-      [selected]="timeWindow()"
-      (selectionChange)="changeTimeWindow($event)"
-    />
-  </div>
-</div>
 
   <app-results-header
     [title]="timeWindow() === 'day' ? 'Tendencias de hoy' : 'Tendencias de esta semana'"

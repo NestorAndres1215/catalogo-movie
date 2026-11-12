@@ -44,7 +44,7 @@ export class DirectorListComponent implements OnInit {
   searchQuery = signal<string>('');
   currentPage = signal<number>(1);
   totalPages = signal<number>(1);
-
+  readonly bannerImage = '/images/banners/directores.png';
   readonly pageSize = 20;
 
   filters = signal<PersonFilters>({

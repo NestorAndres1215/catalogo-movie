@@ -4,6 +4,7 @@
     section="MI BIBLIOTECA"
     title="Películas vistas"
     description="Aquí encontrarás todas las películas que ya has disfrutado."
+    icon="fa-eye"
   />
 
   <app-stats [stats]="stats()" />
@@ -15,15 +16,15 @@
   />
 
   @if (watchedMovies().length > 0) {
-<div class="media-grid">
-  @for (item of watchedMovies(); track item.mediaType + '-' + item.id) {
-    <app-media-card
-      [media]="toMediaCard(item)"
-      [mediaType]="item.mediaType"
-      [isWatched]="true"
-    />
-  }
-</div>
+    <div class="media-grid">
+      @for (item of watchedMovies(); track item.mediaType + '-' + item.id) {
+        <app-media-card
+          [media]="toMediaCard(item)"
+          [mediaType]="item.mediaType"
+          [isWatched]="true"
+        />
+      }
+    </div>
   } @else {
     <!-- ESTADO VACÍO -->
     <app-empty-state

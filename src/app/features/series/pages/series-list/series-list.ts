@@ -35,7 +35,7 @@ import { MediaCardComponent } from '../../../../shared/components/media-card/med
 export class SeriesListComponent implements OnInit {
 
   private readonly seriesService = inject(SeriesService);
-
+readonly bannerImage = '/images/banners/series.jfif';
   series = signal<TvSeries[]>([]);
   genres = signal<Genre[]>([]);
 

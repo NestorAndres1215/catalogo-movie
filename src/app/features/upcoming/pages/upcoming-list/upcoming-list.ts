@@ -33,6 +33,7 @@ import { MediaCardComponent } from '../../../../shared/components/media-card/med
 export class UpcomingListComponent {
   private readonly upcomingService = inject(UpcomingService);
   private readonly router = inject(Router);
+  readonly bannerImage = '/images/banners/proximos-estrenos.webp';
 
   readonly mediaType = signal<'movie' | 'tv'>('movie');
 

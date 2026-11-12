@@ -37,7 +37,7 @@ export class PlatformComparisonComponent {
 
   private searchVersion = 0;
   private providerVersion = 0;
-
+    readonly bannerImage = '/images/banners/comparador.png';
   readonly mediaType = signal<'movie' | 'tv'>('movie');
   readonly searchQuery = signal('');
   readonly searchResults = signal<CatalogMedia[]>([]);

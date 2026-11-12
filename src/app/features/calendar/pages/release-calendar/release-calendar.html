@@ -3,6 +3,7 @@
     section="CINEVERSE · ESTRENOS"
     title="Calendario de estrenos"
     description="Descubre qué películas llegan a los cines y selecciona cualquier día para consultar sus estrenos."
+    [image]="bannerImage"
   />
 
   <!-- CALENDARIO -->
@@ -111,24 +112,19 @@
         detail="Buscando próximos lanzamientos en TMDB..."
         icon="fa-calendar-days"
       />
-    } @else if (errorMessage()) {
-      <div class="error-state">
-        <span>⚠️</span>
-        <p>{{ errorMessage() }}</p>
-
-        <button type="button" (click)="loadMonthMovies()">Intentar nuevamente</button>
-      </div>
     } @else if (getMoviesForSelectedDay().length > 0) {
-   <div class="movies-grid">
-  @for (movie of getMoviesForSelectedDay(); track movie.id) {
-    <app-media-card
-      [media]="movie"
-      mediaType="movie"
-      variant="description"
-      [isUpcoming]="isUpcoming(movie.release_date)"
-    />
-  }
-</div>
+      <div class="row row-cols-2 row-cols-lg-3 row-cols-xl-5 g-4">
+        @for (movie of getMoviesForSelectedDay(); track movie.id) {
+          <div class="col">
+            <app-media-card
+              [media]="movie"
+              mediaType="movie"
+              variant="description"
+              [isUpcoming]="isUpcoming(movie.release_date)"
+            />
+          </div>
+        }
+      </div>
     } @else {
       <app-empty-state
         icon="fa-calendar-xmark"

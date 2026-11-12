@@ -1,81 +1,140 @@
-/* ENCABEZADO REUTILIZABLE */
-
-.page-header {
-  padding: clamp(20px, 4vw, 35px);
-  margin-bottom: clamp(18px, 3vw, 25px);
-  background: linear-gradient(
-    120deg,
-    var(--color-superficie-elevada),
-    var(--color-superficie-secundaria)
-  );
-  border: 1px solid var(--color-borde);
-  border-radius: var(--radio-borde-grande, 20px);
+:host {
+  display: block;
 }
 
-.eyebrow,
+.page-header {
+  position: relative;
+  margin-bottom: 30px;
+}
+
 .section-label {
-  color: var(--color-acento);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1.8px;
+  display: block;
+  color: var(--color-acento, #e5b94b);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
 }
 
 .page-header h1 {
-  margin: 12px 0;
-  color: var(--color-texto);
-  font-size: clamp(22px, 5vw, 34px);
-  font-weight: 800;
-  line-height: 1.2;
-}
-
-.page-header h1 i {
-  margin-right: 10px;
-  color: var(--color-acento);
+  margin: 12px 0 10px;
+  font-size: clamp(28px, 4vw, 38px);
+  line-height: 1.15;
 }
 
 .page-header p {
   max-width: 650px;
   margin: 0;
-  color: var(--color-texto-secundario);
-  font-size: clamp(13px, 2.5vw, 16px);
+  color: var(--color-texto-secundario, #c3c9d4);
   line-height: 1.7;
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 650px) {
-  .page-header {
-    border-radius: 16px;
-  }
-
-  .eyebrow,
-  .section-label {
-    font-size: 10px;
-    letter-spacing: 1.4px;
-  }
-
-  .page-header h1 {
-    margin: 8px 0;
-  }
-
-  .page-header h1 i {
-    margin-right: 8px;
-  }
-
-  .page-header p {
-    line-height: 1.6;
-  }
+/* ===== BANNER (con imagen o con icono) ===== */
+.page-header.with-image,
+.page-header.with-icon {
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: 320px;
+  padding: 48px;
+  overflow: hidden;
+  background-color: var(--color-fondo, #0d1018);
+  border: 1px solid var(--color-borde, #292e3b);
+  border-radius: var(--radio-borde-grande, 16px);
+  box-shadow: var(--box-shadow, 0 20px 50px rgba(0, 0, 0, 0.35));
 }
 
-@media (max-width: 380px) {
-  .page-header {
-    padding: 16px;
+/* ===== CON IMAGEN ===== */
+.page-header.with-image {
+  background-image: var(--hero-image);
+  background-size: cover;
+  background-position: center right;
+}
+
+/* Degradado más largo para que el texto se lea sobre imágenes con mucho detalle */
+.page-header.with-image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(13, 16, 24, 0.97) 0%,
+      rgba(13, 16, 24, 0.9) 35%,
+      rgba(13, 16, 24, 0.55) 55%,
+      rgba(13, 16, 24, 0.15) 80%,
+      rgba(13, 16, 24, 0.05) 100%
+    ),
+    linear-gradient(0deg, rgba(13, 16, 24, 0.7) 0%, transparent 35%);
+}
+
+/* ===== CON ICONO ===== */
+.page-header.with-icon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(
+      ellipse 45% 90% at 82% 50%,
+      var(--color-acento-suave, rgba(229, 185, 75, 0.18)) 0%,
+      transparent 70%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(13, 16, 24, 0.97) 0%,
+      rgba(13, 16, 24, 0.85) 50%,
+      rgba(13, 16, 24, 0.5) 100%
+    );
+}
+
+/* Icono grande a la derecha, en el lugar de la imagen */
+.hero-icon {
+  position: absolute;
+  top: 50%;
+  right: 8%;
+  z-index: -1;
+  color: var(--color-acento, #e5b94b);
+  font-size: 190px;
+  line-height: 1;
+  opacity: 0.22;
+  transform: translateY(-50%) rotate(-8deg);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ===== CONTENIDO ===== */
+.page-header.with-image .page-header-content {
+  max-width: 520px;
+}
+
+.page-header.with-icon .page-header-content {
+  max-width: 600px;
+}
+
+.page-header.with-image h1,
+.page-header.with-icon h1 {
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 700px) {
+  .page-header.with-image,
+  .page-header.with-icon {
+    min-height: 0;
+    padding: 28px 20px;
   }
 
-  .page-header h1 {
-    font-size: 20px;
+  .page-header.with-image::before {
+    background: linear-gradient(180deg, rgba(13, 16, 24, 0.7) 0%, rgba(13, 16, 24, 0.96) 100%);
   }
 
-  .page-header p {
-    font-size: 12.5px;
+  .page-header.with-image .page-header-content {
+    max-width: none;
+  }
+
+  .hero-icon {
+    right: 4%;
+    font-size: 110px;
   }
 }

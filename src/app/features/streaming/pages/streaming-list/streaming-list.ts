@@ -101,4 +101,6 @@ export class StreamingListComponent {
   getProviderLogo(path: string): string {
     return this.catalogService.getImageUrl(path, 'w185');
   }
+
+    readonly bannerImage = '/images/banners/streaming.jpg';
 }

@@ -3,6 +3,7 @@
     section="TU COLECCIÓN PERSONAL"
     title="Mis favoritos"
     description="Aquí encontrarás todas las películas y series que has guardado."
+    icon="fa-heart"
   />
 
   <app-stats [stats]="stats()" />
@@ -10,7 +11,7 @@
   <div
     class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-4"
   >
-      <div class="col-12 col-md-6">
+    <div class="col-12 col-md-6">
       <app-filter-tabs
         [tabs]="favoriteTabs"
         [selected]="selectedType()"

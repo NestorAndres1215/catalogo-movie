@@ -69,13 +69,18 @@
 
 .serie-votes {
   display: flex;
+  flex-direction: row;
   align-items: center;
+  flex-wrap: nowrap;
   gap: 6px;
+  width: fit-content;
+  white-space: nowrap;
   color: var(--color-texto-atenuado);
   font-size: 11px;
 }
 
 .serie-votes i {
+  flex-shrink: 0;
   color: var(--color-texto-secundario);
 }
 

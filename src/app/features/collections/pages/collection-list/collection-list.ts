@@ -28,7 +28,7 @@ export class CollectionListComponent {
 
   readonly searchQuery = signal('');
   readonly collections = signal<CollectionSummary[]>([]);
-
+  readonly bannerImage = '/images/banners/sagas.jpg';
   readonly loading = signal(false);
   readonly errorMessage = signal('');
 

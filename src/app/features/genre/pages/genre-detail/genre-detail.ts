@@ -51,6 +51,10 @@ export class GenreDetailComponent implements OnInit {
 
   selectedType = signal<GenreType>('movie');
 
+  // Banner aleatorio: se elige una sola vez por género/tipo
+  // (no cambia al paginar)
+  bannerImage = signal<string>('');
+
   private genreId = 0;
 
   private requestVersion = 0;
@@ -74,6 +78,9 @@ export class GenreDetailComponent implements OnInit {
       this.selectedType.set(type);
 
       this.currentPage.set(1);
+
+      // Nuevo género o tipo: se permite elegir un banner nuevo
+      this.bannerImage.set('');
 
       this.loadGenre();
     });
@@ -123,6 +130,8 @@ export class GenreDetailComponent implements OnInit {
 
         this.media.set(response.results);
 
+        this.setRandomBanner(response.results);
+
         this.totalPages.set(Math.max(1, Math.min(response.total_pages, 500)));
 
         this.totalResults.set(response.total_results);
@@ -157,6 +166,32 @@ export class GenreDetailComponent implements OnInit {
       top: 0,
       behavior: 'smooth',
     });
+  }
+
+  // =========================================
+  // BANNER ALEATORIO
+  // =========================================
+
+  private setRandomBanner(results: GenreMedia[]): void {
+    // Si ya hay banner (por ejemplo al cambiar de página), se conserva
+    if (this.bannerImage()) {
+      return;
+    }
+
+    // Se usa backdrop_path (imagen horizontal), ideal para un banner
+    const withBackdrop = results.filter(
+      (item) => (item as { backdrop_path?: string | null }).backdrop_path,
+    );
+
+    if (!withBackdrop.length) {
+      return;
+    }
+
+    const random = withBackdrop[Math.floor(Math.random() * withBackdrop.length)] as {
+      backdrop_path: string;
+    };
+
+    this.bannerImage.set(this.genreService.getImageUrl(random.backdrop_path, 'original'));
   }
 
   getPoster(path: string | null): string {

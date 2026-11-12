@@ -64,7 +64,7 @@ export class CompanyListComponent implements OnInit {
   ngOnInit(): void {
     this.loadRandomCompanies();
   }
-
+  readonly bannerImage = '/images/banners/productoras.jpg';
   loadRandomCompanies(): void {
     const version = ++this.requestVersion;
 

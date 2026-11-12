@@ -1,6 +1,6 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { forkJoin } from 'rxjs';
 
@@ -20,7 +20,6 @@ import { MediaCardComponent } from '../../../../shared/components/media-card/med
   selector: 'app-company-detail',
   standalone: true,
   imports: [
-    RouterLink,
     PageLoadingComponent,
     EmptyStateComponent,
     ErrorStateComponent,
@@ -35,10 +34,6 @@ export class CompanyDetailComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
 
   private readonly companyService = inject(CompanyService);
-
-  // =========================================
-  // ESTADOS
-  // =========================================
 
   company = signal<CompanyDetails | null>(null);
 
@@ -63,10 +58,6 @@ export class CompanyDetailComponent implements OnInit {
       this.loadCompany(id);
     });
   }
-
-  // =========================================
-  // CARGAR PRODUCTORA
-  // =========================================
 
   loadCompany(id: number): void {
     this.loading.set(true);
@@ -98,12 +89,13 @@ export class CompanyDetailComponent implements OnInit {
       },
     });
   }
-// Logo de la productora como fondo del banner
-readonly heroImage = computed(() => {
-  const logo = this.company()?.logo_path;
 
-  return logo ? `url(${this.getLogo(logo)})` : 'none';
-});
+  readonly heroImage = computed(() => {
+    const logo = this.company()?.logo_path;
+
+    return logo ? `url(${this.getLogo(logo)})` : 'none';
+  });
+
   get companyStats(): StatItem[] {
     const company = this.company();
 
@@ -134,25 +126,14 @@ readonly heroImage = computed(() => {
       },
     ];
   }
-  // =========================================
-  // LOGOTIPO
-  // =========================================
 
   getLogo(path: string | null): string {
     return this.companyService.getLogoUrl(path, 'w500');
   }
 
-  // =========================================
-  // POSTER DE PELÍCULA
-  // =========================================
-
   getPoster(path: string | null): string {
     return this.companyService.getMoviePoster(path, 'w500');
   }
-
-  // =========================================
-  // FORMATEAR FECHA
-  // =========================================
 
   formatDate(date: string): string {
     if (!date) {
