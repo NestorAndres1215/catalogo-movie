@@ -20,6 +20,7 @@ import {
 } from '../../../../shared/components/select-filter/select-filter';
 import { ErrorStateComponent } from '../../../../shared/components/error-state/error-state';
 import { ResultsHeaderComponent } from '../../../../shared/components/results-header/results-header';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
 
 type CountryMediaType = 'movie' | 'tv';
 
@@ -29,7 +30,6 @@ type CountrySortOption = 'rating-desc' | 'rating-asc' | 'date-desc' | 'date-asc'
   selector: 'app-country-detail',
   standalone: true,
   imports: [
-    RouterLink,
     PageLoadingComponent,
     FilterTabsComponent,
     PaginationComponent,
@@ -37,7 +37,7 @@ type CountrySortOption = 'rating-desc' | 'rating-asc' | 'date-desc' | 'date-asc'
     EmptyStateComponent,
     SelectFilterComponent,
     ErrorStateComponent,
-    ResultsHeaderComponent
+    ResultsHeaderComponent,
 ],
   templateUrl: './country-detail.html',
   styleUrl: './country-detail.css',

@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, signal, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, signal, viewChild, ViewChild } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 
 import { CatalogService } from '../../../../core/service/catalog.service';
@@ -133,6 +133,24 @@ isUpcoming(date: string | null | undefined): boolean {
     this.loadProviders();
   }
 
+
+  private track = viewChild.required<ElementRef<HTMLElement>>('track');
+
+canScrollLeft = signal(false);
+canScrollRight = signal(true);
+
+ngAfterViewInit() {
+  // espera a que se pinten las tarjetas
+  setTimeout(() => this.updateArrows());
+}
+
+
+
+updateArrows() {
+  const el = this.track().nativeElement;
+  this.canScrollLeft.set(el.scrollLeft > 4);
+  this.canScrollRight.set(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+}
   getProviderLogo(path: string): string {
     return this.catalogService.getImageUrl(path, 'w185');
   }

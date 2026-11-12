@@ -12,12 +12,14 @@
   <!-- ERROR -->
 
   @if (!loading() && errorMessage()) {
-    <app-error-state
-      title="Error"
-      [description]="errorMessage()"
-      linkText="Volver a productoras"
-      linkRoute="/companies"
-    />
+    <div class="detail-error">
+      <app-error-state
+        title="Error"
+        [description]="errorMessage()"
+        linkText="Volver a productoras"
+        linkRoute="/companies"
+      />
+    </div>
   }
   <!-- DETALLE -->
 
