@@ -136,8 +136,7 @@
   text-align: center;
 }
 
-.information-column h2,
-.cast-section h2 {
+.information-column h2 {
   margin-top: 0;
   margin-bottom: 22px;
   font-size: 21px;
@@ -148,8 +147,6 @@
   flex-wrap: wrap;
   gap: 10px;
 }
-
-
 
 @media (max-width: 600px) {
   .detail-page {

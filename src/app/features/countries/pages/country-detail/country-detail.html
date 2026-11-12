@@ -45,7 +45,6 @@
         [title]="'Contenido de ' + countryData.english_name"
         description="Descubre las producciones cinematográficas de este país."
       />
-      <!-- SELECTOR DE TIPO -->
       <div class="ranking-toolbar row align-items-end g-3 mt-4 mb-4">
         <div class="col-12 col-md-6">
           <app-filter-tabs
@@ -87,20 +86,6 @@
         />
       }
 
-      <!-- ERROR DE CONTENIDO -->
-
-      @if (!loading() && errorMessage()) {
-        <div class="message error">
-          <h2>Error al cargar el contenido</h2>
-
-          <p>{{ errorMessage() }}</p>
-
-          <button type="button" (click)="loadMedia()">Reintentar</button>
-        </div>
-      }
-
-      <!-- SIN RESULTADOS -->
-
       @if (!loading() && !errorMessage() && media().length === 0) {
         <app-empty-state
           icon="fa-film"
@@ -108,7 +93,7 @@
           description="No se encontraron resultados para este país."
         />
       }
-      <!-- GRID DE PELÍCULAS Y SERIES -->
+
 
       @if (!loading() && !errorMessage() && sortedMedia().length > 0) {
         <div class="row row-cols-2 row-cols-lg-3 row-cols-xl-5 g-4">

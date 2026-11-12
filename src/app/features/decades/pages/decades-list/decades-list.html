@@ -6,7 +6,7 @@
   />
 
   <section class="decades-selector">
-    <h2>Selecciona una década</h2>
+    <app-results-header title="Selecciona una década" />
 
     <div class="decades-list">
       @for (decade of decades; track decade.startYear) {
@@ -37,23 +37,14 @@
       />
     }
 
-    @if (errorMessage()) {
-      <div class="error-message">
-        {{ errorMessage() }}
-        <button type="button" (click)="loadMovies()">Reintentar</button>
-      </div>
-    }
-
     @if (!loading() && !errorMessage() && movies().length > 0) {
-     <div class="movies-grid">
-  @for (movie of movies(); track movie.id) {
-    <app-media-card
-      [media]="movie"
-      mediaType="movie"
-      variant="description"
-    />
-  }
-</div>
+      <div class="row row-cols-2 row-cols-lg-3 row-cols-xl-5 g-4">
+        @for (movie of movies(); track movie.id) {
+          <div class="col">
+            <app-media-card [media]="movie" mediaType="movie" variant="description" />
+          </div>
+        }
+      </div>
 
       <app-pagination
         [currentPage]="page()"

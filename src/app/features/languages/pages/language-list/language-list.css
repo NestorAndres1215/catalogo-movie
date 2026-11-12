@@ -13,11 +13,6 @@
   margin-bottom: 35px;
 }
 
-.media-selector {
-  display: flex;
-  gap: 10px;
-}
-
 .results-header {
   display: flex;
   align-items: center;
@@ -35,37 +30,13 @@
   letter-spacing: 1px;
 }
 
-.movies-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
-  gap: 25px;
-}
-
 @media (max-width: 650px) {
   .languages-page {
     padding: 15px;
   }
 
-  .page-header {
-    padding: 25px 20px;
-  }
-
-  .header-content h1 {
-    font-size: 26px;
-  }
-
-  .filter-group {
-    width: 100%;
-    min-width: 0;
-  }
-
   .filters-section {
     align-items: stretch;
     flex-direction: column;
-  }
-
-  .movies-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 13px;
   }
 }

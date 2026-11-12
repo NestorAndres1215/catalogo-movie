@@ -5,27 +5,27 @@
     description="Descubre películas y series de diferentes partes del mundo según su idioma original."
   />
 
-<section class="filters-section d-flex flex-column flex-md-row align-items-md-end gap-3">
-  <div class="col-12 col-md-4 col-lg-3">
-    <app-select-filter
-      id="language-select"
-      label="Selecciona un idioma"
-      placeholder="Todos los idiomas"
-      [options]="languageOptions()"
-      [selectedValue]="selectedLanguage()"
-      (selectionChange)="changeLanguage($event)"
-    />
-  </div>
+  <section class="filters-section d-flex flex-column flex-md-row align-items-md-end gap-3">
+    <div class="col-12 col-md-4 col-lg-3">
+      <app-select-filter
+        id="language-select"
+        label="Selecciona un idioma"
+        placeholder="Todos los idiomas"
+        [options]="languageOptions()"
+        [selectedValue]="selectedLanguage()"
+        (selectionChange)="changeLanguage($event)"
+      />
+    </div>
 
-  <div class="col-12 col-md-6 col-lg-4">
-    <app-filter-tabs
-      class="d-block w-100"
-      [tabs]="mediaTabs"
-      [selected]="mediaType()"
-      (selectionChange)="changeMediaType($event)"
-    />
-  </div>
-</section>
+    <div class="col-12 col-md-6 col-lg-4">
+      <app-filter-tabs
+        class="d-block w-100"
+        [tabs]="mediaTabs"
+        [selected]="mediaType()"
+        (selectionChange)="changeMediaType($event)"
+      />
+    </div>
+  </section>
 
   <section class="results-header">
     <app-results-header
@@ -48,9 +48,11 @@
   }
 
   @if (!loadingContent() && movies().length > 0) {
-    <section class="movies-grid">
+    <section class="row row-cols-2 row-cols-lg-3 row-cols-xl-5 g-4">
       @for (media of movies(); track media.id) {
-        <app-media-card [media]="media" mediaType="movie" variant="description" />
+        <div class="col">
+          <app-media-card [media]="media" mediaType="movie" variant="description" />
+        </div>
       }
     </section>
 

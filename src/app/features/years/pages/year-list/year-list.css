@@ -50,17 +50,11 @@
 .year-decoration {
   position: absolute;
   right: 25px;
- color: var(--color-texto-atenuado);
+  color: var(--color-texto-atenuado);
   font-size: 150px !important;
   font-weight: 900;
   letter-spacing: -10px !important;
   pointer-events: none;
-}
-
-.media-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-  gap: 24px 18px;
 }
 
 @media (max-width: 650px) {
@@ -81,12 +75,8 @@
     right: 10px;
     font-size: 90px !important;
   }
-
-  .media-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px 12px;
-  }
 }
+
 @media (max-width: 576px) {
   .year-decoration {
     display: none;

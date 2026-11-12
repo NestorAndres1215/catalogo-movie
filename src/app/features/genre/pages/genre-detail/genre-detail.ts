@@ -1,23 +1,10 @@
-import {
-  Component,
-  OnInit,
-  inject,
-  signal
-} from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 
-import {
-  ActivatedRoute,
-  RouterLink
-} from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
-import {
-  Genre,
-  GenreMedia
-} from '../../../../core/models/genre.interface';
+import { Genre, GenreMedia } from '../../../../core/models/genre.interface';
 
-import {
-  GenreService
-} from '../../../../core/service/genre.service';
+import { GenreService } from '../../../../core/service/genre.service';
 import { PageLoadingComponent } from '../../../../shared/components/page-loading/page-loading';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header';
@@ -32,27 +19,21 @@ type GenreType = 'movie' | 'tv';
   selector: 'app-genre-detail',
   standalone: true,
   imports: [
-    RouterLink,
     PageLoadingComponent,
     EmptyStateComponent,
     PageHeaderComponent,
     PaginationComponent,
     MediaCardComponent,
     ResultsHeaderComponent,
-    ErrorStateComponent
-],
+    ErrorStateComponent,
+  ],
   templateUrl: './genre-detail.html',
-  styleUrl: './genre-detail.css'
+  styleUrl: './genre-detail.css',
 })
 export class GenreDetailComponent implements OnInit {
-
   private readonly route = inject(ActivatedRoute);
 
   private readonly genreService = inject(GenreService);
-
-  // =========================================
-  // ESTADOS
-  // =========================================
 
   genre = signal<Genre | null>(null);
 
@@ -75,22 +56,13 @@ export class GenreDetailComponent implements OnInit {
   private requestVersion = 0;
 
   ngOnInit(): void {
-
-    this.route.paramMap.subscribe(params => {
-
+    this.route.paramMap.subscribe((params) => {
       const id = Number(params.get('id'));
 
       const type = params.get('type');
 
-      if (
-        !id ||
-        Number.isNaN(id) ||
-        (type !== 'movie' && type !== 'tv')
-      ) {
-
-        this.errorMessage.set(
-          'El género solicitado no es válido.'
-        );
+      if (!id || Number.isNaN(id) || (type !== 'movie' && type !== 'tv')) {
+        this.errorMessage.set('El género solicitado no es válido.');
 
         this.loading.set(false);
 
@@ -107,12 +79,7 @@ export class GenreDetailComponent implements OnInit {
     });
   }
 
-  // =========================================
-  // CARGAR GÉNERO Y CONTENIDO
-  // =========================================
-
   loadGenre(): void {
-
     const version = ++this.requestVersion;
 
     this.loading.set(true);
@@ -121,99 +88,64 @@ export class GenreDetailComponent implements OnInit {
 
     this.media.set([]);
 
-    const genreRequest = this.selectedType() === 'movie'
-      ? this.genreService.getMovieGenres()
-      : this.genreService.getTvGenres();
+    const genreRequest =
+      this.selectedType() === 'movie'
+        ? this.genreService.getMovieGenres()
+        : this.genreService.getTvGenres();
 
-    const mediaRequest = this.selectedType() === 'movie'
-      ? this.genreService.getMoviesByGenre(
-          this.genreId,
-          this.currentPage()
-        )
-      : this.genreService.getSeriesByGenre(
-          this.genreId,
-          this.currentPage()
-        );
+    const mediaRequest =
+      this.selectedType() === 'movie'
+        ? this.genreService.getMoviesByGenre(this.genreId, this.currentPage())
+        : this.genreService.getSeriesByGenre(this.genreId, this.currentPage());
 
     // Obtener el nombre del género y su contenido.
     genreRequest.subscribe({
-
-      next: genreResponse => {
-
+      next: (genreResponse) => {
         if (version !== this.requestVersion) {
           return;
         }
 
-        const selectedGenre = genreResponse.genres.find(
-          item => item.id === this.genreId
-        );
+        const selectedGenre = genreResponse.genres.find((item) => item.id === this.genreId);
 
         this.genre.set(selectedGenre ?? null);
-
       },
 
-      error: error => {
-
-        console.error(
-          'Error cargando información del género:',
-          error
-        );
-
-      }
-
+      error: (error) => {
+        console.error('Error cargando información del género:', error);
+      },
     });
 
     mediaRequest.subscribe({
-
-      next: response => {
-
+      next: (response) => {
         if (version !== this.requestVersion) {
           return;
         }
 
         this.media.set(response.results);
 
-        this.totalPages.set(
-          Math.max(1, Math.min(response.total_pages, 500))
-        );
+        this.totalPages.set(Math.max(1, Math.min(response.total_pages, 500)));
 
         this.totalResults.set(response.total_results);
 
         this.loading.set(false);
       },
 
-      error: error => {
-
+      error: (error) => {
         if (version !== this.requestVersion) {
           return;
         }
 
-        console.error(
-          'Error cargando contenido del género:',
-          error
-        );
+        console.error('Error cargando contenido del género:', error);
 
-        this.errorMessage.set(
-          'No se pudo cargar el contenido de este género.'
-        );
+        this.errorMessage.set('No se pudo cargar el contenido de este género.');
 
         this.loading.set(false);
-      }
-
+      },
     });
   }
 
-  // =========================================
-  // CAMBIAR PÁGINA
-  // =========================================
-
   changePage(page: number): void {
-
-    if (
-      page < 1 ||
-      page > this.totalPages() ||
-      this.loading()
-    ) {
+    if (page < 1 || page > this.totalPages() || this.loading()) {
       return;
     }
 
@@ -223,40 +155,20 @@ export class GenreDetailComponent implements OnInit {
 
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   }
 
-  // =========================================
-  // IMÁGENES
-  // =========================================
-
   getPoster(path: string | null): string {
-
-    return this.genreService.getImageUrl(
-      path,
-      'w500'
-    );
+    return this.genreService.getImageUrl(path, 'w500');
   }
 
-  // =========================================
-  // TÍTULO
-  // =========================================
-
   getMediaTitle(item: GenreMedia): string {
-
     return item.title ?? item.name ?? 'Sin título';
   }
 
-  // =========================================
-  // FECHA
-  // =========================================
-
   getMediaDate(item: GenreMedia): string {
-
-    const date = this.selectedType() === 'movie'
-      ? item.release_date
-      : item.first_air_date;
+    const date = this.selectedType() === 'movie' ? item.release_date : item.first_air_date;
 
     if (!date) {
       return 'Fecha no disponible';
@@ -271,19 +183,13 @@ export class GenreDetailComponent implements OnInit {
     return parsedDate.toLocaleDateString('es-ES', {
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
     });
   }
 
-  // =========================================
-  // RUTA DE DETALLE
-  // =========================================
-
   getMediaRoute(item: GenreMedia): string[] {
-
     return this.selectedType() === 'movie'
       ? ['/movies', String(item.id)]
       : ['/series', String(item.id)];
   }
-
 }
