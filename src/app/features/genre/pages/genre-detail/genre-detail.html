@@ -21,11 +21,6 @@
 
   <!-- CONTENIDO -->
   @else {
-    <a class="back-link" routerLink="/genres">
-      <i class="fas fa-arrow-left"></i>
-      Volver a géneros
-    </a>
-
     <app-page-header
       section="CINEVERSE / GÉNEROS"
       [title]="genre()?.name ?? 'Género'"
@@ -34,24 +29,12 @@
       "
     />
 
-    <div class="results-header">
-      <app-results-header
-        [title]="
-          (selectedType() === 'movie' ? 'Películas' : 'Series') + ' de ' + (genre()?.name ?? '')
-        "
-        [description]="totalResults() + ' resultados encontrados'"
-      />
-
-      <span class="content-type">
-        @if (selectedType() === 'movie') {
-          <i class="fas fa-film"></i>
-          Películas
-        } @else {
-          <i class="fas fa-tv"></i>
-          Series
-        }
-      </span>
-    </div>
+    <app-results-header
+      [title]="
+        (selectedType() === 'movie' ? 'Películas' : 'Series') + ' de ' + (genre()?.name ?? '')
+      "
+      [description]="totalResults() + ' resultados encontrados'"
+    />
 
     @if (media().length === 0) {
       <app-empty-state
@@ -62,9 +45,11 @@
     }
 
     @if (media().length > 0) {
-      <div class="media-grid">
+      <div class="row row-cols-2 row-cols-lg-3 row-cols-xl-5 g-4">
         @for (item of media(); track item.id) {
-          <app-media-card [media]="item" [mediaType]="selectedType()" variant="description" />
+          <div class="col">
+            <app-media-card [media]="item" [mediaType]="selectedType()" variant="description" />
+          </div>
         }
       </div>
 
