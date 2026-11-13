@@ -1,3 +1,3 @@
 [build]
-  command = "pnpm exec ng build --define TMDB_API='\"$TMDB_API\"'"
+  command = "pnpm exec ng build --define=TMDB_API='\"'\"$TMDB_API\"'\"'"
   publish = "dist/peliculas-app/browser"
