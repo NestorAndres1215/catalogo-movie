@@ -23,11 +23,7 @@
       icon="fa-comments"
     />
   }
-  @if (errorMessage()) {
-    <div class="error-message">
-      {{ errorMessage() }}
-    </div>
-  }
+
 
   @if (!loading() && filteredReviews.length === 0 && !errorMessage()) {
     <app-empty-state

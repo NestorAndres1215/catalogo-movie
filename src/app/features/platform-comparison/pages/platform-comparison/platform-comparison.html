@@ -26,39 +26,37 @@
     </div>
   </div>
 
-  @if (loadingSearch()) {
-    <div class="status-message">Buscando títulos...</div>
-  }
-
   @if (searchResults().length > 0 && !selectedMedia()) {
     <section class="results-section">
       <h2>Resultados de búsqueda</h2>
 
-      <div class="results-grid">
+      <div class="row row-cols-2 row-cols-lg-5 g-3">
         @for (media of searchResults(); track media.id) {
-          <article
-            class="result-card"
-            [class.selected]="selectedMedia()?.id === media.id"
-            (click)="selectMedia(media)"
-          >
-            <div class="result-poster">
-              @if (media.poster_path) {
-                <img
-                  [src]="getImageUrl(media.poster_path)"
-                  [alt]="getTitle(media)"
-                  loading="lazy"
-                />
-              } @else {
-                <div class="no-poster">Sin imagen</div>
-              }
-            </div>
+          <div class="col">
+            <article
+              class="result-card h-100"
+              [class.selected]="selectedMedia()?.id === media.id"
+              (click)="selectMedia(media)"
+            >
+              <div class="result-poster">
+                @if (media.poster_path) {
+                  <img
+                    [src]="getImageUrl(media.poster_path)"
+                    [alt]="getTitle(media)"
+                    loading="lazy"
+                  />
+                } @else {
+                  <div class="no-poster">Sin imagen</div>
+                }
+              </div>
 
-            <div class="result-info">
-              <h3>{{ getTitle(media) }}</h3>
-              <span>{{ getReleaseDate(media) }}</span>
-              <span class="rating"> ★ {{ media.vote_average | number: '1.1-1' }} </span>
-            </div>
-          </article>
+              <div class="result-info">
+                <h3>{{ getTitle(media) }}</h3>
+                <span>{{ getReleaseDate(media) }}</span>
+                <span class="rating"> ★ {{ media.vote_average | number: '1.1-1' }} </span>
+              </div>
+            </article>
+          </div>
         }
       </div>
     </section>
@@ -103,8 +101,25 @@
             <div class="providers-grid">
               @for (provider of getProviders('flatrate'); track provider.provider_id) {
                 <article class="provider-card">
-                  <img [src]="getProviderLogo(provider.logo_path)" [alt]="provider.provider_name" />
-                  <span>{{ provider.provider_name }}</span>
+                  <div class="provider-media">
+                    <img
+                      class="provider-backdrop"
+                      [src]="getProviderLogo(provider.logo_path)"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                    <div class="provider-logo">
+                      <img
+                        [src]="getProviderLogo(provider.logo_path)"
+                        [alt]="provider.provider_name"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="provider-information">
+                    <span class="provider-name">{{ provider.provider_name }}</span>
+                  </div>
                 </article>
               }
             </div>
@@ -114,11 +129,29 @@
         @if (region.free?.length) {
           <section class="provider-category">
             <h3>Gratis</h3>
+
             <div class="providers-grid">
               @for (provider of getProviders('free'); track provider.provider_id) {
                 <article class="provider-card">
-                  <img [src]="getProviderLogo(provider.logo_path)" [alt]="provider.provider_name" />
-                  <span>{{ provider.provider_name }}</span>
+                  <div class="provider-media">
+                    <img
+                      class="provider-backdrop"
+                      [src]="getProviderLogo(provider.logo_path)"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                    <div class="provider-logo">
+                      <img
+                        [src]="getProviderLogo(provider.logo_path)"
+                        [alt]="provider.provider_name"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="provider-information">
+                    <span class="provider-name">{{ provider.provider_name }}</span>
+                  </div>
                 </article>
               }
             </div>
@@ -128,11 +161,29 @@
         @if (region.ads?.length) {
           <section class="provider-category">
             <h3>Gratis con anuncios</h3>
+
             <div class="providers-grid">
               @for (provider of getProviders('ads'); track provider.provider_id) {
                 <article class="provider-card">
-                  <img [src]="getProviderLogo(provider.logo_path)" [alt]="provider.provider_name" />
-                  <span>{{ provider.provider_name }}</span>
+                  <div class="provider-media">
+                    <img
+                      class="provider-backdrop"
+                      [src]="getProviderLogo(provider.logo_path)"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                    <div class="provider-logo">
+                      <img
+                        [src]="getProviderLogo(provider.logo_path)"
+                        [alt]="provider.provider_name"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="provider-information">
+                    <span class="provider-name">{{ provider.provider_name }}</span>
+                  </div>
                 </article>
               }
             </div>
@@ -142,11 +193,29 @@
         @if (region.rent?.length) {
           <section class="provider-category">
             <h3>Alquiler</h3>
+
             <div class="providers-grid">
               @for (provider of getProviders('rent'); track provider.provider_id) {
                 <article class="provider-card">
-                  <img [src]="getProviderLogo(provider.logo_path)" [alt]="provider.provider_name" />
-                  <span>{{ provider.provider_name }}</span>
+                  <div class="provider-media">
+                    <img
+                      class="provider-backdrop"
+                      [src]="getProviderLogo(provider.logo_path)"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                    <div class="provider-logo">
+                      <img
+                        [src]="getProviderLogo(provider.logo_path)"
+                        [alt]="provider.provider_name"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="provider-information">
+                    <span class="provider-name">{{ provider.provider_name }}</span>
+                  </div>
                 </article>
               }
             </div>
@@ -156,24 +225,33 @@
         @if (region.buy?.length) {
           <section class="provider-category">
             <h3>Compra</h3>
+
             <div class="providers-grid">
               @for (provider of getProviders('buy'); track provider.provider_id) {
                 <article class="provider-card">
-                  <img [src]="getProviderLogo(provider.logo_path)" [alt]="provider.provider_name" />
-                  <span>{{ provider.provider_name }}</span>
+                  <div class="provider-media">
+                    <img
+                      class="provider-backdrop"
+                      [src]="getProviderLogo(provider.logo_path)"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                    <div class="provider-logo">
+                      <img
+                        [src]="getProviderLogo(provider.logo_path)"
+                        [alt]="provider.provider_name"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="provider-information">
+                    <span class="provider-name">{{ provider.provider_name }}</span>
+                  </div>
                 </article>
               }
             </div>
           </section>
-        }
-
-        @if (region.link) {
-          <app-button
-            text="Ver opciones en TMDB"
-            icon="fa-external-link-alt"
-            [href]="region.link"
-            variant="secondary"
-          />
         }
       }
     </section>

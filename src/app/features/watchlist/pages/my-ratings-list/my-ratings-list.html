@@ -1,11 +1,11 @@
 <section class="ratings-page">
   <!-- ENCABEZADO -->
-<app-page-header
-  section="MI BIBLIOTECA"
-  title="Mis calificaciones"
-  description="Todos los títulos que has calificado en CINEVERSE."
-  icon="fa-star"
-/>
+  <app-page-header
+    section="MI BIBLIOTECA"
+    title="Mis calificaciones"
+    description="Todos los títulos que has calificado en CINEVERSE."
+    icon="fa-star"
+  />
 
   <!-- ESTADÍSTICAS -->
   <app-stats [stats]="stats()" />
@@ -28,13 +28,15 @@
   />
   <!-- LISTADO -->
   @if (ratedItems().length > 0) {
-    <div class="media-grid">
+    <div class="row row-cols-2 row-cols-lg-4 g-3">
       @for (item of ratedItems(); track item.mediaType + '-' + item.id) {
-        <app-media-details-card
-          [item]="item"
-          [showRatingComparison]="true"
-          (detailsRequested)="openDetails($event.id, $event.mediaType)"
-        />
+        <div class="col">
+          <app-media-details-card
+            [item]="item"
+            [showRatingComparison]="true"
+            (detailsRequested)="openDetails($event.id, $event.mediaType)"
+          />
+        </div>
       }
     </div>
   } @else {

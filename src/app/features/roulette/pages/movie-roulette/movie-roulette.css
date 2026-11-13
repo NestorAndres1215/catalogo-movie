@@ -113,19 +113,7 @@
   line-clamp: 2;
 }
 
-.error-message {
-  margin-top: 12px;
-  color: #fca5a5;
-  font-size: 13px;
-}
-
 /* Películas seleccionadas */
-
-.selected-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 12px;
-}
 
 .selected-movie {
   display: flex;
@@ -291,44 +279,6 @@
   color: #bbb5c9;
 }
 
-.spin-button {
-  padding: 15px 35px;
-  color: var(--color-texto-sobre-acento);
-  background: linear-gradient(100deg, var(--color-acento), var(--color-acento-hover));
-  border: none;
-  border-radius: 30px;
-  font-size: 16px;
-  font-weight: 800;
-  cursor: pointer;
-  box-shadow: 0 5px 25px rgba(255, 138, 31, 0.4);
-  transition: var(--transicion-rapida);
-}
-
-.spin-button:hover {
-  box-shadow: var(--box-shadow-hover);
-  transform: translateY(-2px);
-}
-
-.spin-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-}
-.reset-button {
-  display: block;
-  margin: 15px auto 0;
-  padding: 10px;
-  color: var(--color-acento);
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  transition: color var(--transicion-rapida);
-}
-
-.reset-button:hover {
-  color: var(--color-acento-hover);
-}
-
 .roulette-message {
   max-width: 600px;
   margin: 20px auto 0;
@@ -417,13 +367,6 @@
   line-height: 1.7;
 }
 
-.decision-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 20px;
-}
-
 .accept-button,
 .reject-button,
 .new-roulette-button {
@@ -436,33 +379,6 @@
 }
 
 /* Historial */
-
-.history-summary {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.history-summary > div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-  padding: 15px;
-  background: var(--color-superficie-elevada);
-  border: 1px solid var(--color-borde);
-  border-radius: var(--radio-borde-pequeno);
-}
-
-.history-summary strong {
-  font-size: 23px;
-}
-
-.history-summary span {
-  color: #aaa8b7;
-  font-size: 12px;
-}
 
 .history-list {
   display: flex;
@@ -573,11 +489,6 @@
     width: calc(100% - 80px);
   }
 
-  .add-button,
-  .added-button {
-    margin-left: auto;
-  }
-
   .configuration {
     align-items: stretch;
     flex-direction: column;
@@ -606,14 +517,6 @@
   }
 
   .winner-info {
-    width: 100%;
-  }
-
-  .decision-buttons {
-    flex-direction: column;
-  }
-
-  .decision-buttons button {
     width: 100%;
   }
 

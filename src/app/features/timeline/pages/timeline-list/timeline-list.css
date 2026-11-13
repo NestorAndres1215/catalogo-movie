@@ -1,11 +1,11 @@
-/* ---------- Página ---------- */
+
 .timeline-container {
   max-width: 1600px;
   margin-inline: auto;
   padding: 35px 40px;
 }
 
-/* ---------- Tarjeta del filtro ---------- */
+
 .year-selector {
   --bs-card-bg: var(--color-superficie-secundaria);
   --bs-card-color: var(--color-texto);
@@ -93,10 +93,7 @@
   color: var(--color-acento);
 }
 
-/* ---------- Calendario desplegable ----------
- * Se abre en un overlay fuera del componente; con ::ng-deep al inicio
- * estas reglas se aplican igualmente, sin tocar styles.css.
- */
+
 ::ng-deep .cineverse-datepicker {
   --mat-datepicker-calendar-container-background-color: var(--color-superficie-secundaria);
   --mat-datepicker-calendar-container-text-color: var(--color-texto);

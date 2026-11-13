@@ -1,5 +1,5 @@
 .stats-container {
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 
 .stat-card {
@@ -8,16 +8,10 @@
   justify-content: center;
   min-width: 0;
   height: 100%;
-  padding: 20px;
+  padding: 14px;
   background: var(--color-superficie-elevada);
   border: 1px solid var(--color-borde-hover);
   border-radius: var(--radio-borde);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.stat-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgb(0 0 0 / 0.12);
 }
 
 .stat-info {
@@ -29,25 +23,15 @@
 }
 
 .stat-value {
-  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
   font-weight: 700;
   line-height: 1.1;
   overflow-wrap: anywhere;
 }
 
 .stat-label {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   opacity: 0.7;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .stat-card {
-    transition: none;
-  }
-
-  .stat-card:hover {
-    transform: none;
-  }
 }

@@ -4,59 +4,9 @@
   margin: auto;
 }
 
-/* ENCABEZADO DEL LISTADO */
-.list-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.list-header h2 {
-  margin: 0;
-  font-size: 21px;
-  font-weight: 700;
-}
-
-.list-header p {
-  margin-top: 6px;
-  color: #a1a1aa;
-  font-size: 13px;
-}
-
-/* FILTROS */
-.filter-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-/* GRID */
-.media-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 22px;
-}
-
 @media (max-width: 650px) {
   .ratings-page {
     padding: 18px;
     gap: 22px;
-  }
-
-  .list-header {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .media-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-  }
-}
-
-@media (max-width: 380px) {
-  .media-grid {
-    grid-template-columns: 1fr;
   }
 }

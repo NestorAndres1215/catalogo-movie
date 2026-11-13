@@ -5,29 +5,52 @@
 }
 
 .provider-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   height: 100%;
-  padding: 22px 15px 18px;
-  color: var(--color-texto-secundario);
+  padding: 24px 14px 18px;
   text-align: center;
   text-decoration: none;
   background: var(--color-superficie-secundaria);
   border: 1px solid var(--color-borde);
   border-radius: var(--radio-borde-grande);
+  overflow: hidden;
   transition:
     transform var(--transicion-normal),
     border-color var(--transicion-normal),
-    background var(--transicion-normal);
+    background var(--transicion-normal),
+    box-shadow var(--transicion-normal);
+}
+
+/* Brillo sutil superior al hacer hover */
+.provider-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 0%,
+    color-mix(in srgb, var(--color-acento) 18%, transparent),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity var(--transicion-normal);
+  pointer-events: none;
 }
 
 .provider-card:hover,
 .provider-card:focus-visible {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
   border-color: var(--color-acento);
   background: var(--color-superficie-elevada);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+}
+
+.provider-card:hover::before,
+.provider-card:focus-visible::before {
+  opacity: 1;
 }
 
 .provider-card:focus-visible {
@@ -35,43 +58,73 @@
   outline-offset: 3px;
 }
 
+/* ---------- Logo ---------- */
 .provider-logo {
+  position: relative;
   display: grid;
   place-items: center;
-  width: 72px;
-  height: 72px;
-  overflow: hidden;
-  background: #f2f2f2;
-  border-radius: 16px;
+  width: 84px;
+  height: 84px;
+  padding: 10px;
+  background: #fff;
+  border-radius: 22px;
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+  transition: transform var(--transicion-normal);
 }
 
 .provider-logo img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  border-radius: 14px;
+}
+
+.provider-card:hover .provider-logo,
+.provider-card:focus-visible .provider-logo {
+  transform: scale(1.08);
+}
+
+.provider-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
 }
 
 .provider-name {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.6em; /* mantiene todas las cards alineadas */
   color: var(--color-texto);
   font-size: 14px;
   font-weight: 700;
   line-height: 1.3;
+  letter-spacing: 0.01em;
 }
 
-.view-details {
-  margin-top: auto;
-  color: var(--color-acento);
-  font-size: 12px;
-  font-weight: 700;
+.provider-card:hover .view-details,
+.provider-card:focus-visible .view-details {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.error-message {
-  margin: 20px 0;
-  padding: 15px;
-  color: var(--color-danger);
-  background: var(--color-danger-hover);
-  border: 1px solid var(--color-danger);
-  border-radius: var(--radio-borde-pequeno);
+.provider-card:hover .arrow {
+  transform: translateX(3px);
+}
+
+@media (max-width: 650px) {
+  .provider-logo {
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+  }
 }
 
 @media (max-width: 650px) {

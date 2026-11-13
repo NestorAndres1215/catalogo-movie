@@ -47,30 +47,38 @@
               [class.selected]="selectedProvider()?.provider_id === provider.provider_id"
               (click)="selectProvider(provider)"
             >
-              <div class="provider-position">#{{ i + 1 }}</div>
+              <div class="provider-media">
+                <!-- Fondo difuminado con el mismo logo -->
+                <img
+                  class="provider-backdrop"
+                  [src]="getProviderLogo(provider.logo_path)"
+                  alt=""
+                  aria-hidden="true"
+                />
 
-              <div class="provider-logo">
-                <img [src]="getProviderLogo(provider.logo_path)" [alt]="provider.provider_name" />
+                <div class="provider-logo">
+                  <img [src]="getProviderLogo(provider.logo_path)" [alt]="provider.provider_name" />
+                </div>
+
+                <div class="provider-position">#{{ i + 1 }}</div>
+
+                <div class="provider-rating" title="Popularidad promedio">
+                  <span class="star">★</span>
+                  {{ getPopularity(provider.averagePopularity) }}
+                </div>
               </div>
 
               <div class="provider-information">
                 <h3>{{ provider.provider_name }}</h3>
 
-                <div class="average-label">Popularidad promedio</div>
-
-                <div class="average-value">
-                  {{ getPopularity(provider.averagePopularity) }}
-                </div>
-
                 <div class="provider-counts">
-                  <span>{{ provider.movieCount }} películas</span>
-                  <span>{{ provider.seriesCount }} series</span>
+                  {{ provider.movieCount }} películas · {{ provider.seriesCount }} series
                 </div>
 
-                <div class="total-titles">{{ provider.totalTitles }} títulos analizados</div>
-              </div>
+                <p class="total-titles">{{ provider.totalTitles }} títulos analizados</p>
 
-              <span class="view-details">Ver catálogo →</span>
+                <span class="view-details">Ver catálogo →</span>
+              </div>
             </article>
           </div>
         }

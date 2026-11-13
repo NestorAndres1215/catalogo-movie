@@ -1,5 +1,4 @@
-
-import { Component, OnDestroy, inject, signal } from '@angular/core';
+import { Component, OnDestroy, computed, inject, signal } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 
 import { CatalogService } from '../../../../core/service/catalog.service';
@@ -15,6 +14,7 @@ import { EmptyStateComponent } from '../../../../shared/components/empty-state/e
 import { ButtonComponent } from '../../../../shared/components/button/button';
 import { SearchComponent } from '../../../../shared/components/search/search';
 import { SelectFilterComponent } from '../../../../shared/components/select-filter/select-filter';
+import { StatItem, StatsComponent } from '../../../../shared/components/stats/stats';
 
 interface RouletteWinner {
   movie: CatalogMedia;
@@ -31,13 +31,13 @@ interface RouletteWinner {
     EmptyStateComponent,
     ButtonComponent,
     SearchComponent,
-    SelectFilterComponent
-],
+    SelectFilterComponent,
+    StatsComponent,
+  ],
   templateUrl: './movie-roulette.html',
   styleUrl: './movie-roulette.css',
 })
 export class MovieRouletteComponent implements OnDestroy {
-
   private readonly catalogService = inject(CatalogService);
   private readonly watchlistService = inject(WatchlistService);
 
@@ -118,9 +118,7 @@ export class MovieRouletteComponent implements OnDestroy {
         this.searching.set(false);
 
         if (response.results.length === 0) {
-          this.searchError.set(
-            'No encontramos películas con ese nombre.'
-          );
+          this.searchError.set('No encontramos películas con ese nombre.');
         }
       },
       error: () => {
@@ -129,24 +127,20 @@ export class MovieRouletteComponent implements OnDestroy {
         }
 
         this.searching.set(false);
-        this.searchError.set(
-          'No se pudo realizar la búsqueda.'
-        );
+        this.searchError.set('No se pudo realizar la búsqueda.');
       },
     });
   }
 
   // Agregar películas
   addMovie(movie: CatalogMedia): void {
-    const alreadyAdded = this.selectedMovies().some(
-      selected => selected.id === movie.id
-    );
+    const alreadyAdded = this.selectedMovies().some((selected) => selected.id === movie.id);
 
     if (alreadyAdded) {
       return;
     }
 
-    this.selectedMovies.update(current => [...current, movie]);
+    this.selectedMovies.update((current) => [...current, movie]);
 
     this.message.set('');
     this.adjustWinnerCount();
@@ -158,9 +152,7 @@ export class MovieRouletteComponent implements OnDestroy {
       return;
     }
 
-    this.selectedMovies.update(
-      current => current.filter(movie => movie.id !== movieId)
-    );
+    this.selectedMovies.update((current) => current.filter((movie) => movie.id !== movieId));
 
     this.adjustWinnerCount();
   }
@@ -178,6 +170,24 @@ export class MovieRouletteComponent implements OnDestroy {
     }
   }
 
+  readonly historyStats = computed<StatItem[]>(() => [
+    {
+      icon: 'fa-check-circle',
+      value: this.getAcceptedCount(),
+      label: 'Aceptadas',
+    },
+    {
+      icon: 'fa-times-circle',
+      value: this.getRejectedCount(),
+      label: 'Rechazadas',
+    },
+    {
+      icon: 'fa-trophy',
+      value: this.winners().length,
+      label: 'Seleccionadas',
+    },
+  ]);
+
   changeWinnerCount(event: Event): void {
     const target = event.target;
 
@@ -191,26 +201,18 @@ export class MovieRouletteComponent implements OnDestroy {
       return;
     }
 
-    this.winnerCount.set(
-      Math.min(value, this.selectedMovies().length)
-    );
+    this.winnerCount.set(Math.min(value, this.selectedMovies().length));
   }
 
   // Gestión de participantes
   getAvailableMovies(): CatalogMedia[] {
-    const drawnIds = this.winners().map(
-      winner => winner.movie.id
-    );
+    const drawnIds = this.winners().map((winner) => winner.movie.id);
 
-    return this.selectedMovies().filter(
-      movie => !drawnIds.includes(movie.id)
-    );
+    return this.selectedMovies().filter((movie) => !drawnIds.includes(movie.id));
   }
 
   getPendingWinner(): RouletteWinner | undefined {
-    return this.winners().find(
-      winner => winner.status === 'pending'
-    );
+    return this.winners().find((winner) => winner.status === 'pending');
   }
 
   canSpin(): boolean {
@@ -225,10 +227,7 @@ export class MovieRouletteComponent implements OnDestroy {
   }
 
   getWinnerOptions(): number[] {
-    return Array.from(
-      { length: this.selectedMovies().length },
-      (_, index) => index + 1
-    );
+    return Array.from({ length: this.selectedMovies().length }, (_, index) => index + 1);
   }
 
   // Ruleta
@@ -247,9 +246,7 @@ export class MovieRouletteComponent implements OnDestroy {
     this.currentWinner.set(null);
     this.message.set('');
 
-    const randomIndex = Math.floor(
-      Math.random() * available.length
-    );
+    const randomIndex = Math.floor(Math.random() * available.length);
 
     const selectedMovie = available[randomIndex];
 
@@ -262,13 +259,13 @@ export class MovieRouletteComponent implements OnDestroy {
         status: 'pending',
       };
 
-      this.winners.update(current => [...current, winner]);
+      this.winners.update((current) => [...current, winner]);
 
       this.currentWinner.set(selectedMovie);
       this.spinning.set(false);
 
       this.message.set(
-        `¡La película ganadora número ${position} es ${this.getTitle(selectedMovie)}!`
+        `¡La película ganadora número ${position} es ${this.getTitle(selectedMovie)}!`,
       );
 
       this.spinTimeout = null;
@@ -295,9 +292,7 @@ export class MovieRouletteComponent implements OnDestroy {
 
     this.updateWinnerStatus(winner.movie.id, 'accepted');
 
-    this.message.set(
-      `${item.title} fue agregada a Mi lista.`
-    );
+    this.message.set(`${item.title} fue agregada a Mi lista.`);
 
     this.checkCompletion();
   }
@@ -310,32 +305,21 @@ export class MovieRouletteComponent implements OnDestroy {
 
     this.updateWinnerStatus(winner.movie.id, 'rejected');
 
-    this.message.set(
-      `${this.getTitle(winner.movie)} fue rechazada.`
-    );
+    this.message.set(`${this.getTitle(winner.movie)} fue rechazada.`);
 
     this.checkCompletion();
   }
 
-  updateWinnerStatus(
-    movieId: number,
-    status: 'accepted' | 'rejected'
-  ): void {
-    this.winners.update(current =>
-      current.map(winner =>
-        winner.movie.id === movieId
-          ? { ...winner, status }
-          : winner
-      )
+  updateWinnerStatus(movieId: number, status: 'accepted' | 'rejected'): void {
+    this.winners.update((current) =>
+      current.map((winner) => (winner.movie.id === movieId ? { ...winner, status } : winner)),
     );
   }
 
   checkCompletion(): void {
     const allDecided =
       this.winners().length === this.winnerCount() &&
-      this.winners().every(
-        winner => winner.status !== 'pending'
-      );
+      this.winners().every((winner) => winner.status !== 'pending');
 
     if (allDecided) {
       this.completed.set(true);
@@ -393,15 +377,11 @@ export class MovieRouletteComponent implements OnDestroy {
   }
 
   getAcceptedCount(): number {
-    return this.winners().filter(
-      winner => winner.status === 'accepted'
-    ).length;
+    return this.winners().filter((winner) => winner.status === 'accepted').length;
   }
 
   getRejectedCount(): number {
-    return this.winners().filter(
-      winner => winner.status === 'rejected'
-    ).length;
+    return this.winners().filter((winner) => winner.status === 'rejected').length;
   }
 
   // Limpieza

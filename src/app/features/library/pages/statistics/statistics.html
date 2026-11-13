@@ -101,30 +101,26 @@
       />
 
       @if (topFiveActors().length > 0) {
-        <div class="actors-grid">
-          @for (actor of topFiveActors(); track actor.id; let i = $index) {
-            <article class="actor-card">
-              <span class="actor-ranking">#{{ i + 1 }}</span>
+<div class="actors-grid">
+  @for (actor of topFiveActors(); track actor.id; let i = $index) {
+    <article class="actor-card">
+      <div class="actor-photo">
+        <img
+          [src]="getImageUrl(actor.profilePath, 'w500')"
+          [alt]="actor.name"
+          loading="lazy"
+        />
+        <span class="actor-ranking">#{{ i + 1 }}</span>
+      </div>
 
-              <img
-                [src]="getImageUrl(actor.profilePath, 'w185')"
-                [alt]="actor.name"
-                loading="lazy"
-              />
-
-              <div class="actor-info">
-                <h3>{{ actor.name }}</h3>
-                <strong>{{ actor.count }} películas</strong>
-
-                <div class="actor-movies">
-                  @for (movie of actor.movies; track movie) {
-                    <span>{{ movie }}</span>
-                  }
-                </div>
-              </div>
-            </article>
-          }
-        </div>
+      <div class="actor-info">
+        <h3>{{ actor.name }}</h3>
+        <strong>{{ actor.count }} películas</strong>
+        <p class="actor-movies">{{ actor.movies.join(', ') }}</p>
+      </div>
+    </article>
+  }
+</div>
       } @else {
         <p class="no-data">No hay información de actores disponible.</p>
       }

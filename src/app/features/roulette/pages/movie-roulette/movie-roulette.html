@@ -23,10 +23,6 @@
       />
     </div>
 
-    @if (searchError()) {
-      <p class="error-message">{{ searchError() }}</p>
-    }
-
     @if (searchResults().length > 0) {
       <div class="search-results">
         @for (movie of searchResults(); track movie.id) {
@@ -80,27 +76,29 @@
         description="Busca y agrega las películas que quieres incluir en la ruleta."
       />
     } @else {
-      <div class="selected-grid">
+      <div class="row g-3">
         @for (movie of selectedMovies(); track movie.id) {
-          <article class="selected-movie">
-            <img [src]="getImageUrl(movie.poster_path)" [alt]="getTitle(movie)" />
+          <div class="col-12 col-lg-3">
+            <article class="selected-movie h-100">
+              <img [src]="getImageUrl(movie.poster_path)" [alt]="getTitle(movie)" />
 
-            <div class="selected-info">
-              <h3>{{ getTitle(movie) }}</h3>
-              <span>{{ getYear(movie) }}</span>
-            </div>
+              <div class="selected-info">
+                <h3>{{ getTitle(movie) }}</h3>
+                <span>{{ getYear(movie) }}</span>
+              </div>
 
-            @if (winners().length === 0) {
-              <button
-                type="button"
-                class="remove-button"
-                title="Quitar película"
-                (click)="removeMovie(movie.id)"
-              >
-                ×
-              </button>
-            }
-          </article>
+              @if (winners().length === 0) {
+                <button
+                  type="button"
+                  class="remove-button"
+                  title="Quitar película"
+                  (click)="removeMovie(movie.id)"
+                >
+                  ×
+                </button>
+              }
+            </article>
+          </div>
         }
       </div>
     }
@@ -172,32 +170,47 @@
         </p>
       }
 
-      <button type="button" class="spin-button" (click)="spinRoulette()" [disabled]="!canSpin()">
-        @if (spinning()) {
-          <i class="fas fa-spinner fa-spin"></i>
-          Girando...
-        } @else if (completed()) {
-          <i class="fas fa-flag-checkered"></i>
-          Sorteo finalizado
-        } @else if (getPendingWinner()) {
-          <i class="fas fa-circle-exclamation"></i>
-          Decide la ganadora primero
-        } @else {
-          <i class="fas fa-bullseye"></i>
-          Girar ruleta
-        }
-      </button>
+      <div class="row g-2 justify-content-center">
+        <div class="col-10 col-sm-8 col-md-5">
+          <app-button
+            class="d-block w-100"
+            [text]="
+              spinning()
+                ? 'Girando...'
+                : completed()
+                  ? 'Sorteo finalizado'
+                  : getPendingWinner()
+                    ? 'Decide la ganadora primero'
+                    : 'Girar ruleta'
+            "
+            [icon]="
+              spinning()
+                ? 'fa-spinner fa-spin'
+                : completed()
+                  ? 'fa-flag-checkered'
+                  : getPendingWinner()
+                    ? 'fa-circle-exclamation'
+                    : 'fa-bullseye'
+            "
+            variant="primary"
+            [disabled]="!canSpin()"
+            (clicked)="spinRoulette()"
+          />
+        </div>
 
-      @if (winners().length > 0) {
-        <button
-          type="button"
-          class="reset-button"
-          (click)="resetRoulette()"
-          [disabled]="spinning()"
-        >
-          Volver a empezar con las mismas películas
-        </button>
-      }
+        @if (winners().length > 0) {
+          <div class="col-10 col-sm-8 col-md-5">
+            <app-button
+              class="d-block w-100"
+              text="Volver a empezar con las mismas películas"
+              icon="fa-rotate-left"
+              variant="secondary"
+              [disabled]="spinning()"
+              (clicked)="resetRoulette()"
+            />
+          </div>
+        }
+      </div>
     </div>
 
     @if (message()) {
@@ -234,7 +247,7 @@
           </p>
 
           @if (getPendingWinner(); as pending) {
-            <div class="decision-buttons">
+            <div class="d-flex flex-wrap gap-2 mt-3">
               <app-button
                 text="Aceptar y guardar"
                 icon="fas fa-check"
@@ -265,22 +278,7 @@
         </div>
       </div>
 
-      <div class="history-summary">
-        <div>
-          <strong>{{ getAcceptedCount() }}</strong>
-          <span>Aceptadas</span>
-        </div>
-
-        <div>
-          <strong>{{ getRejectedCount() }}</strong>
-          <span>Rechazadas</span>
-        </div>
-
-        <div>
-          <strong>{{ winners().length }}</strong>
-          <span>Seleccionadas</span>
-        </div>
-      </div>
+      <app-stats [stats]="historyStats()" />
 
       <div class="history-list">
         @for (winner of winners(); track winner.movie.id) {

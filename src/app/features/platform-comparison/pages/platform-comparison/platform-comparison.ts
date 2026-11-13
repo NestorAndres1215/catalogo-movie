@@ -24,7 +24,7 @@ import { SearchComponent } from '../../../../shared/components/search/search';
     DecimalPipe,
     PageHeaderComponent,
     FilterTabsComponent,
-    ButtonComponent,
+   
     EmptyStateComponent,
     Footer,
     SearchComponent,
