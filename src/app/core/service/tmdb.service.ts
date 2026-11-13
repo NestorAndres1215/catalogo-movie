@@ -1,8 +1,9 @@
 import { Injectable, Service, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment.production';
 
-import { environment } from '../../../environments/environment';
+
 
 @Service()
 export class TmdbService {
