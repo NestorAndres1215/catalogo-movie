@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-"build": "node -e \"const fs=require('fs');const k=process.env.TMDB_API_KEY;if(!k)throw Error('Falta TMDB_API_KEY');fs.writeFileSync('src/environments/environment.production.ts',`export const environment = { production: true, tmdbApiKey: '${k}', tmdbBaseUrl: 'https://api.themoviedb.org/3', tmdbImageUrl: 'https://image.tmdb.org/t/p' };`);\" && ng build",
+"build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
