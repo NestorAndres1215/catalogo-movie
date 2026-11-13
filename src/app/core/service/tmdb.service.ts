@@ -1,42 +1,35 @@
 import { Injectable, Service, inject } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+
 import { environment } from '../../../environments/environment.production';
-
-
 
 @Service()
 export class TmdbService {
   private readonly http = inject(HttpClient);
+
   private readonly baseUrl = environment.tmdbBaseUrl;
 
-  get<T>(
-    endpoint: string,
-    parameters: Record<string, string | number | boolean> = {}
-  ): Observable<T> {
+get<T>(
+  endpoint: string,
+  parameters: Record<string, string | number | boolean> = {}
+): Observable<T> {
 
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${environment.tmdbApiKey}`,
-      Accept: 'application/json'
-    });
+  let params = new HttpParams()
+    .set('api_key', environment.tmdbApiKey)
+    .set('language', 'es-ES');
 
-    let params = new HttpParams()
-      .set('language', 'es-ES');
+  Object.entries(parameters).forEach(([key, value]) => {
+    params = params.set(key, String(value));
+  });
 
-    Object.entries(parameters).forEach(([key, value]) => {
-      params = params.set(key, String(value));
-    });
+  return this.http.get<T>(
+    `${this.baseUrl}${endpoint}`,
+    { params }
+  );
+}
 
-    return this.http.get<T>(
-      `${this.baseUrl}${endpoint}`,
-      { headers, params }
-    );
-  }
-
-  getImageUrl(
-    path: string | null,
-    size: string = 'w500'
-  ): string {
+  getImageUrl(path: string | null, size: string = 'w500'): string {
     if (!path) {
       return 'assets/images/no-poster.png';
     }
